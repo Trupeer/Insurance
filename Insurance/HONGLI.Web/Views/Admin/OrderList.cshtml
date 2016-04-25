@@ -1,0 +1,187 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="right_cont">
+
+    <div class="title_right"><strong>报价管理</strong></div>
+    <div style="margin:auto">
+        <strong>查询选项</strong>
+        <table class="table table-bordered">
+            
+            <tr>
+                <td align="right" bgcolor="#f1f1f1">车牌号：</td>
+                <td><input type="text" name="input18" id="CarID" /></td>
+                <td  align="right" bgcolor="#f1f1f1">车主姓名：</td>
+                <td><input type="text" name="" id="CarName" /></td>
+                <td align="right" bgcolor="#f1f1f1">渠道名称：</td>
+                <td><input type="text" name="" id="ChannelName" /></td>               
+            </tr>
+            <tr>
+                <td align="right" bgcolor="#f1f1f1">保险到期时间：</td>
+                <td colspan="2"><input type="text" class="laydate-icon" id="BeginInsuranceEndDate" value="" readonly/>至<input type="text" class="laydate-icon" id="EndInsuranceEndDate" value="" readonly/></td>
+                <td align="right" bgcolor="#f1f1f1">回访时间：</td>
+                <td colspan="2"><input type="text" class="laydate-icon" id="BeginVisitDate" value="" readonly />至<input type="text" class="laydate-icon" id="EndVisitDate" value="" readonly /></td>
+            </tr>
+            <tr>
+               
+                <td align="right" bgcolor="#f1f1f1">起止时间：</td>
+                <td colspan="2"><input type="text" class="laydate-icon" id="BeginDate" value="" readonly/>至<input type="text" class="laydate-icon" id="EndDate" value="" readonly/></td>
+            <td></td><td colspan="2"></td>
+</tr>
+        </table>
+        <strong>筛选项</strong>
+        <table class="table table-bordered">
+
+            <tr>
+                <td align="right" bgcolor="#f1f1f1">所选保险公司：</td>
+                <td>
+                <select id="InsuranceCompany" name="select3">
+                    <option value="">全部</option>
+                    <option value="2">人保</option>
+                    <option value="1">太平洋</option>
+                    <option value="0">平安</option>
+                    </select>
+                </td>
+                <td align="right" bgcolor="#f1f1f1">回访状态：</td>
+                <td><select id="ddlVistState" name="select3">
+                        <option value="">全部</option>
+                        <option value="0">未回访</option>
+                        <option value="1">客户忙碌待联系</option>
+                        <option value="2">待报价</option>
+                        <option value="3">已报价考虑中</option>
+                        <option value="4">无意向</option>
+                        </select>
+                </td>
+                <td align="right" bgcolor="#f1f1f1">核单状态：</td>
+                <td><select id="ddlAuditdocuments" name="select3">
+                    <option value="">全部</option>
+                    <option value="0">未核单</option>
+                    <option value="1">已核单</option>
+                    <option value="2">无法出单</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" bgcolor="#f1f1f1">订单状态：</td>
+                <td>
+                    <select id="ddlOrderState" name="select3">
+                        <option value="">全部</option>
+                        <option value="0">未确认</option>
+                        <option value="1">已订未支付</option>
+                        <option value="2">已支付</option>
+                    </select>
+                </td>
+                <td align="right" bgcolor="#f1f1f1">核保状态：</td>
+                <td>
+                    <select id="ddlexamineState" name="select3">
+                        <option value="">全部</option>
+                        <option value="1">成功</option>
+                        <option value="0">失败</option>
+                    </select>
+                </td>
+                <td></td><td></td>
+            </tr>
+        </table>
+        <table class="margin-bottom-20 table  no-border">
+            <tr>
+                <td class="text-center"><input type="button" value="查询" class="btn btn-info " style="width:80px;" onclick="submit(1,1)" /></td>
+            </tr>
+        </table>
+        <div id="recordlist"></div>
+        <div class="pages">
+            <div id="Pagination"></div>
+            <div class="searchPage">
+                <span class="page-sum">共<strong class="allPage" id="SumPages"></strong>页</span>
+                <span class="page-go">跳转<input type="text" id="anypageindex">页</span>
+                <a href="javascript:;" class="page-btn" id="goanypage">GO</a>
+            </div>
+        </div>
+        </div>
+    
+    </div>
+<script>
+    jeDate({
+        dateCell: '#BeginInsuranceEndDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: jeDate.now(0) //1代表明天，2代表后天，以此类推
+    });
+    jeDate({
+        dateCell: '#EndInsuranceEndDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: jeDate.now(0) //1代表明天，2代表后天，以此类推
+    });
+    jeDate({
+        dateCell: '#BeginVisitDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: jeDate.now(0) //1代表明天，2代表后天，以此类推
+    });
+    jeDate({
+        dateCell: '#EndVisitDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: jeDate.now(0) //1代表明天，2代表后天，以此类推
+    });
+    jeDate({
+        dateCell: '#BeginDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: jeDate.now(0) //1代表明天，2代表后天，以此类推
+    });
+    jeDate({
+        dateCell: '#EndDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: jeDate.now(0) //1代表明天，2代表后天，以此类推
+    });
+    var pageindex = 1;
+    $(function () {
+        submit(1, 1);
+        $("#goanypage").click(function () {
+            var thispage = parseInt($("#anypageindex").val());
+            submit(thispage, null);
+        });
+    });
+    function submit(page,check)
+    {
+
+        if (page == "99999")
+        {
+            page = pageindex + 1;
+        }
+        else if (page == "0")
+        {
+            page = pageindex - 1;
+        }
+        else
+        {
+            pageindex = page;
+        }
+        var CarID = $("#CarID").val();
+        var username = $("#CarName").val();
+        var ChannelName = $("#CarID").val();
+        var BeginInsuranceEndDate = $("#BeginInsuranceEndDate").val();
+        var EndInsuranceEndDate = $("#EndInsuranceEndDate").val();
+        var BeginVisitDate = $("#BeginVisitDate").val();
+        var EndVisitDate = $("#EndVisitDate").val();
+        var BeginDate = $("#BeginDate").val();
+        var EndDate = $("#EndDate").val();
+        var InsuranceCompany = $("#InsuranceCompany").val();
+        var VistState = $("#ddlVistState").val();
+        var Auditdocuments = $("#ddlAuditdocuments").val();
+        var OrderState = $("#ddlOrderState").val();
+        var examineState = $("#ddlexamineState").val();
+        if (check != null) {
+            $.get("GetOrderListCount", { username: username, ChannelName: ChannelName, BeginInsuranceEndDate: BeginInsuranceEndDate, EndInsuranceEndDate: EndInsuranceEndDate, BeginVisitDate: BeginVisitDate, EndVisitDate: EndVisitDate, BeginDate: BeginDate, EndDate, EndDate, InsuranceCompany: InsuranceCompany, VistState: VistState, Auditdocuments: Auditdocuments, OrderState: OrderState, examineState: examineState}, function(data) {
+                var sumcount = parseInt(data);
+                $("#SumPages").html(sumcount);
+                $("#Pagination").pagination(sumcount);
+            });
+            }
+        $("#recordlist").load("OrderListTable", { page: page, username: username, ChannelName: ChannelName, BeginInsuranceEndDate: BeginInsuranceEndDate, EndInsuranceEndDate: EndInsuranceEndDate, BeginVisitDate: BeginVisitDate, EndVisitDate: EndVisitDate, BeginDate: BeginDate, EndDate, EndDate, InsuranceCompany: InsuranceCompany, VistState: VistState, Auditdocuments: Auditdocuments, OrderState: OrderState, examineState: examineState }, function () {
+        });
+    }
+</script>

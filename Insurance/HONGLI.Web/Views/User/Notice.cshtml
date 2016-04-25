@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "站点公告";
+}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/all.css")">
+</head>
+<body>
+    <div class="f-nav">
+        <h2>@ViewBag.Title</h2>
+        <div class="f-nav-back">
+            <a href="javascript:;" id="riaGoBack"><i></i></a>
+        </div>
+        <div class="f-nav-action"></div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    <div class="page10-img">
+        <img src="~/public/imagesTemp/page01-750-368.jpg" />
+    </div>
+    <div class="page90-form">
+        <div class="f-form01-group">
+            <div class="f-form01-item">
+                <p class="f-form01-tip">啊哦，系统开了小差，</p>
+                <p class="f-form01-tip">倒计时 <i id="js-countDownTime">6</i> 秒后跳转至首页</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page31-fixed-extend"></div>
+    <div class="page31-fixed">
+        <a href="tel:4004353678" class="page31-button-400"><i>400-435-3678</i></a>
+    </div>
+
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/jquery/jquery-2.1.3.min.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/base.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/all.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/hongli.common.tools.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/hongli.global.data.js")"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var time = 6;
+
+            setInterval(function () {
+                if (time > 0) {
+                    $("#js-countDownTime").text(time--);
+                }
+                else {
+                    window.location.href = global.homePage;
+                }
+            }, 1000);
+        });
+
+    </script>
+</body>
+</html>

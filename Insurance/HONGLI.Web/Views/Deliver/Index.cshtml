@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View</title>
+</head>
+<body>
+    <div>
+        <p>
+            <a href="@Url.Action("List","Deliver",new { UserId = 4,mobile="13555221234",channel="1",productId="12" })">content</a>
+        </p>
+        <p>
+            <a href="@Url.Action("TypeEdit","Deliver",new { UserId = 4,mobile="13555221234",channel="1",productId="12" })">content</a>
+        </p>
+        <p>
+            <a href="@Url.Action("Edit","Invoice",new { UserId = 4,mobile="13555221234",channel="1",productId="12" })">content</a>
+        </p>
+        <p>
+            <a href="@Url.Action("Edit","PolicyHolder",new { UserId = 4,mobile="13555221234",channel="1",productId="12" })">content</a>
+        </p>
+
+    </div>
+    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
+    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
+</body>
+</html>

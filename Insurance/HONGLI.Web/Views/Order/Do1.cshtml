@@ -1,0 +1,91 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>报价详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link rel="stylesheet" type="text/css" href="../public/css/all.css">
+    <script src="../public/js/base.js"></script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>填写并核对订单信息</h2>
+        <div class="f-nav-back">
+            <a href="javascript:;" id="riaGoBack"><i></i></a>
+        </div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    <div class="page20-address">
+        <div class="page20-address-empty" id="deliverEmpty">
+            <a href="@Url.Action("List","Deliver",new { mobile = ViewBag.Mobile,channel = ViewBag.Channel,userid=ViewBag.UserId} )"><p></p><span>添加订单信息</span><span class="f-list01-icon-arrow" style="margin-left:6.75rem;"></span></a>
+        </div>
+        <div class="f-list01" id="deliverAddress"  style="display:none;">
+            <div class="f-list01-main">
+                <p class="t-p1"><span>姓名</span><span class="t-span">jalsjdlaks</span>
+                    <span style="margin-left:0.2rem">电话</span><span class="t-span">12525256636</span>
+                </p>
+                <p class="t-p2"><span>地址</span><span class="t-span">北京市朝阳区建外大街南区345栋</span></p>
+</div>
+            <div class="f-list01-go"><a href="@Url.Action("List","Deliver",new {ProductId = ViewBag.ProductId, mobile = ViewBag.Mobile,channel = ViewBag.Channel,userid=ViewBag.UserId} )" class="f-list01-icon-arrow"></a></div>
+        </div>
+    </div>
+    <div class="page20-form">
+        <div class="f-form01-item" id="product">
+            <label class="f-form01-label">
+                <img id="product-isuranceLogoUrl" src="../public/imagesTemp/page40-2.png">
+            </label>
+            <div>
+                <p class="t-24" id="product-title">京BBK123保费，交强险起保日期2016年1月5日，商业保险起保日期2016年1月5日</p>
+                <p class="t-money01"><i id="product-dealPrice">￥</i><del id="product-originalPrice">12345</del></p>
+                <p style="margin-top:0.1rem"><span class="t-24">优惠价：</span><span class="t-25">9999</span><span class="t-24" style="margin-left:0.3rem;">预约金：</span><span class="t-25">9999</span></pstyle="margin-top:0.1rem">
+            </div>
+            <div class="f-list01-go"  style="margin-left:0.2rem"><a href="@Url.Action("Detail","ProductV2",new {ProductId = ViewBag.ProductId, mobile = ViewBag.Mobile,channel = ViewBag.Channel} )" class="f-list01-icon-arrow" ></a></div>
+        </div>
+        <div class="f-form01-item">
+            <div class="explain">
+                <p class="t-p1">说明</p>
+                <p class="t-26">京BBK123保费，交强险起保日期2016年1月5日，商业保险起保日期2016年1月5日</p>
+            </div>
+        </div>
+        <div class="f-form01-item" id="PolicyEmpty" style="padding:0">
+            <div class="page20-address-empty"><a href="@Url.Action("Edit","PolicyHolder",new {ProductId = ViewBag.ProductId, userid = ViewBag.UserId,mobile = ViewBag.Mobile,channel = ViewBag.Channel} )"><p></p><span>添加被保人信息</span><span class="f-list01-icon-arrow" style="margin-left:6.3rem;"></span></a></div>
+        </div>
+        <div class="f-form01-item" id="policyHolder">
+            <div class="explain">
+                <p class="t-p1">被保人信息</p>
+                <p id="policyHolder-name" class="t-26">被保人：</p>
+                <p id="policyHolder-idcard" class="t-26">身份证：</p>
+            </div>
+            <div class="f-list01-go" style="margin-left:0.2rem"><a href="@Url.Action("Edit","PolicyHolder",new {ProductId = ViewBag.ProductId, userid = ViewBag.UserId,mobile = ViewBag.Mobile,channel = ViewBag.Channel} )" class="f-list01-icon-arrow"></a></div>
+        </div>
+        <div class="f-form01-item">
+            <div class="explain"><span class="t-p1">发票信息</span><span class="t-26" style="float:right" id="invoice">北京市XXX公司</span></div>
+            <div class="f-list01-go" style="margin-left:0.2rem;"><a href="@Url.Action("Edit","Invoice",new {ProductId = ViewBag.ProductId,userid = ViewBag.UserId, mobile = ViewBag.Mobile,channel = ViewBag.Channel})" class="f-list01-icon-arrow"></a></div>
+        </div>
+        <div class="f-form01-item">
+            <div class="explain"><span class="t-p1">支付配送</span><span class="t-26" style="float:right" id="Deliver">北京市XXX公司</span></div>
+            <div class="f-list01-go" style="margin-left:0.2rem;"><a href="@Url.Action("TypeEdit","Deliver",new {ProductId = ViewBag.ProductId, userid = ViewBag.UserId, mobile = ViewBag.Mobile,channel = ViewBag.Channel})" class="f-list01-icon-arrow"></a></div>
+        </div>
+        <div class="f-form01-item">
+            <div class="explain">
+                <span class="t-p1">保费总额：</span><span class="t-25" id="Total">9999</span>
+                <span class="t-p1" style="margin-left:3rem;">预约金：</span><span class="t-25" id="PrepaidAmount">9999</span>
+            </div>
+        </div>
+        </div>
+    <div class="page20-submit">
+        <a href="#" class="f-button02" onclick="javascript:orderSubmit()">提交订单</a>
+        <div>支付预定金：<span id="order-totalPrice">￥</span></div>
+    </div>
+</body>
+</html>

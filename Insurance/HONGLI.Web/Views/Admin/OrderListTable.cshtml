@@ -1,0 +1,173 @@
+﻿@using System.Data;
+@{ 
+    DataTable dt = ViewBag.list as DataTable;
+}
+<table class="table table-bordered">
+    <tr>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>车主姓名</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>手机号</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>车牌号</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>保险到期时间</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>申请时间</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>渠道</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>保险公司</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>核保状态</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>核单状态 </strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>核单客服</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>回访状态</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>回访客服</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>最后核保时间</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>最后回访时间</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>订单状态</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>详情</strong></td>
+
+    </tr>
+    @if (dt.Rows.Count > 0)
+    {
+        foreach (DataRow item in dt.Rows)
+        {
+            <tr>
+                <td align="center">@item["UserName"]</td>
+                <td align="center">@item["Mobile"]</td>
+                <td align="center">@item["LicenseNo"]</td>
+                <td align="center">@(string.IsNullOrEmpty(item["BusinessExpireDate"].ToString()) ? "" : Convert.ToDateTime(item["BusinessExpireDate"]).ToString("yyyy-MM-dd"))</td>
+                <td align="center">@(string.IsNullOrEmpty(item["CreateTime"].ToString())?"": Convert.ToDateTime(item["CreateTime"]).ToString("yyyy-MM-dd"))</td>
+                               @if (item["Channel"].ToString() == "1")
+                               {
+                                <td align="center">渠道1</td>
+                               }
+                               else
+                               {
+                                <td align="center">其他渠道</td>
+                               }
+                @if (item["InsuranceCompany"].ToString() == "0")
+                {
+                    <td align="center">平安</td>
+                }
+                else if (item["InsuranceCompany"].ToString() == "1")
+                {
+                    <td align="center">太平洋</td>
+                }
+                else if (item["InsuranceCompany"].ToString() == "2")
+                {
+                    <td align="center">人保</td>
+                }
+                else
+                {
+                    <td align="center">其他</td>
+                }
+                <td align="center">
+                    @if(item["RbOffer"].ToString() == "1")
+                    {
+                        <span>核保成功(人保)</span><br/>
+                    }
+                    else
+                    {
+                        <span>核保失败(人保)</span><br />
+                    }
+                    @if(item["TpyOffer"].ToString() == "1")
+                    {
+                    <span>核保成功(太平洋)</span><br />
+                    }
+                    else
+                    {
+                    <span>核保失败(太平洋)</span><br />
+                    }
+                    @if (item["PaOffer"].ToString() == "1")
+                    {
+                        <span>核保成功(平安)</span>
+                    }
+                    else
+                    {
+                        <span>核保失败(平安)</span>
+                    }
+                </td>
+                @if (item["AuditOrderState"].ToString() == "1")
+                {
+                    <td align="center">已核单</td>
+                }
+                
+                else if (item["AuditOrderState"].ToString() == "0")
+                {
+                    <td align="center">未核单</td>
+                }
+                else if (item["AuditOrderState"].ToString() == "2")
+                {
+                    <td align="center">无法出单</td>
+                }
+                else
+                {
+                    <td align="center">未核单</td>
+                }
+                <td>@item["ServiceUserName"]</td>
+                @if (item["VisitState"].ToString() == "0")
+                {
+                    <td align="center">未回访</td>
+                }
+
+                else if (item["VisitState"].ToString() == "1")
+                {
+                    <td align="center">客户忙碌待联系</td>
+                }
+                else if (item["VisitState"].ToString() == "2")
+                {
+                    <td align="center">待报价</td>
+                }
+                else if (item["VisitState"].ToString() == "3")
+                {
+                    <td align="center">已报价考虑中</td>
+                }
+                else if (item["VisitState"].ToString() == "4")
+                {
+                    <td align="center">无意向</td>
+                }
+                else
+                {
+                    <td align="center">未回访</td>
+                }
+                <td>@item["VisitServiceUserName"]</td>
+                <td>@item["AuditOrderDate"]</td>
+                <td>@item["VisitDate"]</td>
+                @if (item["OrderreviewState"].ToString() == "0")
+                {
+                    <td align="center">未确认</td>
+                }
+                else if (item["OrderreviewState"].ToString() == "1")
+                {
+                    <td align="center">已订未支付</td>
+                }
+                else if (item["OrderreviewState"].ToString() == "2")
+                {
+                    <td align="center">已支付</td>
+                }
+                else
+                {
+                    <td align="center">订单未出</td>
+                }
+                <td align="center"><a href="OrderDetail?UserId=@item["ID"]&ItemId=@item["ProdunctItemID"]&OrderCode=@item["OrderCode"]&InsuranceCompany=@item["InsuranceCompany"]">详情</a></td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td align="center"></td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+            <td align="center">&nbsp;</td>
+        </tr>
+    }
+    
+</table>

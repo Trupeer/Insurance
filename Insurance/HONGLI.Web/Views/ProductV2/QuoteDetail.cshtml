@@ -1,0 +1,441 @@
+﻿@using HONGLI.Entity
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>车险询价-报价详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link href="~/public/css/all.css" rel="stylesheet" />
+    <script src="~/public/js/base.js"></script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>报价详情</h2>
+        <div class="f-nav-back">
+            <a href="javascript:;" id="riaGoBack"><i></i></a>
+        </div>
+        <div class="f-nav-action"></div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    <div class="f-list01 page12-top">
+        <div class="f-list01-main">
+
+            @{
+                var intentionCompany = ViewBag.intentionCompany;
+                if (intentionCompany == 0) //pingan
+                {
+                    <img src="~/public/imagesTemp/page40-2.png" />
+                }
+                else if (intentionCompany == 1)  //taipingyang
+                {
+                    <img src="~/public/imagesTemp/page40-3.png" />
+                }
+                else if (intentionCompany == 2)  //renbao
+                {
+                    <img src="~/public/imagesTemp/page40-1.png" />
+                }
+            }
+        </div>
+        <div class="f-list01-main"><del><span class='t-loading' id="total"></span> 元</del></div>
+    </div>
+
+    <div class="f-list01 page12-list01">
+        <div class="f-list01-main">交强险</div>
+        <div class="f-list01-other"><span class='t-loading' id="forceTotal"></span> 元</div>
+    </div>
+    <div class="f-list01 page12-list01">
+        <div class="f-list01-main">车船税</div>
+        <div class="f-list01-other"><span class='t-loading' id="taxTotal"></span> 元</div>
+    </div>
+    <div class="page12-title02">
+        <i class="page12-title02-line"></i>
+        <div class="f-list01">
+            <div class="f-list01-main">商业险</div>
+            <div class="f-list01-other"><span class='t-loading' id="bizTotal"></span>元</div>
+            <div class="f-list01-go"><i class="f-list01-icon-arrow-down" data-sh=".page12-tips"></i></div>
+        </div>
+        @*<div class="page12-title02-tips page12-tips">车损险、三者险（20万）、盗抢险、划痕险(2000元）、玻璃单独破损险、座位险（司机1万）、座位险（乘客1万）、不计免赔险</div>*@
+        <div class="page12-title02-tips page12-tips"><span class='t-loading' id="description"></span></div>
+    </div>
+    <div class="f-list01-group" id="descriptionDetail">
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">车损险</div>
+            <div class="f-list01-other"><span class='t-loading' id="chesun"> </span>元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">三者险（20万）</div>
+            <div class="f-list01-other"><span class='t-loading' id="sanzhe"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">座位险（司机1万）</div>
+            <div class="f-list01-other"><span class='t-loading' id="siji"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">座位险（乘客1万）</div>
+            <div class="f-list01-other"><span class='t-loading' id="chengke"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">盗抢险</div>
+            <div class="f-list01-other"><span class='t-loading' id="daoqiang"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">划痕险</div>
+            <div class="f-list01-other"><span class='t-loading' id="huahen"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">玻璃单独破损险</div>
+            <div class="f-list01-other"><span class='t-loading' id="boli"></span> 元</div>
+        </div>
+    </div>
+    <div class="page12-hbzt-wrap">
+        <div class="page12-hbzt">
+            <!--核保状态-->
+            <div class="page12-hbzt-title page12-hbzt-loading-title"><span>核保中</span></div>
+            <div class="page12-hbzt-content page12-hbzt-loading-content"><span>请稍等...</span></div>
+        </div>
+    </div>
+    <div class="page12-title01"><i></i>代理人为您争取到的优惠： （已用代理人积分抵换）</div>
+
+    <div class="f-list01-group">
+        <div class="f-list01 page12-list04">
+            <div class="f-list01-main" id="bizCoupon">商业险优惠费率  <span class='t-loading'></span> % x <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list04">
+            <div class="f-list01-main" id="forceCoupon">交强险优惠费率   <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list04">
+            <div class="f-list01-main" id="taxCoupon">车船税优惠费率    <span class='t-loading'></span> % x <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main" id="totalCoupon">为您节省：<span class='t-loading'></span> 元</div>
+            <div class="f-list01-main" id="afterCouponTotal">优惠价后总价：<span class='t-loading'></span> 元</div>
+        </div>
+    </div>
+    <div class="page12-submit">
+        <div class="t-info">
+            <p>保险总价：<span><del id="totalFooter"><span class='t-loading'></span> 元</del></span></p>
+            <p>优惠价：<span id="afterCouponTotalFooter"><span class='t-loading'></span> 元</span></p>
+        </div>
+        <a href="javascript:void(0);" class="f-button02 t-disable" id="submit">我要购买</a>
+    </div>
+    <div class="page12-submit-fixed-extend"></div>
+
+    <script src="~/public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
+    <script src="~/public/js/all.js"></script>
+    <script src="~/Scripts/hongli.common.tools.js"></script>
+    <script src="~/Scripts/hongli.global.data.js"></script>
+    <script src="~/public/3rdLibs/layer.mobile/v1.7/layer.js"></script>
+
+    <script type="text/javascript">
+
+        $(function(){
+            $("#descriptionDetail .f-list01").each(function(){
+                $(this).hide();
+            });
+            getPrecisePrice();
+        })
+
+        //意向公司报价 2343
+        function getPrecisePrice() {
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("GetPrecisePrice", "ProductV2")',
+                dataType: "json",
+                data: {
+                    channel: "@ViewBag.channel",
+                    mobile: "@ViewBag.mobile",
+                    licenseNo: "@ViewBag.licenseNo",
+                    intentionCompany :"@ViewBag.intentionCompany"
+                },
+                beforeSend: function () {
+                    layer.open({ type:2 });
+                },
+                success: function (data) {
+
+                    console.log(data);
+                    if (data == null) {
+                        alert("请求报价信息失败！");
+                        return;
+                    }
+                    if (data.BusinessStatus == 1) {
+                        //获取报价信息
+                        getSpecialPrecisePrice();
+                    }
+                    else {
+                        var message = data.StatusMessage;
+                        if (message == null) {
+                            message = "请求报价信息失败，服务器未返回失败原因！";
+                        }
+                        alert(message);
+                    }
+                },
+                error: function (data) {
+                    alert("请求报价信息失败！！");
+                }
+            });
+        }
+
+        //标识调用次数  loading只调两次
+        var requestFlag = 0;
+
+        //获取报价信息
+        function getSpecialPrecisePrice(submitStatus) {
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("GetSpecialPrecisePrice", "ProductV2")',
+                dataType: "json",
+                data: {
+                    channel: "@ViewBag.channel",
+                    mobile: "@ViewBag.mobile",
+                    licenseNo: "@ViewBag.licenseNo",
+                    intentionCompany:  "@ViewBag.intentionCompany",
+                    userID:"@Request["userID"]"
+                },
+                beforeSend: function () {
+                    layer.open({ type:2 });
+                },
+                success: function (data) {
+                    console.log(data);
+                    if(data ==null){
+                        alert("获取报价信息失败！");
+                        return;
+                    }
+                    if (data.BusinessStatus != 1) {
+                        var message = data.StatusMessage;
+                        if (message == null) {
+                            message = "获取报价信息失败，服务器未返回失败原因！";
+                        }
+                        alert(message);
+                    }
+                    if (data.Item == null) {
+                        alert("没有获取到报价信息！");
+                        return;
+                    }
+
+                    var result = data.Item;
+                    var forceTotal = result.ForceTotal;
+                    var taxTotal = result.TaxTotal;
+                    var bizTotal = result.BizTotal;
+                    var total = forceTotal + taxTotal + bizTotal;
+                    var totalFormat = common.operateNum.formatNum(total, 2);
+                    $("#total").removeClass("t-loading").text(totalFormat);
+                    $("#forceTotal").removeClass("t-loading").text(forceTotal);
+                    $("#taxTotal").removeClass("t-loading").text(taxTotal);
+                    $("#bizTotal").removeClass("t-loading").text(bizTotal);
+                    $("#description").removeClass("t-loading").text(result.Description);
+
+                    showItem($("#chesun"),result.CheSun.BaoE,result.CheSun.BaoFei);
+                    showItem($("#sanzhe"),result.SanZhe.BaoE,result.SanZhe.BaoFei);
+                    showItem($("#siji"),result.SiJi.BaoE,result.SiJi.BaoFei);
+                    showItem($("#chengke"),result.ChengKe.BaoE,result.ChengKe.BaoFei);
+                    showItem($("#daoqiang"),result.DaoQiang.BaoE,result.DaoQiang.BaoFei);
+                    showItem($("#huahen"),result.HuaHen.BaoE,result.HuaHen.BaoFei);
+                    showItem($("#boli"),result.BoLi.BaoE,result.BoLi.BaoFei);
+
+                    //核保成功 //todo test submitStatus = 1;
+                    if (submitStatus == "@(Convert.ToInt32(SubmitStatus.Success))"){
+                        var channel_ForceCouponRate = @ViewBag.channel_ForceCouponRate;
+                        var channel_TaxCouponRate = @ViewBag.channel_TaxCouponRate;
+                        var channel_BizCouponRate = @ViewBag.channel_BizCouponRate;
+
+                        var forceRate = result.ForceRate - channel_ForceCouponRate;
+                        var taxRate = result.ForceRate - channel_TaxCouponRate;
+                        var bizRate = result.BizRate - channel_BizCouponRate;
+
+                        var forceCoupon = result.ForceTotal * (forceRate * 0.01);
+                        var taxCoupon = result.TaxTotal * (taxRate * 0.01);
+                        var bizCoupon = result.BizTotal * (bizRate * 0.01);
+
+                        var afterCouponTotal = total - (bizCoupon + forceCoupon + taxCoupon);
+                        var bizCouponHtml = "商业险优惠费率   "+bizRate+" % x "+result.BizTotal+" 元（原价） =  "+common.operateNum.formatNum(bizCoupon,2)+" 元";
+                        $("#bizCoupon").html(bizCouponHtml);
+                        var forceCouponHtml ="交强险优惠费率    "+forceRate+" % x "+result.ForceTotal+" 元（原价） =  "+common.operateNum.formatNum(forceCoupon,2)+" 元";
+                        $("#forceCoupon").html(forceCouponHtml);
+                        var taxCouponHtml ="车船税优惠费率    "+taxRate+" % x "+result.TaxTotal+" 元（原价） =  "+common.operateNum.formatNum( taxCoupon,2)+" 元";
+                        $("#taxCoupon").html(taxCouponHtml);
+                        var totalCouponHtml = "为您节省："+common.operateNum.formatNum((bizCoupon + forceCoupon + taxCoupon),2)+" 元";
+                        $("#totalCoupon").html(totalCouponHtml);
+                        var afterCouponTotalHtml = "优惠价后总价："+common.operateNum.formatNum(afterCouponTotal,2)+" 元";
+                        $("#afterCouponTotal").html(afterCouponTotalHtml);
+                        var totalHtml = total + " 元";
+                        $("#totalFooter").html(totalHtml);
+                        var afterCouponTotalFooterHtml =common.operateNum.formatNum(afterCouponTotal,2)+ "元";
+                        $("#afterCouponTotalFooter").html(afterCouponTotalFooterHtml);
+
+                        //按钮可点击
+                        $("#submit").removeClass("t-disable");
+                    }
+                    else{
+                        var bizCouponHtml = "商业险优惠费率    -  - % x "+result.BizTotal+" 元（原价） =   -  - 元";
+                        $("#bizCoupon").html(bizCouponHtml);
+                        var forceCouponHtml ="交强险优惠费率     -  - % x "+result.ForceTotal+" 元（原价） =   -  - 元";
+                        $("#forceCoupon").html(forceCouponHtml);
+                        var taxCouponHtml ="车船税优惠费率     -  - % x "+result.TaxTotal+" 元（原价） =   -  - 元";
+                        $("#taxCoupon").html(taxCouponHtml);
+                        var totalCouponHtml = "为您节省： -  -元";
+                        $("#totalCoupon").html(totalCouponHtml);
+                        var afterCouponTotalHtml = "优惠价后总价： -  - 元";
+                        $("#afterCouponTotal").html(afterCouponTotalHtml);
+                        var totalHtml = total + " 元";
+                        $("#totalFooter").html(totalHtml);
+                        var afterCouponTotalFooterHtml = " -  - 元";
+                        $("#afterCouponTotalFooter").html(afterCouponTotalFooterHtml);
+                    }
+
+                    layer.closeAll();
+                    //首次报价成功
+                    if(result.QuoteStatus > 0 && requestFlag < 1){
+
+                        //标识调用次数
+                        requestFlag += 1;
+                        //获取核保信息
+                        getSubmitInfo();
+                    }
+                },
+                error: function (data) {
+                    alert("获取报价信息失败！");
+                    return;
+                }
+            });
+        }
+
+        //获取核保信息
+        function getSubmitInfo(){
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("GetSubmitInfo", "ProductV2")',
+                dataType: "json",
+                data: {
+                    channel: "@ViewBag.channel",
+                    mobile: "@ViewBag.mobile",
+                    licenseNo: "@ViewBag.licenseNo",
+                    intentionCompany: "@ViewBag.intentionCompany",
+                    ProductItemId:"@Request["ProductItemId"]"
+                },
+                beforeSend: function () {
+                    layer.open({ type:2 });
+                },
+                success: function (data) {
+                    console.log(data);
+                    if(data == null){
+                        alert("获取核保信息失败！");
+                        return;
+                    }
+                    if (data.BusinessStatus != 1) {
+                        var message = data.StatusMessage;
+                        if (message == null) {
+                            message = "获取核保信息失败，服务器未返回失败原因！";
+                        }
+                        alert(message);
+                    }
+                    if (data.Item == null) {
+                        alert("没有获取到核保信息！");
+                        return;
+                    }
+
+                    var result = data.Item;
+                    var submitStatus = result.SubmitStatus;
+                    var submitStatusHtml = "";
+
+                    if (submitStatus == "@(Convert.ToInt32(SubmitStatus.Fail))")
+                    {
+                        submitStatusHtml =  "<div class='page12-hbzt-title page12-hbzt-error-title'><span>核保<br>失败</span></div>"+
+                                            "<div class='page12-hbzt-content page12-hbzt-error-content'><span>原因：<br>"+result.SubmitResult+"<br>核保成功下单可享低至7折优惠</span></div>"+
+                                            "<div class='page12-hbzt-error-other'> <a href='javascript:history.go(-2);'>重新配置</a><br><span>咨询客服：400-963-1088</span></div>";
+                    }
+                    else if (submitStatus == "@(Convert.ToInt32(SubmitStatus.Success))")
+                    {
+                        submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-success-title'><span>核保<br>成功</span></div>"+
+                                           "<div class='page12-hbzt-content page12-hbzt-success-content'><span>核保内容："+result.SubmitResult+"</span></div>";
+                    }
+                    else if (submitStatus == "@(Convert.ToInt32(SubmitStatus.UnCheck))")
+                    {
+                        submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-no-title'><span>未核保</span></div>"+
+                                           "<div class='page12-hbzt-content page12-hbzt-no-content'><span>亲，保险到期日三月内可以核保算费，届时试算可享低至7折优惠哦！</span></div>";
+                    }
+                    else if (submitStatus == "@(Convert.ToInt32(SubmitStatus.Checking))")
+                    {
+                        submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-loading-title'><span>核保中</span></div>"+
+                                           "<div class='page12-hbzt-content page12-hbzt-loading-content'><span>请稍等...</span></div>";
+                    }
+
+                    $(".page12-hbzt-wrap .page12-hbzt").html(submitStatusHtml);
+
+                    layer.closeAll();
+
+                    getSpecialPrecisePrice(submitStatus);
+                },
+                error: function (data) {
+                    alert("获取核保信息失败！！");
+
+                }
+            });
+        }
+
+        function showItem(source,value1,value2){
+            if(value1 > 0){
+                source.removeClass("t-loading").text(value2);
+                source.parent(".f-list01-other").parent(".f-list01").show();
+            }
+        }
+
+
+        $("#submit").click( function () {
+            if($(this).hasClass("t-disable")){
+                return;
+            }
+
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("Buy", "ProductV2")',
+                dataType: "json",
+                data: {
+                    channel: "@ViewBag.channel",
+                    mobile: "@ViewBag.mobile",
+                    licenseNo: "@ViewBag.licenseNo",
+                    intentionCompany: "@ViewBag.intentionCompany",
+                    userID:"@Request["userID"]",
+                    ProductItemId:"@Request["ProductItemId"]"
+                },
+                beforeSend: function () {
+                    $(this).addClass("t-disable");
+                    layer.open({ type:2 });
+                },
+                success: function (data) {
+                    $(this).removeClass("t-disable");
+
+                    if (data != null) {
+                        //写入cookie
+                        var channel = "@ViewBag.channel";
+                        var isuranceLogo = @ViewBag.intentionCompany;
+                        var order_product = new global.order.product(channel, data.Id, isuranceLogo, data.ProductName, data.Description, data.Total, data.TotalAfterCoupon, data.LicenseNo, data.ForceExpireDate,data.BussinessExpireDate, data.BuId);
+                        var order_product_str = JSON.stringify(order_product);
+                        common.cookie.setCookie(global.domain, global.cookie.order.product, order_product_str, global.expire);
+                        window.location.href = "@Url.Action("Do","Order")" + "?channel=@ViewBag.channel&mobile=@ViewBag.mobile&productId=" + data.Id;
+                        alert("订单已提交！请耐心等待客服人员核实后与您联系！如有问题请致电：400-963-1088")
+
+                    }
+                    else {
+                        $(this).addClass("t-disable");
+                        alert("error!");
+                    }
+                    layer.closeAll();
+                },
+                error: function (data) {
+                    $(this).addClass("t-disable");
+                    alert("error!!");
+                }
+            });
+        })
+
+    </script>
+    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
+    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
+</body>
+</html>

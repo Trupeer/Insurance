@@ -1,0 +1,172 @@
+﻿
+@model HONGLI.Entity.View_ProductUserItem
+
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>车险询价-报价详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link href="~/public/css/all.css" rel="stylesheet" />
+    <script src="~/public/js/base.js"></script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>报价详情</h2>
+        <div class="f-nav-back">
+            <a href="javascript:;" id="riaGoBack"><i></i></a>
+        </div>
+        <div class="f-nav-action"></div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    @{
+        var intentionCompany = Model.ItemSource;
+
+        <div class="f-list01 page12-top">
+            <div class="f-list01-main">
+                @*<img src="./public/imagesTemp/page12-180-100.png">*@
+                @if (intentionCompany == 0) //pingan
+                {
+                    <img src="~/Images/Temp/page40-2.png" />
+                }
+                else if (intentionCompany == 1)  //taiping
+                {
+                    <img src="~/Images/Temp/page40-3.png" />
+                }
+                else if (intentionCompany == 2)  //renbao
+                {
+                    <img src="~/Images/Temp/page40-1.png" />
+                }
+            </div>
+            <div class="f-list01-main"><del>@(Model.OriginalTotal) 元</del></div>
+        </div>
+        <div class="f-list01 page12-list01">
+            <div class="f-list01-main">交强险</div>
+            <div class="f-list01-other">@(Model.ForceTotal) 元</div>
+        </div>
+        <div class="f-list01 page12-list01">
+            <div class="f-list01-main">车船税</div>
+            <div class="f-list01-other">@(Model.TaxTotal)元</div>
+        </div>
+        <div class="page12-title02">
+            <i class="page12-title02-line"></i>
+            <div class="f-list01">
+                <div class="f-list01-main">商业险</div>
+                <div class="f-list01-other">@(Model.BizTotal)元</div>
+                <div class="f-list01-go"><i class="f-list01-icon-arrow-down" data-sh=".page12-tips"></i></div>
+            </div>
+            @*<div class="page12-title02-tips page12-tips">车损险、三者险（20万）、盗抢险、划痕险(2000元）、玻璃单独破损险、座位险（司机1万）、座位险（乘客1万）、不计免赔险</div>*@
+            <div class="page12-title02-tips page12-tips">@(Model.Description)</div>
+        </div>
+        <div class="f-list01-group">
+            <div style="display:@(Model.CheSun_BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">车损险</div>
+                <div class="f-list01-other">@(Model.CheSun_BaoFei)元</div>
+            </div>
+            <div style="display:@(Model.SanZhe_BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">三者险（20万）</div>
+                <div class="f-list01-other">@(Model.SanZhe_BaoFei)元</div>
+            </div>
+            <div style="display:@(Model.SiJi_BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">座位险（司机1万）</div>
+                <div class="f-list01-other">@(Model.SiJi_BaoFei)元</div>
+            </div>
+            <div style="display:@(Model.ChengKe_BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">座位险（乘客1万）</div>
+                <div class="f-list01-other">@(Model.ChengKe_BaoFei)元</div>
+            </div>
+            <div style="display:@(Model.DaoQiang_BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">盗抢险</div>
+                <div class="f-list01-other">@(Model.DaoQiang_BaoFei)元</div>
+            </div>
+            <div style="display:@(Model.HuaHen_BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">划痕险</div>
+                <div class="f-list01-other">@(Model.HuaHen_BaoFei)元</div>
+            </div>
+            <div style="display:@(Model.BoLi_BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">玻璃单独破损险</div>
+                <div class="f-list01-other">@(Model.BoLi_BaoFei)元</div>
+            </div>
+        </div>
+        <div class="page12-list03">
+            @if (Model.SubmitStatus == 2)
+            {
+                <p>核保状态：<span class="page12-hb-loading">未核保</span></p>
+            }
+            else if (Model.SubmitStatus == 1)
+            {
+                <p>核保状态：<span class="page12-hb-success">核保成功</span></p>
+            }
+            else if (Model.SubmitStatus == 0)
+            {
+                <p>核保状态：<span class="page12-hb-error">核保失败</span></p>
+            }
+            else
+            {
+                <p><span class="page12-hb-loading-tips">核保进行中  请等待......</span>核保状态：<span class="page12-hb-loading">核保中</span></p>
+            }
+            <p>核保内容：@(Model.SubmitResult)</p>
+        </div>
+        <div class="page12-title01"><i></i>代理人为您争取到的优惠： （已用代理人积分抵换）</div>
+        if (Model.SubmitStatus != 1)    //todo test ，正常逻辑是==1
+        {
+            <div class="f-list01-group">
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">商业险优惠费率   @Model.BussinessCouponRate % x @Model.BizTotal 元（原价） =  @Model.BussinessAfterCoupon </div>
+                </div>
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">交强险优惠费率    @Model.ForceCouponRate % x @Model.ForceTotal 元（原价） =  @Model.ForceAfterCoupon </div>
+                </div>
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">车船税优惠费率    @Model.TaxCouponRate % x @Model.TaxTotal 元（原价） =  @Model.TaxAfterCoupon </div>
+                </div>
+                <div class="f-list01 page12-list02">
+                    <div class="f-list01-main">为您节省：@(Model.OriginalTotal - Model.Total)</div>
+                    <div class="f-list01-main">优惠价后总价：@Model.Total</div>
+                </div>
+            </div>
+
+            <div class="page12-submit">
+                <div class="t-info">
+                    <p>保险总价：<span><del>@Model.OriginalTotal</del></span></p>
+                    <p>优惠价：<span>@Model.Total</span></p>
+                </div>
+                @*<a href="javascript:void(0);" class="f-button02" id="submit">我要购买</a>*@
+            </div>
+        }
+        else
+        {
+            <div class="f-list01-group">
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">商业险优惠费率    -  -    % x @Model.BizTotal 元（原价）    =    -  -       </div>
+                </div>
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">交强险优惠费率    -  -    % x @Model.ForceTotal 元（原价）    =   -  -        </div>
+                </div>
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">车船税优惠费率    -  -     % x @Model.TaxTotal 元（原价）    =   -  -       </div>
+                </div>
+                <div class="f-list01 page12-list02">
+                    <div class="f-list01-main">为您节省：</div>
+                    <div class="f-list01-main">优惠价后总价：</div>
+                </div>
+            </div>
+
+            <div class="page12-submit">
+                <div class="t-info"></div>
+                @*<a href="javascript:void(0);" class="f-button02 t-disable" id="submit">我要购买</a>*@
+            </div>
+            <div class="page12-submit-fixed-extend"></div>
+        }
+
+    }
+    <script src="~/public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
+    <script src="~/public/js/all.js"></script>
+</body>
+</html>

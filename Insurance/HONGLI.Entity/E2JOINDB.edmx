@@ -1,0 +1,2509 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="E2JOINModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BaseInfo_UserInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="150" />
+          <Property Name="IDCardNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateIP" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Status" Type="tinyint" />
+          <Property Name="Channel" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Order_Base">
+          <Key>
+            <PropertyRef Name="OrderCode" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderCode" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="AmountPayable" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaidAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PrepaidAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PayTime" Type="datetime" />
+          <Property Name="Status" Type="int" />
+          <Property Name="TradeNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Channel" Type="int" />
+          <Property Name="UserId" Type="varchar" MaxLength="50" />
+          <Property Name="InvoiceType" Type="int" />
+          <Property Name="InvoiceTitle" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Order_Deliver">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderCode" Type="varchar" MaxLength="100" />
+          <Property Name="DeliverType" Type="int" />
+          <Property Name="DeliverAddress" Type="nvarchar" MaxLength="200" />
+          <Property Name="DeliverTime" Type="datetime" />
+          <Property Name="DeliverPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DeliverName" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="DeliverMobile" Type="varchar" MaxLength="50" />
+          <Property Name="DeliverDistrictCode" Type="varchar" MaxLength="50" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="Order_Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderCode" Type="varchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ProductId" Type="varchar" MaxLength="50" />
+          <Property Name="ProductName" Type="varchar" MaxLength="50" />
+          <Property Name="ProductTitle" Type="nvarchar" MaxLength="500" />
+          <Property Name="ProductOriginalPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ProductDealPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Channel" Type="int" />
+          <Property Name="InsuranceLogo" Type="int" />
+          <Property Name="LicenseNo" Type="varchar" MaxLength="50" />
+          <Property Name="ForceExpireDate" Type="datetime" />
+          <Property Name="BusinessExpireDate" Type="datetime" />
+          <Property Name="Buid" Type="int" />
+        </EntityType>
+        <EntityType Name="Order_Pay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderCode" Type="varchar" MaxLength="100" />
+          <Property Name="PayType" Type="int" />
+          <Property Name="PayBank" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Order_PolicyHolder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderCode" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="IdCardType" Type="int" />
+          <Property Name="IdCard" Type="varchar" MaxLength="50" />
+          <Property Name="IdCardFacePicUrl" Type="varchar" MaxLength="100" />
+          <Property Name="IdCardBackPicUrl" Type="varchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Mobile" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Product_Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BuId" Type="int" />
+          <Property Name="BizTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Source" Type="int" />
+          <Property Name="SubmitStatus" Type="int" />
+          <Property Name="SubmitResult" Type="varchar" MaxLength="500" />
+          <Property Name="QuoteStatus" Type="int" />
+          <Property Name="QuoteResult" Type="varchar" MaxLength="500" />
+          <Property Name="ExpireDate" Type="varchar" MaxLength="20" />
+          <Property Name="CheSun_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheSun_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="BussinessCouponRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceCouponRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxCouponRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BussinessAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxAfterCoupon" Type="decimal" Precision="1" Scale="0" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OriginalTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Product_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LicenseNo" Type="varchar" MaxLength="50" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="CityCode" Type="int" />
+          <Property Name="EngineNo" Type="varchar" MaxLength="100" />
+          <Property Name="MoldName" Type="varchar" MaxLength="200" />
+          <Property Name="RegisterDate" Type="varchar" MaxLength="20" />
+          <Property Name="CarVin" Type="varchar" MaxLength="50" />
+          <Property Name="Source" Type="int" />
+          <Property Name="LastYearSource" Type="int" />
+          <Property Name="QuoteStatus" Type="int" />
+          <Property Name="ForceExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="BusinessExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="Memo" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="ProductV2_Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="50" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Source" Type="int" />
+          <Property Name="BizRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BizTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="QuoteStatus" Type="int" />
+          <Property Name="QuoteResult" Type="varchar" MaxLength="500" />
+          <Property Name="CheSun_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheSun_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuId" Type="int" />
+          <Property Name="SubmitStatus" Type="tinyint" />
+          <Property Name="SubmitResult" Type="varchar" MaxLength="500" />
+          <Property Name="BizNo" Type="varchar" MaxLength="100" />
+          <Property Name="ForceNo" Type="varchar" MaxLength="100" />
+          <Property Name="BizRate_Channel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate_Channel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate_Channel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BizAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ServiceUserId" Type="int" />
+          <Property Name="AuditOrderStatus" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="UserSelection" Type="bit" />
+          <Property Name="PrepaidAmount" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ProductV2_Renewal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Source" Type="int" />
+          <Property Name="CheSun" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi" Type="int" />
+          <Property Name="HuaHen" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChuXianCiShu" Type="int" />
+          <Property Name="WuPeiKuanYouHui" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChuXianPeiKuanJin" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ProductV2_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarUsedType" Type="varchar" MaxLength="50" />
+          <Property Name="LicenseNo" Type="varchar" MaxLength="50" />
+          <Property Name="LicenseOwner" Type="varchar" MaxLength="50" />
+          <Property Name="PostedName" Type="varchar" MaxLength="50" />
+          <Property Name="InsuredName" Type="varchar" MaxLength="50" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IdType" Type="varchar" MaxLength="50" />
+          <Property Name="CredentislasNum" Type="varchar" MaxLength="18" />
+          <Property Name="CityCode" Type="int" />
+          <Property Name="EngineNo" Type="varchar" MaxLength="100" />
+          <Property Name="ModleName" Type="varchar" MaxLength="200" />
+          <Property Name="RegisterDate" Type="varchar" MaxLength="20" />
+          <Property Name="CarVin" Type="varchar" MaxLength="50" />
+          <Property Name="ForceExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="BusinessExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="SeatCount" Type="int" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="Channel" Type="tinyint" />
+          <Property Name="CustomerKey" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="Memo" Type="varchar" MaxLength="500" />
+          <Property Name="VisitStatus" Type="int" />
+          <Property Name="VisitDate" Type="datetime" />
+          <Property Name="VisitServiceUserId" Type="int" />
+        </EntityType>
+        <EntityType Name="ReadPack">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserOpenId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="ActivityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Wishing" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ClientIP" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="SendTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_LogInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActionMsg" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ActionType" Type="tinyint" />
+          <Property Name="ActionMemo" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateMemberID" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User_Deliver">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeliverType" Type="int" />
+          <Property Name="DeliverAddress" Type="varchar" MaxLength="256" />
+          <Property Name="DeliverTime" Type="datetime" />
+          <Property Name="DeliverPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DeliverName" Type="varchar" MaxLength="50" />
+          <Property Name="DeliverMobile" Type="varchar" MaxLength="50" />
+          <Property Name="DeliverLocation" Type="varchar" MaxLength="512" />
+          <Property Name="PickupTime" Type="datetime" />
+          <Property Name="PickupAddress" Type="varchar" MaxLength="512" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User_Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Context" Type="nvarchar" MaxLength="256" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="User_PolicyHolder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="256" />
+          <Property Name="IdCardType" Type="int" />
+          <Property Name="IdCard" Type="varchar" MaxLength="64" />
+          <Property Name="IdCardFacePicUrl" Type="varchar" MaxLength="512" />
+          <Property Name="IdCardBackPicUrl" Type="varchar" MaxLength="512" />
+          <Property Name="OrganizationCode" Type="varchar" MaxLength="64" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“E2JOIN.dbo.View_ProductUserItem”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="View_ProductUserItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="LicenseNo" Type="varchar" MaxLength="50" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="CityCode" Type="int" />
+          <Property Name="EngineNo" Type="varchar" MaxLength="100" />
+          <Property Name="MoldName" Type="varchar" MaxLength="200" />
+          <Property Name="RegisterDate" Type="varchar" MaxLength="20" />
+          <Property Name="CarVin" Type="varchar" MaxLength="50" />
+          <Property Name="Source" Type="int" />
+          <Property Name="LastYearSource" Type="int" />
+          <Property Name="QuoteStatus" Type="int" />
+          <Property Name="ForceExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="BusinessExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="Memo" Type="varchar" MaxLength="500" />
+          <Property Name="ItemId" Type="int" />
+          <Property Name="BuId" Type="int" />
+          <Property Name="BizTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ItemSource" Type="int" />
+          <Property Name="SubmitStatus" Type="int" />
+          <Property Name="SubmitResult" Type="varchar" MaxLength="500" />
+          <Property Name="ItemQuoteStatus" Type="int" />
+          <Property Name="QuoteResult" Type="varchar" MaxLength="500" />
+          <Property Name="ExpireDate" Type="varchar" MaxLength="20" />
+          <Property Name="CheSun_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheSun_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="ItemMobile" Type="varchar" MaxLength="50" />
+          <Property Name="BussinessCouponRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceCouponRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxCouponRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BussinessAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxAfterCoupon" Type="decimal" Precision="1" Scale="0" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OriginalTotal" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“E2JOIN.dbo.View_ProductV2UserItem”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="View_ProductV2UserItem">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CarUsedType" Type="varchar" MaxLength="50" />
+          <Property Name="LicenseNo" Type="varchar" MaxLength="50" />
+          <Property Name="LicenseOwner" Type="varchar" MaxLength="50" />
+          <Property Name="PostedName" Type="varchar" MaxLength="50" />
+          <Property Name="InsuredName" Type="varchar" MaxLength="50" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IdType" Type="varchar" MaxLength="50" />
+          <Property Name="CredentislasNum" Type="varchar" MaxLength="18" />
+          <Property Name="CityCode" Type="int" />
+          <Property Name="EngineNo" Type="varchar" MaxLength="100" />
+          <Property Name="ModleName" Type="varchar" MaxLength="200" />
+          <Property Name="RegisterDate" Type="varchar" MaxLength="20" />
+          <Property Name="CarVin" Type="varchar" MaxLength="50" />
+          <Property Name="ForceExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="BusinessExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="Memo" Type="varchar" MaxLength="500" />
+          <Property Name="SeatCount" Type="int" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="Channel" Type="tinyint" />
+          <Property Name="CustomerKey" Type="varchar" MaxLength="50" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Source" Type="int" />
+          <Property Name="BizRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BizTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="QuoteStatus" Type="int" />
+          <Property Name="QuoteResult" Type="varchar" MaxLength="500" />
+          <Property Name="CheSun_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheSun_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BizAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxAfterCoupon" Type="decimal" Precision="1" Scale="0" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SubmitStatus" Type="tinyint" />
+          <Property Name="SubmitResult" Type="varchar" MaxLength="500" />
+          <Property Name="BizNo" Type="varchar" MaxLength="100" />
+          <Property Name="ForceNo" Type="varchar" MaxLength="100" />
+          <Property Name="ItemCreateTime" Type="datetime" />
+          <Property Name="BuId" Type="int" />
+          <Property Name="BizRate_Channel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate_Channel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate_Channel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ProductName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“E2JOIN.dbo.View_ProductV2UserItemPolicy”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="View_ProductV2UserItemPolicy">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="OrderCode" />
+            <PropertyRef Name="BaseId" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CarUsedType" Type="varchar" MaxLength="50" />
+          <Property Name="LicenseNo" Type="varchar" MaxLength="50" />
+          <Property Name="LicenseOwner" Type="varchar" MaxLength="50" />
+          <Property Name="PostedName" Type="varchar" MaxLength="50" />
+          <Property Name="InsuredName" Type="varchar" MaxLength="50" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IdType" Type="varchar" MaxLength="50" />
+          <Property Name="CredentislasNum" Type="varchar" MaxLength="18" />
+          <Property Name="CityCode" Type="int" />
+          <Property Name="EngineNo" Type="varchar" MaxLength="100" />
+          <Property Name="ModleName" Type="varchar" MaxLength="200" />
+          <Property Name="RegisterDate" Type="varchar" MaxLength="20" />
+          <Property Name="ForceExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="CarVin" Type="varchar" MaxLength="50" />
+          <Property Name="BusinessExpireDate" Type="varchar" MaxLength="50" />
+          <Property Name="SeatCount" Type="int" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="Channel" Type="tinyint" />
+          <Property Name="CustomerKey" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Creator" Type="varchar" MaxLength="50" />
+          <Property Name="Memo" Type="varchar" MaxLength="500" />
+          <Property Name="ProductItemId" Type="int" />
+          <Property Name="ProductName" Type="varchar" MaxLength="50" />
+          <Property Name="Source" Type="int" />
+          <Property Name="BizRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BizTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="QuoteStatus" Type="int" />
+          <Property Name="QuoteResult" Type="varchar" MaxLength="500" />
+          <Property Name="CheSun_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheSun_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoE" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoFei" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuId" Type="int" />
+          <Property Name="SubmitStatus" Type="tinyint" />
+          <Property Name="SubmitResult" Type="varchar" MaxLength="500" />
+          <Property Name="BizNo" Type="varchar" MaxLength="100" />
+          <Property Name="ForceNo" Type="varchar" MaxLength="100" />
+          <Property Name="BizRate_Channel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate_Channel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate_Channel" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BizAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ForceAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TaxAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAfterCoupon" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="ItemCreateTime" Type="datetime" />
+          <Property Name="PolicyId" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="256" />
+          <Property Name="IdCardType" Type="int" />
+          <Property Name="IdCard" Type="varchar" MaxLength="64" />
+          <Property Name="IdCardFacePicUrl" Type="varchar" MaxLength="512" />
+          <Property Name="IdCardBackPicUrl" Type="varchar" MaxLength="512" />
+          <Property Name="OrganizationCode" Type="varchar" MaxLength="64" />
+          <Property Name="PolicyCreateTime" Type="datetime" />
+          <Property Name="ItemUserId" Type="int" />
+          <Property Name="PolicyUserId" Type="int" />
+          <Property Name="RenewalId" Type="int" />
+          <Property Name="RenewalUserId" Type="int" />
+          <Property Name="BSource" Type="int" />
+          <Property Name="CheSun" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi" Type="int" />
+          <Property Name="HuaHen" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChuXianCiShu" Type="int" />
+          <Property Name="WuPeiKuanYouHui" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ChuXianPeiKuanJin" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="OrderCode" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="BaseCrateTime" Type="datetime" />
+          <Property Name="AmountPayable" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaidAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PayTime" Type="datetime" />
+          <Property Name="BaseStatus" Type="int" />
+          <Property Name="TradeNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="BaseChannel" Type="int" />
+          <Property Name="BaseUserId" Type="varchar" MaxLength="50" />
+          <Property Name="InvoiceType" Type="int" />
+          <Property Name="InvoiceTitle" Type="varchar" MaxLength="100" />
+          <Property Name="BaseId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Order_Deliver_Order_Base">
+          <End Role="Order_Base" Type="Self.Order_Base" Multiplicity="0..1" />
+          <End Role="Order_Deliver" Type="Self.Order_Deliver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Base">
+              <PropertyRef Name="OrderCode" />
+            </Principal>
+            <Dependent Role="Order_Deliver">
+              <PropertyRef Name="OrderCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Item_Order_Base">
+          <End Role="Order_Base" Type="Self.Order_Base" Multiplicity="0..1" />
+          <End Role="Order_Item" Type="Self.Order_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Base">
+              <PropertyRef Name="OrderCode" />
+            </Principal>
+            <Dependent Role="Order_Item">
+              <PropertyRef Name="OrderCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Pay_Order_Base">
+          <End Role="Order_Base" Type="Self.Order_Base" Multiplicity="0..1" />
+          <End Role="Order_Pay" Type="Self.Order_Pay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Base">
+              <PropertyRef Name="OrderCode" />
+            </Principal>
+            <Dependent Role="Order_Pay">
+              <PropertyRef Name="OrderCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_PolicyHolder_Order_Base">
+          <End Role="Order_Base" Type="Self.Order_Base" Multiplicity="0..1" />
+          <End Role="Order_PolicyHolder" Type="Self.Order_PolicyHolder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Base">
+              <PropertyRef Name="OrderCode" />
+            </Principal>
+            <Dependent Role="Order_PolicyHolder">
+              <PropertyRef Name="OrderCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ReadPack_GetList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OpenId" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+          <Parameter Name="Status" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="TotalPage" Type="int" Mode="InOut" />
+          <Parameter Name="TotalRecord" Type="int" Mode="InOut" />
+          <Parameter Name="Error" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="E2JOINModelStoreContainer">
+          <EntitySet Name="BaseInfo_UserInfo" EntityType="Self.BaseInfo_UserInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Base" EntityType="Self.Order_Base" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Deliver" EntityType="Self.Order_Deliver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Item" EntityType="Self.Order_Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Pay" EntityType="Self.Order_Pay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_PolicyHolder" EntityType="Self.Order_PolicyHolder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Item" EntityType="Self.Product_Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_User" EntityType="Self.Product_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductV2_Item" EntityType="Self.ProductV2_Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductV2_Renewal" EntityType="Self.ProductV2_Renewal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductV2_User" EntityType="Self.ProductV2_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReadPack" EntityType="Self.ReadPack" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_LogInfo" EntityType="Self.SYS_LogInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Deliver" EntityType="Self.User_Deliver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Invoice" EntityType="Self.User_Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_PolicyHolder" EntityType="Self.User_PolicyHolder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_ProductUserItem" EntityType="Self.View_ProductUserItem" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_ProductUserItem].[Id] AS [Id], 
+    [View_ProductUserItem].[LicenseNo] AS [LicenseNo], 
+    [View_ProductUserItem].[Mobile] AS [Mobile], 
+    [View_ProductUserItem].[CityCode] AS [CityCode], 
+    [View_ProductUserItem].[EngineNo] AS [EngineNo], 
+    [View_ProductUserItem].[MoldName] AS [MoldName], 
+    [View_ProductUserItem].[RegisterDate] AS [RegisterDate], 
+    [View_ProductUserItem].[CarVin] AS [CarVin], 
+    [View_ProductUserItem].[Source] AS [Source], 
+    [View_ProductUserItem].[LastYearSource] AS [LastYearSource], 
+    [View_ProductUserItem].[QuoteStatus] AS [QuoteStatus], 
+    [View_ProductUserItem].[ForceExpireDate] AS [ForceExpireDate], 
+    [View_ProductUserItem].[BusinessExpireDate] AS [BusinessExpireDate], 
+    [View_ProductUserItem].[CreateTime] AS [CreateTime], 
+    [View_ProductUserItem].[Creator] AS [Creator], 
+    [View_ProductUserItem].[Memo] AS [Memo], 
+    [View_ProductUserItem].[ItemId] AS [ItemId], 
+    [View_ProductUserItem].[BuId] AS [BuId], 
+    [View_ProductUserItem].[BizTotal] AS [BizTotal], 
+    [View_ProductUserItem].[ForceTotal] AS [ForceTotal], 
+    [View_ProductUserItem].[TaxTotal] AS [TaxTotal], 
+    [View_ProductUserItem].[ItemSource] AS [ItemSource], 
+    [View_ProductUserItem].[SubmitStatus] AS [SubmitStatus], 
+    [View_ProductUserItem].[SubmitResult] AS [SubmitResult], 
+    [View_ProductUserItem].[ItemQuoteStatus] AS [ItemQuoteStatus], 
+    [View_ProductUserItem].[QuoteResult] AS [QuoteResult], 
+    [View_ProductUserItem].[ExpireDate] AS [ExpireDate], 
+    [View_ProductUserItem].[CheSun_BaoE] AS [CheSun_BaoE], 
+    [View_ProductUserItem].[CheSun_BaoFei] AS [CheSun_BaoFei], 
+    [View_ProductUserItem].[SanZhe_BaoE] AS [SanZhe_BaoE], 
+    [View_ProductUserItem].[SanZhe_BaoFei] AS [SanZhe_BaoFei], 
+    [View_ProductUserItem].[DaoQiang_BaoE] AS [DaoQiang_BaoE], 
+    [View_ProductUserItem].[DaoQiang_BaoFei] AS [DaoQiang_BaoFei], 
+    [View_ProductUserItem].[SiJi_BaoE] AS [SiJi_BaoE], 
+    [View_ProductUserItem].[SiJi_BaoFei] AS [SiJi_BaoFei], 
+    [View_ProductUserItem].[ChengKe_BaoE] AS [ChengKe_BaoE], 
+    [View_ProductUserItem].[ChengKe_BaoFei] AS [ChengKe_BaoFei], 
+    [View_ProductUserItem].[BoLi_BaoE] AS [BoLi_BaoE], 
+    [View_ProductUserItem].[BoLi_BaoFei] AS [BoLi_BaoFei], 
+    [View_ProductUserItem].[HuaHen_BaoE] AS [HuaHen_BaoE], 
+    [View_ProductUserItem].[HuaHen_BaoFei] AS [HuaHen_BaoFei], 
+    [View_ProductUserItem].[BuJiMianCheSun_BaoE] AS [BuJiMianCheSun_BaoE], 
+    [View_ProductUserItem].[BuJiMianCheSun_BaoFei] AS [BuJiMianCheSun_BaoFei], 
+    [View_ProductUserItem].[BuJiMianSanZhe_BaoE] AS [BuJiMianSanZhe_BaoE], 
+    [View_ProductUserItem].[BuJiMianSanZhe_BaoFei] AS [BuJiMianSanZhe_BaoFei], 
+    [View_ProductUserItem].[BuJiMianDaoQiang_BaoE] AS [BuJiMianDaoQiang_BaoE], 
+    [View_ProductUserItem].[BuJiMianDaoQiang_BaoFei] AS [BuJiMianDaoQiang_BaoFei], 
+    [View_ProductUserItem].[BuJiMianRenYuan_BaoE] AS [BuJiMianRenYuan_BaoE], 
+    [View_ProductUserItem].[BuJiMianRenYuan_BaoFei] AS [BuJiMianRenYuan_BaoFei], 
+    [View_ProductUserItem].[BuJiMianFuJia_BaoE] AS [BuJiMianFuJia_BaoE], 
+    [View_ProductUserItem].[BuJiMianFuJia_BaoFei] AS [BuJiMianFuJia_BaoFei], 
+    [View_ProductUserItem].[SheShui_BaoE] AS [SheShui_BaoE], 
+    [View_ProductUserItem].[SheShui_BaoFei] AS [SheShui_BaoFei], 
+    [View_ProductUserItem].[CheDeng_BaoE] AS [CheDeng_BaoE], 
+    [View_ProductUserItem].[CheDeng_BaoFei] AS [CheDeng_BaoFei], 
+    [View_ProductUserItem].[ZiRan_BaoE] AS [ZiRan_BaoE], 
+    [View_ProductUserItem].[ZiRan_BaoFei] AS [ZiRan_BaoFei], 
+    [View_ProductUserItem].[UserId] AS [UserId], 
+    [View_ProductUserItem].[ItemMobile] AS [ItemMobile], 
+    [View_ProductUserItem].[BussinessCouponRate] AS [BussinessCouponRate], 
+    [View_ProductUserItem].[ForceCouponRate] AS [ForceCouponRate], 
+    [View_ProductUserItem].[TaxCouponRate] AS [TaxCouponRate], 
+    [View_ProductUserItem].[BussinessAfterCoupon] AS [BussinessAfterCoupon], 
+    [View_ProductUserItem].[ForceAfterCoupon] AS [ForceAfterCoupon], 
+    [View_ProductUserItem].[TaxAfterCoupon] AS [TaxAfterCoupon], 
+    [View_ProductUserItem].[Description] AS [Description], 
+    [View_ProductUserItem].[Total] AS [Total], 
+    [View_ProductUserItem].[OriginalTotal] AS [OriginalTotal]
+    FROM [dbo].[View_ProductUserItem] AS [View_ProductUserItem]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_ProductV2UserItem" EntityType="Self.View_ProductV2UserItem" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_ProductV2UserItem].[Id] AS [Id], 
+    [View_ProductV2UserItem].[CarUsedType] AS [CarUsedType], 
+    [View_ProductV2UserItem].[LicenseNo] AS [LicenseNo], 
+    [View_ProductV2UserItem].[LicenseOwner] AS [LicenseOwner], 
+    [View_ProductV2UserItem].[PostedName] AS [PostedName], 
+    [View_ProductV2UserItem].[InsuredName] AS [InsuredName], 
+    [View_ProductV2UserItem].[PurchasePrice] AS [PurchasePrice], 
+    [View_ProductV2UserItem].[IdType] AS [IdType], 
+    [View_ProductV2UserItem].[CredentislasNum] AS [CredentislasNum], 
+    [View_ProductV2UserItem].[CityCode] AS [CityCode], 
+    [View_ProductV2UserItem].[EngineNo] AS [EngineNo], 
+    [View_ProductV2UserItem].[ModleName] AS [ModleName], 
+    [View_ProductV2UserItem].[RegisterDate] AS [RegisterDate], 
+    [View_ProductV2UserItem].[CarVin] AS [CarVin], 
+    [View_ProductV2UserItem].[ForceExpireDate] AS [ForceExpireDate], 
+    [View_ProductV2UserItem].[BusinessExpireDate] AS [BusinessExpireDate], 
+    [View_ProductV2UserItem].[CreateTime] AS [CreateTime], 
+    [View_ProductV2UserItem].[Creator] AS [Creator], 
+    [View_ProductV2UserItem].[Memo] AS [Memo], 
+    [View_ProductV2UserItem].[SeatCount] AS [SeatCount], 
+    [View_ProductV2UserItem].[Mobile] AS [Mobile], 
+    [View_ProductV2UserItem].[Channel] AS [Channel], 
+    [View_ProductV2UserItem].[CustomerKey] AS [CustomerKey], 
+    [View_ProductV2UserItem].[ItemId] AS [ItemId], 
+    [View_ProductV2UserItem].[UserId] AS [UserId], 
+    [View_ProductV2UserItem].[Source] AS [Source], 
+    [View_ProductV2UserItem].[BizRate] AS [BizRate], 
+    [View_ProductV2UserItem].[BizTotal] AS [BizTotal], 
+    [View_ProductV2UserItem].[ForceRate] AS [ForceRate], 
+    [View_ProductV2UserItem].[ForceTotal] AS [ForceTotal], 
+    [View_ProductV2UserItem].[TaxRate] AS [TaxRate], 
+    [View_ProductV2UserItem].[TaxTotal] AS [TaxTotal], 
+    [View_ProductV2UserItem].[QuoteStatus] AS [QuoteStatus], 
+    [View_ProductV2UserItem].[QuoteResult] AS [QuoteResult], 
+    [View_ProductV2UserItem].[CheSun_BaoE] AS [CheSun_BaoE], 
+    [View_ProductV2UserItem].[CheSun_BaoFei] AS [CheSun_BaoFei], 
+    [View_ProductV2UserItem].[SanZhe_BaoE] AS [SanZhe_BaoE], 
+    [View_ProductV2UserItem].[SanZhe_BaoFei] AS [SanZhe_BaoFei], 
+    [View_ProductV2UserItem].[DaoQiang_BaoE] AS [DaoQiang_BaoE], 
+    [View_ProductV2UserItem].[DaoQiang_BaoFei] AS [DaoQiang_BaoFei], 
+    [View_ProductV2UserItem].[SiJi_BaoE] AS [SiJi_BaoE], 
+    [View_ProductV2UserItem].[SiJi_BaoFei] AS [SiJi_BaoFei], 
+    [View_ProductV2UserItem].[ChengKe_BaoE] AS [ChengKe_BaoE], 
+    [View_ProductV2UserItem].[ChengKe_BaoFei] AS [ChengKe_BaoFei], 
+    [View_ProductV2UserItem].[BoLi_BaoE] AS [BoLi_BaoE], 
+    [View_ProductV2UserItem].[BoLi_BaoFei] AS [BoLi_BaoFei], 
+    [View_ProductV2UserItem].[HuaHen_BaoE] AS [HuaHen_BaoE], 
+    [View_ProductV2UserItem].[HuaHen_BaoFei] AS [HuaHen_BaoFei], 
+    [View_ProductV2UserItem].[BuJiMianCheSun_BaoE] AS [BuJiMianCheSun_BaoE], 
+    [View_ProductV2UserItem].[BuJiMianCheSun_BaoFei] AS [BuJiMianCheSun_BaoFei], 
+    [View_ProductV2UserItem].[BuJiMianSanZhe_BaoE] AS [BuJiMianSanZhe_BaoE], 
+    [View_ProductV2UserItem].[BuJiMianSanZhe_BaoFei] AS [BuJiMianSanZhe_BaoFei], 
+    [View_ProductV2UserItem].[BuJiMianDaoQiang_BaoE] AS [BuJiMianDaoQiang_BaoE], 
+    [View_ProductV2UserItem].[BuJiMianDaoQiang_BaoFei] AS [BuJiMianDaoQiang_BaoFei], 
+    [View_ProductV2UserItem].[BuJiMianRenYuan_BaoE] AS [BuJiMianRenYuan_BaoE], 
+    [View_ProductV2UserItem].[BuJiMianRenYuan_BaoFei] AS [BuJiMianRenYuan_BaoFei], 
+    [View_ProductV2UserItem].[BuJiMianFuJia_BaoE] AS [BuJiMianFuJia_BaoE], 
+    [View_ProductV2UserItem].[BuJiMianFuJia_BaoFei] AS [BuJiMianFuJia_BaoFei], 
+    [View_ProductV2UserItem].[SheShui_BaoE] AS [SheShui_BaoE], 
+    [View_ProductV2UserItem].[SheShui_BaoFei] AS [SheShui_BaoFei], 
+    [View_ProductV2UserItem].[CheDeng_BaoE] AS [CheDeng_BaoE], 
+    [View_ProductV2UserItem].[CheDeng_BaoFei] AS [CheDeng_BaoFei], 
+    [View_ProductV2UserItem].[ZiRan_BaoE] AS [ZiRan_BaoE], 
+    [View_ProductV2UserItem].[ZiRan_BaoFei] AS [ZiRan_BaoFei], 
+    [View_ProductV2UserItem].[BizAfterCoupon] AS [BizAfterCoupon], 
+    [View_ProductV2UserItem].[ForceAfterCoupon] AS [ForceAfterCoupon], 
+    [View_ProductV2UserItem].[TaxAfterCoupon] AS [TaxAfterCoupon], 
+    [View_ProductV2UserItem].[Description] AS [Description], 
+    [View_ProductV2UserItem].[Total] AS [Total], 
+    [View_ProductV2UserItem].[TotalAfterCoupon] AS [TotalAfterCoupon], 
+    [View_ProductV2UserItem].[SubmitStatus] AS [SubmitStatus], 
+    [View_ProductV2UserItem].[SubmitResult] AS [SubmitResult], 
+    [View_ProductV2UserItem].[BizNo] AS [BizNo], 
+    [View_ProductV2UserItem].[ForceNo] AS [ForceNo], 
+    [View_ProductV2UserItem].[ItemCreateTime] AS [ItemCreateTime], 
+    [View_ProductV2UserItem].[BuId] AS [BuId], 
+    [View_ProductV2UserItem].[BizRate_Channel] AS [BizRate_Channel], 
+    [View_ProductV2UserItem].[ForceRate_Channel] AS [ForceRate_Channel], 
+    [View_ProductV2UserItem].[TaxRate_Channel] AS [TaxRate_Channel], 
+    [View_ProductV2UserItem].[ProductName] AS [ProductName]
+    FROM [dbo].[View_ProductV2UserItem] AS [View_ProductV2UserItem]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_ProductV2UserItemPolicy" EntityType="Self.View_ProductV2UserItemPolicy" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_ProductV2UserItemPolicy].[Id] AS [Id], 
+    [View_ProductV2UserItemPolicy].[CarUsedType] AS [CarUsedType], 
+    [View_ProductV2UserItemPolicy].[LicenseNo] AS [LicenseNo], 
+    [View_ProductV2UserItemPolicy].[LicenseOwner] AS [LicenseOwner], 
+    [View_ProductV2UserItemPolicy].[PostedName] AS [PostedName], 
+    [View_ProductV2UserItemPolicy].[InsuredName] AS [InsuredName], 
+    [View_ProductV2UserItemPolicy].[PurchasePrice] AS [PurchasePrice], 
+    [View_ProductV2UserItemPolicy].[IdType] AS [IdType], 
+    [View_ProductV2UserItemPolicy].[CredentislasNum] AS [CredentislasNum], 
+    [View_ProductV2UserItemPolicy].[CityCode] AS [CityCode], 
+    [View_ProductV2UserItemPolicy].[EngineNo] AS [EngineNo], 
+    [View_ProductV2UserItemPolicy].[ModleName] AS [ModleName], 
+    [View_ProductV2UserItemPolicy].[RegisterDate] AS [RegisterDate], 
+    [View_ProductV2UserItemPolicy].[ForceExpireDate] AS [ForceExpireDate], 
+    [View_ProductV2UserItemPolicy].[CarVin] AS [CarVin], 
+    [View_ProductV2UserItemPolicy].[BusinessExpireDate] AS [BusinessExpireDate], 
+    [View_ProductV2UserItemPolicy].[SeatCount] AS [SeatCount], 
+    [View_ProductV2UserItemPolicy].[Mobile] AS [Mobile], 
+    [View_ProductV2UserItemPolicy].[Channel] AS [Channel], 
+    [View_ProductV2UserItemPolicy].[CustomerKey] AS [CustomerKey], 
+    [View_ProductV2UserItemPolicy].[CreateTime] AS [CreateTime], 
+    [View_ProductV2UserItemPolicy].[Creator] AS [Creator], 
+    [View_ProductV2UserItemPolicy].[Memo] AS [Memo], 
+    [View_ProductV2UserItemPolicy].[ProductItemId] AS [ProductItemId], 
+    [View_ProductV2UserItemPolicy].[ProductName] AS [ProductName], 
+    [View_ProductV2UserItemPolicy].[Source] AS [Source], 
+    [View_ProductV2UserItemPolicy].[BizRate] AS [BizRate], 
+    [View_ProductV2UserItemPolicy].[BizTotal] AS [BizTotal], 
+    [View_ProductV2UserItemPolicy].[ForceRate] AS [ForceRate], 
+    [View_ProductV2UserItemPolicy].[ForceTotal] AS [ForceTotal], 
+    [View_ProductV2UserItemPolicy].[TaxRate] AS [TaxRate], 
+    [View_ProductV2UserItemPolicy].[TaxTotal] AS [TaxTotal], 
+    [View_ProductV2UserItemPolicy].[QuoteStatus] AS [QuoteStatus], 
+    [View_ProductV2UserItemPolicy].[QuoteResult] AS [QuoteResult], 
+    [View_ProductV2UserItemPolicy].[CheSun_BaoE] AS [CheSun_BaoE], 
+    [View_ProductV2UserItemPolicy].[CheSun_BaoFei] AS [CheSun_BaoFei], 
+    [View_ProductV2UserItemPolicy].[SanZhe_BaoE] AS [SanZhe_BaoE], 
+    [View_ProductV2UserItemPolicy].[SanZhe_BaoFei] AS [SanZhe_BaoFei], 
+    [View_ProductV2UserItemPolicy].[DaoQiang_BaoE] AS [DaoQiang_BaoE], 
+    [View_ProductV2UserItemPolicy].[DaoQiang_BaoFei] AS [DaoQiang_BaoFei], 
+    [View_ProductV2UserItemPolicy].[SiJi_BaoE] AS [SiJi_BaoE], 
+    [View_ProductV2UserItemPolicy].[SiJi_BaoFei] AS [SiJi_BaoFei], 
+    [View_ProductV2UserItemPolicy].[ChengKe_BaoE] AS [ChengKe_BaoE], 
+    [View_ProductV2UserItemPolicy].[ChengKe_BaoFei] AS [ChengKe_BaoFei], 
+    [View_ProductV2UserItemPolicy].[BoLi_BaoE] AS [BoLi_BaoE], 
+    [View_ProductV2UserItemPolicy].[BoLi_BaoFei] AS [BoLi_BaoFei], 
+    [View_ProductV2UserItemPolicy].[HuaHen_BaoE] AS [HuaHen_BaoE], 
+    [View_ProductV2UserItemPolicy].[HuaHen_BaoFei] AS [HuaHen_BaoFei], 
+    [View_ProductV2UserItemPolicy].[BuJiMianCheSun_BaoE] AS [BuJiMianCheSun_BaoE], 
+    [View_ProductV2UserItemPolicy].[BuJiMianCheSun_BaoFei] AS [BuJiMianCheSun_BaoFei], 
+    [View_ProductV2UserItemPolicy].[BuJiMianSanZhe_BaoE] AS [BuJiMianSanZhe_BaoE], 
+    [View_ProductV2UserItemPolicy].[BuJiMianSanZhe_BaoFei] AS [BuJiMianSanZhe_BaoFei], 
+    [View_ProductV2UserItemPolicy].[BuJiMianDaoQiang_BaoE] AS [BuJiMianDaoQiang_BaoE], 
+    [View_ProductV2UserItemPolicy].[BuJiMianDaoQiang_BaoFei] AS [BuJiMianDaoQiang_BaoFei], 
+    [View_ProductV2UserItemPolicy].[BuJiMianRenYuan_BaoE] AS [BuJiMianRenYuan_BaoE], 
+    [View_ProductV2UserItemPolicy].[BuJiMianRenYuan_BaoFei] AS [BuJiMianRenYuan_BaoFei], 
+    [View_ProductV2UserItemPolicy].[BuJiMianFuJia_BaoE] AS [BuJiMianFuJia_BaoE], 
+    [View_ProductV2UserItemPolicy].[BuJiMianFuJia_BaoFei] AS [BuJiMianFuJia_BaoFei], 
+    [View_ProductV2UserItemPolicy].[SheShui_BaoE] AS [SheShui_BaoE], 
+    [View_ProductV2UserItemPolicy].[SheShui_BaoFei] AS [SheShui_BaoFei], 
+    [View_ProductV2UserItemPolicy].[CheDeng_BaoE] AS [CheDeng_BaoE], 
+    [View_ProductV2UserItemPolicy].[CheDeng_BaoFei] AS [CheDeng_BaoFei], 
+    [View_ProductV2UserItemPolicy].[ZiRan_BaoE] AS [ZiRan_BaoE], 
+    [View_ProductV2UserItemPolicy].[ZiRan_BaoFei] AS [ZiRan_BaoFei], 
+    [View_ProductV2UserItemPolicy].[BuId] AS [BuId], 
+    [View_ProductV2UserItemPolicy].[SubmitStatus] AS [SubmitStatus], 
+    [View_ProductV2UserItemPolicy].[SubmitResult] AS [SubmitResult], 
+    [View_ProductV2UserItemPolicy].[BizNo] AS [BizNo], 
+    [View_ProductV2UserItemPolicy].[ForceNo] AS [ForceNo], 
+    [View_ProductV2UserItemPolicy].[BizRate_Channel] AS [BizRate_Channel], 
+    [View_ProductV2UserItemPolicy].[ForceRate_Channel] AS [ForceRate_Channel], 
+    [View_ProductV2UserItemPolicy].[TaxRate_Channel] AS [TaxRate_Channel], 
+    [View_ProductV2UserItemPolicy].[BizAfterCoupon] AS [BizAfterCoupon], 
+    [View_ProductV2UserItemPolicy].[ForceAfterCoupon] AS [ForceAfterCoupon], 
+    [View_ProductV2UserItemPolicy].[TaxAfterCoupon] AS [TaxAfterCoupon], 
+    [View_ProductV2UserItemPolicy].[Total] AS [Total], 
+    [View_ProductV2UserItemPolicy].[TotalAfterCoupon] AS [TotalAfterCoupon], 
+    [View_ProductV2UserItemPolicy].[Description] AS [Description], 
+    [View_ProductV2UserItemPolicy].[ItemCreateTime] AS [ItemCreateTime], 
+    [View_ProductV2UserItemPolicy].[PolicyId] AS [PolicyId], 
+    [View_ProductV2UserItemPolicy].[Name] AS [Name], 
+    [View_ProductV2UserItemPolicy].[IdCardType] AS [IdCardType], 
+    [View_ProductV2UserItemPolicy].[IdCard] AS [IdCard], 
+    [View_ProductV2UserItemPolicy].[IdCardFacePicUrl] AS [IdCardFacePicUrl], 
+    [View_ProductV2UserItemPolicy].[IdCardBackPicUrl] AS [IdCardBackPicUrl], 
+    [View_ProductV2UserItemPolicy].[OrganizationCode] AS [OrganizationCode], 
+    [View_ProductV2UserItemPolicy].[PolicyCreateTime] AS [PolicyCreateTime], 
+    [View_ProductV2UserItemPolicy].[ItemUserId] AS [ItemUserId], 
+    [View_ProductV2UserItemPolicy].[PolicyUserId] AS [PolicyUserId], 
+    [View_ProductV2UserItemPolicy].[RenewalId] AS [RenewalId], 
+    [View_ProductV2UserItemPolicy].[RenewalUserId] AS [RenewalUserId], 
+    [View_ProductV2UserItemPolicy].[BSource] AS [BSource], 
+    [View_ProductV2UserItemPolicy].[CheSun] AS [CheSun], 
+    [View_ProductV2UserItemPolicy].[SanZhe] AS [SanZhe], 
+    [View_ProductV2UserItemPolicy].[DaoQiang] AS [DaoQiang], 
+    [View_ProductV2UserItemPolicy].[SiJi] AS [SiJi], 
+    [View_ProductV2UserItemPolicy].[ChengKe] AS [ChengKe], 
+    [View_ProductV2UserItemPolicy].[BoLi] AS [BoLi], 
+    [View_ProductV2UserItemPolicy].[HuaHen] AS [HuaHen], 
+    [View_ProductV2UserItemPolicy].[BuJiMianCheSun] AS [BuJiMianCheSun], 
+    [View_ProductV2UserItemPolicy].[BuJiMianSanZhe] AS [BuJiMianSanZhe], 
+    [View_ProductV2UserItemPolicy].[BuJiMianDaoQiang] AS [BuJiMianDaoQiang], 
+    [View_ProductV2UserItemPolicy].[BuJiMianRenYuan] AS [BuJiMianRenYuan], 
+    [View_ProductV2UserItemPolicy].[BuJiMianFuJia] AS [BuJiMianFuJia], 
+    [View_ProductV2UserItemPolicy].[SheShui] AS [SheShui], 
+    [View_ProductV2UserItemPolicy].[CheDeng] AS [CheDeng], 
+    [View_ProductV2UserItemPolicy].[ZiRan] AS [ZiRan], 
+    [View_ProductV2UserItemPolicy].[ChuXianCiShu] AS [ChuXianCiShu], 
+    [View_ProductV2UserItemPolicy].[WuPeiKuanYouHui] AS [WuPeiKuanYouHui], 
+    [View_ProductV2UserItemPolicy].[ChuXianPeiKuanJin] AS [ChuXianPeiKuanJin], 
+    [View_ProductV2UserItemPolicy].[OrderCode] AS [OrderCode], 
+    [View_ProductV2UserItemPolicy].[BaseCrateTime] AS [BaseCrateTime], 
+    [View_ProductV2UserItemPolicy].[AmountPayable] AS [AmountPayable], 
+    [View_ProductV2UserItemPolicy].[Discount] AS [Discount], 
+    [View_ProductV2UserItemPolicy].[PaidAmount] AS [PaidAmount], 
+    [View_ProductV2UserItemPolicy].[PayTime] AS [PayTime], 
+    [View_ProductV2UserItemPolicy].[BaseStatus] AS [BaseStatus], 
+    [View_ProductV2UserItemPolicy].[TradeNo] AS [TradeNo], 
+    [View_ProductV2UserItemPolicy].[BaseChannel] AS [BaseChannel], 
+    [View_ProductV2UserItemPolicy].[BaseUserId] AS [BaseUserId], 
+    [View_ProductV2UserItemPolicy].[InvoiceType] AS [InvoiceType], 
+    [View_ProductV2UserItemPolicy].[InvoiceTitle] AS [InvoiceTitle], 
+    [View_ProductV2UserItemPolicy].[BaseId] AS [BaseId]
+    FROM [dbo].[View_ProductV2UserItemPolicy] AS [View_ProductV2UserItemPolicy]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Order_Deliver_Order_Base" Association="Self.FK_Order_Deliver_Order_Base">
+            <End Role="Order_Base" EntitySet="Order_Base" />
+            <End Role="Order_Deliver" EntitySet="Order_Deliver" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Item_Order_Base" Association="Self.FK_Order_Item_Order_Base">
+            <End Role="Order_Base" EntitySet="Order_Base" />
+            <End Role="Order_Item" EntitySet="Order_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Pay_Order_Base" Association="Self.FK_Order_Pay_Order_Base">
+            <End Role="Order_Base" EntitySet="Order_Base" />
+            <End Role="Order_Pay" EntitySet="Order_Pay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_PolicyHolder_Order_Base" Association="Self.FK_Order_PolicyHolder_Order_Base">
+            <End Role="Order_Base" EntitySet="Order_Base" />
+            <End Role="Order_PolicyHolder" EntitySet="Order_PolicyHolder" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="E2JOINModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="E2JOINDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BaseInfo_UserInfo" EntityType="E2JOINModel.BaseInfo_UserInfo" />
+          <EntitySet Name="Order_Base" EntityType="E2JOINModel.Order_Base" />
+          <EntitySet Name="Order_Deliver" EntityType="E2JOINModel.Order_Deliver" />
+          <EntitySet Name="Order_Item" EntityType="E2JOINModel.Order_Item" />
+          <EntitySet Name="Order_Pay" EntityType="E2JOINModel.Order_Pay" />
+          <EntitySet Name="Product_Item" EntityType="E2JOINModel.Product_Item" />
+          <EntitySet Name="Product_User" EntityType="E2JOINModel.Product_User" />
+          <EntitySet Name="ReadPack" EntityType="E2JOINModel.ReadPack" />
+          <EntitySet Name="SYS_LogInfo" EntityType="E2JOINModel.SYS_LogInfo" />
+          <EntitySet Name="User_Deliver" EntityType="E2JOINModel.User_Deliver" />
+          <EntitySet Name="User_Invoice" EntityType="E2JOINModel.User_Invoice" />
+          <EntitySet Name="User_PolicyHolder" EntityType="E2JOINModel.User_PolicyHolder" />
+          <EntitySet Name="View_ProductUserItem" EntityType="E2JOINModel.View_ProductUserItem" />
+          <EntitySet Name="View_ProductV2UserItem" EntityType="E2JOINModel.View_ProductV2UserItem" />
+          <AssociationSet Name="FK_Order_Deliver_Order_Base" Association="E2JOINModel.FK_Order_Deliver_Order_Base">
+            <End Role="Order_Base" EntitySet="Order_Base" />
+            <End Role="Order_Deliver" EntitySet="Order_Deliver" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Item_Order_Base" Association="E2JOINModel.FK_Order_Item_Order_Base">
+            <End Role="Order_Base" EntitySet="Order_Base" />
+            <End Role="Order_Item" EntitySet="Order_Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Pay_Order_Base" Association="E2JOINModel.FK_Order_Pay_Order_Base">
+            <End Role="Order_Base" EntitySet="Order_Base" />
+            <End Role="Order_Pay" EntitySet="Order_Pay" />
+          </AssociationSet>
+          <EntitySet Name="ProductV2_Renewal" EntityType="E2JOINModel.ProductV2_Renewal" />
+          <FunctionImport Name="ReadPack_GetList">
+            <Parameter Name="OpenId" Mode="In" Type="String" />
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="Status" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="TotalPage" Mode="InOut" Type="Int32" />
+            <Parameter Name="TotalRecord" Mode="InOut" Type="Int32" />
+            <Parameter Name="Error" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="View_ProductV2UserItemPolicy" EntityType="E2JOINModel.View_ProductV2UserItemPolicy" />
+          <EntitySet Name="ProductV2_Item" EntityType="E2JOINModel.ProductV2_Item" />
+          <EntitySet Name="ProductV2_User" EntityType="E2JOINModel.ProductV2_User" />
+          <EntitySet Name="Order_PolicyHolder" EntityType="E2JOINModel.Order_PolicyHolder" />
+          <AssociationSet Name="FK_Order_PolicyHolder_Order_Base" Association="E2JOINModel.FK_Order_PolicyHolder_Order_Base">
+            <End Role="Order_Base" EntitySet="Order_Base" />
+            <End Role="Order_PolicyHolder" EntitySet="Order_PolicyHolder" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BaseInfo_UserInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IDCardNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Byte" />
+          <Property Name="Channel" Type="Byte" />
+        </EntityType>
+        <EntityType Name="Order_Base">
+          <Key>
+            <PropertyRef Name="OrderCode" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="AmountPayable" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PayTime" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="TradeNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Channel" Type="Int32" />
+          <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InvoiceType" Type="Int32" />
+          <Property Name="InvoiceTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Order_Deliver" Relationship="E2JOINModel.FK_Order_Deliver_Order_Base" FromRole="Order_Base" ToRole="Order_Deliver" />
+          <NavigationProperty Name="Order_Item" Relationship="E2JOINModel.FK_Order_Item_Order_Base" FromRole="Order_Base" ToRole="Order_Item" />
+          <NavigationProperty Name="Order_Pay" Relationship="E2JOINModel.FK_Order_Pay_Order_Base" FromRole="Order_Base" ToRole="Order_Pay" />
+          <NavigationProperty Name="Order_PolicyHolder" Relationship="E2JOINModel.FK_Order_PolicyHolder_Order_Base" FromRole="Order_Base" ToRole="Order_PolicyHolder" />
+          <Property Name="PrepaidAmount" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Order_Deliver">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DeliverType" Type="Int32" />
+          <Property Name="DeliverAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DeliverTime" Type="DateTime" Precision="3" />
+          <Property Name="DeliverPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DeliverName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="DeliverMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DeliverDistrictCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="Order_Base" Relationship="E2JOINModel.FK_Order_Deliver_Order_Base" FromRole="Order_Deliver" ToRole="Order_Base" />
+        </EntityType>
+        <EntityType Name="Order_Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ProductId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProductOriginalPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ProductDealPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Channel" Type="Int32" />
+          <Property Name="InsuranceLogo" Type="Int32" />
+          <Property Name="LicenseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ForceExpireDate" Type="DateTime" Precision="3" />
+          <Property Name="BusinessExpireDate" Type="DateTime" Precision="3" />
+          <Property Name="Buid" Type="Int32" />
+          <NavigationProperty Name="Order_Base" Relationship="E2JOINModel.FK_Order_Item_Order_Base" FromRole="Order_Item" ToRole="Order_Base" />
+        </EntityType>
+        <EntityType Name="Order_Pay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PayType" Type="Int32" />
+          <Property Name="PayBank" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Order_Base" Relationship="E2JOINModel.FK_Order_Pay_Order_Base" FromRole="Order_Pay" ToRole="Order_Base" />
+        </EntityType>
+        <EntityType Name="Product_Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BuId" Type="Int32" />
+          <Property Name="BizTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Source" Type="Int32" />
+          <Property Name="SubmitStatus" Type="Int32" />
+          <Property Name="SubmitResult" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="QuoteStatus" Type="Int32" />
+          <Property Name="QuoteResult" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpireDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CheSun_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheSun_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BussinessCouponRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceCouponRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxCouponRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BussinessAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxAfterCoupon" Type="Decimal" Precision="1" Scale="0" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OriginalTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Product_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LicenseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CityCode" Type="Int32" />
+          <Property Name="EngineNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MoldName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RegisterDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CarVin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Source" Type="Int32" />
+          <Property Name="LastYearSource" Type="Int32" />
+          <Property Name="QuoteStatus" Type="Int32" />
+          <Property Name="ForceExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BusinessExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Memo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ReadPack">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserOpenId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="ActivityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Wishing" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ClientIP" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SendTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="SYS_LogInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActionMsg" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ActionType" Type="Byte" />
+          <Property Name="ActionMemo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateMemberID" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="User_Deliver">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliverType" Type="Int32" />
+          <Property Name="DeliverAddress" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="DeliverTime" Type="DateTime" Precision="3" />
+          <Property Name="DeliverPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DeliverName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DeliverMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DeliverLocation" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="PickupTime" Type="DateTime" Precision="3" />
+          <Property Name="PickupAddress" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="User_Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Context" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="User_PolicyHolder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="IdCardType" Type="Int32" />
+          <Property Name="IdCard" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="IdCardFacePicUrl" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="IdCardBackPicUrl" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizationCode" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="View_ProductUserItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="LicenseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CityCode" Type="Int32" />
+          <Property Name="EngineNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MoldName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RegisterDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CarVin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Source" Type="Int32" />
+          <Property Name="LastYearSource" Type="Int32" />
+          <Property Name="QuoteStatus" Type="Int32" />
+          <Property Name="ForceExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BusinessExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Memo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ItemId" Type="Int32" />
+          <Property Name="BuId" Type="Int32" />
+          <Property Name="BizTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ItemSource" Type="Int32" />
+          <Property Name="SubmitStatus" Type="Int32" />
+          <Property Name="SubmitResult" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ItemQuoteStatus" Type="Int32" />
+          <Property Name="QuoteResult" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpireDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CheSun_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheSun_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ItemMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BussinessCouponRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceCouponRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxCouponRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BussinessAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxAfterCoupon" Type="Decimal" Precision="1" Scale="0" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OriginalTotal" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="View_ProductV2UserItem">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CarUsedType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LicenseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LicenseOwner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostedName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InsuredName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IdType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CredentislasNum" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="CityCode" Type="Int32" />
+          <Property Name="EngineNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ModleName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RegisterDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CarVin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ForceExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BusinessExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Memo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SeatCount" Type="Int32" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Channel" Type="Byte" />
+          <Property Name="CustomerKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Source" Type="Int32" />
+          <Property Name="BizRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BizTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuoteStatus" Type="Int32" />
+          <Property Name="QuoteResult" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CheSun_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheSun_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BizAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxAfterCoupon" Type="Decimal" Precision="1" Scale="0" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SubmitStatus" Type="Byte" />
+          <Property Name="SubmitResult" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BizNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ForceNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ItemCreateTime" Type="DateTime" Precision="3" />
+          <Property Name="BuId" Type="Int32" />
+          <Property Name="BizRate_Channel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate_Channel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate_Channel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Order_Deliver_Order_Base">
+          <End Type="E2JOINModel.Order_Base" Role="Order_Base" Multiplicity="0..1" />
+          <End Type="E2JOINModel.Order_Deliver" Role="Order_Deliver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Base">
+              <PropertyRef Name="OrderCode" />
+            </Principal>
+            <Dependent Role="Order_Deliver">
+              <PropertyRef Name="OrderCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Item_Order_Base">
+          <End Type="E2JOINModel.Order_Base" Role="Order_Base" Multiplicity="0..1" />
+          <End Type="E2JOINModel.Order_Item" Role="Order_Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Base">
+              <PropertyRef Name="OrderCode" />
+            </Principal>
+            <Dependent Role="Order_Item">
+              <PropertyRef Name="OrderCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Pay_Order_Base">
+          <End Type="E2JOINModel.Order_Base" Role="Order_Base" Multiplicity="0..1" />
+          <End Type="E2JOINModel.Order_Pay" Role="Order_Pay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Base">
+              <PropertyRef Name="OrderCode" />
+            </Principal>
+            <Dependent Role="Order_Pay">
+              <PropertyRef Name="OrderCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductV2_Renewal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Source" Type="Int32" />
+          <Property Name="CheSun" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi" Type="Int32" />
+          <Property Name="HuaHen" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChuXianCiShu" Type="Int32" />
+          <Property Name="WuPeiKuanYouHui" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChuXianPeiKuanJin" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="View_ProductV2UserItemPolicy">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="OrderCode" />
+            <PropertyRef Name="BaseId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CarUsedType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LicenseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LicenseOwner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostedName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InsuredName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IdType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CredentislasNum" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="CityCode" Type="Int32" />
+          <Property Name="EngineNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ModleName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RegisterDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ForceExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CarVin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BusinessExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SeatCount" Type="Int32" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Channel" Type="Byte" />
+          <Property Name="CustomerKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Memo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ProductItemId" Type="Int32" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Source" Type="Int32" />
+          <Property Name="BizRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BizTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuoteStatus" Type="Int32" />
+          <Property Name="QuoteResult" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CheSun_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheSun_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuId" Type="Int32" />
+          <Property Name="SubmitStatus" Type="Byte" />
+          <Property Name="SubmitResult" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BizNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ForceNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BizRate_Channel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate_Channel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate_Channel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BizAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ItemCreateTime" Type="DateTime" Precision="3" />
+          <Property Name="PolicyId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="IdCardType" Type="Int32" />
+          <Property Name="IdCard" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="IdCardFacePicUrl" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="IdCardBackPicUrl" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizationCode" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="PolicyCreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ItemUserId" Type="Int32" />
+          <Property Name="PolicyUserId" Type="Int32" />
+          <Property Name="RenewalId" Type="Int32" />
+          <Property Name="RenewalUserId" Type="Int32" />
+          <Property Name="BSource" Type="Int32" />
+          <Property Name="CheSun" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi" Type="Int32" />
+          <Property Name="HuaHen" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChuXianCiShu" Type="Int32" />
+          <Property Name="WuPeiKuanYouHui" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChuXianPeiKuanJin" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="OrderCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BaseCrateTime" Type="DateTime" Precision="3" />
+          <Property Name="AmountPayable" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaidAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PayTime" Type="DateTime" Precision="3" />
+          <Property Name="BaseStatus" Type="Int32" />
+          <Property Name="TradeNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BaseChannel" Type="Int32" />
+          <Property Name="BaseUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InvoiceType" Type="Int32" />
+          <Property Name="InvoiceTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BaseId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductV2_Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Source" Type="Int32" />
+          <Property Name="BizRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BizTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuoteStatus" Type="Int32" />
+          <Property Name="QuoteResult" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CheSun_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheSun_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SanZhe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DaoQiang_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SiJi_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ChengKe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BoLi_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HuaHen_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianCheSun_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianSanZhe_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianDaoQiang_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianRenYuan_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuJiMianFuJia_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SheShui_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CheDeng_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoE" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ZiRan_BaoFei" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BuId" Type="Int32" />
+          <Property Name="SubmitStatus" Type="Byte" />
+          <Property Name="SubmitResult" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BizNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ForceNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BizRate_Channel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceRate_Channel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxRate_Channel" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BizAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ForceAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TaxAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalAfterCoupon" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ServiceUserId" Type="Int32" />
+          <Property Name="AuditOrderStatus" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="UserSelection" Type="Boolean" />
+          <Property Name="PrepaidAmount" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ProductV2_User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarUsedType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LicenseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LicenseOwner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostedName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="InsuredName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IdType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CredentislasNum" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
+          <Property Name="CityCode" Type="Int32" />
+          <Property Name="EngineNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ModleName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RegisterDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CarVin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ForceExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BusinessExpireDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SeatCount" Type="Int32" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Channel" Type="Byte" />
+          <Property Name="CustomerKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Memo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="VisitStatus" Type="Int32" />
+          <Property Name="VisitDate" Type="DateTime" Precision="3" />
+          <Property Name="VisitServiceUserId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Order_PolicyHolder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdCardType" Type="Int32" />
+          <Property Name="IdCard" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdCardFacePicUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdCardBackPicUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Order_Base" Relationship="E2JOINModel.FK_Order_PolicyHolder_Order_Base" FromRole="Order_PolicyHolder" ToRole="Order_Base" />
+        </EntityType>
+        <Association Name="FK_Order_PolicyHolder_Order_Base">
+          <End Type="E2JOINModel.Order_Base" Role="Order_Base" Multiplicity="0..1" />
+          <End Type="E2JOINModel.Order_PolicyHolder" Role="Order_PolicyHolder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Base">
+              <PropertyRef Name="OrderCode" />
+            </Principal>
+            <Dependent Role="Order_PolicyHolder">
+              <PropertyRef Name="OrderCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="E2JOINModelStoreContainer" CdmEntityContainer="E2JOINDB">
+          <EntitySetMapping Name="BaseInfo_UserInfo">
+            <EntityTypeMapping TypeName="E2JOINModel.BaseInfo_UserInfo">
+              <MappingFragment StoreEntitySet="BaseInfo_UserInfo">
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateIP" ColumnName="CreateIP" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="IDCardNo" ColumnName="IDCardNo" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Base">
+            <EntityTypeMapping TypeName="E2JOINModel.Order_Base">
+              <MappingFragment StoreEntitySet="Order_Base">
+                <ScalarProperty Name="PrepaidAmount" ColumnName="PrepaidAmount" />
+                <ScalarProperty Name="InvoiceTitle" ColumnName="InvoiceTitle" />
+                <ScalarProperty Name="InvoiceType" ColumnName="InvoiceType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="TradeNo" ColumnName="TradeNo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PayTime" ColumnName="PayTime" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="AmountPayable" ColumnName="AmountPayable" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Deliver">
+            <EntityTypeMapping TypeName="E2JOINModel.Order_Deliver">
+              <MappingFragment StoreEntitySet="Order_Deliver">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DeliverDistrictCode" ColumnName="DeliverDistrictCode" />
+                <ScalarProperty Name="DeliverMobile" ColumnName="DeliverMobile" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DeliverName" ColumnName="DeliverName" />
+                <ScalarProperty Name="DeliverPrice" ColumnName="DeliverPrice" />
+                <ScalarProperty Name="DeliverTime" ColumnName="DeliverTime" />
+                <ScalarProperty Name="DeliverAddress" ColumnName="DeliverAddress" />
+                <ScalarProperty Name="DeliverType" ColumnName="DeliverType" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Item">
+            <EntityTypeMapping TypeName="E2JOINModel.Order_Item">
+              <MappingFragment StoreEntitySet="Order_Item">
+                <ScalarProperty Name="Buid" ColumnName="Buid" />
+                <ScalarProperty Name="BusinessExpireDate" ColumnName="BusinessExpireDate" />
+                <ScalarProperty Name="ForceExpireDate" ColumnName="ForceExpireDate" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="InsuranceLogo" ColumnName="InsuranceLogo" />
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="ProductDealPrice" ColumnName="ProductDealPrice" />
+                <ScalarProperty Name="ProductOriginalPrice" ColumnName="ProductOriginalPrice" />
+                <ScalarProperty Name="ProductTitle" ColumnName="ProductTitle" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Pay">
+            <EntityTypeMapping TypeName="E2JOINModel.Order_Pay">
+              <MappingFragment StoreEntitySet="Order_Pay">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="PayBank" ColumnName="PayBank" />
+                <ScalarProperty Name="PayType" ColumnName="PayType" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Item">
+            <EntityTypeMapping TypeName="E2JOINModel.Product_Item">
+              <MappingFragment StoreEntitySet="Product_Item">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="OriginalTotal" ColumnName="OriginalTotal" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TaxAfterCoupon" ColumnName="TaxAfterCoupon" />
+                <ScalarProperty Name="ForceAfterCoupon" ColumnName="ForceAfterCoupon" />
+                <ScalarProperty Name="BussinessAfterCoupon" ColumnName="BussinessAfterCoupon" />
+                <ScalarProperty Name="TaxCouponRate" ColumnName="TaxCouponRate" />
+                <ScalarProperty Name="ForceCouponRate" ColumnName="ForceCouponRate" />
+                <ScalarProperty Name="BussinessCouponRate" ColumnName="BussinessCouponRate" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ZiRan_BaoFei" ColumnName="ZiRan_BaoFei" />
+                <ScalarProperty Name="ZiRan_BaoE" ColumnName="ZiRan_BaoE" />
+                <ScalarProperty Name="CheDeng_BaoFei" ColumnName="CheDeng_BaoFei" />
+                <ScalarProperty Name="CheDeng_BaoE" ColumnName="CheDeng_BaoE" />
+                <ScalarProperty Name="SheShui_BaoFei" ColumnName="SheShui_BaoFei" />
+                <ScalarProperty Name="SheShui_BaoE" ColumnName="SheShui_BaoE" />
+                <ScalarProperty Name="BuJiMianFuJia_BaoFei" ColumnName="BuJiMianFuJia_BaoFei" />
+                <ScalarProperty Name="BuJiMianFuJia_BaoE" ColumnName="BuJiMianFuJia_BaoE" />
+                <ScalarProperty Name="BuJiMianRenYuan_BaoFei" ColumnName="BuJiMianRenYuan_BaoFei" />
+                <ScalarProperty Name="BuJiMianRenYuan_BaoE" ColumnName="BuJiMianRenYuan_BaoE" />
+                <ScalarProperty Name="BuJiMianDaoQiang_BaoFei" ColumnName="BuJiMianDaoQiang_BaoFei" />
+                <ScalarProperty Name="BuJiMianDaoQiang_BaoE" ColumnName="BuJiMianDaoQiang_BaoE" />
+                <ScalarProperty Name="BuJiMianSanZhe_BaoFei" ColumnName="BuJiMianSanZhe_BaoFei" />
+                <ScalarProperty Name="BuJiMianSanZhe_BaoE" ColumnName="BuJiMianSanZhe_BaoE" />
+                <ScalarProperty Name="BuJiMianCheSun_BaoFei" ColumnName="BuJiMianCheSun_BaoFei" />
+                <ScalarProperty Name="BuJiMianCheSun_BaoE" ColumnName="BuJiMianCheSun_BaoE" />
+                <ScalarProperty Name="HuaHen_BaoFei" ColumnName="HuaHen_BaoFei" />
+                <ScalarProperty Name="HuaHen_BaoE" ColumnName="HuaHen_BaoE" />
+                <ScalarProperty Name="BoLi_BaoFei" ColumnName="BoLi_BaoFei" />
+                <ScalarProperty Name="BoLi_BaoE" ColumnName="BoLi_BaoE" />
+                <ScalarProperty Name="ChengKe_BaoFei" ColumnName="ChengKe_BaoFei" />
+                <ScalarProperty Name="ChengKe_BaoE" ColumnName="ChengKe_BaoE" />
+                <ScalarProperty Name="SiJi_BaoFei" ColumnName="SiJi_BaoFei" />
+                <ScalarProperty Name="SiJi_BaoE" ColumnName="SiJi_BaoE" />
+                <ScalarProperty Name="DaoQiang_BaoFei" ColumnName="DaoQiang_BaoFei" />
+                <ScalarProperty Name="DaoQiang_BaoE" ColumnName="DaoQiang_BaoE" />
+                <ScalarProperty Name="SanZhe_BaoFei" ColumnName="SanZhe_BaoFei" />
+                <ScalarProperty Name="SanZhe_BaoE" ColumnName="SanZhe_BaoE" />
+                <ScalarProperty Name="CheSun_BaoFei" ColumnName="CheSun_BaoFei" />
+                <ScalarProperty Name="CheSun_BaoE" ColumnName="CheSun_BaoE" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="QuoteResult" ColumnName="QuoteResult" />
+                <ScalarProperty Name="QuoteStatus" ColumnName="QuoteStatus" />
+                <ScalarProperty Name="SubmitResult" ColumnName="SubmitResult" />
+                <ScalarProperty Name="SubmitStatus" ColumnName="SubmitStatus" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="TaxTotal" ColumnName="TaxTotal" />
+                <ScalarProperty Name="ForceTotal" ColumnName="ForceTotal" />
+                <ScalarProperty Name="BizTotal" ColumnName="BizTotal" />
+                <ScalarProperty Name="BuId" ColumnName="BuId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_User">
+            <EntityTypeMapping TypeName="E2JOINModel.Product_User">
+              <MappingFragment StoreEntitySet="Product_User">
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="BusinessExpireDate" ColumnName="BusinessExpireDate" />
+                <ScalarProperty Name="ForceExpireDate" ColumnName="ForceExpireDate" />
+                <ScalarProperty Name="QuoteStatus" ColumnName="QuoteStatus" />
+                <ScalarProperty Name="LastYearSource" ColumnName="LastYearSource" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="CarVin" ColumnName="CarVin" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="MoldName" ColumnName="MoldName" />
+                <ScalarProperty Name="EngineNo" ColumnName="EngineNo" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReadPack">
+            <EntityTypeMapping TypeName="E2JOINModel.ReadPack">
+              <MappingFragment StoreEntitySet="ReadPack">
+                <ScalarProperty Name="SendTime" ColumnName="SendTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ClientIP" ColumnName="ClientIP" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Wishing" ColumnName="Wishing" />
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="UserOpenId" ColumnName="UserOpenId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_LogInfo">
+            <EntityTypeMapping TypeName="E2JOINModel.SYS_LogInfo">
+              <MappingFragment StoreEntitySet="SYS_LogInfo">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateMemberID" ColumnName="CreateMemberID" />
+                <ScalarProperty Name="ActionMemo" ColumnName="ActionMemo" />
+                <ScalarProperty Name="ActionType" ColumnName="ActionType" />
+                <ScalarProperty Name="ActionMsg" ColumnName="ActionMsg" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Deliver">
+            <EntityTypeMapping TypeName="E2JOINModel.User_Deliver">
+              <MappingFragment StoreEntitySet="User_Deliver">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PickupAddress" ColumnName="PickupAddress" />
+                <ScalarProperty Name="PickupTime" ColumnName="PickupTime" />
+                <ScalarProperty Name="DeliverLocation" ColumnName="DeliverLocation" />
+                <ScalarProperty Name="DeliverMobile" ColumnName="DeliverMobile" />
+                <ScalarProperty Name="DeliverName" ColumnName="DeliverName" />
+                <ScalarProperty Name="DeliverPrice" ColumnName="DeliverPrice" />
+                <ScalarProperty Name="DeliverTime" ColumnName="DeliverTime" />
+                <ScalarProperty Name="DeliverAddress" ColumnName="DeliverAddress" />
+                <ScalarProperty Name="DeliverType" ColumnName="DeliverType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Invoice">
+            <EntityTypeMapping TypeName="E2JOINModel.User_Invoice">
+              <MappingFragment StoreEntitySet="User_Invoice">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Context" ColumnName="Context" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_PolicyHolder">
+            <EntityTypeMapping TypeName="E2JOINModel.User_PolicyHolder">
+              <MappingFragment StoreEntitySet="User_PolicyHolder">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrganizationCode" ColumnName="OrganizationCode" />
+                <ScalarProperty Name="IdCardBackPicUrl" ColumnName="IdCardBackPicUrl" />
+                <ScalarProperty Name="IdCardFacePicUrl" ColumnName="IdCardFacePicUrl" />
+                <ScalarProperty Name="IdCard" ColumnName="IdCard" />
+                <ScalarProperty Name="IdCardType" ColumnName="IdCardType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_ProductUserItem">
+            <EntityTypeMapping TypeName="E2JOINModel.View_ProductUserItem">
+              <MappingFragment StoreEntitySet="View_ProductUserItem">
+                <ScalarProperty Name="OriginalTotal" ColumnName="OriginalTotal" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TaxAfterCoupon" ColumnName="TaxAfterCoupon" />
+                <ScalarProperty Name="ForceAfterCoupon" ColumnName="ForceAfterCoupon" />
+                <ScalarProperty Name="BussinessAfterCoupon" ColumnName="BussinessAfterCoupon" />
+                <ScalarProperty Name="TaxCouponRate" ColumnName="TaxCouponRate" />
+                <ScalarProperty Name="ForceCouponRate" ColumnName="ForceCouponRate" />
+                <ScalarProperty Name="BussinessCouponRate" ColumnName="BussinessCouponRate" />
+                <ScalarProperty Name="ItemMobile" ColumnName="ItemMobile" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ZiRan_BaoFei" ColumnName="ZiRan_BaoFei" />
+                <ScalarProperty Name="ZiRan_BaoE" ColumnName="ZiRan_BaoE" />
+                <ScalarProperty Name="CheDeng_BaoFei" ColumnName="CheDeng_BaoFei" />
+                <ScalarProperty Name="CheDeng_BaoE" ColumnName="CheDeng_BaoE" />
+                <ScalarProperty Name="SheShui_BaoFei" ColumnName="SheShui_BaoFei" />
+                <ScalarProperty Name="SheShui_BaoE" ColumnName="SheShui_BaoE" />
+                <ScalarProperty Name="BuJiMianFuJia_BaoFei" ColumnName="BuJiMianFuJia_BaoFei" />
+                <ScalarProperty Name="BuJiMianFuJia_BaoE" ColumnName="BuJiMianFuJia_BaoE" />
+                <ScalarProperty Name="BuJiMianRenYuan_BaoFei" ColumnName="BuJiMianRenYuan_BaoFei" />
+                <ScalarProperty Name="BuJiMianRenYuan_BaoE" ColumnName="BuJiMianRenYuan_BaoE" />
+                <ScalarProperty Name="BuJiMianDaoQiang_BaoFei" ColumnName="BuJiMianDaoQiang_BaoFei" />
+                <ScalarProperty Name="BuJiMianDaoQiang_BaoE" ColumnName="BuJiMianDaoQiang_BaoE" />
+                <ScalarProperty Name="BuJiMianSanZhe_BaoFei" ColumnName="BuJiMianSanZhe_BaoFei" />
+                <ScalarProperty Name="BuJiMianSanZhe_BaoE" ColumnName="BuJiMianSanZhe_BaoE" />
+                <ScalarProperty Name="BuJiMianCheSun_BaoFei" ColumnName="BuJiMianCheSun_BaoFei" />
+                <ScalarProperty Name="BuJiMianCheSun_BaoE" ColumnName="BuJiMianCheSun_BaoE" />
+                <ScalarProperty Name="HuaHen_BaoFei" ColumnName="HuaHen_BaoFei" />
+                <ScalarProperty Name="HuaHen_BaoE" ColumnName="HuaHen_BaoE" />
+                <ScalarProperty Name="BoLi_BaoFei" ColumnName="BoLi_BaoFei" />
+                <ScalarProperty Name="BoLi_BaoE" ColumnName="BoLi_BaoE" />
+                <ScalarProperty Name="ChengKe_BaoFei" ColumnName="ChengKe_BaoFei" />
+                <ScalarProperty Name="ChengKe_BaoE" ColumnName="ChengKe_BaoE" />
+                <ScalarProperty Name="SiJi_BaoFei" ColumnName="SiJi_BaoFei" />
+                <ScalarProperty Name="SiJi_BaoE" ColumnName="SiJi_BaoE" />
+                <ScalarProperty Name="DaoQiang_BaoFei" ColumnName="DaoQiang_BaoFei" />
+                <ScalarProperty Name="DaoQiang_BaoE" ColumnName="DaoQiang_BaoE" />
+                <ScalarProperty Name="SanZhe_BaoFei" ColumnName="SanZhe_BaoFei" />
+                <ScalarProperty Name="SanZhe_BaoE" ColumnName="SanZhe_BaoE" />
+                <ScalarProperty Name="CheSun_BaoFei" ColumnName="CheSun_BaoFei" />
+                <ScalarProperty Name="CheSun_BaoE" ColumnName="CheSun_BaoE" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="QuoteResult" ColumnName="QuoteResult" />
+                <ScalarProperty Name="ItemQuoteStatus" ColumnName="ItemQuoteStatus" />
+                <ScalarProperty Name="SubmitResult" ColumnName="SubmitResult" />
+                <ScalarProperty Name="SubmitStatus" ColumnName="SubmitStatus" />
+                <ScalarProperty Name="ItemSource" ColumnName="ItemSource" />
+                <ScalarProperty Name="TaxTotal" ColumnName="TaxTotal" />
+                <ScalarProperty Name="ForceTotal" ColumnName="ForceTotal" />
+                <ScalarProperty Name="BizTotal" ColumnName="BizTotal" />
+                <ScalarProperty Name="BuId" ColumnName="BuId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="BusinessExpireDate" ColumnName="BusinessExpireDate" />
+                <ScalarProperty Name="ForceExpireDate" ColumnName="ForceExpireDate" />
+                <ScalarProperty Name="QuoteStatus" ColumnName="QuoteStatus" />
+                <ScalarProperty Name="LastYearSource" ColumnName="LastYearSource" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="CarVin" ColumnName="CarVin" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="MoldName" ColumnName="MoldName" />
+                <ScalarProperty Name="EngineNo" ColumnName="EngineNo" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_ProductV2UserItem">
+            <EntityTypeMapping TypeName="E2JOINModel.View_ProductV2UserItem">
+              <MappingFragment StoreEntitySet="View_ProductV2UserItem">
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="TaxRate_Channel" ColumnName="TaxRate_Channel" />
+                <ScalarProperty Name="ForceRate_Channel" ColumnName="ForceRate_Channel" />
+                <ScalarProperty Name="BizRate_Channel" ColumnName="BizRate_Channel" />
+                <ScalarProperty Name="BuId" ColumnName="BuId" />
+                <ScalarProperty Name="ItemCreateTime" ColumnName="ItemCreateTime" />
+                <ScalarProperty Name="ForceNo" ColumnName="ForceNo" />
+                <ScalarProperty Name="BizNo" ColumnName="BizNo" />
+                <ScalarProperty Name="SubmitResult" ColumnName="SubmitResult" />
+                <ScalarProperty Name="SubmitStatus" ColumnName="SubmitStatus" />
+                <ScalarProperty Name="TotalAfterCoupon" ColumnName="TotalAfterCoupon" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TaxAfterCoupon" ColumnName="TaxAfterCoupon" />
+                <ScalarProperty Name="ForceAfterCoupon" ColumnName="ForceAfterCoupon" />
+                <ScalarProperty Name="BizAfterCoupon" ColumnName="BizAfterCoupon" />
+                <ScalarProperty Name="ZiRan_BaoFei" ColumnName="ZiRan_BaoFei" />
+                <ScalarProperty Name="ZiRan_BaoE" ColumnName="ZiRan_BaoE" />
+                <ScalarProperty Name="CheDeng_BaoFei" ColumnName="CheDeng_BaoFei" />
+                <ScalarProperty Name="CheDeng_BaoE" ColumnName="CheDeng_BaoE" />
+                <ScalarProperty Name="SheShui_BaoFei" ColumnName="SheShui_BaoFei" />
+                <ScalarProperty Name="SheShui_BaoE" ColumnName="SheShui_BaoE" />
+                <ScalarProperty Name="BuJiMianFuJia_BaoFei" ColumnName="BuJiMianFuJia_BaoFei" />
+                <ScalarProperty Name="BuJiMianFuJia_BaoE" ColumnName="BuJiMianFuJia_BaoE" />
+                <ScalarProperty Name="BuJiMianRenYuan_BaoFei" ColumnName="BuJiMianRenYuan_BaoFei" />
+                <ScalarProperty Name="BuJiMianRenYuan_BaoE" ColumnName="BuJiMianRenYuan_BaoE" />
+                <ScalarProperty Name="BuJiMianDaoQiang_BaoFei" ColumnName="BuJiMianDaoQiang_BaoFei" />
+                <ScalarProperty Name="BuJiMianDaoQiang_BaoE" ColumnName="BuJiMianDaoQiang_BaoE" />
+                <ScalarProperty Name="BuJiMianSanZhe_BaoFei" ColumnName="BuJiMianSanZhe_BaoFei" />
+                <ScalarProperty Name="BuJiMianSanZhe_BaoE" ColumnName="BuJiMianSanZhe_BaoE" />
+                <ScalarProperty Name="BuJiMianCheSun_BaoFei" ColumnName="BuJiMianCheSun_BaoFei" />
+                <ScalarProperty Name="BuJiMianCheSun_BaoE" ColumnName="BuJiMianCheSun_BaoE" />
+                <ScalarProperty Name="HuaHen_BaoFei" ColumnName="HuaHen_BaoFei" />
+                <ScalarProperty Name="HuaHen_BaoE" ColumnName="HuaHen_BaoE" />
+                <ScalarProperty Name="BoLi_BaoFei" ColumnName="BoLi_BaoFei" />
+                <ScalarProperty Name="BoLi_BaoE" ColumnName="BoLi_BaoE" />
+                <ScalarProperty Name="ChengKe_BaoFei" ColumnName="ChengKe_BaoFei" />
+                <ScalarProperty Name="ChengKe_BaoE" ColumnName="ChengKe_BaoE" />
+                <ScalarProperty Name="SiJi_BaoFei" ColumnName="SiJi_BaoFei" />
+                <ScalarProperty Name="SiJi_BaoE" ColumnName="SiJi_BaoE" />
+                <ScalarProperty Name="DaoQiang_BaoFei" ColumnName="DaoQiang_BaoFei" />
+                <ScalarProperty Name="DaoQiang_BaoE" ColumnName="DaoQiang_BaoE" />
+                <ScalarProperty Name="SanZhe_BaoFei" ColumnName="SanZhe_BaoFei" />
+                <ScalarProperty Name="SanZhe_BaoE" ColumnName="SanZhe_BaoE" />
+                <ScalarProperty Name="CheSun_BaoFei" ColumnName="CheSun_BaoFei" />
+                <ScalarProperty Name="CheSun_BaoE" ColumnName="CheSun_BaoE" />
+                <ScalarProperty Name="QuoteResult" ColumnName="QuoteResult" />
+                <ScalarProperty Name="QuoteStatus" ColumnName="QuoteStatus" />
+                <ScalarProperty Name="TaxTotal" ColumnName="TaxTotal" />
+                <ScalarProperty Name="TaxRate" ColumnName="TaxRate" />
+                <ScalarProperty Name="ForceTotal" ColumnName="ForceTotal" />
+                <ScalarProperty Name="ForceRate" ColumnName="ForceRate" />
+                <ScalarProperty Name="BizTotal" ColumnName="BizTotal" />
+                <ScalarProperty Name="BizRate" ColumnName="BizRate" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="CustomerKey" ColumnName="CustomerKey" />
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="SeatCount" ColumnName="SeatCount" />
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="BusinessExpireDate" ColumnName="BusinessExpireDate" />
+                <ScalarProperty Name="ForceExpireDate" ColumnName="ForceExpireDate" />
+                <ScalarProperty Name="CarVin" ColumnName="CarVin" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="ModleName" ColumnName="ModleName" />
+                <ScalarProperty Name="EngineNo" ColumnName="EngineNo" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="CredentislasNum" ColumnName="CredentislasNum" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="InsuredName" ColumnName="InsuredName" />
+                <ScalarProperty Name="PostedName" ColumnName="PostedName" />
+                <ScalarProperty Name="LicenseOwner" ColumnName="LicenseOwner" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="CarUsedType" ColumnName="CarUsedType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductV2_Renewal">
+            <EntityTypeMapping TypeName="E2JOINModel.ProductV2_Renewal">
+              <MappingFragment StoreEntitySet="ProductV2_Renewal">
+                <ScalarProperty Name="ChuXianPeiKuanJin" ColumnName="ChuXianPeiKuanJin" />
+                <ScalarProperty Name="WuPeiKuanYouHui" ColumnName="WuPeiKuanYouHui" />
+                <ScalarProperty Name="ChuXianCiShu" ColumnName="ChuXianCiShu" />
+                <ScalarProperty Name="ZiRan" ColumnName="ZiRan" />
+                <ScalarProperty Name="CheDeng" ColumnName="CheDeng" />
+                <ScalarProperty Name="SheShui" ColumnName="SheShui" />
+                <ScalarProperty Name="BuJiMianFuJia" ColumnName="BuJiMianFuJia" />
+                <ScalarProperty Name="BuJiMianRenYuan" ColumnName="BuJiMianRenYuan" />
+                <ScalarProperty Name="BuJiMianDaoQiang" ColumnName="BuJiMianDaoQiang" />
+                <ScalarProperty Name="BuJiMianSanZhe" ColumnName="BuJiMianSanZhe" />
+                <ScalarProperty Name="BuJiMianCheSun" ColumnName="BuJiMianCheSun" />
+                <ScalarProperty Name="HuaHen" ColumnName="HuaHen" />
+                <ScalarProperty Name="BoLi" ColumnName="BoLi" />
+                <ScalarProperty Name="ChengKe" ColumnName="ChengKe" />
+                <ScalarProperty Name="SiJi" ColumnName="SiJi" />
+                <ScalarProperty Name="DaoQiang" ColumnName="DaoQiang" />
+                <ScalarProperty Name="SanZhe" ColumnName="SanZhe" />
+                <ScalarProperty Name="CheSun" ColumnName="CheSun" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ReadPack_GetList" FunctionName="E2JOINModel.Store.ReadPack_GetList" />
+          <EntitySetMapping Name="View_ProductV2UserItemPolicy">
+            <EntityTypeMapping TypeName="E2JOINModel.View_ProductV2UserItemPolicy">
+              <MappingFragment StoreEntitySet="View_ProductV2UserItemPolicy">
+                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
+                <ScalarProperty Name="InvoiceTitle" ColumnName="InvoiceTitle" />
+                <ScalarProperty Name="InvoiceType" ColumnName="InvoiceType" />
+                <ScalarProperty Name="BaseUserId" ColumnName="BaseUserId" />
+                <ScalarProperty Name="BaseChannel" ColumnName="BaseChannel" />
+                <ScalarProperty Name="TradeNo" ColumnName="TradeNo" />
+                <ScalarProperty Name="BaseStatus" ColumnName="BaseStatus" />
+                <ScalarProperty Name="PayTime" ColumnName="PayTime" />
+                <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="AmountPayable" ColumnName="AmountPayable" />
+                <ScalarProperty Name="BaseCrateTime" ColumnName="BaseCrateTime" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="ChuXianPeiKuanJin" ColumnName="ChuXianPeiKuanJin" />
+                <ScalarProperty Name="WuPeiKuanYouHui" ColumnName="WuPeiKuanYouHui" />
+                <ScalarProperty Name="ChuXianCiShu" ColumnName="ChuXianCiShu" />
+                <ScalarProperty Name="ZiRan" ColumnName="ZiRan" />
+                <ScalarProperty Name="CheDeng" ColumnName="CheDeng" />
+                <ScalarProperty Name="SheShui" ColumnName="SheShui" />
+                <ScalarProperty Name="BuJiMianFuJia" ColumnName="BuJiMianFuJia" />
+                <ScalarProperty Name="BuJiMianRenYuan" ColumnName="BuJiMianRenYuan" />
+                <ScalarProperty Name="BuJiMianDaoQiang" ColumnName="BuJiMianDaoQiang" />
+                <ScalarProperty Name="BuJiMianSanZhe" ColumnName="BuJiMianSanZhe" />
+                <ScalarProperty Name="BuJiMianCheSun" ColumnName="BuJiMianCheSun" />
+                <ScalarProperty Name="HuaHen" ColumnName="HuaHen" />
+                <ScalarProperty Name="BoLi" ColumnName="BoLi" />
+                <ScalarProperty Name="ChengKe" ColumnName="ChengKe" />
+                <ScalarProperty Name="SiJi" ColumnName="SiJi" />
+                <ScalarProperty Name="DaoQiang" ColumnName="DaoQiang" />
+                <ScalarProperty Name="SanZhe" ColumnName="SanZhe" />
+                <ScalarProperty Name="CheSun" ColumnName="CheSun" />
+                <ScalarProperty Name="BSource" ColumnName="BSource" />
+                <ScalarProperty Name="RenewalUserId" ColumnName="RenewalUserId" />
+                <ScalarProperty Name="RenewalId" ColumnName="RenewalId" />
+                <ScalarProperty Name="PolicyUserId" ColumnName="PolicyUserId" />
+                <ScalarProperty Name="ItemUserId" ColumnName="ItemUserId" />
+                <ScalarProperty Name="PolicyCreateTime" ColumnName="PolicyCreateTime" />
+                <ScalarProperty Name="OrganizationCode" ColumnName="OrganizationCode" />
+                <ScalarProperty Name="IdCardBackPicUrl" ColumnName="IdCardBackPicUrl" />
+                <ScalarProperty Name="IdCardFacePicUrl" ColumnName="IdCardFacePicUrl" />
+                <ScalarProperty Name="IdCard" ColumnName="IdCard" />
+                <ScalarProperty Name="IdCardType" ColumnName="IdCardType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+                <ScalarProperty Name="ItemCreateTime" ColumnName="ItemCreateTime" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TotalAfterCoupon" ColumnName="TotalAfterCoupon" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="TaxAfterCoupon" ColumnName="TaxAfterCoupon" />
+                <ScalarProperty Name="ForceAfterCoupon" ColumnName="ForceAfterCoupon" />
+                <ScalarProperty Name="BizAfterCoupon" ColumnName="BizAfterCoupon" />
+                <ScalarProperty Name="TaxRate_Channel" ColumnName="TaxRate_Channel" />
+                <ScalarProperty Name="ForceRate_Channel" ColumnName="ForceRate_Channel" />
+                <ScalarProperty Name="BizRate_Channel" ColumnName="BizRate_Channel" />
+                <ScalarProperty Name="ForceNo" ColumnName="ForceNo" />
+                <ScalarProperty Name="BizNo" ColumnName="BizNo" />
+                <ScalarProperty Name="SubmitResult" ColumnName="SubmitResult" />
+                <ScalarProperty Name="SubmitStatus" ColumnName="SubmitStatus" />
+                <ScalarProperty Name="BuId" ColumnName="BuId" />
+                <ScalarProperty Name="ZiRan_BaoFei" ColumnName="ZiRan_BaoFei" />
+                <ScalarProperty Name="ZiRan_BaoE" ColumnName="ZiRan_BaoE" />
+                <ScalarProperty Name="CheDeng_BaoFei" ColumnName="CheDeng_BaoFei" />
+                <ScalarProperty Name="CheDeng_BaoE" ColumnName="CheDeng_BaoE" />
+                <ScalarProperty Name="SheShui_BaoFei" ColumnName="SheShui_BaoFei" />
+                <ScalarProperty Name="SheShui_BaoE" ColumnName="SheShui_BaoE" />
+                <ScalarProperty Name="BuJiMianFuJia_BaoFei" ColumnName="BuJiMianFuJia_BaoFei" />
+                <ScalarProperty Name="BuJiMianFuJia_BaoE" ColumnName="BuJiMianFuJia_BaoE" />
+                <ScalarProperty Name="BuJiMianRenYuan_BaoFei" ColumnName="BuJiMianRenYuan_BaoFei" />
+                <ScalarProperty Name="BuJiMianRenYuan_BaoE" ColumnName="BuJiMianRenYuan_BaoE" />
+                <ScalarProperty Name="BuJiMianDaoQiang_BaoFei" ColumnName="BuJiMianDaoQiang_BaoFei" />
+                <ScalarProperty Name="BuJiMianDaoQiang_BaoE" ColumnName="BuJiMianDaoQiang_BaoE" />
+                <ScalarProperty Name="BuJiMianSanZhe_BaoFei" ColumnName="BuJiMianSanZhe_BaoFei" />
+                <ScalarProperty Name="BuJiMianSanZhe_BaoE" ColumnName="BuJiMianSanZhe_BaoE" />
+                <ScalarProperty Name="BuJiMianCheSun_BaoFei" ColumnName="BuJiMianCheSun_BaoFei" />
+                <ScalarProperty Name="BuJiMianCheSun_BaoE" ColumnName="BuJiMianCheSun_BaoE" />
+                <ScalarProperty Name="HuaHen_BaoFei" ColumnName="HuaHen_BaoFei" />
+                <ScalarProperty Name="HuaHen_BaoE" ColumnName="HuaHen_BaoE" />
+                <ScalarProperty Name="BoLi_BaoFei" ColumnName="BoLi_BaoFei" />
+                <ScalarProperty Name="BoLi_BaoE" ColumnName="BoLi_BaoE" />
+                <ScalarProperty Name="ChengKe_BaoFei" ColumnName="ChengKe_BaoFei" />
+                <ScalarProperty Name="ChengKe_BaoE" ColumnName="ChengKe_BaoE" />
+                <ScalarProperty Name="SiJi_BaoFei" ColumnName="SiJi_BaoFei" />
+                <ScalarProperty Name="SiJi_BaoE" ColumnName="SiJi_BaoE" />
+                <ScalarProperty Name="DaoQiang_BaoFei" ColumnName="DaoQiang_BaoFei" />
+                <ScalarProperty Name="DaoQiang_BaoE" ColumnName="DaoQiang_BaoE" />
+                <ScalarProperty Name="SanZhe_BaoFei" ColumnName="SanZhe_BaoFei" />
+                <ScalarProperty Name="SanZhe_BaoE" ColumnName="SanZhe_BaoE" />
+                <ScalarProperty Name="CheSun_BaoFei" ColumnName="CheSun_BaoFei" />
+                <ScalarProperty Name="CheSun_BaoE" ColumnName="CheSun_BaoE" />
+                <ScalarProperty Name="QuoteResult" ColumnName="QuoteResult" />
+                <ScalarProperty Name="QuoteStatus" ColumnName="QuoteStatus" />
+                <ScalarProperty Name="TaxTotal" ColumnName="TaxTotal" />
+                <ScalarProperty Name="TaxRate" ColumnName="TaxRate" />
+                <ScalarProperty Name="ForceTotal" ColumnName="ForceTotal" />
+                <ScalarProperty Name="ForceRate" ColumnName="ForceRate" />
+                <ScalarProperty Name="BizTotal" ColumnName="BizTotal" />
+                <ScalarProperty Name="BizRate" ColumnName="BizRate" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductItemId" ColumnName="ProductItemId" />
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CustomerKey" ColumnName="CustomerKey" />
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="SeatCount" ColumnName="SeatCount" />
+                <ScalarProperty Name="BusinessExpireDate" ColumnName="BusinessExpireDate" />
+                <ScalarProperty Name="CarVin" ColumnName="CarVin" />
+                <ScalarProperty Name="ForceExpireDate" ColumnName="ForceExpireDate" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="ModleName" ColumnName="ModleName" />
+                <ScalarProperty Name="EngineNo" ColumnName="EngineNo" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="CredentislasNum" ColumnName="CredentislasNum" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="InsuredName" ColumnName="InsuredName" />
+                <ScalarProperty Name="PostedName" ColumnName="PostedName" />
+                <ScalarProperty Name="LicenseOwner" ColumnName="LicenseOwner" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="CarUsedType" ColumnName="CarUsedType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductV2_Item">
+            <EntityTypeMapping TypeName="E2JOINModel.ProductV2_Item">
+              <MappingFragment StoreEntitySet="ProductV2_Item">
+                <ScalarProperty Name="PrepaidAmount" ColumnName="PrepaidAmount" />
+                <ScalarProperty Name="UserSelection" ColumnName="UserSelection" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AuditOrderStatus" ColumnName="AuditOrderStatus" />
+                <ScalarProperty Name="ServiceUserId" ColumnName="ServiceUserId" />
+                <ScalarProperty Name="TotalAfterCoupon" ColumnName="TotalAfterCoupon" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="TaxAfterCoupon" ColumnName="TaxAfterCoupon" />
+                <ScalarProperty Name="ForceAfterCoupon" ColumnName="ForceAfterCoupon" />
+                <ScalarProperty Name="BizAfterCoupon" ColumnName="BizAfterCoupon" />
+                <ScalarProperty Name="TaxRate_Channel" ColumnName="TaxRate_Channel" />
+                <ScalarProperty Name="ForceRate_Channel" ColumnName="ForceRate_Channel" />
+                <ScalarProperty Name="BizRate_Channel" ColumnName="BizRate_Channel" />
+                <ScalarProperty Name="ForceNo" ColumnName="ForceNo" />
+                <ScalarProperty Name="BizNo" ColumnName="BizNo" />
+                <ScalarProperty Name="SubmitResult" ColumnName="SubmitResult" />
+                <ScalarProperty Name="SubmitStatus" ColumnName="SubmitStatus" />
+                <ScalarProperty Name="BuId" ColumnName="BuId" />
+                <ScalarProperty Name="ZiRan_BaoFei" ColumnName="ZiRan_BaoFei" />
+                <ScalarProperty Name="ZiRan_BaoE" ColumnName="ZiRan_BaoE" />
+                <ScalarProperty Name="CheDeng_BaoFei" ColumnName="CheDeng_BaoFei" />
+                <ScalarProperty Name="CheDeng_BaoE" ColumnName="CheDeng_BaoE" />
+                <ScalarProperty Name="SheShui_BaoFei" ColumnName="SheShui_BaoFei" />
+                <ScalarProperty Name="SheShui_BaoE" ColumnName="SheShui_BaoE" />
+                <ScalarProperty Name="BuJiMianFuJia_BaoFei" ColumnName="BuJiMianFuJia_BaoFei" />
+                <ScalarProperty Name="BuJiMianFuJia_BaoE" ColumnName="BuJiMianFuJia_BaoE" />
+                <ScalarProperty Name="BuJiMianRenYuan_BaoFei" ColumnName="BuJiMianRenYuan_BaoFei" />
+                <ScalarProperty Name="BuJiMianRenYuan_BaoE" ColumnName="BuJiMianRenYuan_BaoE" />
+                <ScalarProperty Name="BuJiMianDaoQiang_BaoFei" ColumnName="BuJiMianDaoQiang_BaoFei" />
+                <ScalarProperty Name="BuJiMianDaoQiang_BaoE" ColumnName="BuJiMianDaoQiang_BaoE" />
+                <ScalarProperty Name="BuJiMianSanZhe_BaoFei" ColumnName="BuJiMianSanZhe_BaoFei" />
+                <ScalarProperty Name="BuJiMianSanZhe_BaoE" ColumnName="BuJiMianSanZhe_BaoE" />
+                <ScalarProperty Name="BuJiMianCheSun_BaoFei" ColumnName="BuJiMianCheSun_BaoFei" />
+                <ScalarProperty Name="BuJiMianCheSun_BaoE" ColumnName="BuJiMianCheSun_BaoE" />
+                <ScalarProperty Name="HuaHen_BaoFei" ColumnName="HuaHen_BaoFei" />
+                <ScalarProperty Name="HuaHen_BaoE" ColumnName="HuaHen_BaoE" />
+                <ScalarProperty Name="BoLi_BaoFei" ColumnName="BoLi_BaoFei" />
+                <ScalarProperty Name="BoLi_BaoE" ColumnName="BoLi_BaoE" />
+                <ScalarProperty Name="ChengKe_BaoFei" ColumnName="ChengKe_BaoFei" />
+                <ScalarProperty Name="ChengKe_BaoE" ColumnName="ChengKe_BaoE" />
+                <ScalarProperty Name="SiJi_BaoFei" ColumnName="SiJi_BaoFei" />
+                <ScalarProperty Name="SiJi_BaoE" ColumnName="SiJi_BaoE" />
+                <ScalarProperty Name="DaoQiang_BaoFei" ColumnName="DaoQiang_BaoFei" />
+                <ScalarProperty Name="DaoQiang_BaoE" ColumnName="DaoQiang_BaoE" />
+                <ScalarProperty Name="SanZhe_BaoFei" ColumnName="SanZhe_BaoFei" />
+                <ScalarProperty Name="SanZhe_BaoE" ColumnName="SanZhe_BaoE" />
+                <ScalarProperty Name="CheSun_BaoFei" ColumnName="CheSun_BaoFei" />
+                <ScalarProperty Name="CheSun_BaoE" ColumnName="CheSun_BaoE" />
+                <ScalarProperty Name="QuoteResult" ColumnName="QuoteResult" />
+                <ScalarProperty Name="QuoteStatus" ColumnName="QuoteStatus" />
+                <ScalarProperty Name="TaxTotal" ColumnName="TaxTotal" />
+                <ScalarProperty Name="TaxRate" ColumnName="TaxRate" />
+                <ScalarProperty Name="ForceTotal" ColumnName="ForceTotal" />
+                <ScalarProperty Name="ForceRate" ColumnName="ForceRate" />
+                <ScalarProperty Name="BizTotal" ColumnName="BizTotal" />
+                <ScalarProperty Name="BizRate" ColumnName="BizRate" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductV2_User">
+            <EntityTypeMapping TypeName="E2JOINModel.ProductV2_User">
+              <MappingFragment StoreEntitySet="ProductV2_User">
+                <ScalarProperty Name="VisitServiceUserId" ColumnName="VisitServiceUserId" />
+                <ScalarProperty Name="VisitDate" ColumnName="VisitDate" />
+                <ScalarProperty Name="VisitStatus" ColumnName="VisitStatus" />
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CustomerKey" ColumnName="CustomerKey" />
+                <ScalarProperty Name="Channel" ColumnName="Channel" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="SeatCount" ColumnName="SeatCount" />
+                <ScalarProperty Name="BusinessExpireDate" ColumnName="BusinessExpireDate" />
+                <ScalarProperty Name="ForceExpireDate" ColumnName="ForceExpireDate" />
+                <ScalarProperty Name="CarVin" ColumnName="CarVin" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="ModleName" ColumnName="ModleName" />
+                <ScalarProperty Name="EngineNo" ColumnName="EngineNo" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="CredentislasNum" ColumnName="CredentislasNum" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="InsuredName" ColumnName="InsuredName" />
+                <ScalarProperty Name="PostedName" ColumnName="PostedName" />
+                <ScalarProperty Name="LicenseOwner" ColumnName="LicenseOwner" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="CarUsedType" ColumnName="CarUsedType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_PolicyHolder">
+            <EntityTypeMapping TypeName="E2JOINModel.Order_PolicyHolder">
+              <MappingFragment StoreEntitySet="Order_PolicyHolder">
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IdCardBackPicUrl" ColumnName="IdCardBackPicUrl" />
+                <ScalarProperty Name="IdCardFacePicUrl" ColumnName="IdCardFacePicUrl" />
+                <ScalarProperty Name="IdCard" ColumnName="IdCard" />
+                <ScalarProperty Name="IdCardType" ColumnName="IdCardType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

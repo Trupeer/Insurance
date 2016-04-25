@@ -1,0 +1,56 @@
+﻿@using HONGLI.Entity 
+
+@helper GetInsuranceLogoUrl(EnumInsuranceLogo logo)
+{
+    var logoUrl = "";
+    switch (logo)
+    {
+        case EnumInsuranceLogo.PICC:
+            logoUrl = "../public/imagesTemp/page40-1.png";
+            break;
+        case EnumInsuranceLogo.PINGAN:
+            logoUrl = "../public/imagesTemp/page40-2.png";
+            break;
+        case EnumInsuranceLogo.TAIPING:
+            logoUrl = "../public/imagesTemp/page40-3.png";
+            break;        
+        default:
+            logoUrl = "";
+            break;
+    }
+    @:@logoUrl
+}
+   
+@helper GetOrderStatusText(EnumOrderStatus status)
+{
+    var text = "";
+    switch (status)
+    {
+        case EnumOrderStatus.UnPay:
+            text = "未支付";
+            break;
+        case EnumOrderStatus.Wating:
+            text = "未支付";
+            break;
+        case EnumOrderStatus.Paid:
+            text = "已支付";
+            break;
+        case EnumOrderStatus.Success:
+            text = "已支付";
+            break;
+        case EnumOrderStatus.Failed:
+            text = "未支付";
+            break;
+        case EnumOrderStatus.Quit:
+            text = "撤销";
+            break;
+        default:
+            text = "";
+            break;
+    }
+    @:@text
+}
+
+
+
+ 

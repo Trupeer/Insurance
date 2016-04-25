@@ -1,0 +1,995 @@
+﻿@model ProductV2UserItemPolicyModels
+@using HONGLI.Web.Models;
+@using HONGLI.Entity;
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var orderlsit = ViewBag.OrderList as Order_Base;
+    var productuser = ViewBag.Product_User as ProductV2_User;
+    var renewalList = ViewBag.Product_Renewal as ProductV2_Renewal;
+    var productitemselect = ViewBag.Prduct_ItemSelect as ProductV2_Item;
+}
+
+<div class="right_cont">
+
+    <div class="title_right"><strong>报价详情</strong></div>
+    <div style="margin:auto">
+@using (Html.BeginForm("OrderDetail", "Admin", FormMethod.Post, new { @id = "submitForm" }))
+{
+    @Html.HiddenFor(m => m.Id, new { @Value = productuser.Id }); 
+    @Html.HiddenFor(m => m.BeforeVisitStatus, new { @Value = productuser.VisitStatus });
+    @Html.HiddenFor(m => m.VisitDate, new { @Value = productuser.VisitDate });
+    @Html.HiddenFor(m => m.ItemId);
+    @Html.HiddenFor(m => m.OrderBaseId, new { @Value = orderlsit.Id });
+    @Html.HiddenFor(m => m.OrderBaeOrderCode, new { @Value = orderlsit.OrderCode });
+    @Html.HiddenFor(m => m.OrderBaeUserId, new { @Value = orderlsit.UserId });
+    @Html.HiddenFor(m => m.OrderBaeCreateDate, new { @Value = orderlsit.CreateDate });
+    @Html.HiddenFor(m => m.OrderBaeChannel, new { @Value = orderlsit.Channel });
+    @Html.HiddenFor(m => m.OrderItemId, new { @Value = orderlsit.Order_Item.FirstOrDefault().Id});
+    @Html.HiddenFor(m => m.OrderItemCreateDate, new { @Value = orderlsit.Order_Item.FirstOrDefault().CreateDate });
+    @Html.HiddenFor(m => m.OrderDeliverId, new { @Value = orderlsit.Order_Deliver.FirstOrDefault().Id });
+    @Html.HiddenFor(m => m.DeliverPrice, new { @Value = orderlsit.Order_Deliver.FirstOrDefault().DeliverPrice });
+    @Html.HiddenFor(m => m.ItemSource,new {  @Class = "ItemInput" });
+    @Html.HiddenFor(m => m.QuoteStatus, new { @Class = "ItemInput" });
+    @Html.HiddenFor(m => m.QuoteResult, new { @Class = "ItemInput" });
+    @Html.HiddenFor(m => m.BuId, new { @Class = "ItemInput" });
+    @Html.HiddenFor(m => m.ItemCreateTime, new { @Class = "ItemInput" });
+    @Html.HiddenFor(m => m.OrderDeliverOrderCode, new { @Value = orderlsit.Order_Deliver.FirstOrDefault().OrderCode });
+    @Html.HiddenFor(m => m.PolicyId, new { @Value = orderlsit.Order_PolicyHolder.FirstOrDefault().Id });
+    @Html.HiddenFor(m => m.ItemUserId);
+    @Html.HiddenFor(m => m.Description);
+    <strong>@orderlsit.OrderCode</strong>
+    <strong>车主/被保人信息</strong>
+    <table class="table table-bordered">
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">用户ID：</td>
+            <td  align="center" bgcolor="#f1f1f1">车主姓名：</td>
+            <td align="center" bgcolor="#f1f1f1">车主手机号：</td>
+            <td align="center" bgcolor="#f1f1f1">车主身份证后6位：</td>
+        </tr>
+        <tr>
+            <td align="center">@productuser.Id</td>
+            <td align="center">@Html.TextBoxFor(m => m.LicenseOwner, new { @id = "LicenseOwner",@Value=productuser.LicenseOwner })</td>
+            <td align="center">@Html.TextBoxFor(m => m.Mobile, new { @id = "Mobile",@Value=productuser.Mobile })</td>
+            <td align="center">@Html.TextBoxFor(m => m.CredentislasNum, new { @id = "CredentislasNum", @Value = productuser.CredentislasNum })</td>
+        </tr>
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">被保险人姓名：</td>
+            <td align="center" bgcolor="#f1f1f1">被保险人手机号：</td>
+            <td align="center" bgcolor="#f1f1f1">证件类型</td>
+            <td align="center" bgcolor="#f1f1f1">被保险人证件号：</td>
+        </tr>
+        <tr>
+            <td align="center">@Html.TextBoxFor(m => m.PolicyName, new { @id = "PolicyHolderName", @Value = orderlsit.Order_PolicyHolder.Count<1 ? "" : orderlsit.Order_PolicyHolder.FirstOrDefault().Name })</td>
+            <td align="center">@Html.TextBoxFor(m => m.PolicyMobile, new { @id = "PolicyMobile", @Value = orderlsit.Order_PolicyHolder.Count < 1 ? "" : orderlsit.Order_PolicyHolder.FirstOrDefault().Mobile })</td>
+            <td align="center">@Html.DropDownListFor(m => m.PolicyIdCardType, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="身份证", Value="1"},
+                new SelectListItem(){Text="组织机构代码", Value="2"}
+            }, "Value", "Text"))</td>
+            <td align="center">@Html.TextBoxFor(m => m.PolicyIdCard, new { @id = "PolicyHolderIdCard", @Value = orderlsit.Order_PolicyHolder.Count < 1 ? "" : orderlsit.Order_PolicyHolder.FirstOrDefault().IdCard })</td>
+            
+        </tr>
+    </table>
+    <strong>车辆详情</strong>
+        <table class="table table-bordered">
+            <tr>
+                <td align="center" bgcolor="#f1f1f1">车牌号：</td>
+                <td align="center" bgcolor="#f1f1f1">发动机号：</td>
+                <td align="center" bgcolor="#f1f1f1">车架号：</td>
+                <td align="center" bgcolor="#f1f1f1">车辆注册日期：</td>
+            </tr>
+            <tr>
+                <td align="center">@Html.TextBoxFor(m => m.LicenseNo, new { @id = "LicenseNo", @Value = productuser.LicenseNo })</td>
+                <td align="center">@Html.TextBoxFor(m => m.EngineNo, new { @id = "EngineNo", @Value = productuser.EngineNo })</td>
+                <td align="center">@Html.TextBoxFor(m => m.CarVin, new { @id = "CarVin", @Value = productuser.CarVin })</td>
+                <td align="center">@Html.TextBoxFor(m => m.RegisterDate, new { @id = "RegisterDate",@readonly= "readonly",@class="laydate-icon", @Value = productuser.RegisterDate })</td>
+            </tr>
+            <tr>
+                <td align="center" bgcolor="#f1f1f1">品牌型号：</td>
+                <td align="center" bgcolor="#f1f1f1" colspan="3"></td>
+            </tr>
+            <tr>
+                <td align="center">@Html.TextBoxFor(m => m.ModleName, new { @id = "ModleName", @Value = productuser.ModleName })</td>
+                <td align="center"  colspan="3"></td>
+            </tr>
+        </table>
+        <strong>上年出险情况</strong>
+        <table class="table table-bordered">
+            <tr>
+               
+                <td align="center" bgcolor="#f1f1f1">上年出险赔款次数：</td>
+                <td align="center" bgcolor="#f1f1f1">无赔款优惠系数：</td>
+                <td align="center" bgcolor="#f1f1f1">上年出险赔款金额：</td>
+            </tr>
+            <tr>
+                <td align="center">@Html.TextBoxFor(m => m.ChuXianCiShu, new { @id = "ChuXianCiShu", @Value =renewalList.ChuXianCiShu })</td>
+                <td align="center">@Html.TextBoxFor(m => m.WuPeiKuanYouHui, new { @id = "WuPeiKuanYouHui", @Value = renewalList.WuPeiKuanYouHui })</td>
+                <td align="center">@Html.TextBoxFor(m => m.ChuXianPeiKuanJin, new { @id = "ChuXianPeiKuanJin", @Value = renewalList.ChuXianPeiKuanJin })</td>
+            </tr>
+            <tr>
+                <td align="center" bgcolor="#f1f1f1">上年交强险到期时间：</td>
+                <td align="center" bgcolor="#f1f1f1">上年商业险到期时间：</td>
+                <td align="center" bgcolor="#f1f1f1">保险到期时间是否相同：</td>
+            </tr>
+            <tr>
+                <td align="center">@Html.TextBoxFor(m => m.ForceExpireDate, new { @id = "ForceExpireDate", @readonly = "readonly", @class = "laydate-icon", @Value = productuser.ForceExpireDate })</td>
+                <td align="center">@Html.TextBoxFor(m => m.BusinessExpireDate, new { @id = "BusinessExpireDate", @readonly = "readonly", @class = "laydate-icon", @Value = productuser.BusinessExpireDate })</td>
+            <td align="center"><input type="checkbox" id="CheckEndDate" /></td>
+            </tr>
+        </table>
+        <table class="table table-bordered"  style="width:50%;">
+            <tr>
+
+                <td align="left" colspan="2"  bgcolor="#f1f1f1">上年承保公司：
+               
+                    @if (renewalList.Source == 0)
+                    { <span>平安</span>}
+                    else if (renewalList.Source == 1)
+                    {
+                        <span>太平洋</span>
+                    }
+                    else if (renewalList.Source == 2)
+                    {
+                        <span>人保</span>
+                    }
+                
+                    </td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1" width="50%">车损保额</td>
+                <td align="left">@renewalList.CheSun</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">第三方责任险保额</td>
+                <td align="left">@renewalList.SanZhe</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">全车盗抢保险保额</td>
+                <td align="left">@renewalList.DaoQiang</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">车上人员责任险（司机）保额</td>
+                <td align="left">@renewalList.SiJi</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">车上人员责任险（乘客）保额</td>
+                <td align="left">@renewalList.ChengKe</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">玻璃单独破碎险保额</td>
+                <td align="left">@if (renewalList.BoLi == 0)
+                {<span>不投保</span> }
+                else if (renewalList.BoLi == 1)
+                {<span>国产</span> }
+                else if (renewalList.BoLi == 2)
+                {<span>进口</span> }</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">车身划痕损失险保额</td>
+                <td align="left">@renewalList.HuaHen</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">不计免赔险（车损）保额</td>
+                <td align="left">@renewalList.BuJiMianCheSun</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">不计免赔险（三者）保额</td>
+                <td align="left">@renewalList.BuJiMianSanZhe</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">不计免赔险（盗抢）保额</td>
+                <td align="left">@renewalList.BuJiMianDaoQiang</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">不计免赔险（车上人员）保额</td>
+                <td align="left">@renewalList.BuJiMianRenYuan</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">不计免赔险（附加险）保额</td>
+                <td align="left">@renewalList.BuJiMianFuJia</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">涉水行驶损失险保额</td>
+                <td align="left">@renewalList.SheShui</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">倒车镜、车灯单独损坏险保额</td>
+                <td align="left">@renewalList.CheDeng</td>
+            </tr>
+            <tr>
+                <td align="right"  bgcolor="#f1f1f1">自燃损失险保额</td>
+                <td align="left">@renewalList.ZiRan</td>
+            </tr>
+        </table>
+    <br/><strong>下游渠道报价</strong>
+    <table class="table table-bordered" align="center">
+        <tbody>
+            <tr>
+                <td align="center" bgcolor="#f1f1f1">核保公司</td>
+                <td align="center" bgcolor="#f1f1f1">核保状态</td>
+                <td align="center" bgcolor="#f1f1f1">核保内容</td>
+
+            </tr>
+            <tr>
+                <td align="center">@productitemselect.ProductName</td>
+                <td align="center">
+                    @if(productitemselect.SubmitStatus==0)
+                    {
+                        <span>核保失败</span>
+                    }
+                    else if(productitemselect.SubmitStatus == 1)
+                    {
+                        <span>核保成功</span>
+                    }
+                    else if (productitemselect.SubmitStatus == 2)
+                    {
+                        <span>未核保</span>
+                    }
+                    else if (productitemselect.SubmitStatus == 3)
+                    {
+                        <span>核保中</span>
+                    }
+                </td>
+                <td align="center">@productitemselect.SubmitResult</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered" align="center">
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">险种</td>
+            <td align="center" bgcolor="#f1f1f1">保额</td>
+            <td align="center" bgcolor="#f1f1f1">保险费小计</td>
+        </tr>
+        <tr>
+            <td align="center">机动车损失保险</td>
+            <td align="center">@productitemselect.CheSun_BaoE</td>
+            <td align="center">@productitemselect.CheSun_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">第三方责任险</td>
+            <td align="center">@productitemselect.SanZhe_BaoE</td>
+            <td align="center">@productitemselect.SanZhe_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">全车盗抢保险</td>
+            <td align="center">@productitemselect.DaoQiang_BaoE</td>
+            <td align="center">@productitemselect.DaoQiang_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">车上人员责任险（司机）</td>
+            <td align="center">@productitemselect.SiJi_BaoE</td>
+            <td align="center">@productitemselect.SiJi_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">车上人员责任险（乘客）</td>
+            <td align="center">@productitemselect.ChengKe_BaoE</td>
+            <td align="center">@productitemselect.ChengKe_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">玻璃单独破碎险</td>
+            <td align="center">@productitemselect.BoLi_BaoE</td>
+            <td align="center">@productitemselect.BoLi_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">车身划痕损失险</td>
+            <td align="center">@productitemselect.HuaHen_BaoE</td>
+            <td align="center">@productitemselect.HuaHen_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">不计免赔险（车损）</td>
+            <td align="center">@productitemselect.BuJiMianCheSun_BaoE</td>
+            <td align="center">@productitemselect.BuJiMianCheSun_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">不计免赔险（三者）</td>
+            <td align="center">@productitemselect.BuJiMianSanZhe_BaoE</td>
+            <td align="center">@productitemselect.BuJiMianSanZhe_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">不计免赔险（盗抢）</td>
+            <td align="center">@productitemselect.BuJiMianDaoQiang_BaoE</td>
+            <td align="center">@productitemselect.BuJiMianDaoQiang_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">不计免赔险（车上人员）</td>
+            <td align="center">@productitemselect.BuJiMianRenYuan_BaoE</td>
+            <td align="center">@productitemselect.BuJiMianRenYuan_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">不计免赔险（附加险）</td>
+            <td align="center">@productitemselect.BuJiMianFuJia_BaoE</td>
+            <td align="center">@productitemselect.BuJiMianFuJia_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">涉水行驶损失险</td>
+            <td align="center">@productitemselect.SheShui_BaoE</td>
+            <td align="center">@productitemselect.SheShui_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">倒车镜、车灯单独损坏险</td>
+            <td align="center">@productitemselect.CheDeng_BaoE</td>
+            <td align="center">@productitemselect.CheDeng_BaoFei</td>
+        </tr>
+        <tr>
+            <td align="center">自燃损失险</td>
+            <td align="center">@productitemselect.ZiRan_BaoE</td>
+            <td align="center">@productitemselect.ZiRan_BaoFei</td>
+        </tr>
+        </table>
+
+        <table class="table table-bordered" align="center">
+            <tr>
+                <td align="center" bgcolor="#f1f1f1">商业险总额</td>
+                <td align="center" bgcolor="#f1f1f1">商业险费率</td>
+                <td align="center" bgcolor="#f1f1f1">平台商业费率</td>
+                <td align="center" bgcolor="#f1f1f1">商业险优惠后价格</td>
+            </tr>
+            <tr>
+                <td align="center">@productitemselect.BizTotal</td>
+                <td align="center">@productitemselect.BizRate</td>
+                <td align="center">@productitemselect.BizRate_Channel</td>
+                <td align="center">@productitemselect.BizAfterCoupon</td>
+            </tr>
+            <tr>
+                <td align="center" bgcolor="#f1f1f1">交强险总额</td>
+                <td align="center" bgcolor="#f1f1f1">交强险费率</td>
+                <td align="center" bgcolor="#f1f1f1">平台交强费率</td>
+                <td align="center" bgcolor="#f1f1f1">交强险优惠后价格</td>
+            </tr>
+            <tr>
+                <td align="center">@productitemselect.ForceTotal</td>
+                <td align="center">@productitemselect.ForceRate</td>
+                <td align="center">@productitemselect.ForceRate_Channel</td>
+                <td align="center">@productitemselect.ForceAfterCoupon</td>
+            </tr>
+            <tr>
+                <td align="center" bgcolor="#f1f1f1">车船税总额</td>
+                <td align="center" bgcolor="#f1f1f1">车船税费率</td>
+                <td align="center" bgcolor="#f1f1f1">平台车船费率</td>
+                <td align="center" bgcolor="#f1f1f1">车船税优惠后价格</td>   
+            </tr>
+            <tr>
+                <td align="center">@productitemselect.TaxTotal</td>
+                <td align="center">@productitemselect.TaxRate</td>
+                <td align="center">@productitemselect.TaxRate_Channel</td>
+                <td align="center">@productitemselect.TaxAfterCoupon</td>
+                
+            </tr>
+            <tr>
+                <td colspan="2" align="center" bgcolor="#f1f1f1"></td>
+                <td align="center" bgcolor="#f1f1f1">总价格</td>
+                
+                <td align="center" bgcolor="#f1f1f1">优惠后总价格</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td align="center">@productitemselect.Total</td>
+                
+                <td align="center">@productitemselect.TotalAfterCoupon</td>
+            </tr>
+        </table>
+        <div style="float:right;margin-right:20px; font-size:16px; font-weight:600;"><span>预付金额：</span><span style="margin-right:15px;">@(productitemselect.PrepaidAmount==null?0: productitemselect.PrepaidAmount)</span><span>尾款：</span><span>@(productitemselect.TotalAfterCoupon- (productitemselect.PrepaidAmount==null?0: productitemselect.PrepaidAmount))</span></div>
+        <br />
+        <br />
+        <strong>回访核单</strong><span style="color:red" id="LoseStatus"></span>
+        <br />
+                <br />
+        <table class="table table-bordered" align="center">
+            <tr>
+                <td>回访状态</td>
+                <td>@Html.DropDownListFor(m => m.VisitStatus, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="未回访", Value="0"},
+                new SelectListItem(){Text="客户忙碌待联系", Value="1"},
+                new SelectListItem(){Text="待报价", Value="2"},
+                new SelectListItem(){Text="已报价考虑中", Value="3"},
+                new SelectListItem(){Text="无意向", Value="4"}
+            }, "Value", "Text"))</td>
+                <td>核单状态</td>
+                <td>@Html.DropDownListFor(m => m.AuditOrderStatus, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="未核单", Value="0"},
+                new SelectListItem(){Text="已核单", Value="1"},
+                new SelectListItem(){Text="无法出单", Value="2"}
+            }, "Value", "Text"))</td>
+                <td>车主手机号</td>
+                <td>@productuser.Mobile</td>
+            </tr>
+            <tr>
+                <td>上次回访状态</td>
+                <td>@if (productuser.VisitStatus == 1)
+                { <span>客户忙碌待联系</span>}
+                else if (productuser.VisitStatus == 2)
+                {
+                    <span>待报价</span>
+                }
+                else if (productuser.VisitStatus == 3)
+                {
+                    <span>已报价考虑中</span>
+                }
+                else if (productuser.VisitStatus == 4)
+                {
+                    <span>无意向</span>
+                }
+                else
+                {
+                    <span>未回访</span>
+                }
+                </td>
+                <td>上次核单状态</td>
+                <td>
+                    <span id="LastAuditOrderStatus"></span>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>保险公司</td>
+                <td colspan="5"><select id="CheckCompany" >
+    <option value="0">平安</option>
+    <option value="1">太平洋</option>
+    <option value="2">人保</option>
+</select></td>
+            </tr>
+        </table>
+
+        <table class="table table-bordered" align="center">
+            <tbody>
+                <tr>
+                    <td align="center" bgcolor="#f1f1f1">核保公司</td>
+                    <td align="center" bgcolor="#f1f1f1">核保状态</td>
+                    <td align="center" bgcolor="#f1f1f1">核保内容</td>
+
+                </tr>
+                <tr>
+                    <td align="center">@Html.TextBoxFor(m => m.ProductName, new { @id = "ProductName", @readonly = "readonly",@Class="ItemInput" })</td>
+                    <td align="center">
+                        @Html.DropDownListFor(m => m.SubmitStatus, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="核保失败", Value="0"},
+                new SelectListItem(){Text="核保成功", Value="1"}
+            }, "Value", "Text"),new {@Class="ItemDropList" })
+                </td>
+                <td align="center">@Html.TextBoxFor(m => m.SubmitResult, new { @id = "SubmitResult", @Class = "ItemInput" })</td>
+            </tr>
+                <tr>
+                    <td align="center" bgcolor="#f1f1f1">商业险投保单号</td>
+                    <td align="center" bgcolor="#f1f1f1">交强险投保单号</td>
+                    <td align="center" bgcolor="#f1f1f1"></td>
+                </tr>
+            <tr>
+                <td align="center">@Html.TextBoxFor(m => m.BizNo, new { @id = "BizNo", @Class = "ItemInput" })</td>
+                <td align="center">@Html.TextBoxFor(m => m.ForceNo, new { @id = "ForceNo", @Class = "ItemInput" })</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table class="table table-bordered" align="center">
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">险种</td>
+            <td align="center" bgcolor="#f1f1f1">保额</td>
+            <td align="center" bgcolor="#f1f1f1">保险费小计</td>
+        </tr>
+        <tr>
+            <td align="center">机动车损失保险</td>
+            <td align="center">
+                <input type="checkbox" id="CheSun_BaoECheck" class="ItemCheckBox" />
+                @Html.HiddenFor(m => m.CheSun_BaoE, new { @id = "CheSun_BaoE", @Class = "ItemInput" })
+        </td>
+          
+            <td align="center">@Html.TextBoxFor(m => m.CheSun_BaoFei, new { @id = "CheSun_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">不计免赔险（车损）</td>
+            <td align="center">
+                @Html.CheckBoxFor(m => m.BuJiMianCheSun_BaoE, new { @id = "BuJiMianCheSun_BaoE", @Class = "ItemCheckBox" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.BuJiMianCheSun_BaoFei, new { @id = "BuJiMianCheSun_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">第三方责任险</td>
+            <td align="center">@Html.DropDownListFor(m => m.SanZhe_BaoE, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="不投保", Value="0"},
+                new SelectListItem(){Text="5万", Value="50000"},
+                new SelectListItem(){Text="10万", Value="100000"},
+                new SelectListItem(){Text="15万", Value="150000"},
+                new SelectListItem(){Text="20万", Value="200000"},
+                new SelectListItem(){Text="30万", Value="300000"},
+                new SelectListItem(){Text="50万", Value="500000"},
+                new SelectListItem(){Text="100万", Value="1000000"},
+                new SelectListItem(){Text="150万", Value="1500000"}
+            }, "Value", "Text"), new { @Class = "ItemDropList" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.SanZhe_BaoFei, new { @id = "SanZhe_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">不计免赔险（三者）</td>
+            <td align="center">
+                @Html.CheckBoxFor(m => m.BuJiMianSanZhe_BaoE, new { @id = "BuJiMianSanZhe_BaoE" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.BuJiMianSanZhe_BaoFei, new { @id = "BuJiMianSanZhe_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">全车盗抢保险</td>
+            <td align="center">
+                @Html.CheckBoxFor(m => m.DaoQiang_BaoE, new { @id = "DaoQiang_BaoE", @Class = "ItemCheckBox" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.DaoQiang_BaoFei, new { @id = "DaoQiang_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">不计免赔险（盗抢）</td>
+            <td align="center">
+                @Html.CheckBoxFor(m => m.BuJiMianDaoQiang_BaoE, new { @id = "BuJiMianDaoQiang_BaoE", @Class = "ItemCheckBox" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.BuJiMianDaoQiang_BaoFei, new { @id = "BuJiMianDaoQiang_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">车上人员责任险（司机）</td>
+            <td align="center">
+                @Html.DropDownListFor(m => m.SiJi_BaoE, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="不投保", Value="0"},
+                new SelectListItem(){Text="1万", Value="10000"},
+                new SelectListItem(){Text="2万", Value="20000"},
+                new SelectListItem(){Text="3万", Value="30000"},
+                new SelectListItem(){Text="4万", Value="40000"},
+                new SelectListItem(){Text="5万", Value="50000"},
+                new SelectListItem(){Text="10万", Value="100000"},
+                new SelectListItem(){Text="20万", Value="200000"}
+            }, "Value", "Text"), new { @Class = "ItemDropList" })
+        </td>
+            <td align="center">@Html.TextBoxFor(m => m.SiJi_BaoFei, new { @id = "SiJi_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">车上人员责任险（乘客）</td>
+            <td align="center">
+                @Html.DropDownListFor(m => m.ChengKe_BaoE, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="不投保", Value="0"},
+                new SelectListItem(){Text="1万", Value="10000"},
+                new SelectListItem(){Text="2万", Value="20000"},
+                new SelectListItem(){Text="3万", Value="30000"},
+                new SelectListItem(){Text="4万", Value="40000"},
+                new SelectListItem(){Text="5万", Value="50000"},
+                new SelectListItem(){Text="10万", Value="100000"},
+                new SelectListItem(){Text="20万", Value="200000"}
+            }, "Value", "Text"), new { @Class = "ItemDropList" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.ChengKe_BaoFei, new { @id = "ChengKe_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">不计免赔险（车上人员）</td>
+            <td align="center">
+                @Html.CheckBoxFor(m => m.BuJiMianRenYuan_BaoE, new { @id = "BuJiMianRenYuan_BaoE", @Class = "ItemCheckBox" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.BuJiMianRenYuan_BaoFei, new { @id = "BuJiMianRenYuan_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">玻璃单独破碎险</td>
+            <td align="center">
+                @Html.DropDownListFor(m => m.BoLi_BaoE, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="不投保", Value="0"},
+                new SelectListItem(){Text="国产玻璃", Value="1"},
+                new SelectListItem(){Text="进口玻璃", Value="2"}
+            }, "Value", "Text"), new { @Class = "ItemDropList" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.BoLi_BaoFei, new { @id = "BoLi_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">车身划痕损失险</td>
+            <td align="center">
+                @Html.DropDownListFor(m => m.HuaHen_BaoE, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="不投保", Value="0"},
+                new SelectListItem(){Text="2000元", Value="2000"},
+                new SelectListItem(){Text="5000元", Value="5000"},
+                new SelectListItem(){Text="10000元", Value="10000"},
+                new SelectListItem(){Text="20000元", Value="20000"}
+            }, "Value", "Text"), new { @Class = "ItemDropList" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.HuaHen_BaoFei, new { @id = "HuaHen_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">涉水行驶损失险</td>
+            <td align="center">
+                @Html.CheckBoxFor(m => m.SheShui_BaoE, new { @id = "SheShui_BaoE", @Class = "ItemCheckBox" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.SheShui_BaoFei, new { @id = "SheShui_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">倒车镜、车灯单独损坏险</td>
+            <td align="center">
+                @Html.CheckBoxFor(m => m.CheDeng_BaoE, new { @id = "CheDeng_BaoE", @Class = "ItemCheckBox" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.CheDeng_BaoFei, new { @id = "CheDeng_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">自燃损失险</td>
+            <td align="center">
+                @Html.CheckBoxFor(m => m.ZiRan_BaoE, new { @id = "ZiRan_BaoE", @Class = "ItemCheckBox" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.ZiRan_BaoFei, new { @id = "ZiRan_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center">不计免赔险（附加险）</td>
+            <td align="center">
+                @Html.CheckBoxFor(m => m.BuJiMianFuJia_BaoE, new { @id = "BuJiMianFuJia_BaoE", @Class = "ItemCheckBox" })
+            </td>
+            <td align="center">@Html.TextBoxFor(m => m.BuJiMianFuJia_BaoFei, new { @id = "BuJiMianFuJia_BaoFei", @Class = "ItemInput" })</td>
+        </tr>
+    </table>
+    <br />
+    <table class="table table-bordered" align="center">
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">商业险费率</td>
+            <td align="center" bgcolor="#f1f1f1">交强险费率</td>
+            <td align="center" bgcolor="#f1f1f1">车船税费率</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td align="center">@Html.TextBoxFor(m => m.BizRate, new { @id = "BizRate", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.ForceRate, new { @id = "ForceRate", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.TaxRate, new { @id = "TaxRate", @Class = "ItemInput" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">平台商业费率</td>
+            <td align="center" bgcolor="#f1f1f1">平台交强费率</td>
+            <td align="center" bgcolor="#f1f1f1">平台车船费率</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td align="center">@Html.TextBoxFor(m => m.BizRate_Channel, new { @id = "BizRate_Channel", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.ForceRate_Channel, new { @id = "ForceRate_Channel", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.TaxRate_Channel, new { @id = "TaxRate_Channel", @Class = "ItemInput" })</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">商业险总额</td>
+            <td align="center" bgcolor="#f1f1f1">交强险总额</td>
+            <td align="center" bgcolor="#f1f1f1">车船税总额</td>
+            <td align="center" bgcolor="#f1f1f1">总价格</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td align="center">@Html.TextBoxFor(m => m.BizTotal, new { @id = "BizTotal", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.ForceTotal, new { @id = "ForceTotal", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.TaxTotal, new { @id = "TaxTotal", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.Total, new { @id = "Total", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">商业险优惠后价格</td>
+            <td align="center" bgcolor="#f1f1f1">交强险优惠后价格</td>
+            <td align="center" bgcolor="#f1f1f1">车船税优惠后价格</td>
+            <td align="center" bgcolor="#f1f1f1">优惠后总价格</td>
+        </tr>
+        <tr>
+            <td align="center">@Html.TextBoxFor(m => m.BizAfterCoupon, new { @id = "BizAfterCoupon", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.ForceAfterCoupon, new { @id = "ForceAfterCoupon", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.TaxAfterCoupon, new { @id = "TaxAfterCoupon", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.TotalAfterCoupon, new { @id = "TotalAfterCoupon", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td align="center">预付金额</td>
+            <td align="center">尾款</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td align="center" bgcolor="#f1f1f1">@Html.TextBoxFor(m => m.PrepaidAmount, new { @id = "PrepaidAmount", @Class = "ItemInput" })</td>
+            <td align="center" bgcolor="#f1f1f1"><span id="Retainage"></span></td>
+        </tr>
+    </table>
+    <br/>
+    <strong>收单地址</strong>
+    <table class="table table-bordered" align="center">
+        <tr>
+            <td  bgcolor="#f1f1f1">保单邮寄方式</td>
+            <td colspan="5">@Html.DropDownListFor(m => m.DeliverType, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="上门签约", Value="1"},
+                new SelectListItem(){Text="自提", Value="2"}
+            }, "Value", "Text"))</td>
+        </tr>
+        <tr>
+            <td bgcolor="#f1f1f1">收件人姓名</td>
+            <td>@orderlsit.Order_Deliver.FirstOrDefault().DeliverName</td>
+            <td bgcolor="#f1f1f1">下单人联系方式</td>
+            <td>@productuser.Mobile</td>
+            <td bgcolor="#f1f1f1">收货人联系方式</td>
+            <td>@orderlsit.Order_Deliver.FirstOrDefault().DeliverMobile</td>
+        </tr>
+        <tr>
+            <td bgcolor="#f1f1f1">收货地址</td>
+            <td colspan="5">@orderlsit.Order_Deliver.FirstOrDefault().DeliverAddress</td>
+        </tr>
+    </table>
+    <br /><span>修改</span><br/>
+    <table class="table table-bordered" align="center">
+    <tr>
+        <td bgcolor="#f1f1f1">收件人姓名</td>
+        <td>@Html.TextBoxFor(m => m.DeliverName, new { @id = "DeliverName" })</td>
+        <td bgcolor="#f1f1f1">下单人联系方式</td>
+        <td>@productuser.Mobile</td>
+        <td bgcolor="#f1f1f1">收货人联系方式</td>
+        <td>@Html.TextBoxFor(m => m.DeliverMobile, new { @id = "DeliverMobile" })</td>
+    </tr>
+    <tr>
+        <td>选择地区</td>
+        <td>@Html.HiddenFor(m => m.DeliverDistrictCode, new { @id = "DeliverDistrictCode" })
+        <select class="f-select01" id="s_province" name="s_province"></select>
+        <select class="f-select01" id="s_city" name="s_city"></select>
+        <select class="f-select01" id="s_county" name="s_county"></select></td>
+        <td bgcolor="#f1f1f1">详细地址</td>
+        <td colspan="3">@Html.TextBoxFor(m => m.DeliverAddress, new { @id = "DeliverAddress",@style="Width:380px;" })</td>
+    </tr>
+</table>
+    <input type="submit" id="SaveModel" value="保存" onclick="CheckItemChange()" />
+    <input type="button" id="ChangeAuditDocuments" value="核单通过"/>
+    <input type="button" id="ChangeAuditMessage" value="核单并发送短信" />
+}
+</div>
+    </div>
+<script src="@Url.Content("~/Scripts/area.js")" type="text/javascript"></script>
+<script>
+    var itemdata;
+    _init_area();
+    $(function () {
+        $("#VisitStatus").val(@productuser.VisitStatus);//设置回访装态下拉
+        $("#CheckCompany").val(@Request["InsuranceCompany"]);
+        $("#PolicyIdCardType").val(@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardType);
+        GetProductItem();
+        $("#CheckCompany").change(function () { GetProductItem(); });
+        $('#s_province').change(function () {
+            $('#DeliverDistrictCode').val($('#s_province').val());
+        });
+        $('#s_city').change(function () {
+            $('#DeliverDistrictCode').val($('#DeliverDistrictCode').val() + "|" + $('#s_city').val());
+        });
+        $('#s_county').change(function () {
+            $('#DeliverDistrictCode').val($('#DeliverDistrictCode').val() + "|" + $('#s_county').val());
+        });
+        $("#ChangeAuditDocuments").click(function () { ChangeAuditDocuments(); });
+        $("#ChangeAuditMessage").click(function () { ChangeAuditDocuments(); ChangeOrderList(); });
+    });
+    jeDate({
+        dateCell: '#RegisterDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: jeDate.now(0) //1代表明天，2代表后天，以此类推
+    });
+    jeDate({
+        dateCell: '#ForceExpireDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: '2030-12-31' //1代表明天，2代表后天，以此类推
+    });
+    jeDate({
+        dateCell: '#BusinessExpireDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: '2030-12-31' //1代表明天，2代表后天，以此类推
+    });
+    function GetProductItem() {
+        var company = $("#CheckCompany").val();
+        $("#LoseStatus").html("");
+        $("#Retainage").html("");
+        $(".ItemDropList").val(0);
+        $(".ItemInput").val("");
+        $(".ItemCheckBox").attr("checked", false);
+        $.get("GetProductItem", { UserId: parseInt('@Request["UserId"]'), InsuranceCompany: company }, function (data) {
+            if (data == "null")
+            {
+                $("#LoseStatus").html("暂无信息");
+                return;
+            }
+            var Result = JSON.parse(data);
+            itemdata = Result;
+            $("#ItemId").val(Result.Id);
+            $("#ItemUserId").val(Result.UserId);
+            $("#ItemSource").val(Result.Source);
+            $("#QuoteResult").val(Result.QuoteResult);
+            $("#QuoteStatus").val(Result.QuoteStatus);
+            $("#ProductName").val(Result.ProductName);
+            $("#SubmitStatus").val(Result.SubmitStatus);
+            $("#SubmitResult").val(Result.SubmitResult);
+            $("#BizRate").val(Result.BizRate);
+            $("#ForceRate").val(Result.ForceRate);
+            $("#TaxRate").val(Result.TaxRate);
+            $("#BizRate_Channel").val(Result.BizRate_Channel);
+            $("#ForceRate_Channel").val(Result.ForceRate_Channel);
+            $("#TaxRate_Channel").val(Result.TaxRate_Channel);
+            $("#BizNo").val(Result.BizNo);
+            $("#ForceNo").val(Result.ForceNo);
+            $("#CheSun_BaoECheck").attr("checked", Result.CheSun_BaoE > 0 ? true : false);
+            $("#CheSun_BaoE").val(Result.CheSun_BaoE);
+            $("#CheSun_BaoFei").val(Result.CheSun_BaoFei);
+            $("#SanZhe_BaoE").val(Result.SanZhe_BaoE);
+            $("#DaoQiang_BaoE").attr("checked", Result.DaoQiang_BaoE == 1 ? true : false);;
+            $("#DaoQiang_BaoFei").val(Result.DaoQiang_BaoFei);
+            $("#SiJi_BaoE").val(Result.SiJi_BaoE);
+            $("#SiJi_BaoFei").val(Result.SiJi_BaoFei);
+            $("#ChengKe_BaoE").val(Result.ChengKe_BaoE);
+            $("#ChengKe_BaoFei").val(Result.ChengKe_BaoFei);
+            $("#BoLi_BaoE").val(Result.BoLi_BaoE);
+            $("#BoLi_BaoFei").val(Result.BoLi_BaoFei);
+            $("#HuaHen_BaoE").val(Result.HuaHen_BaoE);
+            $("#HuaHen_BaoFei").val(Result.HuaHen_BaoFei);
+            $("#BuJiMianCheSun_BaoE").attr("checked", Result.BuJiMianCheSun_BaoE == 1 ? true : false);
+            $("#BuJiMianCheSun_BaoFei").val(Result.BuJiMianCheSun_BaoFei);
+            $("#BuJiMianSanZhe_BaoE").attr("checked", Result.BuJiMianSanZhe_BaoE == 1 ? true : false);
+            $("#BuJiMianSanZhe_BaoFei").val(Result.BuJiMianSanZhe_BaoFei);
+            $("#BuJiMianDaoQiang_BaoE").attr("checked", Result.BuJiMianDaoQiang_BaoE == 1 ? true : false);
+            $("#BuJiMianDaoQiang_BaoFei").val(Result.BuJiMianDaoQiang_BaoFei);
+            $("#BuJiMianRenYuan_BaoE").attr("checked", Result.BuJiMianRenYuan_BaoE == 1 ? true : false);
+            $("#BuJiMianRenYuan_BaoFei").val(Result.BuJiMianRenYuan_BaoFei);
+            $("#SheShui_BaoE").attr("checked", Result.SheShui_BaoE == 1 ? true : false);
+            $("#SheShui_BaoFei").val(Result.SheShui_BaoFei);
+            $("#CheDeng_BaoE").attr("checked", Result.CheDeng_BaoE == 1 ? true : false);
+            $("#CheDeng_BaoFei").val(Result.CheDeng_BaoFei);
+            $("#ZiRan_BaoE").attr("checked", Result.ZiRan_BaoE == 1 ? true : false);
+            $("#ZiRan_BaoFei").val(Result.ZiRan_BaoFei);
+            $("#BuJiMianFuJia_BaoE").attr("checked", Result.BuJiMianFuJia_BaoE == 1 ? true : false);
+            $("#BuJiMianFuJia_BaoFei").val(Result.BuJiMianFuJia_BaoFei);
+            $("#BizTotal").val(Result.BizTotal);
+            $("#ForceTotal").val(Result.ForceTotal);
+            $("#TaxTotal").val(Result.TaxTotal);
+            $("#Total").val(Result.Total);
+            $("#BizAfterCoupon").val(Result.BizAfterCoupon);
+            $("#ForceAfterCoupon").val(Result.ForceAfterCoupon);
+            $("#TaxAfterCoupon").val(Result.TaxAfterCoupon);
+            $("#TotalAfterCoupon").val(Result.TotalAfterCoupon);
+            $("#AuditOrderStatus").val(Result.AuditOrderStatus == null ? 0 : Result.AuditOrderStatus);//设置核单装态下拉
+            if (Result.AuditOrderStatus==1)
+            {
+                $("LastAuditOrderStatus").html("已核单");
+            }
+            else if(Result.AuditOrderStatus==2)
+            {
+                $("LastAuditOrderStatus").html("无法出单");
+            }
+            else
+            {
+                $("LastAuditOrderStatus").html("未核单");
+            }
+            $("#ItemCreateTime").val(Result.CreateTime);
+            $("#PrepaidAmount").val(Result.PrepaidAmount);
+            $("#Retainage").html(Result.TotalAfterCoupon - Result.PrepaidAmount);
+            $("#Description").val(Result.Description);
+        })
+    }
+    function CheckItemChange()
+    {
+        if (itemdata == "null")
+        {
+            $("#ItemId").val(0);
+        }
+        var SubmitStatus= $("#SubmitStatus").val();
+        var SubmitResult = $("#SubmitResult").val();
+        var BizRate = $("#BizRate").val();
+        var ForceRate = $("#ForceRate").val();
+        var TaxRate = $("#TaxRate").val();
+        var BizRate_Channel = $("#BizRate_Channel").val();
+        var ForceRate_Channel = $("#ForceRate_Channel").val();
+        var TaxRate_Channel = $("#TaxRate_Channel").val();
+        var BizNo = $("#BizNo").val();
+        var ForceNo = $("#ForceNo").val();
+        var CheSun_BaoE;
+        if ($("#CheSun_BaoECheck").is(':checked') == true)
+        {
+            CheSun_BaoE = $("#CheSun_BaoE").val();;
+        }
+        else
+        {
+            CheSun_BaoE = 0;
+        }
+        var CheSun_BaoFei = $("#CheSun_BaoFei").val();
+        var SanZhe_BaoE = $("#SanZhe_BaoE").val();
+        var DaoQiang_BaoE =$("#DaoQiang_BaoE").is(':checked') == true ? 1 : 0;
+        var DaoQiang_BaoFei = $("#DaoQiang_BaoFei").val();
+        var SiJi_BaoE = $("#SiJi_BaoE").val();
+        var SiJi_BaoFei = $("#SiJi_BaoFei").val();
+        var ChengKe_BaoE = $("#ChengKe_BaoE").val();
+        var ChengKe_BaoFei = $("#ChengKe_BaoFei").val();
+        var BoLi_BaoE = $("#BoLi_BaoE").val();
+        var BoLi_BaoFei = $("#BoLi_BaoFei").val();
+        var HuaHen_BaoE = $("#HuaHen_BaoE").val();
+        var HuaHen_BaoFei = $("#HuaHen_BaoFei").val();
+        var BuJiMianCheSun_BaoE =$("#BuJiMianCheSun_BaoE").is(':checked') == true ? 1 : 0;
+        var BuJiMianCheSun_BaoFei = $("#BuJiMianCheSun_BaoFei").val();
+        var BuJiMianSanZhe_BaoE = $("#BuJiMianSanZhe_BaoE").is(':checked') == true ? 1 : 0;
+        var BuJiMianSanZhe_BaoFei = $("#BuJiMianSanZhe_BaoFei").val();
+        var BuJiMianDaoQiang_BaoE =  $("#BuJiMianDaoQiang_BaoE").is(':checked') == true ? 1 : 0;
+        var BuJiMianDaoQiang_BaoFei = $("#BuJiMianDaoQiang_BaoFei").val();
+        var BuJiMianRenYuan_BaoE =  $("#BuJiMianRenYuan_BaoE").is(':checked') == true ? 1 : 0;
+        var BuJiMianRenYuan_BaoFei = $("#BuJiMianRenYuan_BaoFei").val();
+        var SheShui_BaoE =  $("#SheShui_BaoE").is(':checked') == true ? 1 : 0;
+        var SheShui_BaoFei = $("#SheShui_BaoFei").val();
+        var CheDeng_BaoE = $("#CheDeng_BaoE").is(':checked') == true ? 1 : 0;
+        var CheDeng_BaoFei = $("#CheDeng_BaoFei").val();
+        var ZiRan_BaoE =  $("#ZiRan_BaoE").is(':checked') == true ? 1 : 0;
+        var ZiRan_BaoFei = $("#ZiRan_BaoFei").val();
+        var BuJiMianFuJia_BaoE =  $("#BuJiMianFuJia_BaoE").is(':checked') == true ? 1 : 0;
+        var BuJiMianFuJia_BaoFei = $("#BuJiMianFuJia_BaoFei").val();
+        var BizTotal = $("#BizTotal").val();
+        var ForceTotal = $("#ForceTotal").val();
+        var TaxTotal = $("#TaxTotal").val();
+        var Total = $("#Total").val();
+        var BizAfterCoupon = $("#BizAfterCoupon").val();
+        var ForceAfterCoupon = $("#ForceAfterCoupon").val();
+        var TaxAfterCoupon = $("#TaxAfterCoupon").val();
+        var TotalAfterCoupon = $("#TotalAfterCoupon").val();
+        var AuditOrderStatus = $("#AuditOrderStatus").val();
+        if (SubmitStatus != itemdata.SubmitStatus.toString() || SubmitResult != itemdata.SubmitResult.toString() ||
+            BizRate != itemdata.BizRate.toString() || ForceRate != itemdata.ForceRate.toString() || TaxRate != itemdata.TaxRate.toString() ||
+            BizRate_Channel != itemdata.BizRate_Channel.toString() || ForceRate_Channel != itemdata.ForceRate_Channel.toString() || TaxRate_Channel != itemdata.TaxRate_Channel.toString() ||
+            BizNo != itemdata.BizNo.toString() || ForceNo != itemdata.ForceNo.toString() || CheSun_BaoE != itemdata.CheSun_BaoE.toString() ||
+            CheSun_BaoFei != itemdata.CheSun_BaoFei.toString() || SanZhe_BaoE != itemdata.SanZhe_BaoE.toString() || DaoQiang_BaoE != itemdata.DaoQiang_BaoE.toString() ||
+            DaoQiang_BaoFei != DaoQiang_BaoFei.TaxRate.toString() || SiJi_BaoE != itemdata.SiJi_BaoE.toString() || SiJi_BaoFei != itemdata.SiJi_BaoFei.toString() ||
+            ChengKe_BaoE != itemdata.ChengKe_BaoE.toString() || ChengKe_BaoFei != itemdata.ChengKe_BaoFei.toString() || BoLi_BaoE != itemdata.BoLi_BaoE.toString() ||
+           BoLi_BaoFei != itemdata.BoLi_BaoFei.toString() || HuaHen_BaoE != itemdata.HuaHen_BaoE.toString() || HuaHen_BaoFei != itemdata.HuaHen_BaoFei.toString() ||
+            BuJiMianCheSun_BaoE != itemdata.BuJiMianCheSun_BaoE.toString() || BuJiMianCheSun_BaoFei != itemdata.BuJiMianCheSun_BaoFei.toString() || BuJiMianSanZhe_BaoE != itemdata.BuJiMianSanZhe_BaoE.toString()
+            || BuJiMianSanZhe_BaoFei != itemdata.BuJiMianSanZhe_BaoFei.toString() || BuJiMianDaoQiang_BaoE != itemdata.BuJiMianDaoQiang_BaoE.toString() || BuJiMianDaoQiang_BaoFei != itemdata.BuJiMianDaoQiang_BaoFei.toString()
+            || BuJiMianRenYuan_BaoE != itemdata.BuJiMianRenYuan_BaoE.toString() || BuJiMianRenYuan_BaoFei != itemdata.BuJiMianRenYuan_BaoFei.toString() || BizTotal != itemdata.BizTotal.toString()
+            || ForceTotal != itemdata.ForceTotal.toString() || TaxTotal != itemdata.TaxTotal.toString() || Total != itemdata.Total.toString()
+            || BizAfterCoupon != itemdata.BizAfterCoupon.toString() || ForceAfterCoupon != itemdata.ForceAfterCoupon.toString() || TaxAfterCoupon != itemdata.TaxAfterCoupon.toString()
+            || TotalAfterCoupon != itemdata.TotalAfterCoupon.toString() || AuditOrderStatus != itemdata.AuditOrderStatus.toString())
+        {
+            $("#ItemId").val(0);
+        }
+        var DeliverType = $("#DeliverType").val();
+        if (DeliverType == 1)
+        {
+            $("#DeliverPrice").val(global.order.deliverPrice);
+        }
+        else
+        {
+            $("#DeliverPrice").val("");
+        }
+    }
+    function ChangeAuditDocuments()
+    {
+        var ItemId = $("#ItemId").val();
+        $.post("ChangeAuditDocuments", { ItemId: ItemId }, function (data) {
+            if(data==1)
+            {
+                alert("核单成功");
+            }
+            else
+            {
+                alert("核单失败");
+            }
+        });
+    }
+    function ChangeOrderList()
+    {
+        var description = $("#Description").val();
+        var ProductOriginalPrice = $("#Total").val();
+        var ProductDealPrice = $("#TotalAfterCoupon").val();
+        var ItemId = $("#ItemId").val();
+        var ForceExpireDate = $("#ForceExpireDate").val();
+        var BusinessExpireDate = $("#BusinessExpireDate").val();
+        var buid = $("#BuId").val();
+        var AmountPayable = $("#TotalAfterCoupon").val() + $("#DeliverPrice").val();
+        var Status = 1;
+        var PrepaidAmount = $("#PrepaidAmount").val();
+        var mobeil = $("#Mobile").val();
+        var channel = $("#OrderBaeChannel").val();
+        var source = $("#ItemSource").val();
+        var OrderBaeOrderCode=$("#OrderBaeOrderCode").val();
+        var OrderBaseId = $("#OrderBaseId").val();
+        var OrderItemId = $("#OrderItemId").val();
+        var PolicyId = $("#PolicyId").val();
+        var OrderDeliverId = $("#OrderDeliverId").val();
+        $.post("ChangeOrderList", { orderbaseId: OrderBaseId, orderitemId: OrderItemId, ordercode: OrderBaeOrderCode, PrepaidAmount: PrepaidAmount, Status: Status, AmountPayable: AmountPayable, buid: buid, BusinessExpireDate: BusinessExpireDate, ForceExpireDate: ForceExpireDate, ItemId: ItemId, ProductDealPrice: ProductDealPrice, ProductOriginalPrice: ProductOriginalPrice, description: description }, function (data) {
+            if(data==1)
+            {
+                window.location.href = "/OrderV2/Index?productId=" + ItemId + "&mobile=" + mobeil + "&channel=" + channel + "&intentionCompany=" + source + "&OrderCode=" + OrderBaeOrderCode + "&OrderBaseId=" + OrderBaseId + "&OrderItemId=" + OrderItemId + "&OrderPolicyId=" + PolicyId + "&OrderDeliverId=" + OrderDeliverId;
+            }
+        });
+    }
+</script>

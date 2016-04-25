@@ -1,0 +1,435 @@
+﻿
+@model HONGLI.Entity.UserReInsuranceResult
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>车险询价-填写信息</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link href="~/public/css/all.css" rel="stylesheet" />
+    <script src="~/public/js/base.js"></script>
+
+</head>
+<body>
+    <div class="f-nav">
+        <h2>填写信息</h2>
+        <div class="f-nav-back">
+            <a href="javascript:;" class="riaGoBack"><i></i></a>
+        </div>
+        <div class="f-nav-action"></div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+
+
+    @if (Model != null && Model.UserInfo != null)
+    {
+        var userInfo = Model.UserInfo;
+
+        <div class="page11-form01">
+            <div class="page11-title01"><i></i>机动车行驶证信息</div>
+            <div class="f-form01-item">
+                <label class="f-form01-label">车牌号</label>
+                <div class="f-form01-main">
+                    <input type="text" value="@userInfo.LicenseNo" class="f-form01-input100">
+                </div>
+            </div>
+            <div class="f-form01-item">
+                <label class="f-form01-label">品牌型号</label>
+                <div class="f-form01-main">
+                    <input type="text" id="modelName" value="@userInfo.MoldName" readonly="" class="f-form01-input100">
+                </div>
+                @*<div class="f-form01-go">
+                    <a href="@Url.Action("LicenseModify", "Product", new {channel=ViewBag.channel, mobile=ViewBag.mobile, carLicense = userInfo.LicenseNo, modlName = userInfo.MoldName, cityCode=userInfo.CityCode })" class="f-form01-icon-arrow"></a>
+                </div>*@
+            </div>
+        </div>
+
+        if (Model.UserInfo != null)
+        {
+            if (Model.UserInfo.LastYearSource > -1)
+            {
+                <div class="page11-success">
+                    往年配置
+                    <span>获取成功</span>
+                    以下为往年配置详情
+                </div>
+                <div class="page11-tab">
+                    <a href="javascript:void(0);" class="current" id="lastYearConfig">往年配置<i></i></a>
+                    <a href="javascript:void(0);" id="allProtected">全面保障<i></i></a>
+                </div>
+            }
+            else
+            {
+                <div class="page11-success">
+                    往年配置
+                    <span>获取失败</span>
+                    请自定义配置
+                </div>
+                <div class="page11-tab">
+                    <a href="javascript:void(0);" class="current" id="lastYearConfig">自定义配置<i></i></a>
+                    <a href="javascript:void(0);" id="allProtected">全面保障<i></i></a>
+                </div>
+            }
+            if (Model.Result != null && Model.Result.Count > 0)
+            {
+                var result = Model.Result[0];
+
+                <!--往年配置start-->
+                <div class="page11-form02">
+                    <div class="page11-title01"><i></i>交强险（含车船税）</div>
+                    <div class="f-form01-item">
+                        <div class="f-form01-main"><p class="t-1">交强险</p></div>
+                        <div class="f-form01-other"><input type="checkbox" id="jqx" checked="" value="@result.ForceTotal" /></div>
+                    </div>
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-1">车船税</p>
+                            <p class="t-2">按照国家规定与交强险同时缴纳</p>
+                        </div>
+                        <div class="f-form01-other"><input type="checkbox" id="ccs" checked="" value="@result.TaxTotal" /></div>
+                    </div>
+                </div>
+                <div class="page11-form03">
+                    <div class="page11-title02">
+                        <i></i>
+                        <p class="page11-title02-p1">国家强制投保，未投保则无法验车并处双倍罚款</p>
+                        <p class="page11-title02-p2">商业险<span class="page11-title02-zx">主险</span><span class="page11-title02-fjx">附加险</span></p>
+                    </div>
+                    <!--主险-->
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-p1 t-icon1">机动车损失保险</p>
+                            <p class="t-p2">95%车主选择购买</p>
+                        </div>
+                        <div class="f-form01-other">
+                            <select class="f-select01" id="bujimiansanzhe">
+                                <option>不计免赔</option>
+                            </select>
+                            <input type="checkbox" id="chesun" value="@result.CheSun.BaoE" />
+                        </div>
+                    </div>
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-p1 t-icon1">机动车第三责任保险</p>
+                            <p class="t-p2">98%车主选择购买</p>
+                        </div>
+                        <div class="f-form01-other">
+                            <select class="f-select01" id="bujimiansanzhe">
+                                <option>不计免赔</option>
+                            </select>
+                            <select class="f-select02 ml20" id="sanzhe" value="@result.SanZhe.BaoE">
+                                <option value="0">不投保</option>
+                                <option value="50000">5万</option>
+                                <option value="100000">10万</option>
+                                <option value="150000">15万</option>
+                                <option value="200000">20万</option>
+                                <option value="300000">30万</option>
+                                <option value="500000">50万</option>
+                                <option value="1000000">100万</option>
+                                <option value="1500000">150万</option>
+                            </select>
+                            <input type="checkbox" value="@result.SanZhe.BaoE" />
+                        </div>
+                    </div>
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-p1 t-icon1">机动车全车盗抢保险</p>
+                            <p class="t-p2">未超过三年，85%车主选择购买</p>
+                        </div>
+                        <div class="f-form01-other">
+                            <select class="f-select01" id="bujimiandaoqiang">
+                                <option>不计免赔</option>
+                            </select>
+                            <input type="checkbox" id="daoqiang" value="@result.DaoQiang.BaoE" />
+                        </div>
+                    </div>
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-p1 t-icon1">车上人员责任险（司机）</p>
+                            <p class="t-p2">50%车主选择购买</p>
+                        </div>
+                        <div class="f-form01-other">
+                            @*<select class="f-select01 f-select01-1" disabled="" id="bujimiansiji">
+                                    <option>不计免赔</option>
+                                </select>*@
+                            <select class="f-select02 ml20" id="siji" value="@result.SiJi.BaoE">
+                                <option value="0">不投保</option>
+                                <option value="10000">1万</option>
+                                <option value="20000">2万</option>
+                                <option value="30000">3万</option>
+                                <option value="40000">4万</option>
+                                <option value="50000">5万</option>
+                                <option value="100000">10万</option>
+                                <option value="200000">20万</option>
+                            </select>
+                            <input type="checkbox" value="@result.SiJi.BaoE" />
+                        </div>
+                    </div>
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-p1 t-icon1">车上人员责任险（乘客）</p>
+                            <p class="t-p2">50%车主选择购买</p>
+                        </div>
+                        <div class="f-form01-other">
+                            @*<select class="f-select01 f-select01-1" disabled="" id="bujimianchengke">
+                                    <option>不计免赔</option>
+                                </select>*@
+                            <select class="f-select02 ml20" id="chengke" value="@result.ChengKe.BaoE">
+                                <option value="0">不投保</option>
+                                <option value="10000">1万</option>
+                                <option value="20000">2万</option>
+                                <option value="30000">3万</option>
+                                <option value="40000">4万</option>
+                                <option value="10000">5万</option>
+                                <option value="100000">10万</option>
+                                <option value="200000">20万</option>
+                            </select>
+                            <input type="checkbox" value="@result.ChengKe.BaoE" />
+                        </div>
+                    </div>
+
+                    <!--附加险-->
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-p1 t-icon2">车身划痕险</p>
+                            <p class="t-p2">75%车主选择购买</p>
+                        </div>
+                        <div class="f-form01-other">
+                            <select class="f-select02 ml20" id="huahen" value="@result.HuaHen.BaoE">
+                                <option value="0">不投保</option>
+                                <option value="2000">2000元</option>
+                                <option value="5000">5000元</option>
+                                <option value="10000">10000元</option>
+                                <option value="20000">20000元</option>
+                            </select>
+                            <input type="checkbox" value="@result.HuaHen.BaoE" />
+                        </div>
+                    </div>
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-p1 t-icon2">玻璃单独破碎险</p>
+                            <p class="t-p2">60%车主选择购买</p>
+                        </div>
+                        <div class="f-form01-other">
+                            <select class="f-select02 ml20" id="boli" value="@result.BoLi.BaoE">
+                                <option value="0">不投保</option>
+                                <option value="1">国产玻璃</option>
+                                <option value="2">进口玻璃</option>
+                            </select>
+                            <input type="checkbox" value="@result.BoLi.BaoE" />
+                        </div>
+                    </div>
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-p1 t-icon2">涉水行驶损失险</p>
+                            <p class="t-p2">在北京，建议上此险</p>
+                        </div>
+                        <div class="f-form01-other">
+                            <input type="checkbox" id="sheshui" value="@result.SheShui.BaoE" />
+                        </div>
+                    </div>
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-p1 t-icon2">自燃险</p>
+                            <p class="t-p2">车辆使用超过3年，建议购买此险</p>
+                        </div>
+                        <div class="f-form01-other">
+                            <input type="checkbox" id="ziran" value="@result.ZiRan.BaoE" />
+                        </div>
+                    </div>
+                    <div class="f-form01-item">
+                        <div class="f-form01-main">
+                            <p class="t-p1 t-icon2">倒车镜、车灯单独损失险</p>
+                            <p class="t-p2">此险种仅支持平安车险</p>
+                        </div>
+                        <div class="f-form01-other">
+                            <input type="checkbox" id="chedeng" value="@result.CheDeng.BaoE" />
+                        </div>
+                    </div>
+                </div>
+                <!--往年配置end-->
+            }
+        }
+    }
+
+    <div style="margin-bottom: .16rem;"><a class="f-button01" id="submit">立即试算</a></div>
+    <script src="~/public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
+    <script src="~/public/js/all.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //init
+            init();
+        });
+
+        function init() {
+            //修改的品牌型号
+            var modelName = "@ViewBag.modelName";
+            if (modelName != "") {
+                $("#modelName").val(modelName);
+            }
+
+            setSelected("sanzhe");
+            setSelected("siji");
+            setSelected("chengke");
+            setSelected("huahen");
+            setSelected("boli");
+
+            $("input[type=checkbox]").each(function () {
+                if (!$(this).is(":checked") && $(this).attr("value") > 0) {
+                    setChecked($(this));
+                }
+            });
+        }
+
+        function setSelected(sourceId) {
+            var objValue = $("#" + sourceId).attr("value");
+            if (objValue > 0) {
+                $("#" + sourceId).val(objValue);
+            }
+        }
+
+        function setChecked(source) {
+            var objValue = $(source).attr("value");
+            if (objValue > 0) {
+                $(source).prop("checked", true);
+            }
+            else {
+                $(source).removeAttr("checked");
+            }
+        }
+
+
+        //提交查询
+        $("#submit").on('touchstart', function () {
+            var jqx = ($("#jqx").prop("checked") == true) ? 1 : 0;
+            var ccs = ($("#ccs").prop("checked") == true) ? 1 : 0;
+            if (jqx == 0 || ccs == 0) {
+                alert("国家强制投保，未投保则无法验车并处双倍罚款!");
+                return;
+            }
+
+            var boli = $("#boli").val();  //0,1,2
+            var bujimianchesun = $("#bujimianchesun :disabled") ? 1 : 0;  //0,1
+            var bujimiandaoqiang = $("#bujimiandaoqiang").attr("disabled") ? 1 : 0; //0,1
+            var bujimianfujia = $("#bujimianfujia").attr("disabled") ? 1 : 0;  //0,1
+            var bujimianrenyuan = $("#bujimianrenyuan").attr("disabled") ? 1 : 0;  //0,1
+            var bujimiansanzhe = $("#bujimiansanzhe").attr("disabled") ? 1 : 0;  //0,1
+            var chedeng = ($("#chedeng").attr('checked') == true) ? 1 : 0;  //0,1
+            var sheshui = ($("#chesun").attr('checked') == true) ? 1 : 0;  //0,1
+            var huahen = $("#huahen").val(); //0,value
+            var siji = $("#siji").val(); //0,value
+            var chengke = $("#chengke").val();//0,value
+            var chesun = ($("#chesun").attr('checked') == true) ? 1 : 0;   //0,1
+            var daoqiang = ($("#daoqiang").attr('checked') == true) ? 1 : 0; //0,1
+            var sanzhe = $("#sanzhe").val(); //0,value
+            var ziran = ($("#ziran").attr('checked') == true) ? 1 : 0; //0,1
+
+            var dataItem = {
+                boli: boli,
+                bujimianchesun: bujimianchesun,
+                bujimiandaoqiang: bujimiandaoqiang,
+                bujimianfujia: bujimianfujia,
+                bujimianrenyuan: bujimianrenyuan,
+                bujimiansanzhe: bujimiansanzhe,
+                chedeng: chedeng,
+                sheshui: sheshui,
+                huahen: huahen,
+                siji: siji,
+                chengke: chengke,
+                chesun: chesun,
+                daoqiang: daoqiang,
+                sanzhe: sanzhe,
+                ziran: ziran
+            };
+
+            var jsonToString = JSON.stringify(dataItem);
+
+            var url = "@Url.Action("ResultList")?channel=@ViewBag.channel&mobile=@ViewBag.mobile&carLicense=@ViewBag.carLicense&dataItem=" + jsonToString;
+
+            window.location.href = url;
+        });
+
+        //不计免赔点击事件
+        $(".f-select01").on("touchstart", function () {
+            var obj = $(this);
+            if (obj.is(":disabled")) {
+                obj.removeAttr("disabled");
+                obj.removeClass("f-select01-1");
+            }
+            else {
+                obj.prop("disabled",true);
+                obj.addClass("f-select01-1");
+            }
+        });
+
+        //去年配置tab
+        $("#lastYearConfig").on("touchstart", function () {
+            var obj = $(this);
+            obj.addClass("current");
+            obj.siblings("a").removeClass("current");
+        });
+
+        //全面保障tab
+        $("#allProtected").on("touchstart", function () {
+            var obj = $(this);
+            obj.addClass("current");
+            obj.siblings("a").removeClass("current");
+            
+            //checkbox全部勾选，且切换最高保额
+            $("input[type=checkbox]").each(function () {
+                if (!$(this).is(":checked")) {
+                    $(this).prop("checked", true);
+
+                    checkBoxChange($(this), "max");
+                }
+            });
+        })
+
+
+
+        //select change,checkbox change
+        $(".f-select02").on("change", function () {
+            var value = $(this).val();
+            if (value > 0) {
+                $(this).siblings("input[type=checkbox]").prop("checked", true);
+            } else {
+                $(this).siblings("input[type=checkbox]").prop("checked",false);
+            }
+        });
+
+        //checkbox change, select change 选取中间的index设置为选中
+        $("input[type=checkbox]").on("change", function () {
+            checkBoxChange($(this), "middle");
+        });
+
+        //checkbox change, select change (选取中间的index为选中or最大值)
+        function checkBoxChange(source, type) {
+            console.log(type);
+            if (source.is(":checked")) {
+                if (type == "max") {
+                    var maxValue = source.siblings(".f-select02").find("option:last").val();
+                    source.siblings(".f-select02").val(maxValue);
+                }
+                else {
+                    var size = source.siblings(".f-select02").find("option").size();
+                   if(size >0){
+                       var index = parseInt(size / 2) + 1;
+                       source.siblings(".f-select02").find("option:nth-child("+index+")").prop("selected", true);
+                   }
+                }
+            }
+            else {
+                source.siblings(".f-select02").val(0);
+            }
+        }
+    </script>
+</body>
+</html>

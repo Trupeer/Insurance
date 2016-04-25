@@ -1,0 +1,122 @@
+﻿@using HONGLI.Entity;
+@model HONGLI.Web.Models.OrderDetailModels
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link rel="stylesheet" type="text/css" href="../public/css/all.css">
+    <script src="../public/js/base.js"></script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>订单详情</h2>
+        <div class="f-nav-back">
+            <a href="javascript:;" id="riaGoBack"><i></i></a>
+        </div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    @if (Model != null)
+    {
+
+    <div class="page30-info">订单号<span>@Model.OrderCode</span></div>
+    if (Model.DeliverType == 1)
+    {
+        <div class="page30-address">
+            <div class="f-list01">
+                <div class="f-list01-main">
+                    <p class="t-p1">
+                        <span class="t-name">@Model.DeliverName</span>
+                        <span class="t-mobile">@Model.DeliverMobile</span>
+                    </p>
+                    <p class="t-p2">@Model.DeliverAddress</p>
+                </div>                
+            </div>
+        </div>
+    }
+
+    <div class="page20-form">
+        <div class="f-form01-item">
+            <label class="f-form01-label">
+                <img src="@HtmlHelper.GetInsuranceLogoUrl((EnumInsuranceLogo)(Model.InsuranceLogo))">
+            </label>
+            <div class="f-form01-main">
+                <p class="t-24">@Model.ProductTitle</p>
+                <p class="t-money01"><i>￥@Model.ProductDealPrice</i><del>￥@Model.ProductOriginalPrice</del></p>
+            </div>            
+        </div>
+        <div class="f-form01-item">
+            <label class="f-form01-label">被保人信息</label>
+            <div class="f-form01-main t-30">
+                <p>被保人：@Model.PolicyHolderName</p>
+                <p>身份证：@Model.PolicyHolderIdcard</p>
+            </div>            
+        </div>
+        <div class="f-form01-item">
+            <label class="f-form01-label">发票信息</label>
+            <div class="f-form01-main t-30">
+                @Model.InvoiceTitle
+            </div>            
+        </div>
+    </div>
+    <div class="page30-ps">
+        <div class="f-form01-item">
+            <label class="f-form01-label">支付方式</label>
+            <div class="f-form01-main">在线支付</div>
+        </div>
+        <div class="f-form01-item">
+            <label class="f-form01-label">配送信息</label>
+            <div class="f-form01-main">预计 @Model.DeliverTime.Value.ToString("yyyy年MM月dd日") 送达</div>
+        </div>
+        @*<div class="f-form01-item">
+            <label class="f-form01-label">发票信息</label>
+            <div class="f-form01-main">发票抬头北京旺达科技</div>
+        </div>*@
+    </div>
+    <div class="page20-money01">
+        <p><span>￥@Model.ProductDealPrice</span>保费总额：</p>
+        <p><span>￥@Model.DeliverPrice</span>运费：</p>
+    </div>
+    <div class="page30-other">
+        <p class="t-1">实付金额</p>
+        <p class="t-2">￥@Model.AmountPayable</p>
+        <p class="t-3">下单时间为：@Model.CreateDate</p>
+    </div>
+   if (((EnumOrderStatus)Model.OrderStatus) == EnumOrderStatus.Paid || ((EnumOrderStatus)Model.OrderStatus) == EnumOrderStatus.Success)
+   {
+        <div class="page30-submit">已支付</div>
+   }
+   else
+   {
+    <div class="page30-submit">
+        <a href="@Url.Action("Quit", new { ordercode = Model.OrderCode })" class="f-button02 t-cancel-1">取消订单</a>
+        <a href="@Url.Action("PayConfirm", new { ordercode = Model.OrderCode })" class="f-button02 t-pay-1">去支付</a>
+    </div>
+   }
+
+
+
+    }
+    else {
+        <div  class="page30-info">订单为空</div>
+    }
+
+    <div class="page30-submit-fixed-extend"></div>
+    <script src="../public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
+    <script src="../public/js/all.js"></script>
+
+  
+</body>
+<a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
+<script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
+</html>

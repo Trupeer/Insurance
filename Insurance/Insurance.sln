@@ -1,0 +1,99 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HONGLI.Service", "HONGLI.Service\HONGLI.Service.csproj", "{B4401190-FF0E-425E-831C-100AB0CB959D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HONGLI.Entity", "HONGLI.Entity\HONGLI.Entity.csproj", "{D08D2BE1-EE17-49C8-A01A-D9EA42828818}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HONGLI.Repository", "HONGLI.Repository\HONGLI.Repository.csproj", "{9888CFF5-AD4D-4339-860A-49A69630D06C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "document", "document", "{BAF5E007-0713-4F1D-A929-33F871A7BC8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HONGLI.Web", "HONGLI.Web\HONGLI.Web.csproj", "{60DB020F-3DBA-477D-954A-66F0686946CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dependecy", "dependecy", "{584A5246-EFD0-4992-80BB-6564EC59BCC5}"
+	ProjectSection(SolutionItems) = preProject
+		dependecy\itextsharp.dll = dependecy\itextsharp.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NPOI", "NPOI", "{D83C56D8-1E8D-4FA8-B6C7-44ACCB10F66F}"
+	ProjectSection(SolutionItems) = preProject
+		dependecy\NPOI\NPOI.dll = dependecy\NPOI\NPOI.dll
+		dependecy\NPOI\NPOI.OOXML.dll = dependecy\NPOI\NPOI.OOXML.dll
+		dependecy\NPOI\NPOI.OpenXml4Net.dll = dependecy\NPOI\NPOI.OpenXml4Net.dll
+		dependecy\NPOI\NPOI.OpenXmlFormats.dll = dependecy\NPOI\NPOI.OpenXmlFormats.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "i.utility", "i.utility", "{814FE69F-B4AF-4354-9583-CFDEED8AE023}"
+	ProjectSection(SolutionItems) = preProject
+		dependecy\i.utility\I.Utility.dll = dependecy\i.utility\I.Utility.dll
+		dependecy\i.utility\ICSharpCode.SharpZipLib.dll = dependecy\i.utility\ICSharpCode.SharpZipLib.dll
+		dependecy\i.utility\log4net.dll = dependecy\i.utility\log4net.dll
+		dependecy\i.utility\Memcached.ClientLibrary.dll = dependecy\i.utility\Memcached.ClientLibrary.dll
+		dependecy\i.utility\MongoDB.Bson.dll = dependecy\i.utility\MongoDB.Bson.dll
+		dependecy\i.utility\MongoDB.Driver.dll = dependecy\i.utility\MongoDB.Driver.dll
+		dependecy\i.utility\NewOriental.NoSQL.dll = dependecy\i.utility\NewOriental.NoSQL.dll
+		dependecy\i.utility\Newtonsoft.Json.dll = dependecy\i.utility\Newtonsoft.Json.dll
+		dependecy\i.utility\X3.Service.dll = dependecy\i.utility\X3.Service.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HONGLI.Api", "HONGLI.Api\HONGLI.Api.csproj", "{D1212E43-5C33-4B37-B137-5CC5AF2DD268}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4401190-FF0E-425E-831C-100AB0CB959D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4401190-FF0E-425E-831C-100AB0CB959D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4401190-FF0E-425E-831C-100AB0CB959D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4401190-FF0E-425E-831C-100AB0CB959D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D08D2BE1-EE17-49C8-A01A-D9EA42828818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D08D2BE1-EE17-49C8-A01A-D9EA42828818}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D08D2BE1-EE17-49C8-A01A-D9EA42828818}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D08D2BE1-EE17-49C8-A01A-D9EA42828818}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9888CFF5-AD4D-4339-860A-49A69630D06C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9888CFF5-AD4D-4339-860A-49A69630D06C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9888CFF5-AD4D-4339-860A-49A69630D06C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9888CFF5-AD4D-4339-860A-49A69630D06C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60DB020F-3DBA-477D-954A-66F0686946CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60DB020F-3DBA-477D-954A-66F0686946CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60DB020F-3DBA-477D-954A-66F0686946CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60DB020F-3DBA-477D-954A-66F0686946CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1212E43-5C33-4B37-B137-5CC5AF2DD268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1212E43-5C33-4B37-B137-5CC5AF2DD268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1212E43-5C33-4B37-B137-5CC5AF2DD268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1212E43-5C33-4B37-B137-5CC5AF2DD268}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D83C56D8-1E8D-4FA8-B6C7-44ACCB10F66F} = {584A5246-EFD0-4992-80BB-6564EC59BCC5}
+		{814FE69F-B4AF-4354-9583-CFDEED8AE023} = {584A5246-EFD0-4992-80BB-6564EC59BCC5}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs.weisenz.com/tfs/insurance
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = HONGLI.Service\\HONGLI.Service.csproj
+		SccProjectName1 = HONGLI.Service
+		SccLocalPath1 = HONGLI.Service
+		SccProjectUniqueName2 = HONGLI.Entity\\HONGLI.Entity.csproj
+		SccProjectName2 = HONGLI.Entity
+		SccLocalPath2 = HONGLI.Entity
+		SccProjectUniqueName3 = HONGLI.Repository\\HONGLI.Repository.csproj
+		SccProjectName3 = HONGLI.Repository
+		SccLocalPath3 = HONGLI.Repository
+		SccProjectUniqueName4 = HONGLI.Web\\HONGLI.Web.csproj
+		SccProjectName4 = HONGLI.Web
+		SccLocalPath4 = HONGLI.Web
+		SccProjectUniqueName5 = HONGLI.Api\\HONGLI.Api.csproj
+		SccProjectName5 = HONGLI.Api
+		SccLocalPath5 = HONGLI.Api
+	EndGlobalSection
+EndGlobal

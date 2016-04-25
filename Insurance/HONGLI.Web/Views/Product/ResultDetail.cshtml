@@ -1,0 +1,230 @@
+﻿
+@model HONGLI.Entity.UserReInsuranceResult
+
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>车险询价-报价详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link href="~/public/css/all.css" rel="stylesheet" />
+    <script src="~/public/js/base.js"></script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>报价详情</h2>
+        <div class="f-nav-back">
+            <a href="javascript:;" id="riaGoBack"><i></i></a>
+        </div>
+        <div class="f-nav-action"></div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    @if (Model != null && Model.Result != null)
+    {
+        var result = Model.Result[0];
+
+        var forceTotal = result.ForceTotal;
+        var taxTotal = result.TaxTotal;
+        var bizTotal = result.BizTotal;
+        var total = forceTotal + taxTotal + bizTotal;
+
+        var intentionCompany = ViewBag.intentionCompany;
+
+        <div class="f-list01 page12-top">
+            <div class="f-list01-main">
+                @*<img src="./public/imagesTemp/page12-180-100.png">*@
+                @if (intentionCompany == 0) //pingan
+                {
+                    <img src="~/Images/Temp/page40-2.png" />
+                }
+                else if (intentionCompany == 1)  //taiping
+                {
+                    <img src="~/Images/Temp/page40-3.png" />
+                }
+                else if (intentionCompany == 2)  //renbao
+                {
+                    <img src="~/Images/Temp/page40-1.png" />
+                }
+            </div>
+            <div class="f-list01-main"><del>@(total) 元</del></div>
+        </div>
+        <div class="f-list01 page12-list01">
+            <div class="f-list01-main">交强险</div>
+            <div class="f-list01-other">@(forceTotal) 元</div>
+        </div>
+        <div class="f-list01 page12-list01">
+            <div class="f-list01-main">车船税</div>
+            <div class="f-list01-other">@(taxTotal)元</div>
+        </div>
+        <div class="page12-title02">
+            <i class="page12-title02-line"></i>
+            <div class="f-list01">
+                <div class="f-list01-main">商业险</div>
+                <div class="f-list01-other">@(bizTotal)元</div>
+                <div class="f-list01-go"><i class="f-list01-icon-arrow-down" data-sh=".page12-tips"></i></div>
+            </div>
+            @*<div class="page12-title02-tips page12-tips">车损险、三者险（20万）、盗抢险、划痕险(2000元）、玻璃单独破损险、座位险（司机1万）、座位险（乘客1万）、不计免赔险</div>*@
+            <div class="page12-title02-tips page12-tips">@(result.Description)</div>
+        </div>
+        <div class="f-list01-group">
+            <div style="display:@(result.CheSun.BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">车损险</div>
+                <div class="f-list01-other">@(result.CheSun.BaoFei)元</div>
+            </div>
+            <div style="display:@(result.SanZhe.BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">三者险（20万）</div>
+                <div class="f-list01-other">@(result.SanZhe.BaoFei)元</div>
+            </div>
+            <div style="display:@(result.SiJi.BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">座位险（司机1万）</div>
+                <div class="f-list01-other">@(result.SiJi.BaoFei)元</div>
+            </div>
+            <div style="display:@(result.ChengKe.BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">座位险（乘客1万）</div>
+                <div class="f-list01-other">@(result.ChengKe.BaoFei)元</div>
+            </div>
+            <div style="display:@(result.DaoQiang.BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">盗抢险</div>
+                <div class="f-list01-other">@(result.DaoQiang.BaoFei)元</div>
+            </div>
+            <div style="display:@(result.HuaHen.BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">划痕险</div>
+                <div class="f-list01-other">@(result.HuaHen.BaoFei)元</div>
+            </div>
+            <div style="display:@(result.BoLi.BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
+                <div class="f-list01-main">玻璃单独破损险</div>
+                <div class="f-list01-other">@(result.BoLi.BaoFei)元</div>
+            </div>
+        </div>
+        <div class="page12-list03">
+            @if (result.SubmitStatus == 2)
+            {
+                <p>核保状态：<span class="page12-hb-loading">未核保</span></p>
+            }
+            else if (result.SubmitStatus == 1)
+            {
+                <p>核保状态：<span class="page12-hb-success">核保成功</span></p>
+            }
+            else if (result.SubmitStatus == 0)
+            {
+                <p>核保状态：<span class="page12-hb-error">核保失败</span></p>
+            }
+            else
+            {
+                <p><span class="page12-hb-loading-tips">核保进行中  请等待......</span>核保状态：<span class="page12-hb-loading">核保中</span></p>
+            }
+            <p>核保内容：@(result.SubmitResult)</p>
+        </div>
+        <div class="page12-title01"><i></i>代理人为您争取到的优惠： （已用代理人积分抵换）</div>
+
+        var bizCoupon = ViewBag.bizCouponRate * 0.01 * result.BizTotal;
+        var forceCoupon = ViewBag.forceCouponRate * 0.01 * result.ForceTotal;
+        var taxCoupon = ViewBag.taxCouponRate * 0.01 * result.ForceTotal;
+
+        if (result.SubmitStatus == 1)       //正常逻辑==1
+        {
+            <div class="f-list01-group">
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">商业险优惠费率   @ViewBag.bizCouponRate % x @result.BizTotal 元（原价） =  @( bizTotal - bizCoupon ) 元</div>
+                </div>
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">交强险优惠费率    @ViewBag.forceCouponRate % x @result.ForceTotal 元（原价） =  @(forceTotal - forceCoupon) 元</div>
+                </div>
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">车船税优惠费率    @ViewBag.taxCouponRate % x @result.TaxTotal 元（原价） =  @(taxTotal - taxCoupon) 元</div>
+                </div>
+                <div class="f-list01 page12-list02">
+                    <div class="f-list01-main">为您节省：@(bizCoupon + forceCoupon + taxCoupon) 元</div>
+                    <div class="f-list01-main">优惠价后总价：@(total - (bizCoupon + forceCoupon + taxCoupon)) 元</div>
+                </div>
+            </div>
+            <div class="page12-submit">
+                <div class="t-info">
+                    <p>保险总价：<span><del>@total 元</del></span></p>
+                    <p>优惠价：<span>@(total - (bizCoupon + forceCoupon + taxCoupon)) 元</span></p>
+                </div>
+                <a href="javascript:void(0);" class="f-button02" id="submit">我要购买</a>
+            </div>
+            <div class="page12-submit-fixed-extend"></div>
+        }
+        else
+        {
+            <div class="f-list01-group">
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">商业险优惠费率    -  -    % x @result.BizTotal  元（原价）    =    -  -       </div>
+                </div>
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">交强险优惠费率    -  -    % x @result.ForceTotal  元（原价）    =   -  -        </div>
+                </div>
+                <div class="f-list01 page12-list04">
+                    <div class="f-list01-main">车船税优惠费率    -  -     % x @result.TaxTotal  元（原价）    =   -  -       </div>
+                </div>
+                <div class="f-list01 page12-list02">
+                    <div class="f-list01-main">为您节省：</div>
+                    <div class="f-list01-main">优惠价后总价：</div>
+                </div>
+            </div>
+            <div class="page12-submit">
+                <div class="t-info"></div>
+                <a href="javascript:void(0);" class="f-button02 t-disable">我要购买</a>
+            </div>
+            <div class="page12-submit-fixed-extend"></div>
+        }
+    }
+    <script src="~/public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
+    <script src="~/public/js/all.js"></script>
+    <script src="~/Scripts/hongli.common.tools.js"></script>
+    <script src="~/Scripts/hongli.global.data.js"></script>
+
+    <script type="text/javascript">
+        $("#submit").on("touchstart", function () {
+
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("Buy", "Product")',
+                dataType: "json",
+                data: {
+                    intentionCompany: "@ViewBag.intentionCompany",
+                    carLicense: "@ViewBag.carLicense",
+                    mobile: "@ViewBag.mobile",
+                    channel: "@ViewBag.channel"
+                },
+                beforeSend: function () {
+                    $(this).addClass("t-disable");
+                },
+                success: function (data) {
+                    $(this).removeClass("t-disable");
+
+                    if (data != null) {
+                        //写入cookie
+                        var channel = "@ViewBag.channel";
+                        var isuranceLogo = @ViewBag.intentionCompany; //1PICC,2PINGAN,3TAIPING
+                        var order_product = new global.order.product(channel, data.Id, isuranceLogo, "平安", data.Description, data.OriginalTotal, data.Total, data.LicenseNo, data.ForceExpireDate,data.BussinessExpireDate, data.BuId);
+                        var order_product_str = JSON.stringify(order_product);
+                        common.cookie.setCookie(global.domain, global.cookie.order.product, order_product_str, global.expire);
+
+
+                        window.location.href = "@Url.Action("Do","Order")" + "?mobile=@ViewBag.mobile&channel=@ViewBag.channel&productId=@ViewBag.productId";
+
+                    }
+                    else {
+                        $(this).addClass("t-disable");
+                        alert("error!");
+                    }
+                },
+                error: function (data) {
+                    $(this).addClass("t-disable");
+                    alert("error!!");
+                }
+            });
+        })
+
+    </script>
+</body>
+</html>
