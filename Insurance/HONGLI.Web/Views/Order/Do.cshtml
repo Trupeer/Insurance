@@ -1,8 +1,6 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-
 
 <!DOCTYPE html>
 <html>
@@ -23,7 +21,7 @@
         <h2>填写并核对订单信息</h2>
         <div class="f-nav-back">
             <a href="javascript:;" id="riaGoBack"><i></i></a>
-        </div>
+        </div>        
     </div>
     <div class="f-nav-extend">&nbsp;</div>
     <div class="page20-address">
@@ -106,14 +104,15 @@
     
     <script src="~/Scripts/hongli.common.tools.js"></script>
     <script src="~/Scripts/hongli.global.data.js"></script>
+    <script src="~/public/3rdLibs/layer.mobile/v1.7/layer.js"></script>
    
     <script>
-
         $(function () {
             $(".f-form01-item").click(function () {               
                 var href = $(this).find(".f-list01-icon-arrow").attr("href");
                 if (href == "" || href == undefined)
-                    return false;                
+                    return false;
+                layer.open({ type: 2 });
                 window.location.href = href;                
             })
 
@@ -121,6 +120,7 @@
                 var href = $(this).find("a").attr("href");
                 if (href == "" || href == undefined)
                     return false;
+                layer.open({ type: 2 });
                 window.location.href = href;                
             })
 
@@ -128,20 +128,15 @@
                 var href = $(this).find("a").attr("href");
                 if (href == "" || href == undefined)
                     return false;
+                layer.open({ type: 2 });
                 window.location.href = href;                
             })
-
-            load();
         })
 
     </script>
 
     <script>
-        var order_product_json;
-        var order_deliver_json;
-        var order_policyHolder_json;
-        var order_invoice_json;
-        var order_payAndDeliver_json;
+
         function getIsuranceLogoUrl(logo)
         {
             var logoUrl = "";
@@ -175,131 +170,102 @@
         //var order_policyHolder_str = "";
         //common.cookie.setCookie(global.domain, global.cookie.order.policyHolder, order_policyHolder_str, global.expire);
 
-        var productCookie = common.cookie.getCookie(global.cookie.order.product);
-        var deliverCookie = common.cookie.getCookie(global.cookie.order.deliver);
-        //被保人
-        var policyHolderCookie = common.cookie.getCookie(global.cookie.order.policyHolder);
-        //支付配送
-        var payAndDeliverCookie = common.cookie.getCookie(global.cookie.order.payAndDeliver);
-        if (productCookie == null || productCookie == "" || deliverCookie == null || deliverCookie == "" || policyHolderCookie == null || policyHolderCookie == "" || payAndDeliverCookie == null || payAndDeliverCookie == "") {
-            $.get("GetOrderByCode", { OrderCode: '@Request["OrderCode"]' }, function (data) {
-                var result = JSON.parse(data);
-                //product
-                var channel = result.Channel;
-                var isuranceLogo = '@ViewBag.intentionCompany';
-                var order_product = new global.order.product(channel, result.UserId, result.InsuranceLogo, result.ProductName, result.ProductTitle, result.ProductOriginalPrice, result.ProductDealPrice, result.LicenseNo, result.ForceExpireDate, result.BussinessExpireDate, result.Buid);
-                var order_product_str = JSON.stringify(order_product);
-                common.cookie.setCookie(global.domain, global.cookie.order.product, order_product_str, global.expire);
-                //deliver
-                var order_deliver = new global.order.deliver(result.DeliverName, result.DeliverMobile, result.DeliverDistrictCode, result.DeliverAddress);
-                var order_deliver_str = JSON.stringify(order_deliver);
-                common.cookie.setCookie(global.domain, global.cookie.order.deliver, order_deliver_str, global.expire);
-                //payAndDeliver
-                var order_payAndDeliver = new global.order.payAndDeliver(1, result.DeliverType, result.DeliverPrice, result.DeliverAddress, result.DeliverTime);
-                var order_payAndDeliver_str = JSON.stringify(order_payAndDeliver);
-                common.cookie.setCookie(global.domain, global.cookie.order.payAndDeliver, order_payAndDeliver_str, global.expire);
-                //policyHolder
-                var order_policyHolder = new global.order.policyHolder(result.Name, result.IdCardType, result.IdCard, result.IdCardFacePicUrl, result.IdCardBackPicUrl);
-                var order_policyHolder_str = JSON.stringify(order_policyHolder);
-                common.cookie.setCookie(global.domain, global.cookie.order.policyHolder, order_policyHolder_str, global.expire);
-                load();
-            });
-        }
+        
 
 
-        function load()
+        //产品
+        var productCookieValue = common.cookie.getCookie(global.cookie.order.product);
+        if (productCookieValue != null && productCookieValue != "")
         {
-            //产品
-            var productCookieValue = common.cookie.getCookie(global.cookie.order.product);
-            if (productCookieValue != null && productCookieValue != "") {
-                order_product_json = $.parseJSON(productCookieValue);
-                if (order_product_json != null) {
+            var order_product_json = $.parseJSON(productCookieValue);
+            if (order_product_json != null) {
 
-                    $("#product-isuranceLogoUrl").attr("src", getIsuranceLogoUrl(order_product_json.isuranceLogo));
-                    $("#product-title").html(order_product_json.title);
-                    $("#product-dealPrice").html("￥" + order_product_json.dealPrice);
-                    $("#product-originalPrice").html("￥" + order_product_json.originalPrice);
+                $("#product-isuranceLogoUrl").attr("src", getIsuranceLogoUrl(order_product_json.isuranceLogo));
+                $("#product-title").html(order_product_json.title);
+                $("#product-dealPrice").html("￥" + order_product_json.dealPrice);
+                $("#product-originalPrice").html("￥" + order_product_json.originalPrice);
 
-                    $("#order-productPrice").html("￥" + order_product_json.dealPrice);
-                }
-                else {
-                    //TODO by guoqiangs
-                    alert("保险产品信息异常");
-                }
+                $("#order-productPrice").html("￥" + order_product_json.dealPrice);
             }
-
-
-
-            //配送地址
-            var deliverCookieValue = common.cookie.getCookie(global.cookie.order.deliver);
-            if (deliverCookieValue != null && deliverCookieValue != "") {
-                order_deliver_json = $.parseJSON(deliverCookieValue);
-                $("#deliverAddress").find(".t-name").html(order_deliver_json.deliverName);
-                $("#deliverAddress").find(".t-mobile").html(order_deliver_json.deliverMobile);
-                $("#deliverAddress").find(".t-p2").html(order_deliver_json.deliverAddress);
-                $("#deliverAddress").show();
-
-                $("#deliverEmpty").hide();
-
+            else {
+                //TODO by guoqiangs
+                alert("保险产品信息异常");
             }
-
-            //被保人
-            var policyHolderCookieValue = common.cookie.getCookie(global.cookie.order.policyHolder);
-            if (policyHolderCookieValue != null && policyHolderCookieValue != "") {
-                order_policyHolder_json = $.parseJSON(policyHolderCookieValue);
-                $("#policyHolder-name").html("被保人：" + order_policyHolder_json.name);
-                if (order_policyHolder_json.idcardType == 1) {
-                    $("#policyHolder-idcard").html("身份证：" + order_policyHolder_json.idcard);
-                }
-                else {
-                    $("#policyHolder-idcard").html("机构代码：" + order_policyHolder_json.idcard);
-                }
-
-                $("#policyHolder").show();
-            }
-
-            //发票
-            var invoiceCookieValue = common.cookie.getCookie(global.cookie.order.invoice);
-            if (invoiceCookieValue != null && invoiceCookieValue != "") {
-                order_invoice_json = $.parseJSON(invoiceCookieValue);
-                $("#invoice").html(order_invoice_json.invoiceTitle).show();
-            }
-
-            //支付配送
-            var payAndDeliverCookieValue = common.cookie.getCookie(global.cookie.order.payAndDeliver);
-            if (payAndDeliverCookieValue != null && payAndDeliverCookieValue != "") {
-                order_payAndDeliver_json = $.parseJSON(payAndDeliverCookieValue);
-                $("#payAndDeliverEmpty").hide();
-
-                if (order_payAndDeliver_json.deliverType == 2) {//自取
-                    $("#payAndDeliver-viewText").html("自取");
-                } else {
-
-                    $("#payAndDeliver-viewText").html("快递");
-                }
-
-                $("#order-deliverPrice").html("￥" + order_payAndDeliver_json.deliverPrice);
-
-                $("#payAndDeliver").show();
-
-            } else {
-                $("#order-deliverPrice").html("￥" + 0);
-            }
-
-
-            //最终价格=产品价格+配送费
-
-            var totalPrice = 0;
-            if (order_product_json != null && order_product_json.dealPrice != null) {
-                totalPrice = parseFloat(order_product_json.dealPrice);
-            }
-
-            if (order_payAndDeliver_json != null && order_payAndDeliver_json.deliverPrice != null) {
-                totalPrice = totalPrice + parseFloat(order_payAndDeliver_json.deliverPrice);
-            }
-
-            $("#order-totalPrice").html("￥" + totalPrice);
         }
+
+
+
+        //配送地址
+        var deliverCookieValue = common.cookie.getCookie(global.cookie.order.deliver);
+        if (deliverCookieValue != null && deliverCookieValue != "") {
+            var order_deliver_json = $.parseJSON(deliverCookieValue);
+            $("#deliverAddress").find(".t-name").html(order_deliver_json.deliverName);
+            $("#deliverAddress").find(".t-mobile").html(order_deliver_json.deliverMobile);
+            $("#deliverAddress").find(".t-p2").html(order_deliver_json.deliverAddress);
+            $("#deliverAddress").show();
+
+            $("#deliverEmpty").hide();
+
+        }
+
+        //被保人
+        var policyHolderCookieValue = common.cookie.getCookie(global.cookie.order.policyHolder);
+        if (policyHolderCookieValue != null && policyHolderCookieValue !="") {
+            var order_policyHolder_json = $.parseJSON(policyHolderCookieValue);
+            $("#policyHolder-name").html("被保人：" + order_policyHolder_json.name);
+            if (order_policyHolder_json.idcardType == 1) {
+                $("#policyHolder-idcard").html("身份证：" + order_policyHolder_json.idcard);
+            }
+            else {
+                $("#policyHolder-idcard").html("机构代码：" + order_policyHolder_json.idcard);
+            }
+            
+            $("#policyHolder").show();
+        }
+
+        //发票
+        var invoiceCookieValue = common.cookie.getCookie(global.cookie.order.invoice);
+        if (invoiceCookieValue != null && invoiceCookieValue != "")
+        {
+            var order_invoice_json = $.parseJSON(invoiceCookieValue);
+            $("#invoice").html(order_invoice_json.invoiceTitle).show();
+        }
+
+        //支付配送
+        var payAndDeliverCookieValue = common.cookie.getCookie(global.cookie.order.payAndDeliver);
+        if (payAndDeliverCookieValue != null && payAndDeliverCookieValue != "") {
+            var order_payAndDeliver_json = $.parseJSON(payAndDeliverCookieValue);
+            $("#payAndDeliverEmpty").hide();
+
+            if (order_payAndDeliver_json.deliverType == 2) {//自取
+                $("#payAndDeliver-viewText").html("自取");
+            } else {
+
+                $("#payAndDeliver-viewText").html("快递");
+            }
+
+            $("#order-deliverPrice").html("￥" + order_payAndDeliver_json.deliverPrice);
+
+            $("#payAndDeliver").show();
+
+        } else {
+            $("#order-deliverPrice").html("￥" + 0);
+        }
+
+
+        //最终价格=产品价格+配送费
+
+        var totalPrice = 0;        
+        if (order_product_json != null && order_product_json.dealPrice != null) {
+            totalPrice = parseFloat(order_product_json.dealPrice);            
+        }
+
+        if (order_payAndDeliver_json != null && order_payAndDeliver_json.deliverPrice != null)
+        {
+            totalPrice = totalPrice + parseFloat(order_payAndDeliver_json.deliverPrice);
+        }
+
+        $("#order-totalPrice").html("￥" + totalPrice);
 
 
 
@@ -363,7 +329,5 @@
         }
         
     </script>
-    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
-    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
 </body>
 </html>

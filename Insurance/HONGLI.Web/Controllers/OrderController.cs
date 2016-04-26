@@ -7,9 +7,6 @@ using HONGLI.Entity;
 using HONGLI.Service;
 using HONGLI.Web.Models;
 using X3;
-using static HONGLI.Repository.OrderRepository;
-using Newtonsoft.Json;
-
 namespace HONGLI.Web.Controllers
 {
 #if (!DEBUG)
@@ -57,6 +54,7 @@ namespace HONGLI.Web.Controllers
                     InvoiceType = order.InvoiceType,
                     PolicyHolderName = order.Order_PolicyHolder.FirstOrDefault().Name,
                     PolicyHolderIdcard = order.Order_PolicyHolder.FirstOrDefault().IdCard,
+                    PolicyHolderIdcardType = order.Order_PolicyHolder.FirstOrDefault().IdCardType,
                     PayType = order.Order_Pay.FirstOrDefault().PayType,
                     InsuranceLogo = order.Order_Item.FirstOrDefault().InsuranceLogo,
                     AmountPayable = order.AmountPayable,
@@ -78,12 +76,11 @@ namespace HONGLI.Web.Controllers
         /// 下订单
         /// </summary>
         /// <returns></returns>
-        public ActionResult Do(int? productId,string mobile, string channel,int? intentionCompany, string OrderCode)
+        public ActionResult Do(int? productId,string mobile, string channel)
         {
             ViewBag.ProductId = productId;
             ViewBag.Mobile = mobile;
             ViewBag.Channel = channel;
-            ViewBag.intentionCompany = intentionCompany;
 #if (!DEBUG)
       ViewBag.UserId = UserViewModel.CurrentUser.ID;
 #else
@@ -92,19 +89,7 @@ namespace HONGLI.Web.Controllers
 
             return View();
         }
-        public string GetOrderByCode(string OrderCode)
-        {
-            try
-            {
-                AllOrderList orderlist = new OrderService().GetOrderListByOrderCode(OrderCode);
-                return JsonConvert.SerializeObject(orderlist);
-            }
-            catch
-            {
-                return null;
-            }
 
-        }
         /// <summary>
         /// 订单提交
         /// </summary>
@@ -159,7 +144,12 @@ namespace HONGLI.Web.Controllers
 
         public ActionResult List()
         {
-            var userid = UserViewModel.CurrentUser.ID.ToString();
+#if (!DEBUG)
+      var userid = UserViewModel.CurrentUser.ID.ToString();
+#else
+            var userid = "3";
+#endif
+                        
             List<OrderListModel> model = null;
             var orderlist = _orderService.GetOrderListByUserId(userid);
             if (orderlist != null)
@@ -363,6 +353,8 @@ namespace HONGLI.Web.Controllers
             }
                       
         }
+
+        
 
 
     }

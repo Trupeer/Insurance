@@ -77,8 +77,7 @@ namespace HONGLI.Web.Controllers
 
             /*缓存读取*/
             var key = string.Format("{0}/{1}/{2}/{3}", channelValue, mobile, licenseNo, "insurance");
-            //定义用户id
-            int userid = -1;
+
             try
             {
                 //有cache读cache
@@ -96,7 +95,7 @@ namespace HONGLI.Web.Controllers
                     }
 
                     data = result.FromJsonTo<UserInsuranceInfoResultV2>();
-                     if (data != null)
+                    if (data != null)
                     {
                         //获取续保信息成功
                         if (data.BusinessStatus == 1)
@@ -119,53 +118,6 @@ namespace HONGLI.Web.Controllers
                         {
                             data.UserInfo = new Entity.User();
                             data.SaveQuote = new Quote();
-                        }
-                        if(data.BusinessStatus == 1|| data.BusinessStatus == 2||data.BusinessStatus==3)
-                        {
-                            var product_user = new ProductV2_User();
-                            product_user.CarUsedType = data.UserInfo.CarUsedType;
-                            product_user.LicenseNo = data.UserInfo.LicenseNo;
-                            product_user.LicenseOwner = data.UserInfo.LicenseOwner;
-                            product_user.PostedName = data.UserInfo.PostedName;
-                            product_user.InsuredName = data.UserInfo.InsuredName;
-                            product_user.PurchasePrice =Convert.ToDecimal(data.UserInfo.PurchasePrice);
-                            product_user.IdType = data.UserInfo.IdType;
-                            product_user.CredentislasNum = data.UserInfo.CredentislasNum;
-                            product_user.CityCode = data.UserInfo.CityCode;
-                            product_user.EngineNo = data.UserInfo.EngineNo;
-                            product_user.ModleName = data.UserInfo.ModleName;
-                            product_user.RegisterDate = data.UserInfo.RegisterDate;
-                            product_user.CarVin = data.UserInfo.CarVin;
-                            product_user.ForceExpireDate = data.UserInfo.ForceExpireDate;
-                            product_user.BusinessExpireDate = data.UserInfo.BusinessExpireDate;
-                            product_user.SeatCount = data.UserInfo.SeatCount;
-                            product_user.Mobile = mobile;
-                            product_user.Channel = (byte)channel;
-                            product_user.CustomerKey = data.CustKey;
-                            product_user.CreateTime = DateTime.Now;
-                            product_user.SeatCount = data.UserInfo.SeatCount;
-                            product_user.Creator = mobile;
-                            userid = new ProductV2Service().SaveProductUser(product_user);
-                            //续保信息
-                            var productV2_renewal = new ProductV2_Renewal();
-                            productV2_renewal.UserId = userid;
-                            productV2_renewal.Source = data.SaveQuote.Source;
-                            productV2_renewal.CheSun = Convert.ToDecimal(data.SaveQuote.CheSun);
-                            productV2_renewal.SanZhe = Convert.ToDecimal(data.SaveQuote.SanZhe);
-                            productV2_renewal.DaoQiang = Convert.ToDecimal(data.SaveQuote.DaoQiang);
-                            productV2_renewal.SiJi = Convert.ToDecimal(data.SaveQuote.SiJi);
-                            productV2_renewal.ChengKe = Convert.ToDecimal(data.SaveQuote.ChengKe);
-                            productV2_renewal.BoLi = Convert.ToInt32(data.SaveQuote.BoLi);
-                            productV2_renewal.BuJiMianCheSun = Convert.ToDecimal(data.SaveQuote.BuJiMianCheSun);
-                            productV2_renewal.BuJiMianSanZhe = Convert.ToDecimal(data.SaveQuote.BuJiMianSanZhe);
-                            productV2_renewal.BuJiMianDaoQiang = Convert.ToDecimal(data.SaveQuote.BuJiMianDaoQiang);
-                            productV2_renewal.BuJiMianRenYuan = Convert.ToDecimal(data.SaveQuote.BuJiMianRenYuan);
-                            productV2_renewal.BuJiMianFuJia = Convert.ToDecimal(data.SaveQuote.BuJiMianFuJia);
-                            productV2_renewal.SheShui = Convert.ToDecimal(data.SaveQuote.SheShui);
-                            productV2_renewal.CheDeng = Convert.ToDecimal(data.SaveQuote.CheDeng);
-                            productV2_renewal.ZiRan = Convert.ToDecimal(data.SaveQuote.ZiRan);
-                            int id= new ProductV2Service().SaveProductRenewal(productV2_renewal);
-                            data.UserId = userid;
                         }
                     }
                 }
@@ -196,9 +148,7 @@ namespace HONGLI.Web.Controllers
             var key = string.Format("{0}/{1}/{2}/{3}", channelValue, mobile, licenseNo, "dataItem");
             HttpContext.Cache.Remove(key);
             HttpContext.Cache.Insert(key, dataItem);
-            HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, 0, "price"));
-            HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, 1, "price"));
-            HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, 2, "price"));
+
             return View();
         }
 
@@ -300,25 +250,20 @@ namespace HONGLI.Web.Controllers
 
         #endregion
 
-        //获取报价接口、同时核保(同时插入数据)
+        //获取报价接口
 #if (!DEBUG)
     [AuthorizationFilter]
 #endif
-        public JsonResult GetSpecialPrecisePrice(int? channel, string mobile, string licenseNo, int intentionCompany,int UserID)
+        public JsonResult GetSpecialPrecisePrice(int? channel, string mobile, string licenseNo, int intentionCompany)
         {
             var channelValue = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
             ViewBag.channel = channelValue;
             ViewBag.mobile = mobile;
             ViewBag.licenseNo = licenseNo;
-            var keyPrice = string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, intentionCompany, "price");
+
             var data = new PrecisePriceResultV2();
             try
             {
-                var cachresult = HttpContext.Session[keyPrice];
-                if(cachresult!=null)
-                {
-                    return Json(cachresult, JsonRequestBehavior.AllowGet);
-                }
                 var result = new ProductV2Service().GetSpecialPrecisePrice(licenseNo, intentionCompany, channelValue, mobile);
 
                 if (string.IsNullOrWhiteSpace(result))
@@ -337,101 +282,23 @@ namespace HONGLI.Web.Controllers
                         var item = data.Item;
                         var description = "";
                         description += item.CheSun.BaoE > 0 ? ("车损险、") : "";
-                        description += item.SanZhe.BaoE > 0 ? (string.Format("三者险({0})、", item.SanZhe.BaoFei)) : "";
+                        description += item.BuJiMianCheSun.BaoE > 0 ? ("不计免赔车损险、") : "";
+                        description += item.SanZhe.BaoE > 0 ? (string.Format("三者险({0})、", FormatNumber(item.SanZhe.BaoE))) : "";
+                        description += item.BuJiMianSanZhe.BaoE > 0 ? ("不计免赔三者险、") : "";
                         description += item.DaoQiang.BaoE > 0 ? ("盗抢险、") : "";
-                        description += item.SiJi.BaoE > 0 ? (string.Format("座位险(司机{0})、", item.SiJi.BaoFei)) : "";
-                        description += item.ChengKe.BaoE > 0 ? (string.Format("座位险(乘客{0})、", item.ChengKe.BaoFei)) : "";
-                        description += item.HuaHen.BaoE > 0 ? (string.Format("划痕险({0})、", item.HuaHen.BaoFei)) : "";
-                        description += item.BoLi.BaoE > 0 ? (string.Format("玻璃单独破损险({0})、", item.BoLi.BaoFei)) : "";
+                        description += item.BuJiMianDaoQiang.BaoE > 0 ? ("不计免赔盗抢险、") : "";
+                        description += item.SiJi.BaoE > 0 ? (string.Format("座位险(司机{0})、", FormatNumber(item.SiJi.BaoE))) : "";
+                        description += item.ChengKe.BaoE > 0 ? (string.Format("座位险(乘客{0})、", FormatNumber(item.ChengKe.BaoE))) : "";
+                        description += item.HuaHen.BaoE > 0 ? (string.Format("划痕险({0})、", FormatNumber(item.HuaHen.BaoE))) : "";
+                        description += item.BoLi.BaoE > 0 ? (string.Format("玻璃单独破损险({0})、", BoLiType(item.BoLi.BaoE))) : "";
                         description += item.SheShui.BaoE > 0 ? ("涉水险、") : "";
-                        description += item.CheDeng.BaoE > 0 ? ("车灯单独损失险") : "";
-                        description += item.ZiRan.BaoE > 0 ? ("自然损失险") : "";
-
-                        data.Item.Description = description.TrimEnd('、');
-                        #region 插入报价信息
-
-                        var product_item = new ProductV2_Item();
-                        result.MapToEntity<ProductV2_Item>(product_item);
-                        product_item.UserId = UserID;
-                        product_item.BoLi_BaoE = Convert.ToDecimal(data.Item.BoLi.BaoE);
-                        product_item.BoLi_BaoFei = Convert.ToDecimal(data.Item.BoLi.BaoFei);
-                        product_item.BuJiMianCheSun_BaoE = Convert.ToDecimal(data.Item.BuJiMianCheSun.BaoE);
-                        product_item.BuJiMianCheSun_BaoFei = Convert.ToDecimal(data.Item.BuJiMianCheSun.BaoFei);
-                        product_item.BuJiMianDaoQiang_BaoE = Convert.ToDecimal(data.Item.BuJiMianDaoQiang.BaoE);
-                        product_item.BuJiMianDaoQiang_BaoFei = Convert.ToDecimal(data.Item.BuJiMianDaoQiang.BaoFei);
-                        product_item.BuJiMianFuJia_BaoE = Convert.ToDecimal(data.Item.BuJiMianFuJia.BaoE);
-                        product_item.BuJiMianFuJia_BaoFei = Convert.ToDecimal(data.Item.BuJiMianFuJia.BaoFei);
-                        product_item.BuJiMianRenYuan_BaoE = Convert.ToDecimal(data.Item.BuJiMianRenYuan.BaoE);
-                        product_item.BuJiMianRenYuan_BaoFei = Convert.ToDecimal(data.Item.BuJiMianRenYuan.BaoFei);
-                        product_item.BuJiMianSanZhe_BaoE = Convert.ToDecimal(data.Item.BuJiMianSanZhe.BaoE);
-                        product_item.BuJiMianSanZhe_BaoFei = Convert.ToDecimal(data.Item.BuJiMianSanZhe.BaoFei);
-                        product_item.CheDeng_BaoE = Convert.ToDecimal(data.Item.CheDeng.BaoE);
-                        product_item.CheDeng_BaoFei = Convert.ToDecimal(data.Item.CheDeng.BaoFei);
-                        product_item.ChengKe_BaoE = Convert.ToDecimal(data.Item.ChengKe.BaoE);
-                        product_item.ChengKe_BaoFei = Convert.ToDecimal(data.Item.ChengKe.BaoFei);
-                        product_item.CheSun_BaoE = Convert.ToDecimal(data.Item.CheSun.BaoE);
-                        product_item.CheSun_BaoFei = Convert.ToDecimal(data.Item.CheSun.BaoFei);
-                        product_item.DaoQiang_BaoE = Convert.ToDecimal(data.Item.DaoQiang.BaoE);
-                        product_item.DaoQiang_BaoFei = Convert.ToDecimal(data.Item.DaoQiang.BaoFei);
-                        product_item.HuaHen_BaoE = Convert.ToDecimal(data.Item.HuaHen.BaoE);
-                        product_item.HuaHen_BaoFei = Convert.ToDecimal(data.Item.HuaHen.BaoFei);
-                        product_item.ZiRan_BaoE = Convert.ToDecimal(data.Item.ZiRan.BaoE);
-                        product_item.ZiRan_BaoFei = Convert.ToDecimal(data.Item.ZiRan.BaoFei);
-                        #region 平台自用费率，即用户的价格=总价*(1-保险公司费率+平台费率)
-                        var rateList = new ProductV2Service().GetCouponRateList(channelValue, Convert.ToInt32(intentionCompany));
-                        var key = string.Format("{0}_{1}_CouponRate", channelValue, intentionCompany);
-                        var couponRate = rateList[key];
-
-                        var forceRate_Channel = Convert.ToDouble(0);
-                        var taxRate_Channel = Convert.ToDouble(0);
-                        var bizRate_Channel = Convert.ToDouble(0);
-                        if (couponRate != null)
+                        description += item.ZiRan.BaoE > 0 ? ("自燃损失险、") : "";
+                        if (intentionCompany == Convert.ToInt32(ProductCompany.PingAn)) //只有平安有此险种
                         {
-                            var array = couponRate.Split(',').ToArray();
-                            forceRate_Channel = Convert.ToDouble(array[0]);
-                            taxRate_Channel = Convert.ToDouble(array[1]);
-                            bizRate_Channel = Convert.ToDouble(array[2]);
+                            description += item.CheDeng.BaoE > 0 ? ("倒车镜、车灯单独损失险") : "";
                         }
 
-                        product_item.ForceRate_Channel = Convert.ToDecimal(forceRate_Channel);
-                        product_item.TaxRate_Channel = Convert.ToDecimal(taxRate_Channel);
-                        product_item.BizRate_Channel = Convert.ToDecimal(bizRate_Channel);
-                        #endregion
-
-                        product_item.BizTotal = Convert.ToDecimal(data.Item.BizTotal);
-                        product_item.BizRate = Convert.ToDecimal(data.Item.BizRate);
-                        product_item.BizAfterCoupon = decimal.Round(Convert.ToDecimal(data.Item.BizTotal * (1 - data.Item.BizRate + bizRate_Channel * 0.01)), 2);
-
-                        product_item.ForceTotal = Convert.ToDecimal(data.Item.ForceTotal);
-                        product_item.ForceRate = Convert.ToDecimal(data.Item.ForceRate);
-                        product_item.ForceAfterCoupon = decimal.Round(Convert.ToDecimal(data.Item.ForceTotal * (1 - data.Item.ForceRate + forceRate_Channel * 0.01)), 2);
-
-                        product_item.TaxTotal = Convert.ToDecimal(data.Item.TaxTotal); ;
-                        product_item.TaxRate = Convert.ToDecimal(data.Item.ForceRate); //核保后，交强险费率和车船税费率相同
-                        product_item.TaxAfterCoupon = decimal.Round(Convert.ToDecimal(data.Item.TaxTotal * (1 - data.Item.ForceRate + taxRate_Channel * 0.01)), 2);
-
-                        product_item.Total = product_item.BizTotal + product_item.ForceTotal + product_item.TaxTotal;
-                        product_item.TotalAfterCoupon = decimal.Round(Convert.ToDecimal(product_item.BizAfterCoupon + product_item.ForceAfterCoupon + product_item.TaxAfterCoupon), 2);
-
-                        #region 预付比例
-                        var PrepaidAmountkey= string.Format("{0}_PrepaidAmount", channelValue);
-                        var prepaidlist = new ProductV2Service().GetPrepaidAmount(channelValue);
-                        decimal PrepaidAmount = Convert.ToDecimal(prepaidlist[PrepaidAmountkey]);
-                        product_item.PrepaidAmount = product_item.TotalAfterCoupon * PrepaidAmount;
-                        #endregion
-                        product_item.CreateTime = DateTime.Now;
-
-                        product_item.BuId = data.Item.BuId;    //续保buid
-
-                        product_item.ProductName = new ProductV2Service().GetCompanyName(intentionCompany);  //产品名称（即保险公司名）
-                        product_item.Source = intentionCompany;
-                        product_item.QuoteStatus = data.BusinessStatus;
-                        product_item.QuoteResult = data.StatusMessage;
-                        product_item.Description = data.Item.Description;
-                        data.Item.Id = new ProductV2Service().SaveProductItem(product_item);
-                        #endregion
-                        //进行核保，每家公司只核保一次，核保会会插入缓存
-                        GetSubmitInfo(channel, mobile, licenseNo, intentionCompany, data.Item.Id);
+                        data.Item.Description = description.TrimEnd('、');
 
                     }
                     else
@@ -439,10 +306,11 @@ namespace HONGLI.Web.Controllers
                         data.Item = new PrecisePriceItem();
                     }
                     #endregion
-                    
 
+                    var keyPrice = string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, intentionCompany, "price");
                     HttpContext.Session[keyPrice] = data;
                 }
+
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -454,6 +322,31 @@ namespace HONGLI.Web.Controllers
 
         }
 
+        public string FormatNumber(double number)
+        {
+            if (number < 10000)
+            {
+                return number.ToString() + "元";
+            }
+            else
+            {
+                var index = number.ToString().LastIndexOf('0') - 3;
+                return number.ToString().Substring(0, index) + "万";
+            }
+        }
+
+        public string BoLiType(double type)
+        {
+            if (type == 1)
+            {
+                return "国产";
+            }
+            else if (type == 2)
+            {
+                return "进口";
+            }
+            return "";
+        }
         #endregion
 
         #region page4-报价详情 20160323
@@ -478,7 +371,7 @@ namespace HONGLI.Web.Controllers
                 var rateList = new ProductV2Service().GetCouponRateList(channelValue, intentionCompany);
                 var key = string.Format("{0}_{1}_CouponRate", channelValue, intentionCompany);
                 var couponRate = rateList[key];
-               
+
                 var forceRate_Channel = Convert.ToDouble(0);
                 var taxRate_Channel = Convert.ToDouble(0);
                 var bizRate_Channel = Convert.ToDouble(0);
@@ -507,11 +400,11 @@ namespace HONGLI.Web.Controllers
             return View(data);
         }
 
-        //获取核保信息接口（第2个接口是报价+核保接口，这个接口仅获取核保信息）同时同步核保数据
+        //获取核保信息接口（第2个接口是报价+核保接口，这个接口仅获取核保信息）
 #if (!DEBUG)
     [AuthorizationFilter]
 #endif
-        public JsonResult GetSubmitInfo(int? channel, string mobile, string licenseNo, int intentionCompany,int ProductItemId)
+        public JsonResult GetSubmitInfo(int? channel, string mobile, string licenseNo, int intentionCompany)
         {
             var channelValue = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
             ViewBag.channel = channelValue;
@@ -545,16 +438,7 @@ namespace HONGLI.Web.Controllers
                     //HttpContext.Session[keySubmit] = data;
                     HttpContext.Cache.Insert(keySubmit, data);
                 }
-                #region 同步核保数据
-                var product_item = new ProductV2_Item();
-                result.MapToEntity<ProductV2_Item>(product_item);
-                product_item.Id = ProductItemId;
-                product_item.SubmitStatus = (byte)(data.Item.SubmitStatus);
-                product_item.SubmitResult = data.Item.SubmitResult;
-                product_item.BizNo = data.Item.BizNo;
-                product_item.ForceNo = data.Item.ForceNo;
-                new ProductV2Service().Editproductitem(product_item);
-                #endregion
+
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -568,32 +452,125 @@ namespace HONGLI.Web.Controllers
 #if (!DEBUG)
     [AuthorizationFilter]
 #endif
-        public JsonResult Buy(int? channel, string mobile, string licenseNo, string intentionCompany,int userID, int ProductItemId)
+        public JsonResult Buy(int? channel, string mobile, string licenseNo, string intentionCompany)
         {
+            var channelValue = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
+            ViewBag.channel = channelValue;
+            ViewBag.mobile = mobile;
+            ViewBag.licenseNo = licenseNo;
+            ViewBag.intentionCompany = intentionCompany;
 
             View_ProductV2UserItem userItem = null;
             try
             {
-                //修改用户选择购买公司
-                new ProductV2Service().EditProductItemUserCheck(ProductItemId, userID);
-                //增加订单信息
-                string ordercode = "100001" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
-                Order_Item order_item = new Order_Item();
-                order_item.OrderCode = ordercode;
-                order_item.CreateDate = DateTime.Now;
-                order_item.ProductId = ProductItemId.ToString();
-                order_item.ProductName = new ProductV2Service().GetCompanyName(ProductItemId);
-                order_item.InsuranceLogo = ProductItemId;
-                order_item.LicenseNo = licenseNo;
-                order_item.Channel = channel;
-                Order_Base order_base = new Order_Base();
-                order_base.OrderCode = ordercode;
-                order_base.Channel = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
-                order_base.CreateDate = DateTime.Now;
-                order_base.UserId = userID.ToString();
-                order_base.Order_Item = new List<Order_Item>() { order_item };
-                var code = new OrderService().AddOrder(order_base);
-                userItem = new ProductV2Service().GetProductV2(userID);
+                var keyPrice = string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, intentionCompany, "price");
+                var data = HttpContext.Session[keyPrice] as PrecisePriceResultV2;
+
+                if (data != null && data.BusinessStatus == 1)
+                {
+                    #region product_user
+
+                    var product_user = new ProductV2_User();
+                    data.UserInfo.MapToEntity<ProductV2_User>(product_user);
+                    product_user.CreateTime = DateTime.Now;
+                    product_user.Creator = mobile;
+                    product_user.Mobile = mobile;
+                    product_user.Channel = (byte)channelValue;
+                    product_user.CustomerKey = new ProductV2Service().Md5(channelValue + mobile);
+
+                    #endregion
+
+                    #region product_item
+
+                    var product_item = new ProductV2_Item();
+                    var result = data.Item;
+                    result.MapToEntity<ProductV2_Item>(product_item);
+
+                    product_item.BoLi_BaoE = Convert.ToDecimal(result.BoLi.BaoE);
+                    product_item.BoLi_BaoFei = Convert.ToDecimal(result.BoLi.BaoFei);
+                    product_item.BuJiMianCheSun_BaoE = Convert.ToDecimal(result.BuJiMianCheSun.BaoE);
+                    product_item.BuJiMianCheSun_BaoFei = Convert.ToDecimal(result.BuJiMianCheSun.BaoFei);
+                    product_item.BuJiMianDaoQiang_BaoE = Convert.ToDecimal(result.BuJiMianDaoQiang.BaoE);
+                    product_item.BuJiMianDaoQiang_BaoFei = Convert.ToDecimal(result.BuJiMianDaoQiang.BaoFei);
+                    product_item.BuJiMianFuJia_BaoE = Convert.ToDecimal(result.BuJiMianFuJia.BaoE);
+                    product_item.BuJiMianFuJia_BaoFei = Convert.ToDecimal(result.BuJiMianFuJia.BaoFei);
+                    product_item.BuJiMianRenYuan_BaoE = Convert.ToDecimal(result.BuJiMianRenYuan.BaoE);
+                    product_item.BuJiMianRenYuan_BaoFei = Convert.ToDecimal(result.BuJiMianRenYuan.BaoFei);
+                    product_item.BuJiMianSanZhe_BaoE = Convert.ToDecimal(result.BuJiMianSanZhe.BaoE);
+                    product_item.BuJiMianSanZhe_BaoFei = Convert.ToDecimal(result.BuJiMianSanZhe.BaoFei);
+                    product_item.CheDeng_BaoE = Convert.ToDecimal(result.CheDeng.BaoE);
+                    product_item.CheDeng_BaoFei = Convert.ToDecimal(result.CheDeng.BaoFei);
+                    product_item.ChengKe_BaoE = Convert.ToDecimal(result.ChengKe.BaoE);
+                    product_item.ChengKe_BaoFei = Convert.ToDecimal(result.ChengKe.BaoFei);
+                    product_item.CheSun_BaoE = Convert.ToDecimal(result.CheSun.BaoE);
+                    product_item.CheSun_BaoFei = Convert.ToDecimal(result.CheSun.BaoFei);
+                    product_item.DaoQiang_BaoE = Convert.ToDecimal(result.DaoQiang.BaoE);
+                    product_item.DaoQiang_BaoFei = Convert.ToDecimal(result.DaoQiang.BaoFei);
+                    product_item.HuaHen_BaoE = Convert.ToDecimal(result.HuaHen.BaoE);
+                    product_item.HuaHen_BaoFei = Convert.ToDecimal(result.HuaHen.BaoFei);
+                    product_item.ZiRan_BaoE = Convert.ToDecimal(result.ZiRan.BaoE);
+                    product_item.ZiRan_BaoFei = Convert.ToDecimal(result.ZiRan.BaoFei);
+
+                    #region 平台自用费率，即用户的价格=总价*(1-保险公司费率+平台费率)
+                    var rateList = new ProductV2Service().GetCouponRateList(channelValue, Convert.ToInt32(intentionCompany));
+                    var key = string.Format("{0}_{1}_CouponRate", channelValue, intentionCompany);
+                    var couponRate = rateList[key];
+
+                    var forceRate_Channel = Convert.ToDouble(0);
+                    var taxRate_Channel = Convert.ToDouble(0);
+                    var bizRate_Channel = Convert.ToDouble(0);
+                    if (couponRate != null)
+                    {
+                        var array = couponRate.Split(',').ToArray();
+                        forceRate_Channel = Convert.ToDouble(array[0]);
+                        taxRate_Channel = Convert.ToDouble(array[1]);
+                        bizRate_Channel = Convert.ToDouble(array[2]);
+                    }
+
+                    product_item.ForceRate_Channel = Convert.ToDecimal(forceRate_Channel);
+                    product_item.TaxRate_Channel = Convert.ToDecimal(taxRate_Channel);
+                    product_item.BizRate_Channel = Convert.ToDecimal(bizRate_Channel);
+                    #endregion
+
+                    product_item.BizTotal = Convert.ToDecimal(result.BizTotal);
+                    product_item.BizRate = Convert.ToDecimal(result.BizRate);
+                    product_item.BizAfterCoupon = Convert.ToDecimal(result.BizTotal * (100 - (result.BizRate + bizRate_Channel)) * 0.01);
+
+                    product_item.ForceTotal = Convert.ToDecimal(result.ForceTotal);
+                    product_item.ForceRate = Convert.ToDecimal(result.ForceRate);
+                    product_item.ForceAfterCoupon = Convert.ToDecimal(result.ForceTotal * (100 - (result.ForceRate + forceRate_Channel)) * 0.01);
+
+                    product_item.TaxTotal = Convert.ToDecimal(result.TaxTotal); ;
+                    product_item.TaxRate = Convert.ToDecimal(result.ForceRate); //核保后，交强险费率和车船税费率相同
+                    product_item.TaxAfterCoupon = Convert.ToDecimal(result.TaxTotal * (100 - (result.ForceRate + taxRate_Channel)) * 0.01);
+
+                    product_item.Total = product_item.BizTotal + product_item.ForceTotal + product_item.TaxTotal;
+                    product_item.TotalAfterCoupon = product_item.BizAfterCoupon + product_item.ForceAfterCoupon + product_item.TaxAfterCoupon;
+
+                    product_item.CreateTime = DateTime.Now;
+
+                    product_item.BuId = result.BuId;    //续保buid
+
+                    product_item.ProductName = new ProductV2Service().GetCompanyName(int.Parse(intentionCompany));  //产品名称（即保险公司名）
+
+                    #region 核保数据 核保成功才能购买
+                    var keySubmit = string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, intentionCompany, "submit");
+                    var sumbitInfo = HttpContext.Session[keySubmit] as SubmitInfoResultV2;
+                    if (sumbitInfo != null && sumbitInfo.Item != null)
+                    {
+                        product_item.SubmitStatus = (byte)(sumbitInfo.Item.SubmitStatus);
+                        product_item.SubmitResult = sumbitInfo.Item.SubmitResult;
+                        product_item.BizNo = sumbitInfo.Item.BizNo;
+                        product_item.ForceNo = sumbitInfo.Item.ForceNo;
+                    }
+                    #endregion
+
+                    #endregion
+
+                    //
+                    userItem = new ProductV2Service().SaveProductV2(product_user, product_item);
+
+                }
                 return Json(userItem);
             }
             catch (Exception ex)

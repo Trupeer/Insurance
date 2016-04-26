@@ -54,7 +54,6 @@ namespace HONGLI.Service
         {
             return _orderRepository.UpdatePay(ordercode, tradeNo, paidAmount, payTime, status);
         }
-
         /// <summary>
         /// 获取用户下单前需要的数据
         /// </summary>
@@ -73,8 +72,6 @@ namespace HONGLI.Service
                 }
             }
         }
-
-
         /// <summary>
         /// 添加支付状态
         /// </summary>
@@ -84,6 +81,5 @@ namespace HONGLI.Service
         {
             return _orderRepository.AddPay(model);
         }
-
-        }
+    }
 }

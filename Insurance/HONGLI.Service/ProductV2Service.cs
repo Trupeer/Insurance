@@ -22,13 +22,13 @@ namespace HONGLI.Service
 
         #region 产品-与db相关的方法
         //保存
-        public View_ProductV2UserItem SaveProductV2( ProductV2_Item product_item)
+        public View_ProductV2UserItem SaveProductV2(ProductV2_User product_user, ProductV2_Item product_item)
         {
             var userItem = new View_ProductV2UserItem();
 
             try
             {
-                userItem = new ProductV2Repository().SaveProduct( product_item);
+                userItem = new ProductV2Repository().SaveProduct(product_user, product_item);
             }
             catch (Exception ex)
             {
@@ -495,43 +495,13 @@ namespace HONGLI.Service
 
         #endregion
 
-        #region 各个渠道预付比例
-        public Dictionary<string, string> GetPrepaidAmount(int channel)
-        {
-            var dict = new Dictionary<string, string>();
-            if (channel == -1)
-            {
-                return dict;
-            }
-            try
-            {
-                var configItems = ConfigurationManager.GetSection("PrepaidAmountConfig") as List<ConfigItem>;
-                foreach (var item in configItems)
-                {
-                    if (item.Value.IsNull())
-                    {
-                        LogHelper.AppError(item.Key + "配置项，没有配置CouponRate数据！");
-                        continue;
-                    }
-
-                    dict.Add(item.Key, item.Value);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.AppError(string.Format("获取预付比例配置GetPrepaidAmount异常，确认config是否有GetPrepaidAmount配置节。异常信息：{0}.", ex.Message + ex.StackTrace));
-            }
-            return dict;
-        }
-        #endregion
-
         #region 获取保险公司名称 by Lee 20160401
 
         public string GetCompanyName(int companyId)
         {
             var companyName = "无匹配项";
 
-            if (companyId == Convert.ToInt32(ProductCompany.PingAn))
+            if (companyId== Convert.ToInt32(ProductCompany.PingAn))
             {
                 companyName = "平安";
             }
@@ -548,96 +518,5 @@ namespace HONGLI.Service
         }
 
         #endregion
-
-        #region 保存用户信息 by lijun 20160411
-        public int SaveProductUser(ProductV2_User product_user)
-        {
-            int userid;
-            try
-            {
-                userid = new ProductV2Repository().SaveProductUser(product_user);
-            }
-            catch (Exception ex)
-            {
-                userid = -1;
-                //todo log
-                LogHelper.AppError(string.Format("保存产品详细SaveProductUser异常，异常信息：{0}，异常跟踪：{1}.", ex.Message, ex.StackTrace));
-            }
-            return userid;
-        }
-        public int SaveProductRenewal(ProductV2_Renewal product_renewal)
-        {
-            int userid;
-            try
-            {
-                userid = new ProductV2Repository().SaveProductRenewal(product_renewal);
-            }
-            catch (Exception ex)
-            {
-                userid = -1;
-                //todo log
-                LogHelper.AppError(string.Format("保存产品详细SaveProductUser异常，异常信息：{0}，异常跟踪：{1}.", ex.Message, ex.StackTrace));
-            }
-            return userid;
-        }
-        #endregion
-
-        #region 保存报价信息
-        /// <summary>
-        /// 单独保存报价信息
-        /// </summary>
-        /// <param name="product_renewal"></param>
-        /// <returns></returns>
-        public int SaveProductItem(ProductV2_Item productv2_item)
-        {
-            int result;
-            try
-            {
-                result = new ProductV2Repository().SaveProductItem(productv2_item);
-            }
-            catch (Exception ex)
-            {
-                result = -1;
-                //todo log
-                LogHelper.AppError(string.Format("保存产品详细SaveProductUser异常，异常信息：{0}，异常跟踪：{1}.", ex.Message, ex.StackTrace));
-            }
-            return result;
-        }
-        public int Editproductitem(ProductV2_Item product_item)
-        {
-            int result;
-            try
-            {
-                result = new ProductV2Repository().Editproductitem(product_item);
-            }
-            catch (Exception ex)
-            {
-                result = -1;
-                //todo log
-                LogHelper.AppError(string.Format("保存产品详细SaveProductUser异常，异常信息：{0}，异常跟踪：{1}.", ex.Message, ex.StackTrace));
-            }
-            return result;
-        }
-        /// <summary>
-        /// 修改用户选择状态（选择前清除掉所有选择状态）
-        /// </summary>
-        /// <param name="productItemId"></param>
-        /// <returns></returns>
-        public int EditProductItemUserCheck(int productItemId, int UserId)
-        {
-            int result;
-            try
-            {
-                result = new ProductV2Repository().EditProductItemUserCheck(productItemId,UserId);
-            }
-            catch (Exception ex)
-            {
-                result = -1;
-                //todo log
-                LogHelper.AppError(string.Format("修改用户选择状态详细SaveProductUser异常，异常信息：{0}，异常跟踪：{1}.", ex.Message, ex.StackTrace));
-            }
-            return result;
-        }
-            #endregion
-        }
+    }
 }

@@ -87,13 +87,13 @@
                 @*<select class="f-select01" id="bujimianchesun">
                         <option>不计免赔</option>
                     </select>*@
-                <div class="f-tips01" id="bujimianchesun"> 不计免赔 </div>
+                <div class="f-tips01" id="bujimianchesun"> 不计免赔 √ </div>
                 <input type="checkbox" id="chesun" value="" />
             </div>
         </div>
         <div class="f-form01-item">
             <div class="f-form01-main">
-                <p class="t-p1 t-icon1">机动车第三责任保险</p>
+                <p class="t-p1 t-icon1">机动车第三者责任保险</p>
                 <p class="t-p2">98%车主选择购买</p>
             </div>
             <div class="f-form01-other" style=" text-align:right;">
@@ -112,7 +112,7 @@
                     <option value="1500000">150万</option>
                 </select>
                 <input type="checkbox" value="" /><br /><br />
-                <div class="f-tips01" id="bujimiansanzhe"> 不计免赔 </div>
+                <div class="f-tips01" id="bujimiansanzhe"> 不计免赔 √ </div>
             </div>
         </div>
         <div class="f-form01-item">
@@ -124,7 +124,7 @@
                 @*<select class="f-select01" id="bujimiandaoqiang">
                         <option>不计免赔</option>
                     </select>*@
-                <div class="f-tips01" id="bujimiandaoqiang"> 不计免赔 </div>
+                <div class="f-tips01" id="bujimiandaoqiang"> 不计免赔 √ </div>
                 <input type="checkbox" id="daoqiang" value="" />
             </div>
         </div>
@@ -248,8 +248,7 @@
 
             getReInfo();
         });
-        //用户ID
-        var userID = -1;
+
         function getReInfo() {
             $.ajax({
                 type: "post",
@@ -268,10 +267,10 @@
                     console.log(data);
 
                     if (data == null) {
-                        alert("未查到该车牌续保信息，请退回修改车牌配置！");
+                        alert("未查到该车牌续保信息，请后退修改车牌配置！");
                         return;
                     }
-                    userID = data.UserId;
+
                     var userInfo = data.UserInfo;
                     if (userInfo != null) {
                         $("#licenseNo").val(userInfo.LicenseNo);
@@ -308,6 +307,10 @@
                                 message = "获取续保信息失败，服务器未返回失败原因！";
                             }
                             alert(message);
+
+                            //var url = "@Url.Action("Index")?channel=@ViewBag.channel&mobile=@ViewBag.mobile";
+
+                            //window.location.href = url;
                         }
                         layer.closeAll();
                         return;
@@ -368,7 +371,7 @@
 
             var jsonToString = JSON.stringify(dataItem);
 
-            var url = "@Url.Action("QuoteList")?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=" + jsonToString + "&userID="+userID;
+            var url = "@Url.Action("QuoteList")?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=" + jsonToString;
 
             window.location.href = url;
         });
@@ -415,6 +418,8 @@
             else {
                 obj.prop("disabled", true);
                 obj.css("background", "#648feb");
+                obj.siblings("input[type=checkbox]").prop("checked", true);
+                checkBoxChange(obj.siblings("input[type=checkbox]"), "middle");
             }
         });
 
@@ -437,6 +442,12 @@
             $("input[type=checkbox]").each(function () {
                 $(this).prop("checked", true);
                 checkBoxChange($(this), "max");
+            });
+            //不计免赔选中
+            $(".f-tips01").each(function () {
+                var obj = $(this);
+                obj.css("background", "#648feb");
+                obj.prop("disabled", true);
             });
         })
 
@@ -483,7 +494,5 @@
             }
         }
     </script>
-    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
-    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
 </body>
 </html>

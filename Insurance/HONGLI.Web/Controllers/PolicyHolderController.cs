@@ -12,6 +12,8 @@ using HONGLI.Entity;
 using HONGLI.Service.User;
 using I.Utility.Extensions;
 using I.Utility.Helper;
+using System.Drawing;
+using System.Web.UI.HtmlControls;
 
 namespace HONGLI.Web.Controllers
 {
@@ -27,6 +29,17 @@ namespace HONGLI.Web.Controllers
         public static string AppRootUrl = ConfigurationManager.AppSettings["AppRootUrl"] == null ? "" : ConfigurationManager.AppSettings["AppRootUrl"].ToString();
         public static string AppRootPath = ConfigurationManager.AppSettings["AppRootPath"] == null ? "" : ConfigurationManager.AppSettings["AppRootPath"].ToString();
         public static string MaxFileSize = ConfigurationManager.AppSettings["MaxFileSize"] == null ? "0" : ConfigurationManager.AppSettings["MaxFileSize"].ToString();
+
+        public static int ImagesZipSize = ConfigurationManager.AppSettings["ImagesZipSize"] == null ? 1048576 : Convert.ToInt32(ConfigurationManager.AppSettings["ImagesZipSize"].ToString());
+
+        public static int ImagesZipWidth = ConfigurationManager.AppSettings["ImagesZipWidth"] == null ? 1200 : Convert.ToInt32(ConfigurationManager.AppSettings["ImagesZipWidth"].ToString());
+
+        public static int ImagesZipHeight = ConfigurationManager.AppSettings["ImagesZipHeight"] == null ? 1200 : Convert.ToInt32(ConfigurationManager.AppSettings["ImagesZipHeight"].ToString());
+
+        public static int ImagesThumbWidth = ConfigurationManager.AppSettings["ImagesThumbWidth"] == null ? 120 : Convert.ToInt32(ConfigurationManager.AppSettings["ImagesThumbWidth"].ToString());
+
+        public static int ImagesThumbHeight = ConfigurationManager.AppSettings["ImagesThumbHeight"] == null ? 120 : Convert.ToInt32(ConfigurationManager.AppSettings["ImagesThumbHeight"].ToString());
+
         public static string ImagesUpload = ConfigurationManager.AppSettings["ImagesUpload"] == null ? String.Empty : ConfigurationManager.AppSettings["ImagesUpload"].ToString();
         public static string IdCardUpload = ConfigurationManager.AppSettings["IdCardUpload"] == null ? String.Empty : ConfigurationManager.AppSettings["IdCardUpload"].ToString();
 
@@ -111,6 +124,7 @@ namespace HONGLI.Web.Controllers
             }
             model.MaxUploadSize = maxFileSize;
             OrderPolicyHolder orderPolicyHolder = new OrderPolicyHolder();
+            OrderPolicyHolderPic orderPolicyHolderPic = new OrderPolicyHolderPic();
             if (model.IdCardType == 1)
             {
                 User_PolicyHolder oldPpolicyHolder = _policyHolderService.GetPolicyHolderById(model.Id);
@@ -140,8 +154,12 @@ namespace HONGLI.Web.Controllers
                             {
                                 try
                                 {
-                                    picIdCardFace.SaveAs(picIdCardFacePath);
+                                    UploadImageZip(picIdCardFace, picIdCardFacePath, ImagesZipWidth, ImagesZipHeight);
+                                    //picIdCardFace.SaveAs(picIdCardFacePath);
                                     model.IdCardFacePicUrl = Path.Combine(string.Format("{0}{1}", ImagesUpload, IdCardUpload), "IdCardFace_" + fileName + "." + expName);
+                                    var picIdCardFaceThumbPath = Path.Combine(Request.MapPath(string.Format("~/{0}{1}", ImagesUpload, IdCardUpload)), "IdCardFace_Thumb_" + fileName + "." + expName);
+                                    MakeThumbnail(picIdCardFace.InputStream, picIdCardFaceThumbPath, ImagesThumbWidth, ImagesThumbHeight, "W");
+                                    orderPolicyHolderPic.idcardFacePicUrl = Path.Combine(string.Format("{0}{1}", ImagesUpload, IdCardUpload), "IdCardFace_Thumb_" + fileName + "." + expName);
                                 }
                                 catch
                                 {
@@ -152,15 +170,13 @@ namespace HONGLI.Web.Controllers
                             }
                             else
                             {
-                                if (string.IsNullOrEmpty(orderPolicyHolder.idcardFacePicUrl))
-                                {
-                                    model.Error = "上传身份证正面失败，请上传不大于 " + maxFileSize / 1024 / 1024 + "M 的图片！";
-                                    LogHelper.Info("未上传身份证反面，文件大小：" + picIdCardFace.ContentLength + "。");
-                                    return View(model);
-                                }
+                                model.Error = "上传身份证正面失败，请上传不大于 " + maxFileSize / 1024 / 1024 + "M 的图片！";
+                                LogHelper.Info("未上传身份证反面，文件大小：" + picIdCardFace.ContentLength + "。");
+                                return View(model);
                             }
-                            //}
                         }
+                        //}
+                        //}
                     }
                     if (oldPpolicyHolder == null || string.IsNullOrEmpty(oldPpolicyHolder.IdCardBackPicUrl))
                     {
@@ -175,8 +191,12 @@ namespace HONGLI.Web.Controllers
                             {
                                 try
                                 {
-                                    picIdCardBack.SaveAs(picIdCardBackPath);
+                                    UploadImageZip(picIdCardBack, picIdCardBackPath, ImagesZipWidth, ImagesZipHeight);
+                                    //picIdCardBack.SaveAs(picIdCardBackPath);
                                     model.IdCardBackPicUrl = Path.Combine(string.Format("{0}{1}", ImagesUpload, IdCardUpload), "IdCardBack_" + fileName + "." + expName);
+                                    var picIdCardBackThumbPath = Path.Combine(Request.MapPath(string.Format("~/{0}{1}", ImagesUpload, IdCardUpload)), "IdCardBack_Thumb_" + fileName + "." + expName);
+                                    MakeThumbnail(picIdCardBack.InputStream, picIdCardBackThumbPath, ImagesThumbWidth, ImagesThumbHeight, "W");
+                                    orderPolicyHolderPic.idcardBackPicUrl = Path.Combine(string.Format("{0}{1}", ImagesUpload, IdCardUpload), "IdCardBack_Thumb_" + fileName + "." + expName);
                                 }
                                 catch
                                 {
@@ -187,15 +207,13 @@ namespace HONGLI.Web.Controllers
                             }
                             else
                             {
-                                if (string.IsNullOrEmpty(orderPolicyHolder.idcardBackPicUrl))
-                                {
-                                    model.Error = "上传身份证反面失败，请上传不大于 " + maxFileSize / 1024 / 1024 + "M 的图片！";
-                                    LogHelper.Info("未上传身份证反面，文件大小：" + picIdCardBack.ContentLength + "。");
-                                    return View(model);
-                                }
+                                model.Error = "上传身份证反面失败，请上传不大于 " + maxFileSize / 1024 / 1024 + "M 的图片！";
+                                LogHelper.Info("未上传身份证反面，文件大小：" + picIdCardBack.ContentLength + "。");
+                                return View(model);
                             }
-                            //}
                         }
+                        //}
+                        //}
                     }
                 }
             }
@@ -308,6 +326,12 @@ namespace HONGLI.Web.Controllers
                     cookie.Value = newOrderPolicyHolder.ToJsonItem();
                     Response.Cookies.Set(cookie);
 
+
+                    HttpCookie policyHolderPicCookie = new HttpCookie("HONGLI.order.policyHolderPic");
+                    policyHolderPicCookie.Domain = CookieDomain;
+                    policyHolderPicCookie.Value = orderPolicyHolderPic.ToJsonItem();
+                    Response.Cookies.Set(policyHolderPicCookie);
+
                     if (!string.IsNullOrEmpty(model.ReturnUrl))
                     {
                         string reurl = string.Empty;
@@ -346,6 +370,288 @@ namespace HONGLI.Web.Controllers
 
             return View(model);
         }
+
+        public string UploadImageZip(HttpPostedFileBase httpPostedFile, string savePath, int thumbWidth, int thumbHeight)
+        {
+            //, out string error
+            string error = string.Empty;
+
+            string newFileName = string.Empty;
+
+            int contentLength = httpPostedFile.ContentLength;
+
+            if (contentLength == 0)
+                error = "没有选择上传图片。";
+            //获取upImage选择文件的扩展名
+            string extendName = Path.GetExtension(httpPostedFile.FileName).ToLower();
+            //判断是否为图片格式
+            if (extendName != ".jpg" && extendName != ".jpeg" && extendName != ".gif" && extendName != ".bmp" && extendName != ".png")
+                error = "图片格式不正确。";
+
+
+            byte[] fileData = new byte[contentLength];
+            httpPostedFile.InputStream.Read(fileData, 0, contentLength);
+            //sFilename = Path.GetFileName(httpPostedFile.FileName);
+
+            //int file_append = 0;
+            //检查当前文件夹下是否有同名图片,有则在文件名+1
+            //while (System.IO.File.Exists(System.Web.HttpContext.Current.Server.MapPath(sSavePath + sFilename)))
+            //{
+            //    file_append++;
+            //    sFilename = Path.GetFileNameWithoutExtension(myFile.FileName)
+            //        + file_append.ToString() + extendName;
+            //}
+
+
+            if (contentLength > ImagesZipSize)
+            {
+                using (Image sourceImage = Image.FromStream(httpPostedFile.InputStream))
+                {
+                    //原图宽度和高度
+                    int width = sourceImage.Width;
+                    int height = sourceImage.Height;
+                    int smallWidth;
+                    int smallHeight;
+                    //获取第一张绘制图的大小,(比较 原图的宽/缩略图的宽  和 原图的高/缩略图的高)
+                    if (((decimal)width) / height <= ((decimal)thumbWidth) / thumbHeight)
+                    {
+                        smallWidth = thumbWidth;
+                        smallHeight = thumbWidth * height / width;
+                    }
+                    else
+                    {
+                        smallWidth = thumbHeight * width / height;
+                        smallHeight = thumbHeight;
+                    }
+                    MakeThumbnail(httpPostedFile.InputStream, savePath, thumbWidth, thumbHeight, "W");
+
+                }
+            }
+            else
+            {
+                FileStream fileStream = new FileStream(savePath, FileMode.Create, FileAccess.Write);
+                fileStream.Write(fileData, 0, fileData.Length);
+                fileStream.Close();
+            }
+
+
+            return newFileName;
+        }
+
+
+        /// <summary> 
+        /// 生成缩略图 
+        /// </summary> 
+        /// <param name="originalImagePath">源图路径（物理路径）</param> 
+        /// <param name="thumbnailPath">缩略图路径（物理路径）</param> 
+        /// <param name="width">缩略图宽度</param> 
+        /// <param name="height">缩略图高度</param> 
+        /// <param name="mode">生成缩略图的方式</param>     
+        public static void MakeThumbnail(Stream stream, string thumbnailPath, int width, int height, string mode)
+        {
+            System.Drawing.Image originalImage = System.Drawing.Image.FromStream(stream);
+
+            int towidth = width;
+            int toheight = height;
+
+            int x = 0;
+            int y = 0;
+            int ow = originalImage.Width;
+            int oh = originalImage.Height;
+
+            switch (mode)
+            {
+                case "HW"://指定高宽缩放（可能变形）                 
+                    break;
+                case "W"://指定宽，高按比例                     
+                    toheight = originalImage.Height * width / originalImage.Width;
+                    break;
+                case "H"://指定高，宽按比例 
+                    towidth = originalImage.Width * height / originalImage.Height;
+                    break;
+                case "Cut"://指定高宽裁减（不变形）                 
+                    if ((double)originalImage.Width / (double)originalImage.Height > (double)towidth / (double)toheight)
+                    {
+                        oh = originalImage.Height;
+                        ow = originalImage.Height * towidth / toheight;
+                        y = 0;
+                        x = (originalImage.Width - ow) / 2;
+                    }
+                    else
+                    {
+                        ow = originalImage.Width;
+                        oh = originalImage.Width * height / towidth;
+                        x = 0;
+                        y = (originalImage.Height - oh) / 2;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            //新建一个bmp图片 
+            System.Drawing.Image bitmap = new System.Drawing.Bitmap(towidth, toheight);
+
+            //新建一个画板 
+
+            Graphics g = System.Drawing.Graphics.FromImage(bitmap);
+
+            //设置高质量插值法 
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+
+            //设置高质量,低速度呈现平滑程度 
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+            //清空画布并以透明背景色填充 
+
+            g.Clear(Color.White);
+
+            //在指定位置并且按指定大小绘制原图片的指定部分 
+            g.DrawImage(originalImage, new Rectangle(0, 0, towidth, toheight),
+                new Rectangle(x, y, ow, oh),
+                GraphicsUnit.Pixel);
+
+            try
+            {
+                //以jpg格式保存缩略图 
+
+                bitmap.Save(thumbnailPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+            }
+            catch (System.Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                originalImage.Dispose();
+                bitmap.Dispose();
+                g.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// asp.net上传图片并生成缩略图
+        /// </summary>
+        /// <param name="upImage">HtmlInputFile控件</param>
+        /// <param name="sSavePath">保存的路径,些为相对服务器路径的下的文件夹</param>
+        /// <param name="sThumbExtension">缩略图的thumb</param>
+        /// <param name="intThumbWidth">生成缩略图的宽度</param>
+        /// <param name="intThumbHeight">生成缩略图的高度</param>
+        /// <returns>缩略图名称</returns>
+        public string UpLoadImage(HtmlInputFile upImage, string sSavePath, string sThumbExtension, int intThumbWidth, int intThumbHeight)
+        {
+            string sThumbFile = "";
+            string sFilename = "";
+            if (upImage.PostedFile != null)
+            {
+                HttpPostedFile myFile = upImage.PostedFile;
+                int nFileLen = myFile.ContentLength;
+                if (nFileLen == 0)
+                    return "没有选择上传图片";
+                //获取upImage选择文件的扩展名
+                string extendName = Path.GetExtension(myFile.FileName).ToLower();
+                //判断是否为图片格式
+                if (extendName != ".jpg" && extendName != ".jpge" && extendName != ".gif" && extendName != ".bmp" && extendName != ".png")
+                    return "图片格式不正确";
+
+                byte[] myData = new byte[nFileLen];
+                myFile.InputStream.Read(myData, 0, nFileLen);
+                sFilename = Path.GetFileName(myFile.FileName);
+                int file_append = 0;
+                //检查当前文件夹下是否有同名图片,有则在文件名+1
+                while (System.IO.File.Exists(System.Web.HttpContext.Current.Server.MapPath(sSavePath + sFilename)))
+                {
+                    file_append++;
+                    sFilename = Path.GetFileNameWithoutExtension(myFile.FileName)
+                        + file_append.ToString() + extendName;
+                }
+                FileStream newFile
+                    = new FileStream(System.Web.HttpContext.Current.Server.MapPath(sSavePath + sFilename),
+                    FileMode.Create, FileAccess.Write);
+                newFile.Write(myData, 0, myData.Length);
+                newFile.Close();
+                //以上为上传原图
+                try
+                {
+                    //原图加载
+                    using (System.Drawing.Image sourceImage = System.Drawing.Image.FromFile(System.Web.HttpContext.Current.Server.MapPath(sSavePath + sFilename)))
+                    {
+                        //原图宽度和高度
+                        int width = sourceImage.Width;
+                        int height = sourceImage.Height;
+                        int smallWidth;
+                        int smallHeight;
+                        //获取第一张绘制图的大小,(比较 原图的宽/缩略图的宽  和 原图的高/缩略图的高)
+                        if (((decimal)width) / height <= ((decimal)intThumbWidth) / intThumbHeight)
+                        {
+                            smallWidth = intThumbWidth;
+                            smallHeight = intThumbWidth * height / width;
+                        }
+                        else
+                        {
+                            smallWidth = intThumbHeight * width / height;
+                            smallHeight = intThumbHeight;
+                        }
+                        //判断缩略图在当前文件夹下是否同名称文件存在
+                        file_append = 0;
+                        sThumbFile = sThumbExtension + Path.GetFileNameWithoutExtension(myFile.FileName) + extendName;
+                        while (System.IO.File.Exists(System.Web.HttpContext.Current.Server.MapPath(sSavePath + sThumbFile)))
+                        {
+                            file_append++;
+                            sThumbFile = sThumbExtension + System.IO.Path.GetFileNameWithoutExtension(myFile.FileName) +
+                                file_append.ToString() + extendName;
+                        }
+                        //缩略图保存的绝对路径
+                        string smallImagePath = System.Web.HttpContext.Current.Server.MapPath(sSavePath) + sThumbFile;
+                        //新建一个图板,以最小等比例压缩大小绘制原图
+                        using (System.Drawing.Image bitmap = new Bitmap(smallWidth, smallHeight))
+                        {
+                            //绘制中间图
+                            using (Graphics g = Graphics.FromImage(bitmap))
+                            {
+                                //高清,平滑
+                                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+                                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                                g.Clear(Color.Black);
+                                g.DrawImage(
+                                sourceImage,
+                                new Rectangle(0, 0, smallWidth, smallHeight),
+                                new Rectangle(0, 0, width, height),
+                                GraphicsUnit.Pixel
+                                );
+                            }
+                            //新建一个图板,以缩略图大小绘制中间图
+                            using (System.Drawing.Image bitmap1 = new System.Drawing.Bitmap(intThumbWidth, intThumbHeight))
+                            {
+                                //绘制缩略图  http://www.cnblogs.com/sosoft/
+                                using (Graphics g = Graphics.FromImage(bitmap1))
+                                {
+                                    //高清,平滑
+                                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+                                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                                    g.Clear(Color.Black);
+                                    int lwidth = (smallWidth - intThumbWidth) / 2;
+                                    int bheight = (smallHeight - intThumbHeight) / 2;
+                                    g.DrawImage(bitmap, new Rectangle(0, 0, intThumbWidth, intThumbHeight), lwidth, bheight, intThumbWidth, intThumbHeight, GraphicsUnit.Pixel);
+                                    g.Dispose();
+                                    bitmap1.Save(smallImagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    //出错则删除
+                    System.IO.File.Delete(System.Web.HttpContext.Current.Server.MapPath(sSavePath + sFilename));
+                    return "图片格式不正确";
+                }
+                //返回缩略图名称
+                return sThumbFile;
+            }
+            return "没有选择图片";
+        }
+
         public static string GetUrl(string url, IDictionary<string, string> parameters)
         {
             var resultUrl = String.Empty;
@@ -391,6 +697,12 @@ namespace HONGLI.Web.Controllers
             return builder.ToString();
         }
 
+    }
+
+    internal class OrderPolicyHolderPic
+    {
+        public string idcardBackPicUrl { get; set; }
+        public string idcardFacePicUrl { get; set; }
     }
 
     internal class OrderPolicyHolder

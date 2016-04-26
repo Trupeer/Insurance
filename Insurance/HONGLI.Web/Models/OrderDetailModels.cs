@@ -22,6 +22,7 @@ namespace HONGLI.Web.Models
         public decimal? ProductDealPrice { get; set; }
         public string PolicyHolderName { get; set; }
         public string PolicyHolderIdcard { get; set; }
+        public int? PolicyHolderIdcardType { get; set; }
         public int? InvoiceType { get; set; }
         public string InvoiceTitle { get; set; }
         public int? PayType { get; set; }

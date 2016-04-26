@@ -177,7 +177,7 @@ namespace HONGLI.Repository
             using (var db = new E2JOINDB())
             {
                 var query = db.Database.SqlQuery<AllOrderList>(sql.ToString());
-                result=query.FirstOrDefault();
+                result = query.FirstOrDefault();
             }
             return result;
         }

@@ -68,7 +68,30 @@
                 </div>
             </div>
         </div>
-        <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;" value="保存">
+        <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;border: 0;" value="保存">
+
+        <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+
     }
     <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/hongli.common.tools.js")"></script>
     <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/hongli.global.data.js")"></script>
@@ -79,10 +102,12 @@
                 $("#deliverType").val(1);
                 $("#divPickupAddressBox").hide();
                 $("#divPickupTimeBox").hide();
-                $("#btnExpress").css("background-color", "#888787");
+                $("#btnExpress").css("background-color", "#ea3c31");
+                $("#btnPickup").css("background-color", "#888787");
             }
             else {
-                $("#btnPickup").css("background-color", "#888787");
+                $("#btnExpress").css("background-color", "#888787");
+                $("#btnPickup").css("background-color", "#ea3c31");
             }
             var date = new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
             var year = date.getFullYear();
@@ -105,21 +130,27 @@
                 })
             });
             $("#btnPayType").click(function () {
-                $("#btnPayType").css("background-color", "#888787");
+                //$("#btnPayType").css("background-color", "#888787");
+            });
+            $("#pickupAddress").focus(function () {
+                $('html,body').animate({ scrollTop: $("#pickupAddress").offset().top }, 500);
+            });
+            $("#txtPickupTime").focus(function () {
+                $('html,body').animate({ scrollTop: $("#txtPickupTime").offset().top }, 500);
             });
             $("#btnExpress").click(function () {
                 $("#deliverType").val(1);
                 $("#divPickupAddressBox").hide();
                 $("#divPickupTimeBox").hide();
-                $("#btnExpress").css("background-color", "#888787");
-                $("#btnPickup").css("background-color", "#ea3c31");
+                $("#btnExpress").css("background-color", "#ea3c31");
+                $("#btnPickup").css("background-color", "#888787");
             });
             $("#btnPickup").click(function () {
                 $("#deliverType").val(2);
                 $("#divPickupAddressBox").show();
                 $("#divPickupTimeBox").show();
-                $("#btnExpress").css("background-color", "#ea3c31");
-                $("#btnPickup").css("background-color", "#888787");
+                $("#btnExpress").css("background-color", "#888787");
+                $("#btnPickup").css("background-color", "#ea3c31");
             });
             $("#btnSubmit").click(function () {
                 var payType = 1;
@@ -144,21 +175,19 @@
                 if (deliver['deliverType'] == 1) {
                     $("#divPickupAddressBox").hide();
                     $("#divPickupTimeBox").hide();
-                    $("#btnExpress").css("background-color", "#888787");
-                    $("#btnPickup").css("background-color", "#ea3c31");
+                    $("#btnExpress").css("background-color", "#ea3c31");
+                    $("#btnPickup").css("background-color", "#888787");
                 }
                 else {
                     $("#divPickupAddressBox").show();
                     $("#divPickupTimeBox").show();
                     $("#pickupAddress").val(deliver['selfTakeAddress']);
                     $("#pickupTime").val(deliver['selfTakeDate']);
-                    $("#btnExpress").css("background-color", "#ea3c31");
-                    $("#btnPickup").css("background-color", "#888787");
+                    $("#btnExpress").css("background-color", "#888787");
+                    $("#btnPickup").css("background-color", "#ea3c31");
                 }
             }
         });
     </script>
-    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
-    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
 </body>
 </html>

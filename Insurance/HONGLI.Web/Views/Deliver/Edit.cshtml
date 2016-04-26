@@ -19,6 +19,7 @@
     <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/all.js")"></script>
     <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/hongli.common.tools.js")"></script>
     <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/hongli.global.data.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/pcas.js")"></script>
 </head>
 <body>
     <div class="f-nav">
@@ -58,9 +59,9 @@
                 <label class="f-form01-label">所在地区:</label>
                 <div class="f-form01-main">
                     @Html.HiddenFor(m => m.DeliverLocation, new { @id = "deliverLocation" })
-                    <select class="f-select01" id="s_province" name="s_province"></select>
-                    <select class="f-select01" id="s_city" name="s_city"></select>
-                    <select class="f-select01" id="s_county" name="s_county"></select>
+                    <select class="f-select01" id="deliverProvince" name="deliverProvince"></select>
+                    <select class="f-select01" id="deliverCity" name="deliverCity"></select>
+                    <select class="f-select01" id="deliverArea" name="deliverArea"></select>
                 </div>
             </div>
             <div class="f-form01-item">
@@ -71,31 +72,68 @@
                 </div>
             </div>
         </div>
-        <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;" value="保存">
+        <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;border: 0;" value="保存">
+
+
+        <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+
         @*<a class="f-button01" style="margin-top: 1rem;" id="btnSubmit">保存</a>*@
         @*</form>*@
     }
-    <script src="@Url.Content("~/Scripts/area.js")" type="text/javascript"></script>
+    @*<script src="@Url.Content("~/Scripts/area.js")" type="text/javascript"></script>*@
     <script type="text/javascript">
-        _init_area();
         $(function () {
             var deliverLocation = "@Model.DeliverLocation";
             if (deliverLocation != null && deliverLocation != "") {
                 var locationArrar = deliverLocation.split('|');
-                $("#s_province option[value=" + locationArrar[0] + "]").attr("selected", "selected");
-                $('#s_province').onchange();
-                $("#s_city option[value=" + locationArrar[1] + "]").attr("selected", "selected");
-                $("#s_county option[value=" + locationArrar[2] + "]").attr("selected", "selected");
+                console.log(locationArrar);
+                //$("#s_province option[value=" + locationArrar[0] + "]").attr("selected", "selected");
+                //$('#s_province').onchange();
+
+                //$("#s_city option[value=" + locationArrar[1] + "]").attr("selected", "selected");
+
+                //$("#s_county option[value=" + locationArrar[2] + "]").attr("selected", "selected");
+                //$('#s_province').val(locationArrar[0]);
+                //$('#s_city').val(locationArrar[1]);
+                //console.log(locationArrar[1]);
+                //$('#s_county').val(locationArrar[2]);
+                new PCAS("deliverProvince", "deliverCity", "deliverArea", locationArrar[0], locationArrar[1], locationArrar[2]);
+            }
+            else {
+                new PCAS("deliverProvince", "deliverCity", "deliverArea");
             }
         });
-        $('#s_province').change(function () {
-            $('#deliverLocation').val($('#s_province').val());
+        $('#deliverProvince').change(function () {
+            $('#deliverLocation').val($('#deliverProvince').val());
         });
-        $('#s_city').change(function () {
-            $('#deliverLocation').val($('#deliverLocation').val() + "|" + $('#s_city').val());
+        $('#deliverCity').change(function () {
+            $('#deliverLocation').val($('#deliverProvince').val() + "|" + $('#deliverCity').val());
         });
-        $('#s_county').change(function () {
-            $('#deliverLocation').val($('#deliverLocation').val() + "|" + $('#s_county').val());
+        $('#deliverArea').change(function () {
+            $('#deliverLocation').val($('#deliverProvince').val() + "|" + $('#deliverCity').val() + "|" + $('#deliverArea').val());
+        });
+        $("#deliverAddress").focus(function () {
+            $('html,body').animate({ scrollTop: $("#deliverAddress").offset().top }, 500);
         });
         $("#btnSubmit").click(function () {
             var deliverName = $('#deliverName').val();
@@ -128,7 +166,7 @@
                 msg = msg + '请选择城市！\n';
             }
             console.log(msg);
-            if (($('#s_province').val() == null || $('#s_province').val() == '请选择') && ($('#s_city').val() == null || $('#s_city').val() == '请选择') && ($('#s_county') == null || $('#s_county') == '请选择')) {
+            if (($('#deliverProvince').val() == null || $('#deliverProvince').val() == '请选择') && ($('#deliverCity').val() == null || $('#deliverCity').val() == '请选择') && ($('#deliverArea') == null || $('#deliverArea') == '请选择')) {
                 msg = msg + '请选择城市！\n';
             }
             if (msg != '') {
@@ -138,7 +176,5 @@
 
         });
     </script>
-    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
-    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
 </body>
 </html>

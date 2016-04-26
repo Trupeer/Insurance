@@ -1,100 +1,16 @@
 ﻿
 @{
     Layout = null;
+    ViewBag.Title = "Index";
 }
 
+<h2>Index</h2>
+<script src="~/Scripts/hongli.common.tools.js"></script>
+ 
 
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>选择支付配送</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-    <meta content="yes" name="apple-mobile-web-app-capable" />
-    <meta content="yes" name="apple-touch-fullscreen" />
-    <meta content="telephone=no,email=no" name="format-detection" />
-    <meta content="portrait" name="screen-orientation" />
-    <meta content="portrait" name="x5-orientation" />
-    <link rel="stylesheet" type="text/css" href="../public/css/all.css">
-    <script src="../public/js/base.js"></script>
-</head>
-<body>
-    <div class="f-nav">
-        <h2>选择支付配送</h2>
-        <div class="f-nav-back">
-            <a href="javascript:;" id="riaGoBack"><i></i></a>
-        </div>
-    </div>
-    <div class="f-nav-extend">&nbsp;</div>
-    
-    <div class="page94-Image">
-        <img src="../public/Images/Order-index.gif" />
-    </div>
-    <div class="page94-form">
-        <div class="f-form01-item" id="product">
-            <label class="f-form01-label">
-                <img id="product-isuranceLogoUrl" src="">
-            </label>
-            <div class="f-form01-main">
-                <p class="t-24" id="product-title"></p>
-                <p class="t-money01"><i id="product-dealPrice">￥</i><del id="product-originalPrice">￥</del></p>
-            </div>
-        </div>
+<div>
+    @ViewBag.Result
 
-        <div class="f-form01-item">
-            <div class="explain">
-                <p class="t-p1" id="FavorablePrice">已为您优惠 ￥999</p>
-                <p class="t-26">再需交<span id="PrepaidAmount"></span>预定金，我方服务人员会为您按预约时间上门签订合同！</p>
-            </div>
-        </div>
-    </div>
-    <div class="page94-submit">
-        <a href="Do?productId=@ViewBag.ProductId&mobile=@ViewBag.Mobile&channel=@ViewBag.Channel&intentionCompany=@ViewBag.intentionCompany&OrderCode=@ViewBag.OrderCode&OrderBaseId=@ViewBag.OrderBaseId&OrderItemId=@ViewBag.OrderItemId&OrderPolicyId=@ViewBag.OrderPolicyId&OrderDeliverId=@ViewBag.OrderDeliverId" class="f-button03">确认订单信息</a>
-    </div>
-    <div class="page20-submit-fixed-extend"></div>
+</div>
 
-        <script src="../public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
-        <script src="../public/js/all.js"></script>
-
-
-        <script src="~/Scripts/hongli.common.tools.js"></script>
-        <script src="~/Scripts/hongli.global.data.js"></script>
-
-        <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
-        <script>function getReferrer() { var imEle = document.getElementById("udesk-im-74"); if (imEle.href.indexOf("?") > -1) { imEle.href += "&" } else { imEle.href += "?" } imEle.href += "cur_url=" + encodeURIComponent(location.href); imEle.href += "&"; imEle.href += "pre_url=" + encodeURIComponent(document.referrer); } window.onload = getReferrer();</script>
-<script>
-    $(function () {
-        $.get("GetOrderByCode", { OrderCode: '@Request["OrderCode"]' }, function (data) {
-            if (data == null) {
-                return;
-            }
-            var result = JSON.parse(data);
-            $("#product-isuranceLogoUrl").attr("src", getIsuranceLogoUrl(result.InsuranceLogo));
-            $("#product-title").html(result.LicenseNo + "保费,交强险起保日期" + result.ForceExpireDate + ",商业保险起保日期" + result.BusinessExpireDate);
-            $("#product-originalPrice").html("￥" + result.ProductOriginalPrice);
-            $("#PrepaidAmount").html(result.PrepaidAmount);
-            var price = parseFloat(result.ProductOriginalPrice) - parseFloat(result.ProductDealPrice);
-            $("#FavorablePrice").html("已为您优惠 ￥" + price)
-        });
-    });
-    function getIsuranceLogoUrl(logo) {
-        var logoUrl = "";
-        switch (logo) {
-            case 0:
-                logoUrl = "../public/imagesTemp/page40-2.png";
-                break;
-            case 1:
-                logoUrl = "../public/imagesTemp/page40-3.png";
-                break;
-            case 2:
-                logoUrl = "../public/imagesTemp/page40-1.png";
-                break;
-            default:
-                logoUrl = "";
-                break;
-        }
-        return logoUrl;
-    }
-</script>
-</body>
-</html>
+ 
