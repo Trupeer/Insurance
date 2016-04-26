@@ -387,9 +387,10 @@ body input.radio:checked:before{
 /*page20*/
 .page20-form {margin-bottom: .16rem; border-top: 1px solid #d9d9da; height: 10rem;}
 .page20-form .f-form01-item{ border-bottom:0.5px solid #d9d9da;padding: 0.5rem 0 0.5rem 0;}
+.page20-form .f-form01-item1{ border-bottom:0.5px solid #d9d9da;padding: 0.5rem 0 0.5rem 0;border-bottom: 1px solid #d9d9da;padding: 0.2rem;background-color: #ffffff;}
 .page20-form .f-form01-label img{ width: 2.56rem; height: 1.28rem;}
 .page20-form .t-24{ font-size: .280rem; color: #000000; width:6.8rem;}
-.page20-form .t-25{ font-size: .550rem; color: #ea3c31;}
+.page20-form .t-25{ font-size: .480rem; color: #ea3c31;}
 .page20-form .t-26{ font-size: .280rem; color: #000000; margin-top:0.2rem;}
 .page20-form .t-30{ font-size: .48rem; color: #0c0c0c;}
 .page20-form .t-money01{ font-size: .280rem;}
@@ -653,3 +654,38 @@ body input.radio:checked:before{
 .page94-form .t-money01 i{ color: #000000; margin-right: .16rem; font-style: normal;}
 .page94-form .explain{ margin-left:.5rem;width:9.8rem;}
 .page94-form .t-p1{ font-size: .448rem;color:#ea3c31}
+
+/*page95*/
+.page95-info{background-color: #fff; margin: .16rem 0; font-size: .48rem; padding:.2rem .8rem;}
+.page95-info span{ color: #000; padding-left: .48rem;}
+/*==========*/
+.page95-address{background-color: #fff; height: 1.5rem; margin: .16rem 0;}
+.page95-address .f-list01{ background:transparent; border-bottom: 0; height: 1.5rem; padding: 0;}
+.page95-address .f-list01-main{ padding-left: .89rem;}
+.page95-address .f-list01-go{ padding-right: .64rem;}
+.page95-address .t-p1{ font-size: .448rem; color: #010101;}
+.page95-address .t-p2{ font-size: .416rem; color: #817e7e; padding-top: .16rem;}
+.page95-address .t-span1{ font-size: .448rem; color: #817e7e; width:0.8rem;}
+.page95-address .t-name,
+.page95-address .t-mobile{ margin-left: .48rem; height: .64rem; display: inline-block; line-height: .64rem;}
+/*==========*/
+.page95-ps{margin-bottom: .16rem;}
+.page95-ps .f-form01-main{ text-align: right; color: #000; padding-right: .16rem;}
+/*==========*/
+.page95-other{padding: .64rem .48rem;}
+.page95-other p{ text-align: right; margin-bottom: .16rem;}
+.page95-other .t-1{ font-size: .48rem; color: #000;}
+.page95-other .t-2{ font-size: .448rem; color: #e5411a;}
+.page95-other .t-3{ font-size: .416rem;}
+/*=========*/
+.page95-submit{ line-height: 1.28rem; border-top: 1px solid #e2e0e0; padding: .32rem .32rem .32rem .5rem; background-color: #f3f3f3; position: fixed; bottom: 0; width: 11.18rem; margin-bottom: 0 auto;}
+.page95-submit-fixed-extend{ height: 2.2rem; visibility: hidden;}
+.page95-submit a{height: 1.28rem; line-height: 1.28rem; width: 5.4rem; text-align: center; display: inline-block;}
+.page95-submit a.t-cancel{ background-color: #e5411a; margin-right: .1rem;}
+.page95-submit a.t-pay{ background-color: #e37101; margin-left: .1rem;}
+
+/**add by guoqiangs **/
+.page95-submit a.t-cancel-1{ background-color: #5b6272; margin-right: .1rem;}
+.page95-submit a.t-pay-1{ background-color: #ea3c31; margin-left: .1rem;}
+.page95-label{width: 2.5rem; margin-right: .5rem; padding-left: .8rem; display: inline-block; font-size: .48rem;}
+.page95-label img{ width: 2.56rem; height: 1.28rem;}

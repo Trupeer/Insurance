@@ -138,6 +138,8 @@ namespace HONGLI.Web.Controllers
             ViewBag.Product_User = new AdminService().GetProductUser(UserId);
             ViewBag.Product_Renewal = new AdminService().GetProductRenewal(UserId);
             ViewBag.Prduct_ItemSelect = new AdminService().GetProductItemSelection(UserId);
+            ViewBag.InsuranceCompany = InsuranceCompany;
+            ViewBag.UserId = UserId;
             return View();
         }
         public object GetProductItem(int? UserId, int? InsuranceCompany)
@@ -329,7 +331,7 @@ namespace HONGLI.Web.Controllers
 
             #endregion
 
-            var orderList = new OrderService().GetOrderByCode(ordercode);
+            var orderList = new OrderService().GetOrderByCode(order_base.OrderCode);
             if (orderList == null)
             {
                 orderList = new Order_Base();
@@ -354,9 +356,11 @@ namespace HONGLI.Web.Controllers
                 orderList.Order_PolicyHolder.Add(order_policyholder);
             }
             ViewBag.OrderList = orderList;
-            ViewBag.Product_User = new AdminService().GetProductUser(userId);
-            ViewBag.Product_Renewal = new AdminService().GetProductRenewal(userId);
-            ViewBag.Prduct_ItemSelect = new AdminService().GetProductItemSelection(userId);
+            ViewBag.Product_User = new AdminService().GetProductUser(model.Id);
+            ViewBag.Product_Renewal = new AdminService().GetProductRenewal(model.Id);
+            ViewBag.Prduct_ItemSelect = new AdminService().GetProductItemSelection(model.Id);
+            ViewBag.InsuranceCompany = model.ItemSource;
+            ViewBag.UserId = model.Id;
             return View(model);
         }
         [HttpPost]
@@ -380,7 +384,8 @@ namespace HONGLI.Web.Controllers
             order_base.Id = orderbaseId;
             order_base.OrderCode = ordercode;
             order_base.Status = Status;
-            order_base.PrepaidAmount = PrepaidAmount;
+            //order_base.PrepaidAmount = PrepaidAmount;
+            //order_base.AmountPayable = AmountPayable;
             order_base.CreateDate = DateTime.Now;
             Order_Item order_item = new Order_Item();
             order_item.Id = orderitemId;
@@ -392,6 +397,7 @@ namespace HONGLI.Web.Controllers
             order_item.ProductDealPrice = ProductDealPrice;
             order_item.ProductOriginalPrice = ProductOriginalPrice;
             order_item.ProductTitle = description;
+            order_item.Buid = buid;
             order_base.Order_Item.Add(order_item);
             int result = new AdminService().ChangeOrderList(order_base);
             if(result>0)

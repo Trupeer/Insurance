@@ -243,5 +243,28 @@ namespace HONGLI.Repository
             }
             return result;
         }
+        /// <summary>
+        /// 修改发票信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int EditOrderInvoice(Order_Base model)
+        {
+            int result = -1;
+            using (var context = new E2JOINDB())
+            {
+                context.Order_Base.Attach(model);
+                context.Entry(model).Property(t => t.Id).IsModified = true;
+                context.Entry(model).Property(t => t.OrderCode).IsModified = true;
+                context.Entry(model).Property(t => t.InvoiceTitle).IsModified = true;
+                context.Entry(model).Property(t => t.InvoiceType).IsModified = true;
+                context.Entry(model).Property(t => t.AmountPayable).IsModified = true;
+                context.Entry(model).Property(t => t.PaidAmount).IsModified = true;
+                context.SaveChanges();
+                result = model.Id;
+            }
+
+            return result;
+        }
     }
 }

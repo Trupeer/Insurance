@@ -29,76 +29,81 @@
     @if (Model != null)
     {
 
-    <div class="page30-info">订单号<span>@Model.OrderCode</span></div>
+    <div class="page95-info">订单号<span>@Model.OrderCode</span></div>
     if (Model.DeliverType == 1)
     {
-        <div class="page30-address">
+        <div class="page95-address">
             <div class="f-list01">
                 <div class="f-list01-main">
                     <p class="t-p1">
-                        <span class="t-name">@Model.DeliverName</span>
-                        <span class="t-mobile">@Model.DeliverMobile</span>
-                    </p>
-                    <p class="t-p2">@Model.DeliverAddress</p>
+                        <span class="t-span1">姓名</span><span class="t-name">@Model.DeliverName</span>
+                        <span class="t-span1" style="margin-left:2.2rem">手机号</span><span class="t-mobile" >@Model.DeliverMobile</span>
+</p>
                 </div>                
             </div>
         </div>
     }
 
     <div class="page20-form">
-        <div class="f-form01-item">
-            <label class="f-form01-label">
-                <img src="@HtmlHelper.GetInsuranceLogoUrl((EnumInsuranceLogo)(Model.InsuranceLogo))">
+        <div class="f-form01-item" id="product">
+            <label class="page95-label">
+                <img id="product-isuranceLogoUrl" src="../public/imagesTemp/page40-2.png">
             </label>
-            <div class="f-form01-main">
-                <p class="t-24">@Model.ProductTitle</p>
-                <p class="t-money01"><i>￥@Model.ProductDealPrice</i><del>￥@Model.ProductOriginalPrice</del></p>
-            </div>            
+            <div>
+                <p class="t-24" id="product-title"><span>@Model.LicenseNo</span>保费，交强险起保日期<span>@Model.ForceExpireDate</span>，商业险起保日期<span>@Model.BusinessExpireDate</span></p>
+                <p class="t-money01" style="margin-top:0.1rem;"><del>@Model.ProductOriginalPrice</del><span class="t-24" style="margin-left:0.3rem;">优惠价：</span><span class="t-25">@Model.ProductDealPrice</span></p>
+                <p style="margin-top:0.1rem;" class="t-money01"><span class="t-24" style="margin-left:1.75rem;">预约金：</span><span class="t-25" id="product-PrepaidAmount">@Model.PrepaidAmount</span></p>
+            </div>
         </div>
         <div class="f-form01-item">
-            <label class="f-form01-label">被保人信息</label>
-            <div class="f-form01-main t-30">
-                <p>被保人：@Model.PolicyHolderName</p>
-                <p>身份证：@Model.PolicyHolderIdcard</p>
-            </div>            
+            <div class="explain" style="margin-left:.9rem;">
+                <p class="t-p1">说明</p>
+                <p class="t-26">亲爱的用户，你只需要支付相应的预约金，我们的专职人员会第一时间上门服务。</p>
+            </div>
         </div>
+
         <div class="f-form01-item">
-            <label class="f-form01-label">发票信息</label>
-            <div class="f-form01-main t-30">
-                @Model.InvoiceTitle
-            </div>            
+            <div class="explain" style="margin-left:.9rem;">
+                <p class="t-p1">被保人信息</p>
+                <p id="policyHolder-name" class="t-26">被保人：@Model.PolicyHolderName</p>
+                <p id="policyHolder-idcard" class="t-26">身份证：@Model.PolicyHolderIdcard</p>
+            </div>
         </div>
+<div class="f-form01-item">
+    <div class="explain"><span class="t-p1">发票信息</span><span class="t-26" style="float:right">@Model.InvoiceTitle</span></div>
+</div>
+<div class="f-form01-item" id="PayType" style="display:none;">
+    <div class="explain"><span class="t-p1">支付方式</span><span class="t-26" style="float:right">在线支付</span></div>
+</div>
+<div class="f-form01-item" id="DeliverType" style="display:none;">
+    <div class="explain">
+        @if (Model.DeliverType == 1)
+        {
+
+            <span class="t-p1">专员上门签单地址</span>
+        }
+        else
+        {
+            <span class="t-p1">自取约单地址</span>
+        }
+        <span class="t-26" style="float:right" id="payAndDeliver-viewText">@Model.DeliverAddress</span>
     </div>
-    <div class="page30-ps">
-        <div class="f-form01-item">
-            <label class="f-form01-label">支付方式</label>
-            <div class="f-form01-main">在线支付</div>
-        </div>
-        <div class="f-form01-item">
-            <label class="f-form01-label">配送信息</label>
-            <div class="f-form01-main">预计 @Model.DeliverTime.Value.ToString("yyyy年MM月dd日") 送达</div>
-        </div>
-        @*<div class="f-form01-item">
-            <label class="f-form01-label">发票信息</label>
-            <div class="f-form01-main">发票抬头北京旺达科技</div>
-        </div>*@
     </div>
-    <div class="page20-money01">
-        <p><span>￥@Model.ProductDealPrice</span>保费总额：</p>
-        <p><span>￥@Model.DeliverPrice</span>运费：</p>
-    </div>
-    <div class="page30-other">
-        <p class="t-1">实付金额</p>
-        <p class="t-2">￥@Model.AmountPayable</p>
-        <p class="t-3">下单时间为：@Model.CreateDate</p>
+        <div class="f-form01-item" style="margin-bottom:2rem">
+            <div class="explain">
+                <p>
+                    <span class="t-p1">支付预约金：</span><span class="t-25">@(Model.PrepaidAmount+Model.DeliverPrice)</span><span class="t-25">(含运费</span><span>@Model.DeliverPrice)</span>
+</p>
+            </div>
+        </div>
     </div>
    if (((EnumOrderStatus)Model.OrderStatus) == EnumOrderStatus.Paid || ((EnumOrderStatus)Model.OrderStatus) == EnumOrderStatus.Success)
    {
-        <div class="page30-submit">已支付</div>
+        <div class="page95-submit">已支付</div>
    }
    else
    {
-    <div class="page30-submit">
+    <div class="page95-submit">
         <a href="@Url.Action("Quit", new { ordercode = Model.OrderCode })" class="f-button02 t-cancel-1">取消订单</a>
         <a href="@Url.Action("PayConfirm", new { ordercode = Model.OrderCode })" class="f-button02 t-pay-1">去支付</a>
     </div>
@@ -108,10 +113,10 @@
 
     }
     else {
-        <div  class="page30-info">订单为空</div>
+        <div  class="page95-info">订单为空</div>
     }
 
-    <div class="page30-submit-fixed-extend"></div>
+    <div class="page95-submit-fixed-extend"></div>
     <script src="../public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
     <script src="../public/js/all.js"></script>
 

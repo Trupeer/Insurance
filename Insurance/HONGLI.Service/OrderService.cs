@@ -81,5 +81,14 @@ namespace HONGLI.Service
         {
             return _orderRepository.AddPay(model);
         }
-    }
+        /// <summary>
+        /// 修改发票信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int EditOrderInvoice(Order_Base model)
+        {
+            return _orderRepository.EditOrderInvoice(model);
+        }
+        }
 }

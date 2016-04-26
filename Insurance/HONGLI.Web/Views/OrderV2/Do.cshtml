@@ -47,8 +47,8 @@
             </label>
             <div>
                 <p class="t-24" id="product-title"></p>
-                <p class="t-money01"><del id="product-originalPrice">12345</del></p>@*<i id="product-dealPrice">￥</i>*@
-                <p style="margin-top:0.1rem"><span class="t-24">优惠价：</span><span class="t-25" id="product-Discount">9999</span><span class="t-24" style="margin-left:0.3rem;">预约金：</span><span class="t-25" id="product-PrepaidAmount">9999</span></p>
+                <p class="t-money01" style="margin-top:0.1rem;"><del id="product-originalPrice">12345</del><span class="t-24" style="margin-left:0.3rem;">优惠价：</span><span class="t-25" id="product-Discount">9999</span></p>@*<i id="product-dealPrice">￥</i>*@
+                <p style="margin-top:0.1rem;" class="t-money01"><span class="t-24" style="margin-left:2.13rem;">预约金：</span><span class="t-25" id="product-PrepaidAmount">9999</span></p>
             </div>
             <div class="f-list01-go" style="margin-left:0.2rem"><a href="@Url.Action("Detail","ProductV3",new {ProductId = ViewBag.ProductId, mobile = ViewBag.Mobile,channel = ViewBag.Channel} )" class="f-list01-icon-arrow"></a></div>
         </div>
@@ -58,44 +58,47 @@
                 <p class="t-26">亲爱的用户，你只需要支付相应的预约金，我们的专职人员会第一时间上门服务。</p>
             </div>
         </div>
-        <div class="f-form01-item" id="PolicyEmpty" style="padding:0">
-            <div class="page20-address-empty"><a href="@Url.Action("Edit","PolicyHolder",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId} )"><p></p><span>添加被保人信息</span><span class="f-list01-icon-arrow" style="margin-left:6.3rem;"></span></a></div>
-        </div>
-        <div class="f-form01-item" id="policyHolder" style="display:none">
-            <div class="explain">
-                <p class="t-p1">被保人信息</p>
-                <p id="policyHolder-name" class="t-26">被保人：</p>
-                <p id="policyHolder-idcard" class="t-26">身份证：</p>
-            </div>
-            <div class="f-list01-go" style="margin-left:0.2rem"><a href="@Url.Action("Edit","PolicyHolderV2",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId} )" class="f-list01-icon-arrow"></a></div>
-        </div>
-        <div class="f-form01-item">
-            <div class="explain"><span class="t-p1">发票信息</span><span class="t-26" style="float:right" id="invoice"></span></div>
-            <div class="f-list01-go" style="margin-left:0.2rem;"><a href="@Url.Action("Edit","InvoiceV2",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a></div>
-        </div>
-        <div class="f-form01-item" id="PayAndDeliver">
-            <div class="explain"><span class="t-p1">支付配送</span></div>
-            <div class="f-list01-go" style="margin-left:0.2rem;"><a href="@Url.Action("TypeEdit","DeliverV2",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a></div>
-        </div>
-        <div class="f-form01-item" id="PayType" style="display:none;">
-            <div class="explain"><span class="t-p1">支付方式</span><span class="t-26" style="float:right">在线支付</span></div>  
-            <div class="f-list01-go" style="margin-left:0.2rem;">
-                <a href="@Url.Action("TypeEdit","DeliverV2",new {userid=ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile,channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a>
-            </div>
-            </div>
-        <div class="f-form01-item" id="DeliverType" style="display:none;">
-            <div class="explain"><span class="t-p1">配送信息</span><span class="t-26" style="float:right" id="payAndDeliver-viewText"></span></div>
-            <div class="f-list01-go" style="margin-left:0.2rem;">
-                <a href="@Url.Action("TypeEdit","DeliverV2",new { userid = ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a>
-            </div>
-            </div>
-        <div class="f-form01-item" style="margin-bottom:2rem">
-            <div class="explain">
-                <span class="t-p1">保费总额：</span><span class="t-25" id="Total">9999</span>
-                <span class="t-p1" style="margin-left:3rem;">预约金：</span><span class="t-25" id="PrepaidAmount">9999</span>
+        <div class="f-form01-item1" id="PolicyEmpty" style="padding:0">
+            <div class="page20-address-empty">
+                <a href="@Url.Action("Edit","PolicyHolderV2",new { userId= ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId } )"><span>添加被保人信息</span><span class="f-list01-icon-arrow" style="margin-left:6.75rem;"></span></a>
             </div>
         </div>
-    </div>
+           
+            <div class="f-form01-item" id="policyHolder" style="display:none">
+                <div class="explain">
+                    <p class="t-p1">被保人信息</p>
+                    <p id="policyHolder-name" class="t-26">被保人：</p>
+                    <p id="policyHolder-idcard" class="t-26">身份证：</p>
+                </div>
+                <div class="f-list01-go" style="margin-left:0.2rem"><a href="@Url.Action("Edit","PolicyHolderV2",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId} )" class="f-list01-icon-arrow"></a></div>
+            </div>
+            <div class="f-form01-item">
+                <div class="explain"><span class="t-p1">发票信息</span><span class="t-26" style="float:right" id="invoice"></span></div>
+                <div class="f-list01-go" style="margin-left:0.2rem;"><a href="@Url.Action("Edit","InvoiceV2",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a></div>
+            </div>
+            <div class="f-form01-item" id="PayAndDeliver">
+                <div class="explain"><span class="t-p1">支付配送</span></div>
+                <div class="f-list01-go" style="margin-left:0.2rem;"><a href="@Url.Action("TypeEdit","DeliverV2",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a></div>
+            </div>
+            <div class="f-form01-item" id="PayType" style="display:none;">
+                <div class="explain"><span class="t-p1">支付方式</span><span class="t-26" style="float:right">在线支付</span></div>
+                <div class="f-list01-go" style="margin-left:0.2rem;">
+                    <a href="@Url.Action("TypeEdit","DeliverV2",new {userid=ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile,channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a>
+                </div>
+            </div>
+            <div class="f-form01-item" id="DeliverType" style="display:none;">
+                <div class="explain"><span class="t-p1">配送信息</span><span class="t-26" style="float:right" id="payAndDeliver-viewText"></span></div>
+                <div class="f-list01-go" style="margin-left:0.2rem;">
+                    <a href="@Url.Action("TypeEdit","DeliverV2",new { userid = ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a>
+                </div>
+            </div>
+            <div class="f-form01-item" style="margin-bottom:2rem">
+                <div class="explain">
+                    <span class="t-p1">保费总额：</span><span class="t-25" id="Total">9999</span>
+                    <span class="t-p1" style="margin-left:2rem;">预约金：</span><span class="t-25" id="PrepaidAmount">9999</span>
+                </div>
+            </div>
+        </div>
     <div class="page20-submit">
         <a href="#" class="f-button02" onclick="javascript:orderSubmit()">提交订单</a>
         <div>支付预定金：<span id="order-totalPrice">￥</span></div>
@@ -232,7 +235,6 @@
                     $("#product-originalPrice").html("￥" + order_product_json.originalPrice);
                     $("#product-PrepaidAmount").html(order_product_json.PrepaidAmount);
                     $("#order-productPrice").html("￥" + order_product_json.dealPrice);
-                    $("#Total").html(order_product_json.dealPrice);
                     $("#PrepaidAmount").html(order_product_json.PrepaidAmount);
                 }
                 else {
@@ -305,14 +307,19 @@
             //最终价格=产品价格+配送费
 
             var totalPrice = 0;
-            if (order_product_json != null && order_product_json.dealPrice != null) {
+            var endprice=0;
+            if (order_product_json != null && order_product_json.PrepaidAmount != null) {
                 totalPrice = parseFloat(order_product_json.PrepaidAmount == null ? 0 : order_product_json.PrepaidAmount);
             }
-
+            if (order_product_json != null && order_product_json.dealPrice != null) {
+                endprice = parseFloat(order_product_json.dealPrice == null ? 0 : order_product_json.dealPrice);
+            }
             if (order_payAndDeliver_json != null && order_payAndDeliver_json.deliverPrice != null) {
                 totalPrice = totalPrice + parseFloat(order_payAndDeliver_json.deliverPrice);
+                endprice=endprice + parseFloat(order_payAndDeliver_json.deliverPrice);
             }
 
+            $("#Total").html(endprice);
             $("#order-totalPrice").html("￥" + totalPrice);
         }
 

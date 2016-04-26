@@ -70,7 +70,11 @@ namespace HONGLI.Web.Controllers
                     InsuranceLogo = order.Order_Item.FirstOrDefault().InsuranceLogo,
                     AmountPayable = order.AmountPayable,
                     CreateDate = order.CreateDate,
-                    OrderStatus = order.Status
+                    OrderStatus = order.Status,
+                    PrepaidAmount=order.PrepaidAmount,
+                    LicenseNo=order.Order_Item.FirstOrDefault().LicenseNo,
+                    ForceExpireDate=order.Order_Item.FirstOrDefault().ForceExpireDate,
+                    BusinessExpireDate=order.Order_Item.FirstOrDefault().BusinessExpireDate
 
                 };
                 return View(model);
@@ -249,7 +253,14 @@ namespace HONGLI.Web.Controllers
                 }
                 catch (Exception ex)
                 { }
-
+                Order_Base order_base = new Order_Base();
+                order_base.Id = OrderBaseId==null?0:Convert.ToInt32(OrderBaseId);
+                order_base.OrderCode = OrderCode;
+                order_base.InvoiceTitle = invoice.InvoiceTitle;
+                order_base.InvoiceType = invoice.InvoiceType;
+                order_base.AmountPayable=productDealPrice+ payAndDeliver.DeliverPrice;
+                order_base.PaidAmount= productDealPrice + payAndDeliver.DeliverPrice;
+                new OrderService().EditOrderInvoice(order_base);
                 Order_Deliver order_deliver = new Order_Deliver();
                 if (payAndDeliver.DeliverType == 1)
                 {

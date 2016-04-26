@@ -602,11 +602,11 @@ namespace HONGLI.Repository
 
             return result;
         }
-       /// <summary>
-       /// 添加订单地址信息
-       /// </summary>
-       /// <param name="order_deliver"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// 添加订单地址信息
+        /// </summary>
+        /// <param name="order_deliver"></param>
+        /// <returns></returns>
         public int SaveOrderDeliver(Order_Deliver order_deliver)
         {
             int itemid;
@@ -659,8 +659,9 @@ namespace HONGLI.Repository
                 context.Order_Base.Attach(order_base);
                 context.Entry(order_base).Property(t => t.Id).IsModified = true;
                 context.Entry(order_base).Property(t => t.Status).IsModified = true;
-                context.Entry(order_base).Property(t => t.PrepaidAmount).IsModified = true;
+                //context.Entry(order_base).Property(t => t.PrepaidAmount).IsModified = true;
                 context.Entry(order_base).Property(t => t.CreateDate).IsModified = true;
+                //context.Entry(order_base).Property(t => t.AmountPayable).IsModified = true;
                 context.SaveChanges();
                 context.Order_Item.Attach(order_base.Order_Item.FirstOrDefault());
                 context.Entry(order_base.Order_Item.FirstOrDefault()).Property(t => t.Id).IsModified = true;
@@ -671,6 +672,7 @@ namespace HONGLI.Repository
                 context.Entry(order_base.Order_Item.FirstOrDefault()).Property(t => t.ProductDealPrice).IsModified = true;
                 context.Entry(order_base.Order_Item.FirstOrDefault()).Property(t => t.ProductOriginalPrice).IsModified = true;
                 context.Entry(order_base.Order_Item.FirstOrDefault()).Property(t => t.ProductTitle).IsModified = true;
+                context.Entry(order_base.Order_Item.FirstOrDefault()).Property(t => t.Buid).IsModified = true;
                 context.SaveChanges();
                 result = order_base.Id;
             }

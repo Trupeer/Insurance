@@ -30,6 +30,10 @@ namespace HONGLI.Web.Models
         public decimal? AmountPayable { get; set; }
         public DateTime? CreateDate { get; set; }
         public int? OrderStatus { get; set; }
+        public string LicenseNo { get; set; }
+        public DateTime? ForceExpireDate { get; set; }
 
+        public DateTime? BusinessExpireDate { get; set; }
+        public decimal? PrepaidAmount { get; set; }
     }
 }
