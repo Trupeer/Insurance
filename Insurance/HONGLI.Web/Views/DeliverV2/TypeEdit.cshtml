@@ -43,8 +43,8 @@
             <div class="f-form01-item">
                 <label class="f-form01-label">支付方式</label>
                 <div class="f-form01-main">
-                    <a href="javascript:void(0);" id="btnPayType" class="f-button02">在线支付</a>
-                    <p>支持信用卡支付</p>
+                    <a href="javascript:void(0);" id="btnPayType" class="f-button02" style="background-color:#ea3c31">在线支付</a>
+                   
                 </div>
             </div>
         </div>
@@ -111,21 +111,21 @@
                 })
             });
             $("#btnPayType").click(function () {
-                $("#btnPayType").css("background-color", "#888787");
+                $("#btnPayType").css("background-color", "#ea3c31");
             });
             $("#btnExpress").click(function () {
                 $("#deliverType").val(1);
                 $("#divPickupAddressBox").hide();
                 $("#divPickupTimeBox").hide();
-                $("#btnExpress").css("background-color", "#888787");
-                $("#btnPickup").css("background-color", "#ea3c31");
+                $("#btnExpress").css("background-color", "#ea3c31");
+                $("#btnPickup").css("background-color", "#888787");
             });
             $("#btnPickup").click(function () {
                 $("#deliverType").val(2);
                 $("#divPickupAddressBox").show();
                 $("#divPickupTimeBox").show();
-                $("#btnExpress").css("background-color", "#ea3c31");
-                $("#btnPickup").css("background-color", "#888787");
+                $("#btnExpress").css("background-color", "#888787");
+                $("#btnPickup").css("background-color", "#ea3c31");
             });
             $("#btnSubmit").click(function () {
                 var payType = 1;
@@ -146,20 +146,20 @@
             if (payAndDeliver != "") {
                 var deliver = JSON.parse(payAndDeliver);
                 $("#deliverType").val(deliver['deliverType']);
-                $("#btnPayType").css("background-color", "#888787");
+                $("#btnPayType").css("background-color", "#ea3c31");
                 if (deliver['deliverType'] == 1) {
                     $("#divPickupAddressBox").hide();
                     $("#divPickupTimeBox").hide();
-                    $("#btnExpress").css("background-color", "#888787");
-                    $("#btnPickup").css("background-color", "#ea3c31");
+                    $("#btnExpress").css("background-color", "#ea3c31");
+                    $("#btnPickup").css("background-color", "#888787");
                 }
                 else {
                     $("#divPickupAddressBox").show();
                     $("#divPickupTimeBox").show();
                     $("#pickupAddress").val(deliver['selfTakeAddress']);
                     $("#pickupTime").val(deliver['selfTakeDate']);
-                    $("#btnExpress").css("background-color", "#ea3c31");
-                    $("#btnPickup").css("background-color", "#888787");
+                    $("#btnExpress").css("background-color", "#888787");
+                    $("#btnPickup").css("background-color", "#ea3c31");
                 }
             }
         });

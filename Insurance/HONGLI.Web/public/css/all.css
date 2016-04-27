@@ -122,6 +122,10 @@ body input.radio:checked:before{
 .f-button03{font-size: .512rem; width: 11.4rem; height: 1.312rem; line-height: 1.312rem; background-color: #ea3c31; text-align: center; color: #FFF; display: block; margin: 0 auto; border-radius: 0.1rem;}
 .f-button03:active{ opacity: .8;}
 
+/* f-button04 */
+.f-button04{font-size: .512rem; width: 10.976rem; height: 1.312rem; line-height: 1.312rem; background-color: #ea3c31; text-align: center; color: #FFF; display: block; margin: 0 auto; border-radius: 0.1rem;display: inline-block;}
+.f-button04:active{ opacity: .8;}
+
 /* f-form01 */
 .f-form01-group{
     background-color: #ffffff;
@@ -685,7 +689,7 @@ body input.radio:checked:before{
 .page95-submit a.t-pay{ background-color: #e37101; margin-left: .1rem;}
 
 /**add by guoqiangs **/
-.page95-submit a.t-cancel-1{ background-color: #5b6272; margin-right: .1rem;}
+.page95-submit a.t-cancel-1{ background-color: #9e9d9d; margin-right: .1rem;}
 .page95-submit a.t-pay-1{ background-color: #ea3c31; margin-left: .1rem;}
 .page95-label{width: 2.5rem; margin-right: .5rem; padding-left: .8rem; display: inline-block; font-size: .48rem;}
 .page95-label img{ width: 2.56rem; height: 1.28rem;}
