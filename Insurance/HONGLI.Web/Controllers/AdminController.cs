@@ -137,7 +137,19 @@ namespace HONGLI.Web.Controllers
             ViewBag.OrderList = orderList;
             ViewBag.Product_User = new AdminService().GetProductUser(UserId);
             ViewBag.Product_Renewal = new AdminService().GetProductRenewal(UserId);
+            if(ViewBag.Product_Renewal==null)
+            {
+                ProductV2_Renewal product_renewal = new ProductV2_Renewal();
+                product_renewal.Id = 0;
+                ViewBag.Product_Renewal = product_renewal;
+            }
             ViewBag.Prduct_ItemSelect = new AdminService().GetProductItemSelection(UserId);
+            if(ViewBag.Prduct_ItemSelect ==null)
+            {
+                ProductV2_Item product_item = new ProductV2_Item();
+                product_item.Id = 0;
+                ViewBag.Prduct_ItemSelect = product_item;
+            }
             ViewBag.InsuranceCompany = InsuranceCompany;
             ViewBag.UserId = UserId;
             return View();
@@ -358,6 +370,7 @@ namespace HONGLI.Web.Controllers
             ViewBag.OrderList = orderList;
             ViewBag.Product_User = new AdminService().GetProductUser(model.Id);
             ViewBag.Product_Renewal = new AdminService().GetProductRenewal(model.Id);
+
             ViewBag.Prduct_ItemSelect = new AdminService().GetProductItemSelection(model.Id);
             ViewBag.InsuranceCompany = model.ItemSource;
             ViewBag.UserId = model.Id;

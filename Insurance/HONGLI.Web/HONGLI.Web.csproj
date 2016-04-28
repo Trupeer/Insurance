@@ -565,7 +565,6 @@
     <Content Include="Views\OrderV2\List.cshtml" />
     <Content Include="Views\OrderV2\PayConfirm.cshtml" />
     <Content Include="Views\ProductV3\Detail.cshtml" />
-    <Content Include="Views\ProductV3\FillIn.cshtml" />
     <Content Include="Views\ProductV3\Index.cshtml" />
     <Content Include="Views\ProductV3\QuoteDetail.cshtml" />
     <Content Include="Views\ProductV3\QuoteList.cshtml" />
@@ -577,6 +576,7 @@
     <Content Include="Views\InvoiceV2\View.cshtml" />
     <Content Include="Views\PolicyHolderV2\Edit.cshtml" />
     <Content Include="Views\PolicyHolderV2\View.cshtml" />
+    <Content Include="Views\ProductV3\FillIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

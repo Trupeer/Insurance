@@ -160,7 +160,7 @@ namespace HONGLI.Web.Controllers
 
                     result = "1";
 
-                    this.HttpContext.Cache.Insert(key, _sms, null, DateTime.Now.AddMinutes(5), new TimeSpan(0), CacheItemPriority.Normal, null);
+                    this.HttpContext.Cache.Insert(key, _sms, null, DateTime.Now.AddMinutes(30), new TimeSpan(0), CacheItemPriority.Normal, null);
                 }
                 catch (Exception error)
                 {

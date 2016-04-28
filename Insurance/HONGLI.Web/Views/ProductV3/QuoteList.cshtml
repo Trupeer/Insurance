@@ -88,7 +88,7 @@
         function getPrecisePrice() {
             $.ajax({
                 type: "post",
-                url: '@Url.Action("GetPrecisePrice", "ProductV2")',
+                url: '@Url.Action("GetPrecisePrice", "ProductV3")',
                 dataType: "json",
                 data: {
                     channel: "@ViewBag.channel",
@@ -133,14 +133,15 @@
 
             $.ajax({
                 type: "post",
-                url: '@Url.Action("GetSpecialPrecisePrice", "ProductV2")',
+                url: '@Url.Action("GetSpecialPrecisePrice", "ProductV3")',
                 dataType: "json",
                 data: {
                     channel: "@ViewBag.channel",
                     mobile: "@ViewBag.mobile",
                     licenseNo: "@ViewBag.licenseNo",
                     intentionCompany: companyId,
-                    UserID:parseInt('@Request["userID"]')
+                    UserID: parseInt('@Request["userID"]'),
+                    check:"1"
                 },
                 beforeSend: function () {
                     companyObj.empty().append("<span class='t-loading'>试算中...</span>");

@@ -277,7 +277,7 @@ namespace HONGLI.Repository
             sql.Append(" LEFT JOIN dbo.Order_Base T1  WITH(NOLOCK) ON T.Id=T1.UserId ");
             sql.Append(" LEFT JOIN dbo.BaseInfo_UserInfo T2  WITH(NOLOCK) ON T.ServiceUserId=T2.ID ");
             sql.Append(" LEFT JOIN dbo.BaseInfo_UserInfo T3  WITH(NOLOCK) ON T.VisitServiceUserId=T3.ID ");
-            sql.Append(" WHERE 1=1 ");
+            sql.Append(" WHERE 1=1  ");
             sql.Append(where.ToString());
             sql.Append(") T4 ");
             #endregion
@@ -703,7 +703,7 @@ namespace HONGLI.Repository
             sql.Append("LEFT JOIN dbo.Order_PolicyHolder D WITH(NOLOCK) ON A.OrderCode=D.OrderCode ");
             sql.Append("LEFT JOIN dbo.Order_Pay E WITH(NOLOCK) ON A.OrderCode = E.OrderCode ");
             sql.Append("LEFT JOIN dbo.ProductV2_User F WITH(NOLOCK) ON A.UserId=F.Id ");
-            sql.Append("WHERE 1=1   ");//AND A.Status IS NOT NULL
+            sql.Append("WHERE 1=1 AND A.Status IS NOT NULL ");//AND A.Status IS NOT NULL
             if (!string.IsNullOrEmpty(licenseNo))
             {
                 sql.AppendFormat(" AND B.LicenseNo LIKE '%{0}%' ", licenseNo);
@@ -731,7 +731,7 @@ namespace HONGLI.Repository
             {
                 DataTable dt = new DataTable();
                 var query = db.Database.SqlQuery<BillList>(sql.ToString());
-                dt.Columns.Add("OrderCode ");
+                dt.Columns.Add("OrderCode");
                 dt.Columns.Add("CreateDate");
                 dt.Columns.Add("Status");
                 dt.Columns.Add("LicenseNo");
@@ -740,13 +740,14 @@ namespace HONGLI.Repository
                 dt.Columns.Add("IdCard");
                 dt.Columns.Add("Mobile");
                 dt.Columns.Add("PayType");
+                dt.Columns.Add("DeliverType");
                 dt.Columns.Add("ProductId");
                 dt.Columns.Add("UserId");
                 dt.Columns.Add("Channel");
                 foreach (var item in query)
                 {
                     DataRow dr = dt.NewRow();
-                    dr["OrderCode "] = item.OrderCode;
+                    dr["OrderCode"] = item.OrderCode;
                     dr["CreateDate"] = item.CreateDate;
                     dr["Status"] = item.Status;
                     dr["LicenseNo"] = item.LicenseNo;
@@ -755,6 +756,7 @@ namespace HONGLI.Repository
                     dr["IdCard"] = item.IdCard;
                     dr["Mobile"] = item.Mobile;
                     dr["PayType"] = item.PayType;
+                    dr["DeliverType"] = item.DeliverType;
                     dr["ProductId"] = item.ProductId;
                     dr["UserId"] = item.UserId;
                     dr["Channel"] = item.Channel;
@@ -776,7 +778,7 @@ namespace HONGLI.Repository
         {
             #region 查询内容
             StringBuilder sql = new StringBuilder();
-            sql.Append("SELECT COUNT(*) FROM ");
+            sql.Append("SELECT COUNT(*) AS SumCount FROM ");
             sql.Append("(SELECT ROW_NUMBER() OVER(ORDER BY A.CreateDate DESC) AS PageIndex, A.OrderCode,A.CreateDate,A.Status,B.LicenseNo, ");
             sql.Append("D.Name,IdCardType,IdCard,F.Mobile,E.PayType,ProductId,A.UserId,B.Channel,DeliverType ");
             sql.Append("FROM dbo.Order_Base A WITH(NOLOCK) ");
@@ -785,7 +787,7 @@ namespace HONGLI.Repository
             sql.Append("LEFT JOIN dbo.Order_PolicyHolder D WITH(NOLOCK) ON A.OrderCode=D.OrderCode ");
             sql.Append("LEFT JOIN dbo.Order_Pay E WITH(NOLOCK) ON A.OrderCode = E.OrderCode ");
             sql.Append("LEFT JOIN dbo.ProductV2_User F WITH(NOLOCK) ON A.UserId=F.Id ");
-            sql.Append("WHERE 1=1  ");//AND A.Status IS NOT NULL
+            sql.Append("WHERE 1=1   AND A.Status IS NOT NULL");//AND A.Status IS NOT NULL
             if (!string.IsNullOrEmpty(licenseNo))
             {
                 sql.AppendFormat(" AND B.LicenseNo LIKE '%{0}%' ", licenseNo);
@@ -831,8 +833,9 @@ namespace HONGLI.Repository
             public string IdCard { get; set; }
             public string Mobile { get; set; }
             public Nullable<int> PayType { get;  set; }
-            public Nullable<int> ProductId { get; set; }
-            public Nullable<int> UserId { get; set; }
+            public Nullable<int> DeliverType { get; set; }
+            public string ProductId { get; set; }
+            public string UserId { get; set; }
             public Nullable<int> Channel { get; set; }
         }
 
@@ -851,6 +854,8 @@ namespace HONGLI.Repository
                 DataTable dt = new DataTable();
                 dt.Columns.Add("Id");
                 dt.Columns.Add("ModleName");
+                dt.Columns.Add("ProductName");
+                dt.Columns.Add("Mobile");
                 dt.Columns.Add("ForceExpireDate");
                 dt.Columns.Add("InvoiceTitle");
                 dt.Columns.Add("InvoiceType");
@@ -923,7 +928,7 @@ namespace HONGLI.Repository
                 #endregion
                 DataRow dr = dt.NewRow();
                 StringBuilder sql = new StringBuilder();
-                sql.Append("SELECT A.Id,A.ModleName,A.ForceExpireDate, ");
+                sql.Append("SELECT A.Id,A.ModleName,A.Mobile,B.ProductName,A.ForceExpireDate, ");
                 sql.Append("C.InvoiceTitle,C.InvoiceType,C.Id AS orderBaseId,C.CreateDate AS OrderBaeCreateDate,B.Id AS itemId, ");
                 sql.Append("B.BizRate,B.BizTotal,B.ForceRate,B.ForceTotal,B.TaxRate,B.TaxTotal ");
                 sql.Append(",B.QuoteStatus,B.QuoteResult,B.CheSun_BaoE,B.CheSun_BaoFei,B.SanZhe_BaoE ");
@@ -949,6 +954,8 @@ namespace HONGLI.Repository
                 {
                     dr["Id"]=query.FirstOrDefault().Id;
                     dr["ModleName"]=query.FirstOrDefault().ModleName;
+                    dr["ProductName"] = query.FirstOrDefault().ProductName;
+                    dr["Mobile"] = query.FirstOrDefault().Mobile;
                     dr["ForceExpireDate"]=query.FirstOrDefault().ForceExpireDate;
                     dr["InvoiceTitle"]=query.FirstOrDefault().InvoiceTitle;
                     dr["InvoiceType"]=query.FirstOrDefault().InvoiceType;
@@ -1027,6 +1034,8 @@ namespace HONGLI.Repository
         {
             public int Id { get; set; }
             public string ModleName { get; set; }
+            public string Mobile { get; set; }
+            public string ProductName { get; set; }
             public string ForceExpireDate { get; set; }
             public string InvoiceTitle { get; set; }
             public Nullable<int> InvoiceType { get; set; }

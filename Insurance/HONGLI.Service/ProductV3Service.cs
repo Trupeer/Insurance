@@ -292,6 +292,38 @@ namespace HONGLI.Service
 
         #region DoHttpGet 模拟Get请求   //todo 放到单独帮助类中
 
+        //public static string DoHttpGet(string url, IDictionary<string, string> parameters)
+        //{
+        //    if (parameters != null && parameters.Count > 0)
+        //    {
+        //        if (url.Contains("?"))
+        //        {
+        //            url = url + "&" + BuildRequestData(parameters);
+        //        }
+        //        else
+        //        {
+        //            url = url + "?" + BuildRequestData(parameters);
+        //        }
+        //    }
+
+        //    LogHelper.Info("请求91bihu version2接口-url:" + url);
+
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        //    request.Method = "GET";
+        //    request.ContentType = "text/html;charset=UTF-8";
+
+        //    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        //    Stream myResponseStream = response.GetResponseStream();
+        //    StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+        //    string retString = myStreamReader.ReadToEnd();
+        //    myStreamReader.Close();
+        //    myResponseStream.Close();
+
+        //    LogHelper.Info("请求91bihu version2接口-url_return:" + retString);
+
+        //    return retString;
+        //}
+
         public static string DoHttpGet(string url, IDictionary<string, string> parameters)
         {
             if (parameters != null && parameters.Count > 0)
@@ -308,22 +340,28 @@ namespace HONGLI.Service
 
             LogHelper.Info("请求91bihu version2接口-url:" + url);
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "text/html;charset=UTF-8";
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            //request.Method = "GET";
+            //request.ContentType = "text/html;charset=UTF-8";
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream myResponseStream = response.GetResponseStream();
-            StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
-            string retString = myStreamReader.ReadToEnd();
-            myStreamReader.Close();
-            myResponseStream.Close();
+            //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            //Stream myResponseStream = response.GetResponseStream();
+            //StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));
+            using (WebClient web = new WebClient())
+            {
+                web.Encoding = System.Text.Encoding.UTF8;
+                string retString = web.DownloadString(url);
+                LogHelper.Info("请求91bihu version2接口-url_return:" + retString);
 
-            LogHelper.Info("请求91bihu version2接口-url_return:" + retString);
+                return retString;
+            }
+            //System.Net.WebClient web = new System.Net.WebClient();
+            //string retString = web.DownloadString(url,);
+            //myStreamReader.Close();
+            //myResponseStream.Close();
 
-            return retString;
+ 
         }
-
         public static string BuildRequestData(IDictionary<string, string> parameters)
         {
             var builder = new StringBuilder();

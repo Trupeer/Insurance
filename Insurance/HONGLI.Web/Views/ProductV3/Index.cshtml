@@ -115,7 +115,7 @@
 
         $("#toOrder").click(function () {
             var mobile = $("#mobileNo").val();
-            window.location.href = "@Url.Action("List","Order")?channel=@ViewBag.channel&mobile=" + mobile;
+            window.location.href = "@Url.Action("List","OrderV2")?channel=@ViewBag.channel&mobile=" + mobile;
         });
 
         $("#submit").click(function () {

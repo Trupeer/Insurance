@@ -96,7 +96,7 @@ namespace HONGLI.Web.Controllers
                         //获取续保信息成功
                         if (data.BusinessStatus == 1)
                         {
-                            HttpContext.Session[key] = data;
+                            //HttpContext.Session[key] = data;
                             HttpContext.Cache.Insert(key, data);
                         }
                         else if (data.BusinessStatus == 2) //驾驶证信息需完善，这部分内容砍掉了
@@ -107,7 +107,7 @@ namespace HONGLI.Web.Controllers
                         else if (data.BusinessStatus == 3) // 获取用户信息成功，但获取续保信息失败
                         {
                             data.SaveQuote = new Quote();
-                            HttpContext.Session[key] = data;
+                            //HttpContext.Session[key] = data;
                             HttpContext.Cache.Insert(key, data);
                         }
                         else
@@ -211,7 +211,7 @@ namespace HONGLI.Web.Controllers
             try
             {
                 var key = string.Format("{0}/{1}/{2}/{3}", channelValue, mobile, licenseNo, "insurance");
-                var tempData = HttpContext.Session[key];
+                var tempData = HttpContext.Cache.Get(key);
                 if (tempData == null)
                 {
                     return Json(data, JsonRequestBehavior.AllowGet);
@@ -299,7 +299,7 @@ namespace HONGLI.Web.Controllers
 #if (!DEBUG)
     [AuthorizationFilter]
 #endif
-        public JsonResult GetSpecialPrecisePrice(int? channel, string mobile, string licenseNo, int intentionCompany, int UserID)
+        public JsonResult GetSpecialPrecisePrice(int? channel, string mobile, string licenseNo, int intentionCompany, int UserID,string check="")
         {
             var channelValue = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
             ViewBag.channel = channelValue;
@@ -309,10 +309,13 @@ namespace HONGLI.Web.Controllers
             var data = new PrecisePriceResultV2();
             try
             {
-                var cachresult = HttpContext.Session[keyPrice];
-                if (cachresult != null)
+                if(check=="")
                 {
-                    return Json(cachresult, JsonRequestBehavior.AllowGet);
+                    var cachresult = HttpContext.Session[keyPrice];
+                    if (cachresult != null)
+                    {
+                        return Json(cachresult, JsonRequestBehavior.AllowGet);
+                    }
                 }
                 var result = new ProductV3Service().GetSpecialPrecisePrice(licenseNo, intentionCompany, channelValue, mobile);
 
