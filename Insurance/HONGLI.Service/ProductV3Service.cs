@@ -353,7 +353,7 @@ namespace HONGLI.Service
                 string retString = web.DownloadString(url);
                 LogHelper.Info("请求91bihu version2接口-url_return:" + retString);
 
-                return retString;
+               return retString;
             }
             //System.Net.WebClient web = new System.Net.WebClient();
             //string retString = web.DownloadString(url,);

@@ -429,6 +429,9 @@ namespace HONGLI.Web.Controllers
                         data.Item.Id = new ProductV3Service().SaveProductItem(product_item);
                         #endregion
                         //进行核保，每家公司只核保一次，核保会会插入缓存
+                        var keySubmit = string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, intentionCompany, "submit");
+                        HttpContext.Cache.Remove(keySubmit);//核保前清除缓存
+                        GetPrecisePrice(channel, mobile, licenseNo, intentionCompany);
                         GetSubmitInfo(channel, mobile, licenseNo, intentionCompany, data.Item.Id);
 
                     }
@@ -538,7 +541,7 @@ namespace HONGLI.Web.Controllers
                 data = result.FromJsonTo<SubmitInfoResultV2>();
 
                 //核保成功，成功再记cache
-                if (data != null && data.BusinessStatus == 1 && data.Item.SubmitStatus == Convert.ToInt32(SubmitStatus.Success))
+                if (data != null)
                 {
                     //HttpContext.Session[keySubmit] = data;
                     HttpContext.Cache.Insert(keySubmit, data);

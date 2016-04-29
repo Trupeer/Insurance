@@ -13,14 +13,16 @@
     <meta content="portrait" name="x5-orientation" />
     <link href="~/public/css/all.css" rel="stylesheet" />
     <script src="~/public/js/base.js"></script>
-</head>
+    <link href="~/public/Popup/reveal.css" rel="stylesheet" />
+    <script src="~/public/Popup/jquery-1.6.min.js"></script>
+    <script src="~/public/Popup/jquery.reveal.js"></script></head>
 <body>
     <div class="f-nav">
         <h2>报价详情</h2>
         <div class="f-nav-back">
             <a href="javascript:;" id="riaGoBack"><i></i></a>
         </div>
-        <div class="f-nav-action"></div>
+        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.580rem;" data-reveal-id="myModal" href="#" data-animation="fade">客服</a></div>
     </div>
     <div class="f-nav-extend">&nbsp;</div>
     <div class="f-list01 page12-top">
@@ -374,7 +376,7 @@
                     mobile: "@ViewBag.mobile",
                     licenseNo: "@ViewBag.licenseNo",
                     intentionCompany: "@ViewBag.intentionCompany",
-                    ProductItemId:"@Request["ProductItemId"]"
+                ProductItemId:"@Request["ProductItemId"]"
                 },
                 beforeSend: function () {
                     layer.open({ type:2 });
@@ -405,7 +407,7 @@
                     {
                         submitStatusHtml =  "<div class='page12-hbzt-title page12-hbzt-error-title'><span>核保<br>失败</span></div>"+
                                             "<div class='page12-hbzt-content page12-hbzt-error-content'><span>原因：<br>"+result.SubmitResult+"<br>核保成功下单可享低至7折优惠</span></div>"+
-                                            "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:history.go(-2);'>重新配置</a><br><a class='page12-hbzt-error-other-400' href='javascript:linkTel();'>咨询客服：400-963-1088</a></div>";
+                                            "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:history.go(-2);'>重新配置</a></div>";
 
                         //var ahtml = linkTelHtml();
                         //"<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:history.go(-2);'>重新配置</a><br><a class='page12-hbzt-error-other-400' href='javascript:void(0);'>"+ahtml+"</a></div>";
@@ -419,7 +421,7 @@
                     {
                         submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-no-title'><span>未核保</span></div>"+
                                            "<div class='page12-hbzt-content page12-hbzt-no-content'><span>亲，保险到期日三月内可以核保算费，届时试算可享低至7折优惠哦！</span></div>" +
-                                           "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:backToIndex();'>回到首页</a><br><a class='page12-hbzt-error-other-400' href='javascript:linkTel();'>咨询客服：400-963-1088</a></div>";
+                                           "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:backToIndex();'>回到首页</a></div>";
 
                         //var ahtml = linkTelHtml();
                         //"<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:backToIndex();'>回到首页</a><br><a class='page12-hbzt-error-other-400' href='javascript:void(0);'>"+ahtml+"</a></div>";
@@ -528,5 +530,20 @@
         })
 
     </script>
+    <div id="myModal" class="reveal-modal">
+        <div class="title-text">联系客服</div>
+        <div class="Online-Service">
+            <a target="_blank" href="http://trupeer.udesk.cn/im_client" id="udesk-im-74">
+                <img src="~/public/images/icon-Online.png" /><span>在线客服</span>
+
+            </a>
+        </div>
+        <div class="tel-Service">
+            <a href="tel://400-963-1088">
+                <img src="~/public/images/icon-tel.png" /><span>致电客服</span>
+            </a>
+        </div>
+    </div>
+    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
 </body>
 </html>

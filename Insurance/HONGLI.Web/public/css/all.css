@@ -10,6 +10,7 @@ fieldset,img{border:0}
 table{border-collapse:collapse;border-spacing:0}
 li{list-style:none}
 a,a:hover{text-decoration:none}
+select{outline:medium;}
 body{
     font-family:"Helvetica Neue", Helvetica, Arial, "Heiti SC", sans-serif;
     font-weight: normal;
@@ -107,7 +108,7 @@ body input.radio:checked:before{
 .f-nav h2{text-align: center; font-size: .521rem; font-weight: bold; white-space: nowrap; color: #000000;}
 .f-nav-back { position: absolute; top: 0; left: 0;}
 .f-nav-back a{width: 1.408rem; height: 1.408rem; display: block;background: url(../images/icon-back.png) no-repeat center center;background-size: .704rem .704rem;}
-.f-nav-action{ position: absolute; top: 0; right: .1rem; padding:0 0.16rem;}
+.f-nav-action{ position: absolute; top: 0; right: .2rem; padding:0 0.16rem;}
 .f-nav-action a{ color: #000000; font-size: .434rem}
 
 /* f-button01 */

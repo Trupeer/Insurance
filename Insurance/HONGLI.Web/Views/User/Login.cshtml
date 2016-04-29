@@ -69,6 +69,10 @@
                 }
 
                 var _mobile = $("#txt_mobile").val().trim();
+                if (_mobile == "")
+                {
+                    alert("请输入手机号");
+                }
 
                 $.post(url, { method: "sendSMS", mobile: _mobile}, function (json) {
                     if (json.Data > 0) {
@@ -104,7 +108,12 @@
             var _tip = $("#checkSMS").text();
             var _sms = $("#verifyCode").val().trim();
             var _mobile = $("#txt_mobile").val().trim();
+            if (_mobile.length == 0)
+            {
+                alert("请输入手机号~");
 
+                return;
+            }
             if (_sms.length == 0) {
                 alert("请输入验证码~");
 

@@ -15,14 +15,16 @@
     <meta content="portrait" name="x5-orientation" />
     <link href="~/public/css/all.css" rel="stylesheet" />
     <script src="~/public/js/base.js"></script>
-</head>
+    <link href="~/public/Popup/reveal.css" rel="stylesheet" />
+    <script src="~/public/Popup/jquery-1.6.min.js"></script>
+    <script src="~/public/Popup/jquery.reveal.js"></script></head>
 <body>
     <div class="f-nav">
         <h2>报价详情</h2>
         <div class="f-nav-back">
             <a href="javascript:;" id="riaGoBack"><i></i></a>
         </div>
-        <div class="f-nav-action"></div>
+        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.580rem;" data-reveal-id="myModal" href="#" data-animation="fade">客服</a></div>
     </div>
     <div class="f-nav-extend">&nbsp;</div>
     @{
@@ -137,7 +139,20 @@
 
     <script src="~/public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
     <script src="~/public/js/all.js"></script>
-    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
+    <div id="myModal" class="reveal-modal">
+        <div class="title-text">联系客服</div>
+        <div class="Online-Service">
+            <a target="_blank" href="http://trupeer.udesk.cn/im_client" id="udesk-im-74">
+                <img src="~/public/images/icon-Online.png" /><span>在线客服</span>
+
+            </a>
+        </div>
+        <div class="tel-Service">
+            <a href="tel://400-963-1088">
+                <img src="~/public/images/icon-tel.png" /><span>致电客服</span>
+            </a>
+        </div>
+    </div>
     <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
 </body>
 </html>

@@ -1,0 +1,93 @@
+/*	--------------------------------------------------
+	Reveal Modals
+	-------------------------------------------------- */
+		
+	.reveal-modal-bg { 
+		position: fixed; 
+		height: 100%;
+		width: 100%;
+		background: #292929;
+		background: rgba(0,0,0,.8);
+		z-index: 100;
+		display: none;
+		top: 0;
+		left: 0; 
+		}
+	
+	.reveal-modal {
+		visibility: hidden;
+		top: 8.45rem; 
+		margin-left: 0.85rem;
+        height:3.16rem;
+		width:10.21rem;
+		background: #eee url(modal-gloss.png) no-repeat -200px -80px;
+		position:fixed;
+		z-index: 101;
+		
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		-moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
+		-webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
+		-box-shadow: 0 0 10px rgba(0,0,0,.4);
+		}
+		
+	.reveal-modal.small 		{ width: 200px; margin-left: -140px;}
+	.reveal-modal.medium 		{ width: 400px; margin-left: -240px;}
+	.reveal-modal.large 		{ width: 600px; margin-left: -340px;}
+	.reveal-modal.xlarge 		{ width: 800px; margin-left: -440px;}
+	
+	.reveal-modal .close-reveal-modal {
+		font-size: 22px;
+		line-height: .5;
+		position: absolute;
+		top: 8px;
+		right: 11px;
+		color: #aaa;
+		text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+		font-weight: bold;
+		cursor: pointer;
+		} 
+    .reveal-modal .title-text{
+        text-align:center;
+        font-size:.620rem;
+        color:black;
+        font-stretch:expanded;
+        border-bottom:0.5px solid #dfdfdf;
+        line-height: 1.58rem;
+        overflow: hidden;
+    }
+   .reveal-modal .Online-Service{ 
+       position: absolute; 
+       bottom: 0; 
+       left: 0;
+       font-size:15px;
+       color:black;
+       border-right:0.5px solid #dfdfdf;
+       width:5.15rem;
+        line-height: 1.58rem;
+        overflow: hidden;
+        text-decoration:none;
+   }
+   .reveal-modal .tel-Service
+   {  position: absolute; 
+       bottom: 0; 
+       right: 0;
+       font-size:15px;
+       color:black;
+       width:5.15rem;
+        line-height: 1.58rem;
+        overflow: hidden;
+        text-decoration:none;
+
+   }
+        .reveal-modal img {
+            width:0.705rem;
+            height:0.705rem;
+            vertical-align:middle;
+            margin-left:33px;
+            margin-right:11px;
+        }
+      .reveal-modal a { text-decoration: none;color: black}  
+
+

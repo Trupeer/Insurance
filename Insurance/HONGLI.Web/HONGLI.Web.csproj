@@ -361,7 +361,9 @@
     <Content Include="public\images\icon-edit.png" />
     <Content Include="public\images\icon-mobile.png" />
     <Content Include="public\images\icon-name.png" />
+    <Content Include="public\images\icon-Online.png" />
     <Content Include="public\images\icon-phone.png" />
+    <Content Include="public\images\icon-tel.png" />
     <Content Include="public\images\icon-wen.png" />
     <Content Include="public\images\input-checkbox-checked.png" />
     <Content Include="public\images\input-checkbox-default.png" />
@@ -386,6 +388,11 @@
     <Content Include="public\images\page91-icon-4.png" />
     <Content Include="public\js\all.js" />
     <Content Include="public\js\base.js" />
+    <Content Include="public\Popup\demo.html" />
+    <Content Include="public\Popup\jquery-1.4.4.min.js" />
+    <Content Include="public\Popup\jquery.reveal.js" />
+    <Content Include="public\Popup\modal-gloss.png" />
+    <Content Include="public\Popup\reveal.css" />
     <Content Include="Scripts\all.js" />
     <Content Include="Scripts\area.js" />
     <Content Include="Scripts\base.js" />
@@ -473,6 +480,7 @@
     <Content Include="public\imagesTemp\.DS_Store" />
     <Content Include="public\images\.DS_Store" />
     <Content Include="public\Admin\img\thumbs.db" />
+    <Content Include="public\Popup\jquery-1.6.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
