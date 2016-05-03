@@ -431,7 +431,12 @@
                         submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-loading-title'><span>核保中</span></div>"+
                                            "<div class='page12-hbzt-content page12-hbzt-loading-content'><span>请稍等...</span></div>";
                     }
-
+                    else
+                    {
+                        submitStatusHtml =  "<div class='page12-hbzt-title page12-hbzt-error-title'><span>核保<br>失败</span></div>"+
+                                           "<div class='page12-hbzt-content page12-hbzt-error-content'><span>原因：<br>"+result.SubmitResult+"<br>核保成功下单可享低至7折优惠</span></div>"+
+                                           "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:history.go(-2);'>重新配置</a></div>";
+                    }
                     $(".page12-hbzt-wrap .page12-hbzt").html(submitStatusHtml);
 
                     layer.closeAll();

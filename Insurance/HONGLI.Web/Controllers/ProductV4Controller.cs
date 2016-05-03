@@ -125,7 +125,7 @@ namespace HONGLI.Web.Controllers
                             product_user.InsuredName = data.UserInfo.InsuredName;
                             product_user.PurchasePrice = Convert.ToDecimal(data.UserInfo.PurchasePrice);
                             product_user.IdType = data.UserInfo.IdType;
-                            product_user.CredentislasNum = data.UserInfo.CredentislasNum;
+                            product_user.CredentislasNum = data.UserInfo.CredentislasNum.Trim();
                             product_user.CityCode = data.UserInfo.CityCode;
                             product_user.EngineNo = data.UserInfo.EngineNo;
                             product_user.ModleName = data.UserInfo.ModleName;

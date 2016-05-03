@@ -69,11 +69,16 @@
                 }
 
                 var _mobile = $("#txt_mobile").val().trim();
-                if (_mobile == "")
+                if (_mobile.length == 0)
                 {
                     alert("请输入手机号");
+                    return;
                 }
-
+                var mobileMatch = /^(1(([35][0-9])|(47)|[8][01236789]))\d{8}$/;
+                if (!mobileMatch.test(_mobile)) {
+                    alert("请输入正确格式的手机号！");
+                    return false;
+                }
                 $.post(url, { method: "sendSMS", mobile: _mobile}, function (json) {
                     if (json.Data > 0) {
                         countDown(60, function (leftTime) {
