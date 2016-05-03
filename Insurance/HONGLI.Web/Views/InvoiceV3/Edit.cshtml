@@ -1,0 +1,116 @@
+﻿
+@model InvoiceModel
+@using HONGLI.Web.Models.User;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新建发票信息</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/all.css")">
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/base.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/jquery/jquery-2.1.3.min.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/all.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/hongli.common.tools.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/hongli.global.data.js")"></script>
+</head>
+<body>
+    <div class="f-nav">
+            <h2>发票信息</h2>
+            <div class="f-nav-back">
+                <a href="javascript:;" id="riaGoBack"><i></i></a>
+            </div>
+        </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    @using (Html.BeginForm("Edit", "InvoiceV2", FormMethod.Post, new { @id = "submitForm" }))
+    {
+        @Html.HiddenFor(m => m.UserId)
+        if (Model != null)
+        {
+            @Html.HiddenFor(m => m.Id)
+        }
+        @Html.HiddenFor(m => m.Mobile)
+        @Html.HiddenFor(m => m.ProductId)
+        @Html.HiddenFor(m => m.Channel)
+        @Html.HiddenFor(model => model.ReturnUrl)
+        @Html.HiddenFor(m => m.intentionCompany)
+        @Html.HiddenFor(m => m.OrderCode)
+        @Html.HiddenFor(m => m.OrderBaseId)
+        @Html.HiddenFor(m => m.OrderItemId)
+        @Html.HiddenFor(m => m.OrderPolicyId)
+        @Html.HiddenFor(m => m.OrderDeliverId)
+        <div class="page21-main">
+            <div class="page21-radio">
+                <span>发票信息</span>
+                @Html.HiddenFor(m => m.Type, new { @id = "invoiceType" })
+                <label><input type="radio" name="invoiceType" id="personalType" value="1" checked="checked">个人</label>
+                <label><input type="radio" name="invoiceType" id="enterpriseType" value="2">企业</label>
+            </div>
+            <div class="page21-text">
+                @Html.TextBoxFor(m => m.Context, new { @id = "invoiceContext" })
+            </div>
+        </div>
+        <div class="page21-fixed-extend"></div>
+        @*<div class="page21-fixed">*@
+        <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;" value="保存">
+        @*</div>*@
+    }
+
+    <script type="text/javascript">
+        $(function () {
+            var invoiceType = "@Model.Type";
+            if (invoiceType == "0" || invoiceType == 0) {
+                $("#invoiceType").val(1);
+            }
+            if (invoiceType != null && invoiceType != "") {
+                $("input:radio[name=invoiceType][value=" + invoiceType + "]").attr("checked", true);
+                $("#invoiceType").val(invoiceType);
+            }
+            // 发票类型
+            $('input:radio[name=invoiceType]').click(function () {
+                $("#invoiceType").val($(this).val());
+            });
+            //提交
+            $("#btnSubmit").click(function () {
+                var type = $('#invoiceType').val();
+                var context = $.trim($("#invoiceContext").val());
+                var msg = '';
+                if (context.length == 0) {
+                    msg = '请输入发票抬头！';
+                }
+                if (msg != '') {
+                    alert(msg);
+                    return false;
+                }
+                var order_invoice = new global.order.invoice(type, context);
+                var order_invoice_str = JSON.stringify(order_invoice);
+                common.cookie.setCookie(global.domain, global.cookie.order.invoice, order_invoice_str, global.expire);
+            });
+
+            var order_invoice = common.cookie.getCookie(global.cookie.order.invoice);
+            if (order_invoice != "") {
+                var invoice = JSON.parse(order_invoice);
+                $("#invoiceContext").val(invoice['invoiceTitle']);
+                if (invoice['invoiceType'] == "1" || invoice['invoiceType'] == 1) {
+                    $("#personalType").attr("checked", true);
+                    $("#invoiceType").val(1);
+                }
+                else {
+                    $("#enterpriseType").attr("checked", true);
+                    $("#invoiceType").val(2);
+                }
+            }
+        });
+
+    </script>
+    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
+    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
+</body>
+</html>

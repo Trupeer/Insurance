@@ -491,7 +491,7 @@
 
             $.ajax({
                 type: "post",
-                url: '@Url.Action("Buy", "ProductV3")',
+                url: '@Url.Action("Buy", "ProductV4")',
                 dataType: "json",
                 data: {
                     channel: "@ViewBag.channel",
@@ -514,9 +514,9 @@
                         var isuranceLogo = @ViewBag.intentionCompany;
                         var order_product = new global.order.product(channel, data.Id, isuranceLogo, data.ProductName, data.Description, data.Total, data.TotalAfterCoupon, data.LicenseNo, data.ForceExpireDate,data.BussinessExpireDate, data.BuId);
                         var order_product_str = JSON.stringify(order_product);
-                        common.cookie.setCookie(global.domain, global.cookie.order.product, order_product_str, global.expire);
-                        window.location.href = "@Url.Action("Do","Order")" + "?channel=@ViewBag.channel&mobile=@ViewBag.mobile&productId=" + data.Id;*@
-                        alert("订单已提交！请耐心等待客服人员核实后与您联系！如有问题请致电：400-963-1088");
+                        common.cookie.setCookie(global.domain, global.cookie.order.product, order_product_str, global.expire);*@
+                        window.location.href = "/OrderV3/Index?productId=" + data.ItemId + "&mobile=" + data.mobeil + "&channel=" + data.channel + "&intentionCompany=" + data.source + "&OrderCode=" + data.OrderBaeOrderCode + "&OrderBaseId=" + data.OrderBaseId + "&OrderItemId=" + data.OrderItemId + "&OrderPolicyId=" + data.PolicyId + "&OrderDeliverId=" + data.OrderDeliverId;
+                        //alert("订单已提交！请耐心等待客服人员核实后与您联系！如有问题请致电：400-963-1088");
                     }
                     else {
                         $(this).addClass("t-disable");

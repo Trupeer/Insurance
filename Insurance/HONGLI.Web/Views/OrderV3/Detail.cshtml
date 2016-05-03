@@ -1,0 +1,127 @@
+﻿@using HONGLI.Entity;
+@model HONGLI.Web.Models.OrderDetailModels
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link rel="stylesheet" type="text/css" href="../public/css/all.css">
+    <script src="../public/js/base.js"></script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>订单详情</h2>
+        <div class="f-nav-back">
+            <a href="javascript:;" id="riaGoBack"><i></i></a>
+        </div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    @if (Model != null)
+    {
+
+    <div class="page95-info">订单号<span>@Model.OrderCode</span></div>
+    if (Model.DeliverType == 1)
+    {
+        <div class="page95-address">
+            <div class="f-list01">
+                <div class="f-list01-main">
+                    <p class="t-p1">
+                        <span class="t-span1">姓名</span><span class="t-name">@Model.DeliverName</span>
+                        <span class="t-span1" style="margin-left:2.2rem">手机号</span><span class="t-mobile" >@Model.DeliverMobile</span>
+</p>
+                </div>                
+            </div>
+        </div>
+    }
+
+    <div class="page20-form">
+        <div class="f-form01-item" id="product">
+            <label class="page95-label">
+                <img id="product-isuranceLogoUrl" src="../public/imagesTemp/page40-2.png">
+            </label>
+            <div>
+                <p class="t-24" id="product-title"><span>@Model.LicenseNo</span>保费，交强险起保日期<span>@Model.ForceExpireDate</span>，商业险起保日期<span>@Model.BusinessExpireDate</span></p>
+                <p class="t-money01" style="margin-top:0.1rem;"><del>@Model.ProductOriginalPrice</del><span class="t-24" style="margin-left:0.3rem;">优惠价：</span><span class="t-25">@Model.ProductDealPrice</span></p>
+                <p style="margin-top:0.1rem;" class="t-money01"><span class="t-24" style="margin-left:1.75rem;">预约金：</span><span class="t-25" id="product-PrepaidAmount">@Model.PrepaidAmount</span></p>
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="explain" style="margin-left:.9rem;">
+                <p class="t-p1">说明</p>
+                <p class="t-26">亲爱的用户，你只需要支付相应的预约金，我们的专职人员会第一时间上门服务。</p>
+            </div>
+        </div>
+
+        <div class="f-form01-item">
+            <div class="explain" style="margin-left:.9rem;">
+                <p class="t-p1">被保人信息</p>
+                <p id="policyHolder-name" class="t-26">被保人：@Model.PolicyHolderName</p>
+                <p id="policyHolder-idcard" class="t-26">身份证：@Model.PolicyHolderIdcard</p>
+            </div>
+        </div>
+<div class="f-form01-item">
+    <div class="explain"><span class="t-p1">发票信息</span><span class="t-26" style="float:right">@Model.InvoiceTitle</span></div>
+</div>
+<div class="f-form01-item" id="PayType" style="display:none;">
+    <div class="explain"><span class="t-p1">支付方式</span><span class="t-26" style="float:right">在线支付</span></div>
+</div>
+<div class="f-form01-item" id="DeliverType" style="display:none;">
+    <div class="explain">
+        @if (Model.DeliverType == 1)
+        {
+
+            <span class="t-p1">专员上门签单地址</span>
+        }
+        else
+        {
+            <span class="t-p1">自取约单地址</span>
+        }
+        <span class="t-26" style="float:right" id="payAndDeliver-viewText">@Model.DeliverAddress</span>
+    </div>
+    </div>
+        <div class="f-form01-item" style="margin-bottom:2rem">
+            <div class="explain">
+                <p>
+                    <span class="t-p1">支付预约金：</span><span class="t-25">@(Model.PrepaidAmount+Model.DeliverPrice)</span><span class="t-25">(含运费</span><span>@Model.DeliverPrice)</span>
+</p>
+            </div>
+        </div>
+    </div>
+   if (((EnumOrderStatus)Model.OrderStatus) == EnumOrderStatus.Paid || ((EnumOrderStatus)Model.OrderStatus) == EnumOrderStatus.Success)
+   {
+        <div class="page95-submit">已支付</div>
+   }
+   else
+   {
+    <div class="page95-submit">
+        <a href="@Url.Action("Quit", new { ordercode = Model.OrderCode })" class="f-button02 t-cancel-1">取消订单</a>
+        <a href="@Url.Action("PayConfirm", new { ordercode = Model.OrderCode })" class="f-button02 t-pay-1">去支付</a>
+    </div>
+   }
+
+
+
+    }
+    else {
+        <div  class="page95-info">订单为空</div>
+    }
+
+    <div class="page95-submit-fixed-extend"></div>
+    <script src="../public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
+    <script src="../public/js/all.js"></script>
+
+  
+</body>
+<a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
+<script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
+</html>

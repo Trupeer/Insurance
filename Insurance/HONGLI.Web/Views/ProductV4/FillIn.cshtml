@@ -1,0 +1,561 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>车险询价-填写信息</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link href="~/public/css/all.css" rel="stylesheet" />
+    <script src="~/public/js/base.js"></script>
+    <link href="~/public/Popup/reveal.css" rel="stylesheet" />
+    <script src="~/public/Popup/jquery-1.6.min.js"></script>
+    <script src="~/public/Popup/jquery.reveal.js"></script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>填写信息</h2>
+        <div class="f-nav-back">
+            <a href="javascript:history.go(-1);" class="riaGoBack"><i></i></a>
+        </div>
+        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.580rem;" data-reveal-id="myModal" href="#"  data-animation="fade">客服</a></div>
+
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    <!--用户车牌信息 start-->
+    <div class="page11-form01">
+        <div class="page11-title01"><i></i>机动车行驶证信息</div>
+        <div class="f-form01-item">
+            <label class="f-form01-label">车牌号</label>
+            <div class="f-form01-main">
+                <input type="text" value="" readonly="" class="f-form01-input100" id="licenseNo">
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <label class="f-form01-label">品牌型号</label>
+            <div class="f-form01-main">
+                <input type="text" value="" readonly="" class="f-form01-input100" id="modelName">
+            </div>
+            @*<div class="f-form01-go">
+                    <a href="@Url.Action("LicenseModify", "Product", new {channel=ViewBag.channel, mobile=ViewBag.mobile, carLicense = userInfo.LicenseNo, modlName = userInfo.MoldName, cityCode=userInfo.CityCode })" class="f-form01-icon-arrow"></a>
+                </div>*@
+        </div>
+    </div>
+    <!--用户车牌信息 end-->
+    <!--配置header start-->
+    <div class="page11-success">
+        @*往年配置
+            <span>获取成功</span>
+            以下为往年配置详情*@
+        往年配置
+        <span>获取失败</span>
+        请自定义配置
+    </div>
+    <div class="page11-tab">
+        <a href="javascript:void(0);" class="current" id="lastYearConfig">@*往年配置*@自定义配置<i></i></a>
+        <a href="javascript:void(0);" id="allProtected">全面保障<i></i></a>
+    </div>
+    <!--配置header end-->
+    <!--配置start-->
+    <div class="page11-form02">
+        <div class="page11-title01"><i></i>交强险（含车船税）</div>
+        <div class="f-form01-item">
+            <div class="f-form01-main"><p class="t-1">交强险</p></div>
+            <div class="f-form01-other"><input type="checkbox" checked="" value="1" readonly="" id="jqx" /></div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-1">车船税</p>
+                <p class="t-2">按照国家规定与交强险同时缴纳</p>
+            </div>
+            <div class="f-form01-other"><input type="checkbox" checked="" value="1" readonly="" id="ccs" /></div>
+        </div>
+    </div>
+    <div class="page11-form03">
+        <div class="page11-title02">
+            <i></i>
+            <p class="page11-title02-p1">国家强制投保，未投保则无法验车并处双倍罚款</p>
+            <p class="page11-title02-p2">商业险<span class="page11-title02-zx">主险</span><span class="page11-title02-fjx">附加险</span></p>
+        </div>
+        <!--主险-->
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon1">机动车损失保险</p>
+                <p class="t-p2">95%车主选择购买</p>
+            </div>
+            <div class="f-form01-other">
+                @*<select class="f-select01" id="bujimianchesun">
+                        <option>不计免赔</option>
+                    </select>*@
+                <div class="f-tips01" id="bujimianchesun"> 不计免赔 √ </div>
+                <input type="checkbox" id="chesun" value="" />
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon1">机动车第三者责任保险</p>
+                <p class="t-p2">98%车主选择购买</p>
+            </div>
+            <div class="f-form01-other" style="text-align:right;">
+                @*<select class="f-select01" id="bujimiansanzhe">
+                        <option>不计免赔</option>
+                    </select>*@
+                <select class="f-select02 ml20" id="sanzhe" value="">
+                    <option value="0">不投保</option>
+                    <option value="50000">5万</option>
+                    <option value="100000">10万</option>
+                    <option value="150000">15万</option>
+                    <option value="200000">20万</option>
+                    <option value="300000">30万</option>
+                    <option value="500000">50万</option>
+                    <option value="1000000">100万</option>
+                    <option value="1500000">150万</option>
+                </select>
+                <input type="checkbox" value="" /><br /><br />
+                <div class="f-tips01" id="bujimiansanzhe"> 不计免赔 √ </div>
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon1">机动车全车盗抢保险</p>
+                <p class="t-p2">未超过三年，85%车主选择购买</p>
+            </div>
+            <div class="f-form01-other">
+                @*<select class="f-select01" id="bujimiandaoqiang">
+                        <option>不计免赔</option>
+                    </select>*@
+                <div class="f-tips01" id="bujimiandaoqiang"> 不计免赔 √ </div>
+                <input type="checkbox" id="daoqiang" value="" />
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon1">车上人员责任险（司机）</p>
+                <p class="t-p2">50%车主选择购买</p>
+            </div>
+            <div class="f-form01-other">
+                @*<select class="f-select01 f-select01-1" disabled="" id="bujimiansiji">
+                        <option>不计免赔</option>
+                    </select>*@
+                <select class="f-select02 ml20" id="siji" value="">
+                    <option value="0">不投保</option>
+                    <option value="10000">1万</option>
+                    <option value="20000">2万</option>
+                    <option value="30000">3万</option>
+                    <option value="40000">4万</option>
+                    <option value="50000">5万</option>
+                    <option value="100000">10万</option>
+                    <option value="200000">20万</option>
+                </select>
+                <input type="checkbox" value="" />
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon1">车上人员责任险（乘客）</p>
+                <p class="t-p2">50%车主选择购买</p>
+            </div>
+            <div class="f-form01-other">
+                @*<select class="f-select01 f-select01-1" disabled="" id="bujimianchengke">
+                        <option>不计免赔</option>
+                    </select>*@
+                <select class="f-select02 ml20" id="chengke" value="">
+                    <option value="0">不投保</option>
+                    <option value="10000">1万</option>
+                    <option value="20000">2万</option>
+                    <option value="30000">3万</option>
+                    <option value="40000">4万</option>
+                    <option value="10000">5万</option>
+                    <option value="100000">10万</option>
+                    <option value="200000">20万</option>
+                </select>
+                <input type="checkbox" value="" />
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon1">车上人员责任险（不计免赔）</p>
+            </div>
+            <div class="f-form01-other">
+                <div class="f-tips01" id="bujimiansanzhe"> 不计免赔 √ </div>
+            </div>
+        </div>
+        <!--附加险-->
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon2">车身划痕险</p>
+                <p class="t-p2">75%车主选择购买</p>
+            </div>
+            <div class="f-form01-other">
+                <select class="f-select02 ml20" id="huahen" value="">
+                    <option value="0">不投保</option>
+                    <option value="2000">2000元</option>
+                    <option value="5000">5000元</option>
+                    <option value="10000">10000元</option>
+                    <option value="20000">20000元</option>
+                </select>
+                <input type="checkbox" value="" />
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon2">玻璃单独破碎险</p>
+                <p class="t-p2">60%车主选择购买</p>
+            </div>
+            <div class="f-form01-other">
+                <select class="f-select02 ml20" id="boli" value="">
+                    <option value="0">不投保</option>
+                    <option value="1">国产玻璃</option>
+                    <option value="2">进口玻璃</option>
+                </select>
+                <input type="checkbox" value="" />
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon2">发动机特别损失险</p>
+                <p class="t-p2">在北京，建议上此险</p>
+            </div>
+            <div class="f-form01-other">
+                <input type="checkbox" id="sheshui" value="" />
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon2">自燃险</p>
+                <p class="t-p2">车辆使用超过3年，建议购买此险</p>
+            </div>
+            <div class="f-form01-other">
+                <input type="checkbox" id="ziran" value="" />
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon2">倒车镜、车灯单独损失险</p>
+                <p class="t-p2">此险种仅支持平安车险</p>
+            </div>
+            <div class="f-form01-other">
+                <input type="checkbox" id="chedeng" value="" />
+            </div>
+        </div>
+    </div>
+    <!--配置end-->
+    <div style="margin-bottom: .16rem;"><a class="f-button01" id="submit">立即试算</a></div>
+    <script src="~/public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
+    <script src="~/public/3rdLibs/layer.mobile/v1.7/layer.js"></script>
+    <script src="~/public/js/all.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".f-tips01").each(function () {
+                var obj = $(this);
+                obj.css("background-color", "#ccc");
+                obj.prop("disabled", false);
+            });
+            $("select").change(function () {
+                $(this).removeAttr("selected"); //移除属性selected
+            });
+            getReInfo();
+        });
+        //用户ID
+        var userID = -1
+        function getReInfo() {
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("GetReInfo", "ProductV4")',
+                dataType: "json",
+                data: {
+                    channel: "@ViewBag.channel",
+                    mobile: "@ViewBag.mobile",
+                    licenseNo: "@ViewBag.licenseNo",
+                    cityCode: "@ViewBag.cityCode"
+                },
+                beforeSend: function () {
+                    layer.open({ type: 2 });
+                },
+                success: function (data) {
+                    console.log(data);
+
+                    if (data == null) {
+                        alert("未查到该车牌续保信息，请后退修改车牌配置！");
+                        return;
+                    }
+                    userID = data.UserId;
+                    var userInfo = data.UserInfo;
+                    if (userInfo != null) {
+                        $("#licenseNo").val(userInfo.LicenseNo);
+                        $("#modelName").val(userInfo.ModleName);
+                    }
+                    if (data.BusinessStatus == 1) {
+                        $(".page11-success").html("往年配置<span>获取成功</span>以下为往年配置详情");
+                        $("#lastYearConfig").html("往年配置<i></i>");
+                    };
+                    var quote = data.SaveQuote;
+                    if (quote != null) {
+                        if (quote.bujimianchesun == 1)
+                        {
+                            $("#bujimianchesun").prop("disabled", true);
+                            $("#bujimianchesun").css("background", "#648feb");
+                        }
+                        else
+                        {
+                            $("#bujimianchesun").prop("disabled", false);
+                            $("#bujimianchesun").css("background", "#ccc");
+                        }
+                        if (quote.bujimiandaoqiang == 1) {
+                            $("#bujimiandaoqiang").prop("disabled", true);
+                            $("#bujimiandaoqiang").css("background", "#648feb");
+                        }
+                        else {
+                            $("#bujimiandaoqiang").prop("disabled", false);
+                            $("#bujimiandaoqiang").css("background", "#ccc");
+                        }
+                        if (quote.bujimianfujia == 1) {
+                            $("#bujimianfujia").prop("disabled", true);
+                            $("#bujimianfujia").css("background", "#648feb");
+                        }
+                        else {
+                            $("#bujimianfujia").prop("disabled", false);
+                            $("#bujimianfujia").css("background", "#ccc");
+                        }
+                        if (quote.bujimiansanzhe == 1) {
+                            $("#bujimiansanzhe").prop("disabled", true);
+                            $("#bujimiansanzhe").css("background", "#648feb");
+                        }
+                        else {
+                            $("#bujimiansanzhe").prop("disabled", false);
+                            $("#bujimiansanzhe").css("background", "#ccc");
+                        }
+                        $("#jqx").val(quote.ForceTotal);
+                        $("#ccs").val(quote.TaxTotal);
+                        $("#chesun").val(quote.CheSun);
+                        $("#sanzhe").val(quote.SanZhe);
+                        $("#sanzhe").siblings("input[type=checkbox]").val(quote.SanZhe);
+                        $("#daoqiang").val(quote.DaoQiang);
+                        $("#siji").val(quote.SiJi);
+                        $("#siji").siblings("input[type=checkbox]").val(quote.SiJi);
+                        $("#chengke").val(quote.ChengKe);
+                        $("#chengke").siblings("input[type=checkbox]").val(quote.ChengKe);
+                        $("#huahen").val(quote.HuaHen);
+                        $("#huahen").siblings("input[type=checkbox]").val(quote.HuaHen);
+                        $("#boli").val(quote.BoLi);
+                        $("#boli").siblings("input[type=checkbox]").val(quote.BoLi);
+                        $("#sheshui").val(quote.SheShui);
+                        $("#ziran").val(quote.ZiRan);
+                        $("#chedeng").val(quote.CheDeng);
+                    }
+                    if (data.BusinessStatus != 1) {
+                        if (data.BusinessStatus != 3) {
+                            var message = data.StatusMessage;
+                            if (message == null) {
+                                message = "获取续保信息失败，服务器未返回失败原因！";
+                            }
+                            alert(message);
+
+                            //var url = "@Url.Action("Index")?channel=@ViewBag.channel&mobile=@ViewBag.mobile";
+
+                            //window.location.href = url;
+                        }
+                        layer.closeAll();
+                        return;
+                    } else {
+                        //初始化
+                        init();
+                        layer.closeAll();
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        }
+
+
+        //提交查询
+        $("#submit").click(function () {
+            var jqx = ($("#jqx").prop("checked") == true) ? 1 : 0;
+            var ccs = ($("#ccs").prop("checked") == true) ? 1 : 0;
+            if (jqx == 0 || ccs == 0) {
+                alert("国家强制投保，未投保则无法验车并处双倍罚款!");
+                return;
+            }
+
+            var boli = $("#boli").val();  //0,1,2
+            var bujimianchesun = $("#bujimianchesun").prop("disabled") ? 1 : 0;  //0,1
+            var bujimiandaoqiang = $("#bujimiandaoqiang").prop("disabled") ? 1 : 0; //0,1
+            var bujimianfujia = $("#bujimianfujia").prop("disabled") ? 1 : 0;  //0,1
+            var bujimianrenyuan = $("#bujimianrenyuan").prop("disabled") ? 1 : 0;  //0,1
+            var bujimiansanzhe = $("#bujimiansanzhe").prop("disabled") ? 1 : 0;  //0,1
+            var chedeng = $("#chedeng").prop('checked') ? 1 : 0;  //0,1
+            var sheshui = $("#chesun").prop('checked') ? 1 : 0;  //0,1
+            var huahen = $("#huahen").val(); //0,value
+            var siji = $("#siji").val(); //0,value
+            var chengke = $("#chengke").val();//0,value
+            var chesun = $("#chesun").prop('checked') ? 1 : 0;   //0,1
+            var daoqiang = $("#daoqiang").attr('checked') ? 1 : 0; //0,1
+            var sanzhe = $("#sanzhe").val(); //0,value
+            var ziran = $("#ziran").prop('checked') ? 1 : 0; //0,1
+
+            var dataItem = {
+                boli: boli,
+                bujimianchesun: bujimianchesun,
+                bujimiandaoqiang: bujimiandaoqiang,
+                bujimianfujia: bujimianfujia,
+                bujimianrenyuan: bujimianrenyuan,
+                bujimiansanzhe: bujimiansanzhe,
+                chedeng: chedeng,
+                sheshui: sheshui,
+                huahen: huahen,
+                siji: siji,
+                chengke: chengke,
+                chesun: chesun,
+                daoqiang: daoqiang,
+                sanzhe: sanzhe,
+                ziran: ziran
+            };
+
+            var jsonToString = JSON.stringify(dataItem);
+
+            var url = "@Url.Action("QuoteList")?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=" + jsonToString+"&userID="+userID;
+
+            window.location.href = url;
+        });
+
+
+        function init() {
+            setSelected("sanzhe");
+            setSelected("siji");
+            setSelected("chengke");
+            setSelected("huahen");
+            setSelected("boli");
+            $("input[type=checkbox]").each(function () {
+                setChecked($(this));
+            });
+        }
+;
+        function setSelected(sourceId) {
+            var objValue = $("#" + sourceId).attr("value");
+            if (objValue > 0) {
+                $("#" + sourceId).val(objValue);
+            }
+        }
+
+        function setChecked(source) {
+            var objValue = source.prop("value");
+            if (objValue > 0) {
+                source.prop("checked", true);
+            }
+            else {
+                source.removeAttr("checked");
+            }
+            if (source.prop("readonly")) {  //必选项不可取消选中
+                source.prop("checked", true);
+            }
+        }
+
+        //不计免赔点击事件
+        $(".f-tips01").click(function () {
+            var obj = $(this);
+            if (obj.prop("disabled")) {
+                obj.prop("disabled", false);
+                obj.css("background", "#ccc");
+            }
+            else {
+                obj.prop("disabled", true);
+                obj.css("background", "#648feb");
+                obj.siblings("input[type=checkbox]").prop("checked", true);
+                checkBoxChange(obj.siblings("input[type=checkbox]"), "middle");
+            }
+        });
+
+        //去年配置tab
+        $("#lastYearConfig").click(function () {
+            var obj = $(this);
+            obj.addClass("current");
+            obj.siblings("a").removeClass("current");
+
+            getReInfo();
+        });
+
+        //全面保障tab
+        $("#allProtected").click(function () {
+            var obj = $(this);
+            obj.addClass("current");
+            obj.siblings("a").removeClass("current");
+
+            //checkbox全部勾选，且切换最高保额
+            $("input[type=checkbox]").each(function () {
+                $(this).prop("checked", true);
+                checkBoxChange($(this), "max");
+            });
+            //不计免赔选中
+            $(".f-tips01").each(function () {
+                var obj = $(this);
+                obj.css("background", "#648feb");
+                obj.prop("disabled", true);
+            });
+        })
+
+
+
+        //select change,checkbox change
+        $(".f-select02").change(function () {
+            var value = $(this).val();
+            if (value > 0) {
+                $(this).siblings("input[type=checkbox]").prop("checked", true);
+            } else {
+                $(this).siblings("input[type=checkbox]").prop("checked", false);
+            }
+        });
+
+        //checkbox change, select change 选取中间的index设置为选中
+        $("input[type=checkbox]").change(function () {
+            if ($(this).prop("readonly")) {  //必选项不可取消选中
+                $(this).prop("checked", true);
+                alert("国家强制投保，未投保则无法验车并处双倍罚款!");
+            }
+            else {
+                checkBoxChange($(this), "middle");
+            }
+        });
+
+        //checkbox change, select change (选取中间的index为选中or最大值)
+        function checkBoxChange(source, type) {
+            if (source.is(":checked")) {
+                if (type == "max") {
+                    var maxValue = source.siblings(".f-select02").find("option:last").val();
+                    source.siblings(".f-select02").val(maxValue);
+                }
+                else {
+                    
+                    var size = source.siblings(".f-select02").find("option").size();
+                    if (size > 0) {
+                        var index = parseInt(size / 2) + 1;
+                        source.siblings(".f-select02").find("option:nth-child(" + index + ")").prop("selected", true);
+                    }
+                }
+            }
+            else {
+                source.siblings(".f-tips01").prop("disabled", false);
+                source.siblings(".f-tips01").css("background", "#ccc");
+                source.siblings(".f-select02").val(0);
+            }
+        }
+    </script>
+    <div id="myModal" class="reveal-modal">
+        <div class="title-text">联系客服</div>
+        <div class="Online-Service">
+                <a target="_blank" href="http://trupeer.udesk.cn/im_client" id="udesk-im-74" >
+                    <img src="~/public/images/icon-Online.png" /><span>在线客服</span>
+
+</a>
+</div>
+        <div class="tel-Service">
+        <a href="tel://400-963-1088" >
+                <img src="~/public/images/icon-tel.png" /><span>致电客服</span></a></div>
+    </div>
+    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+﻿@model HONGLI.Web.Models.User.DeliverModel
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>选择支付配送</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Styles/all.css")">
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/base.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/jquery/jquery-2.1.3.min.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/all.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/calendar/WdatePicker.js")"></script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>选择支付配送</h2>
+        <div class="f-nav-back">
+            <a href="@Url.Action("Do", "OrderV2", new { userId= Request["userId"], productId = Request["productId"],mobile = Request["mobile"], channel= Request["userId"], intentionCompany=Request["intentionCompany"], OrderCode=Request["OrderCode"], OrderBaseId=Request["OrderBaseId"], OrderItemId=Request["OrderItemId"], OrderPolicyId=Request["OrderPolicyId"], OrderDeliverId=Request["OrderDeliverId"]  })" id=""><i></i></a>
+        </div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    @using (Html.BeginForm("TypeEdit", "DeliverV2", FormMethod.Post, new { @id = "submitForm" }))
+    {
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.UserId)
+        @Html.HiddenFor(model => model.ReturnUrl)
+        @Html.HiddenFor(m => m.Mobile)
+        @Html.HiddenFor(m => m.ProductId)
+        @Html.HiddenFor(m => m.Channel)
+        @Html.HiddenFor(m => m.intentionCompany)
+        @Html.HiddenFor(m => m.OrderCode)
+        @Html.HiddenFor(m => m.OrderBaseId)
+        @Html.HiddenFor(m => m.OrderItemId)
+        @Html.HiddenFor(m => m.OrderPolicyId)
+        @Html.HiddenFor(m => m.OrderDeliverId)
+        <div class="page25-pay">
+            <div class="f-form01-item">
+                <label class="f-form01-label">支付方式</label>
+                <div class="f-form01-main">
+                    <a href="javascript:void(0);" id="btnPayType" class="f-button02" style="background-color:#ea3c31">在线支付</a>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="page25-form">
+            <div class="f-form01-item">
+                <label class="f-form01-label">配送方式</label>
+                <div class="f-form01-main">
+                    @Html.HiddenFor(m => m.DeliverType, new { @id = "deliverType" })
+                    <a href="javascript:void(0);" class="f-button02" id="btnExpress">快递</a>
+                    <a href="javascript:void(0);" class="f-button02" id="btnPickup">上门自提</a>
+                </div>
+            </div>
+            <div class="f-form01-item" id="divPickupAddressBox">
+                <label class="f-form01-label">自提地点</label>
+                <div class="f-form01-main">
+                    @Html.TextBoxFor(m => m.PickupAddress, new { @class = "f-form01-input100", @id = "pickupAddress", @readonly = "readonly" })
+                </div>
+                <div class="f-form01-go" style="display:none">
+                    <a href="javascript:void(0);" class="f-form01-icon-arrow"></a>
+                </div>
+            </div>
+            <div class="f-form01-item" id="divPickupTimeBox">
+                <label class="f-form01-label">自提时间</label>
+                <div class="f-form01-main">
+                    @Html.TextBoxFor(m => m.PickupTime, new { @class = "f-form01-input100", @id = "txtPickupTime" })
+                    @*<input type="text" id="txtPickupTime" value="" class="f-form01-input100">*@
+                </div>
+            </div>
+        </div>
+        <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;" value="保存">
+    }
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/hongli.common.tools.js")"></script>
+    <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/hongli.global.data.js")"></script>
+    <script>
+        //日历控件
+        $(function () {
+            if ($("#deliverType").val() != 2) {
+                $("#deliverType").val(1);
+                $("#divPickupAddressBox").hide();
+                $("#divPickupTimeBox").hide();
+                $("#btnExpress").css("background-color", "#888787");
+            }
+            else {
+                $("#btnPickup").css("background-color", "#888787");
+            }
+            var date = new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            month = ("" + month).length > 1 ? month : "0" + month;
+            var day = date.getDate();
+            day = ("" + day).length > 1 ? day : "0" + day;
+            todayDate = year + "-" + month + "-" + day;
+            $("#txtPickupTime").val(todayDate);
+            //时间筛选
+            $("#txtPickupTime").focus(function () {
+                //var dateEnd = $dp.$('date_end');
+                WdatePicker({
+                    doubleCalendar: false,
+                    onpicked: function () { this.blur(); },
+                    dateFmt: 'yyyy-MM-dd',
+                    startDate: todayDate,
+                    alwaysUseStartDate: true,
+                    minDate: todayDate
+                })
+            });
+            $("#btnPayType").click(function () {
+                $("#btnPayType").css("background-color", "#ea3c31");
+            });
+            $("#btnExpress").click(function () {
+                $("#deliverType").val(1);
+                $("#divPickupAddressBox").hide();
+                $("#divPickupTimeBox").hide();
+                $("#btnExpress").css("background-color", "#ea3c31");
+                $("#btnPickup").css("background-color", "#888787");
+            });
+            $("#btnPickup").click(function () {
+                $("#deliverType").val(2);
+                $("#divPickupAddressBox").show();
+                $("#divPickupTimeBox").show();
+                $("#btnExpress").css("background-color", "#888787");
+                $("#btnPickup").css("background-color", "#ea3c31");
+            });
+            $("#btnSubmit").click(function () {
+                var payType = 1;
+                var deliverType = $("#deliverType").val();
+                var deliverPrice = 0;
+                var pickupAddress = $("#pickupAddress").val();
+                var pickupTime = $("#txtPickupTime").val()
+                if (deliverType == 1) {
+                    deliverPrice = global.order.deliverPrice;
+                    pickupAddress == "";
+                    pickupTime == "";
+                }
+                var order_payAndDeliver = new global.order.payAndDeliver(payType, deliverType, deliverPrice, pickupAddress, pickupTime);
+                var order_payAndDeliver_str = JSON.stringify(order_payAndDeliver);
+                common.cookie.setCookie(global.domain, global.cookie.order.payAndDeliver, order_payAndDeliver_str, global.expire);
+            });
+            var payAndDeliver = common.cookie.getCookie(global.cookie.order.payAndDeliver);
+            if (payAndDeliver != "") {
+                var deliver = JSON.parse(payAndDeliver);
+                $("#deliverType").val(deliver['deliverType']);
+                $("#btnPayType").css("background-color", "#ea3c31");
+                if (deliver['deliverType'] == 1) {
+                    $("#divPickupAddressBox").hide();
+                    $("#divPickupTimeBox").hide();
+                    $("#btnExpress").css("background-color", "#ea3c31");
+                    $("#btnPickup").css("background-color", "#888787");
+                }
+                else {
+                    $("#divPickupAddressBox").show();
+                    $("#divPickupTimeBox").show();
+                    $("#pickupAddress").val(deliver['selfTakeAddress']);
+                    $("#pickupTime").val(deliver['selfTakeDate']);
+                    $("#btnExpress").css("background-color", "#888787");
+                    $("#btnPickup").css("background-color", "#ea3c31");
+                }
+            }
+        });
+    </script>
+    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
+    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
+</body>
+</html>

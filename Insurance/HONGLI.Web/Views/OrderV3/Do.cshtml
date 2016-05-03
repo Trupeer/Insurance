@@ -1,0 +1,389 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>报价详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link rel="stylesheet" type="text/css" href="../public/css/all.css">
+    <script src="../public/js/base.js"></script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>填写并核对订单信息</h2>
+        <div class="f-nav-back">
+            <a href="javascript:;" id="riaGoBack"><i></i></a>
+        </div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    <div class="page20-address">
+        <div class="page20-address-empty" id="deliverEmpty">
+            <a href="@Url.Action("List","DeliverV2",new { userId= ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId } )"><p></p><span>添加订单信息</span><span class="f-list01-icon-arrow" style="margin-left:6.75rem;"></span></a>
+        </div>
+        <div class="f-list01" id="deliverAddress" style="display:none;">
+            <div class="f-list01-main">
+                <p class="t-p1">
+                    <span>姓名</span><span class="t-span" id="product-Name">jalsjdlaks</span>
+                    <span style="margin-left:0.2rem">电话</span><span class="t-span" id="product-mobile">12525256636</span>
+                </p>
+                <p class="t-p2"><span>地址</span><span class="t-span" id="Product-Address">北京市朝阳区建外大街南区345栋</span></p>
+            </div>
+            <div class="f-list01-go"><a href="@Url.Action("List","DeliverV2",new {productId = ViewBag.ProductId,mobile = ViewBag.Mobile,userid=ViewBag.UserId, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId } )" class="f-list01-icon-arrow"></a></div>
+        </div>
+    </div>
+    <div class="page20-form">
+        <div class="f-form01-item" id="product">
+            <label class="f-form01-label">
+                <img id="product-isuranceLogoUrl" src="../public/imagesTemp/page40-2.png">
+            </label>
+            <div>
+                <p class="t-24" id="product-title"></p>
+                <p class="t-money01" style="margin-top:0.1rem;"><del id="product-originalPrice">12345</del><span class="t-24" style="margin-left:0.3rem;">优惠价：</span><span class="t-25" id="product-Discount">9999</span></p>@*<i id="product-dealPrice">￥</i>*@
+                <p style="margin-top:0.1rem;" class="t-money01"><span class="t-24" style="margin-left:2.13rem;">预约金：</span><span class="t-25" id="product-PrepaidAmount">9999</span></p>
+            </div>
+            <div class="f-list01-go" style="margin-left:0.2rem"><a href="@Url.Action("Detail","ProductV3",new {ProductId = ViewBag.ProductId, mobile = ViewBag.Mobile,channel = ViewBag.Channel} )" class="f-list01-icon-arrow"></a></div>
+        </div>
+        <div class="f-form01-item">
+            <div class="explain">
+                <p class="t-p1">说明</p>
+                <p class="t-26">亲爱的用户，你只需要支付相应的预约金，我们的专职人员会第一时间上门服务。</p>
+            </div>
+        </div>
+        <div class="f-form01-item1" id="PolicyEmpty" style="padding:0">
+            <div class="page20-address-empty">
+                <a href="@Url.Action("Edit","PolicyHolderV2",new { userId= ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId } )"><span>添加被保人信息</span><span class="f-list01-icon-arrow" style="margin-left:6.75rem;"></span></a>
+            </div>
+        </div>
+           
+            <div class="f-form01-item" id="policyHolder" style="display:none">
+                <div class="explain">
+                    <p class="t-p1">被保人信息</p>
+                    <p id="policyHolder-name" class="t-26">被保人：</p>
+                    <p id="policyHolder-idcard" class="t-26">身份证：</p>
+                </div>
+                <div class="f-list01-go" style="margin-left:0.2rem"><a href="@Url.Action("Edit","PolicyHolderV2",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId} )" class="f-list01-icon-arrow"></a></div>
+            </div>
+            <div class="f-form01-item">
+                <div class="explain"><span class="t-p1">发票信息</span><span class="t-26" style="float:right" id="invoice"></span></div>
+                <div class="f-list01-go" style="margin-left:0.2rem;"><a href="@Url.Action("Edit","InvoiceV2",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a></div>
+            </div>
+            <div class="f-form01-item" id="PayAndDeliver">
+                <div class="explain"><span class="t-p1">支付配送</span></div>
+                <div class="f-list01-go" style="margin-left:0.2rem;"><a href="@Url.Action("TypeEdit","DeliverV2",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a></div>
+            </div>
+            <div class="f-form01-item" id="PayType" style="display:none;">
+                <div class="explain"><span class="t-p1">支付方式</span><span class="t-26" style="float:right">在线支付</span></div>
+                <div class="f-list01-go" style="margin-left:0.2rem;">
+                    <a href="@Url.Action("TypeEdit","DeliverV2",new {userid=ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile,channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a>
+                </div>
+            </div>
+            <div class="f-form01-item" id="DeliverType" style="display:none;">
+                <div class="explain"><span class="t-p1">配送信息</span><span class="t-26" style="float:right" id="payAndDeliver-viewText"></span></div>
+                <div class="f-list01-go" style="margin-left:0.2rem;">
+                    <a href="@Url.Action("TypeEdit","DeliverV2",new { userid = ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a>
+                </div>
+            </div>
+            <div class="f-form01-item" style="margin-bottom:2rem">
+                <div class="explain">
+                    <span class="t-p1">保费总额：</span><span class="t-25" id="Total">9999</span>
+                    <span class="t-p1" style="margin-left:2rem;">预约金：</span><span class="t-25" id="PrepaidAmount">9999</span>
+                </div>
+            </div>
+        </div>
+    <div class="page20-submit">
+        <a href="#" class="f-button02" onclick="javascript:orderSubmit()">提交订单</a>
+        <div>支付预定金：<span id="order-totalPrice">￥</span></div>
+    </div>
+    <script src="../public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
+    <script src="../public/js/all.js"></script>
+
+
+    <script src="~/Scripts/hongli.common.tools.js"></script>
+    <script src="~/Scripts/hongli.global.data.js"></script>
+
+    <script>
+
+        $(function () {
+            $(".f-form01-item").click(function () {
+                var href = $(this).find(".f-list01-icon-arrow").attr("href");
+                if (href == "" || href == undefined)
+                    return false;
+                window.location.href = href;
+            })
+
+            $("#deliverEmpty").click(function () {
+                var href = $(this).find("a").attr("href");
+                if (href == "" || href == undefined)
+                    return false;
+                window.location.href = href;
+            })
+
+            $("#deliverAddress").click(function () {
+                var href = $(this).find("a").attr("href");
+                if (href == "" || href == undefined)
+                    return false;
+                window.location.href = href;
+            })
+
+            load();
+        })
+
+    </script>
+
+    <script>
+        var order_product_json;
+        var order_deliver_json;
+        var order_policyHolder_json;
+        var order_invoice_json;
+        var order_payAndDeliver_json;
+        function getIsuranceLogoUrl(logo)
+        {
+            var logoUrl = "";
+            switch (logo)
+            {
+                case 0:
+                    logoUrl = "../public/imagesTemp/page40-2.png";
+                    break;
+                case 1:
+                    logoUrl = "../public/imagesTemp/page40-3.png";
+                    break;
+                case 2:
+                    logoUrl = "../public/imagesTemp/page40-1.png";
+                    break;
+                default:
+                    logoUrl = "";
+                    break;
+            }
+            return logoUrl;
+        }
+
+        //var order_deliver_str = "";
+        //common.cookie.setCookie(global.domain, global.cookie.order.deliver, order_deliver_str, global.expire);
+
+        //var order_payAndDeliver_str = "";
+        //common.cookie.setCookie(global.domain, global.cookie.order.payAndDeliver, order_payAndDeliver_str, global.expire);
+
+        //var order_invoice_str = "";
+        //common.cookie.setCookie(global.domain, global.cookie.order.invoice, order_invoice_str, global.expire);
+
+        //var order_policyHolder_str = "";
+        //common.cookie.setCookie(global.domain, global.cookie.order.policyHolder, order_policyHolder_str, global.expire);
+
+        var productCookie = common.cookie.getCookie(global.cookie.order.product);
+        var deliverCookie = common.cookie.getCookie(global.cookie.order.deliver);
+        //被保人
+        var policyHolderCookie = common.cookie.getCookie(global.cookie.order.policyHolder);
+        //支付配送
+        var payAndDeliverCookie = common.cookie.getCookie(global.cookie.order.payAndDeliver);
+        if (productCookie == null || productCookie == "" || deliverCookie == null || deliverCookie == "" || policyHolderCookie == null || policyHolderCookie == "" || payAndDeliverCookie == null || payAndDeliverCookie == "") {
+            $.get("GetOrderByCode", { OrderCode: '@Request["OrderCode"]' }, function (data) {
+                if (data == null)
+                {
+                    return;
+                }
+                var result = JSON.parse(data);
+                //product
+                var channel = result.Channel;
+                var isuranceLogo = '@ViewBag.intentionCompany';
+                var order_product = new global.order.product(channel, result.UserId, result.InsuranceLogo, result.ProductName, result.ProductTitle, result.ProductOriginalPrice, result.ProductDealPrice, result.LicenseNo, result.ForceExpireDate, result.BusinessExpireDate, result.Buid, result.PrepaidAmount);
+                var order_product_str = JSON.stringify(order_product);
+                common.cookie.setCookie(global.domain, global.cookie.order.product, order_product_str, global.expire);
+                //deliver
+                if (result.DeliverName != null && result.DeliverMobile != null && result.DeliverAddress != null)
+                {
+                    var order_deliver = new global.order.deliver(result.DeliverName, result.DeliverMobile, result.DeliverDistrictCode, result.DeliverAddress);
+                    var order_deliver_str = JSON.stringify(order_deliver);
+                    common.cookie.setCookie(global.domain, global.cookie.order.deliver, order_deliver_str, global.expire);
+                }
+                //payAndDeliver
+                var order_payAndDeliver = new global.order.payAndDeliver(1, result.DeliverType, result.DeliverPrice, result.DeliverAddress, result.DeliverTime);
+                var order_payAndDeliver_str = JSON.stringify(order_payAndDeliver);
+                common.cookie.setCookie(global.domain, global.cookie.order.payAndDeliver, order_payAndDeliver_str, global.expire);
+                //policyHolder
+                if (result.Name != null && result.IdCard != null)
+                {
+                    var order_policyHolder = new global.order.policyHolder(result.Name, result.IdCardType, result.IdCard, result.IdCardFacePicUrl, result.IdCardBackPicUrl);
+                    var order_policyHolder_str = JSON.stringify(order_policyHolder);
+                    common.cookie.setCookie(global.domain, global.cookie.order.policyHolder, order_policyHolder_str, global.expire);
+                }
+                load();
+            });
+        }
+
+
+        function load()
+        {
+            //产品
+            var productCookieValue = common.cookie.getCookie(global.cookie.order.product);
+            if (productCookieValue != null && productCookieValue != "") {
+                order_product_json = $.parseJSON(productCookieValue);
+                if (order_product_json != null) {
+
+                    $("#product-isuranceLogoUrl").attr("src", getIsuranceLogoUrl(order_product_json.isuranceLogo));
+                    $("#product-title").html(order_product_json.LicenseNo + "保费,交强险起保日期" + order_product_json.forceExpireDate + ",商业保险起保日期" + order_product_json.businessExpireDate);
+                    //$("#product-dealPrice").html("￥" + order_product_json.dealPrice);
+                    $("#product-Discount").html(order_product_json.dealPrice)
+                    $("#product-originalPrice").html("￥" + order_product_json.originalPrice);
+                    $("#product-PrepaidAmount").html(order_product_json.PrepaidAmount);
+                    $("#order-productPrice").html("￥" + order_product_json.dealPrice);
+                    $("#PrepaidAmount").html(order_product_json.PrepaidAmount);
+                }
+                else {
+                    //TODO by guoqiangs
+                    alert("保险产品信息异常");
+                }
+            }
+
+
+
+            //配送地址
+            var deliverCookieValue = common.cookie.getCookie(global.cookie.order.deliver);
+            if (deliverCookieValue != null && deliverCookieValue != "") {
+                order_deliver_json = $.parseJSON(deliverCookieValue);
+                $("#product-Name").html(order_deliver_json.deliverName);
+                $("#product-mobile").html(order_deliver_json.deliverMobile);
+                $("#Product-Address").html(order_deliver_json.deliverAddress);
+                $("#deliverAddress").show();
+
+                $("#deliverEmpty").hide();
+
+            }
+
+            //被保人
+            var policyHolderCookieValue = common.cookie.getCookie(global.cookie.order.policyHolder);
+            if (policyHolderCookieValue != null && policyHolderCookieValue != "") {
+                order_policyHolder_json = $.parseJSON(policyHolderCookieValue);
+                $("#policyHolder-name").html("被保人：" + order_policyHolder_json.name);
+                if (order_policyHolder_json.idcardType == 1) {
+                    $("#policyHolder-idcard").html("身份证：" + order_policyHolder_json.idcard);
+                }
+                else {
+                    $("#policyHolder-idcard").html("机构代码：" + order_policyHolder_json.idcard);
+                }
+                $("#policyHolder").show();
+
+                $("#PolicyEmpty").hide();
+            }
+
+            //发票
+            var invoiceCookieValue = common.cookie.getCookie(global.cookie.order.invoice);
+            if (invoiceCookieValue != null && invoiceCookieValue != "") {
+                order_invoice_json = $.parseJSON(invoiceCookieValue);
+                $("#invoice").html(order_invoice_json.invoiceTitle).show();
+            }
+
+            //支付配送
+            var payAndDeliverCookieValue = common.cookie.getCookie(global.cookie.order.payAndDeliver);
+            if (payAndDeliverCookieValue != null && payAndDeliverCookieValue != "") {
+                order_payAndDeliver_json = $.parseJSON(payAndDeliverCookieValue);
+                $("#PayAndDeliver").hide();
+
+                if (order_payAndDeliver_json.deliverType == 2) {//自取
+                    $("#payAndDeliver-viewText").html("自取");
+                } else {
+
+                    $("#payAndDeliver-viewText").html("快递");
+                }
+
+                $("#order-deliverPrice").html("￥" + order_payAndDeliver_json.deliverPrice);
+
+                $("#PayType").show();
+                $("#DeliverType").show();
+
+            } else {
+                $("#order-deliverPrice").html("￥" + 0);
+            }
+
+
+            //最终价格=产品价格+配送费
+
+            var totalPrice = 0;
+            var endprice=0;
+            if (order_product_json != null && order_product_json.PrepaidAmount != null) {
+                totalPrice = parseFloat(order_product_json.PrepaidAmount == null ? 0 : order_product_json.PrepaidAmount);
+            }
+            if (order_product_json != null && order_product_json.dealPrice != null) {
+                endprice = parseFloat(order_product_json.dealPrice == null ? 0 : order_product_json.dealPrice);
+            }
+            if (order_payAndDeliver_json != null && order_payAndDeliver_json.deliverPrice != null) {
+                totalPrice = totalPrice + parseFloat(order_payAndDeliver_json.deliverPrice);
+                endprice=endprice + parseFloat(order_payAndDeliver_json.deliverPrice);
+            }
+
+            $("#Total").html(endprice);
+            $("#order-totalPrice").html("￥" + totalPrice);
+        }
+
+
+
+
+    </script>
+
+    <script>
+
+        function orderSubmit() {
+
+            if (order_product_json == null){
+                alert("产品信息异常");
+                return false;
+            }
+            if (order_policyHolder_json == null) {
+                alert("请填写被保人信息");
+                return false;
+            }
+            if (order_invoice_json == null){
+                alert("请填写发票信息");
+                return false;
+            }
+            if (order_payAndDeliver_json == null) {
+                alert("请填写支付配送信息");
+                return false;
+            }
+            if (order_payAndDeliver_json.deliverType == 1 && order_deliver_json == null){
+                alert("请填写配送地址");
+                return false;
+            }
+
+            if (order_product_json.dealPrice == null || order_product_json.dealPrice == "")
+            {
+                alert("产品价格异常");
+                return false;
+            }
+
+
+
+            $.ajax({
+                type: "Post",
+                url: "@Url.Action("Submit")",
+                data: { product: order_product_json, invoice: order_invoice_json,payAndDeliver:order_payAndDeliver_json, deliver: order_deliver_json, policyHolder: order_policyHolder_json,OrderCode:'@ViewBag.OrderCode',OrderBaseId:@ViewBag.OrderBaseId,OrderItemId:@ViewBag.OrderItemId,OrderPolicyId:@ViewBag.OrderPolicyId,OrderDeliverId:@ViewBag.OrderDeliverId },
+                cache: false,
+                beforeSend: function (xhr) {
+                },
+                success: function (response) {
+                    if (response.Status == 1) {
+                       alert("订单已提交！请耐心等待客服人员核实后与您联系！如有问题请致电：400-963-1088");
+                    }
+                    else {
+                        alert(response.Error);
+                    }
+                },
+                error: function (xml, status) {
+                    alert(xml.responseText);
+                }
+            });
+        }
+
+    </script>
+    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#ea3c31;position: fixed;line-height: 50px;top:5px;right:30px;width: 0.521rem;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 0.521rem;"></a>
+    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+﻿@model  HONGLI.Web.Models.PayConfirmModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>确认支付</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta content="telephone=no,email=no" name="format-detection" />
+    <meta content="portrait" name="screen-orientation" />
+    <meta content="portrait" name="x5-orientation" />
+    <link rel="stylesheet" type="text/css" href="../public/css/all.css">
+    <script src="../public/js/base.js"></script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>确认支付</h2>
+        <div class="f-nav-back">
+            <a href="javascript:;" id="riaGoBack"><i></i></a>
+        </div>
+    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    <div class="page22-title"><span>@Model.LicenseNo</span>保费</div>
+    <div class="page22-money">￥@Model.DealPrice</div>
+    <div class="page22-info">
+        <span>宏利国际</span>
+        收款方
+    </div>
+    <a class="f-button01" href="@Url.Action("Pay",new { ordercode = Model.OrderCode})">立即支付</a>
+    <script src="../public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
+    <script src="../public/js/all.js"></script>
+    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
+    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
+</body>
+</html>
