@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using I.Utility.Helper;
 using HONGLI.Service;
 using HONGLI.Web.Models;
+using System.Web.Caching;
+using System.Collections;
 
 namespace HONGLI.Web.Controllers
 {
@@ -47,6 +49,18 @@ namespace HONGLI.Web.Controllers
 
 
             return View();
+        }
+        public string clearcach()
+        {
+            Cache cache = HttpRuntime.Cache;
+            int count = cache.Count;
+            IDictionaryEnumerator CacheEnum = cache.GetEnumerator();
+            while (CacheEnum.MoveNext())
+            {
+                string cacheItem = Server.HtmlEncode(CacheEnum.Key.ToString());
+                cache.Remove(cacheItem);
+            }
+            return "清除缓存成功";
         }
     }
 }

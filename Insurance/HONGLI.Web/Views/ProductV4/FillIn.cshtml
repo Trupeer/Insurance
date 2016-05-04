@@ -21,7 +21,7 @@
         <div class="f-nav-back">
             <a href="javascript:history.go(-1);" class="riaGoBack"><i></i></a>
         </div>
-        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.580rem;" data-reveal-id="myModal" href="#"  data-animation="fade">客服</a></div>
+        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.521rem;" data-reveal-id="myModal" href="#"  data-animation="fade">客服</a></div>
 
     </div>
     <div class="f-nav-extend">&nbsp;</div>
@@ -51,8 +51,7 @@
             <span>获取成功</span>
             以下为往年配置详情*@
         往年配置
-        <span>获取失败</span>
-        请自定义配置
+        <span>获取中</span>
     </div>
     <div class="page11-tab">
         <a href="javascript:void(0);" class="current" id="lastYearConfig">@*往年配置*@自定义配置<i></i></a>
@@ -87,9 +86,6 @@
                 <p class="t-p2">95%车主选择购买</p>
             </div>
             <div class="f-form01-other">
-                @*<select class="f-select01" id="bujimianchesun">
-                        <option>不计免赔</option>
-                    </select>*@
                 <div class="f-tips01" id="bujimianchesun"> 不计免赔 √ </div>
                 <input type="checkbox" id="chesun" value="" />
             </div>
@@ -131,58 +127,60 @@
                 <input type="checkbox" id="daoqiang" value="" />
             </div>
         </div>
-        <div class="f-form01-item">
-            <div class="f-form01-main">
-                <p class="t-p1 t-icon1">车上人员责任险（司机）</p>
-                <p class="t-p2">50%车主选择购买</p>
-            </div>
-            <div class="f-form01-other">
-                @*<select class="f-select01 f-select01-1" disabled="" id="bujimiansiji">
-                        <option>不计免赔</option>
+        <div class="f-form01-item1">
+            <div class="f-form01-item" style="border:none;">
+                <div class="f-form01-main">
+                    <p class="t-p1 t-icon1">车上人员责任险（司机）</p>
+                    <p class="t-p2">50%车主选择购买</p>
+                </div>
+                <div class="f-form01-other">
+                    @*<select class="f-select01 f-select01-1" disabled="" id="bujimiansiji">
+                    <option>不计免赔</option>
                     </select>*@
-                <select class="f-select02 ml20" id="siji" value="">
-                    <option value="0">不投保</option>
-                    <option value="10000">1万</option>
-                    <option value="20000">2万</option>
-                    <option value="30000">3万</option>
-                    <option value="40000">4万</option>
-                    <option value="50000">5万</option>
-                    <option value="100000">10万</option>
-                    <option value="200000">20万</option>
-                </select>
-                <input type="checkbox" value="" />
+                    <select class="f-select02 ml20" id="siji" value="">
+                        <option value="0">不投保</option>
+                        <option value="10000">1万</option>
+                        <option value="20000">2万</option>
+                        <option value="30000">3万</option>
+                        <option value="40000">4万</option>
+                        <option value="50000">5万</option>
+                        <option value="100000">10万</option>
+                        <option value="200000">20万</option>
+                    </select>
+                    <input type="checkbox" value="" id="sijicheck" />
+                </div>
+                </div>
+            <div style="border-bottom: 1px solid #d9d9da; width:90%;margin-left: auto;margin-right: auto;"></div>
+            <div class="f-form01-item"   style="border:none;">
+                <div class="f-form01-main">
+                    <p class="t-p1 t-icon1">车上人员责任险（乘客）</p>
+                    <p class="t-p2">50%车主选择购买</p>
+                </div>
+                <div class="f-form01-other">
+                    <select class="f-select02 ml20" id="chengke" value="">
+                        <option value="0">不投保</option>
+                        <option value="10000">1万</option>
+                        <option value="20000">2万</option>
+                        <option value="30000">3万</option>
+                        <option value="40000">4万</option>
+                        <option value="10000">5万</option>
+                        <option value="100000">10万</option>
+                        <option value="200000">20万</option>
+                    </select>
+                    <input type="checkbox" value="" id="chengkecheck" />
+                </div>
+                </div>
+            <div style="border-bottom: 1px solid #d9d9da; width:90%;margin-left: auto;margin-right: auto;"></div>
+            <div class="f-form01-item">
+                <div class="f-form01-main">
+                    <p class="t-p1 t-icon1">车上人员责任险（不计免赔）</p>
+                </div>
+                <div class="f-form01-other">
+                    <div class="f-tips01" id="bujimianrenyuan"> 不计免赔 √ </div>
+                </div>
             </div>
-        </div>
-        <div class="f-form01-item">
-            <div class="f-form01-main">
-                <p class="t-p1 t-icon1">车上人员责任险（乘客）</p>
-                <p class="t-p2">50%车主选择购买</p>
             </div>
-            <div class="f-form01-other">
-                @*<select class="f-select01 f-select01-1" disabled="" id="bujimianchengke">
-                        <option>不计免赔</option>
-                    </select>*@
-                <select class="f-select02 ml20" id="chengke" value="">
-                    <option value="0">不投保</option>
-                    <option value="10000">1万</option>
-                    <option value="20000">2万</option>
-                    <option value="30000">3万</option>
-                    <option value="40000">4万</option>
-                    <option value="10000">5万</option>
-                    <option value="100000">10万</option>
-                    <option value="200000">20万</option>
-                </select>
-                <input type="checkbox" value="" />
-            </div>
-        </div>
-        <div class="f-form01-item">
-            <div class="f-form01-main">
-                <p class="t-p1 t-icon1">车上人员责任险（不计免赔）</p>
-            </div>
-            <div class="f-form01-other">
-                <div class="f-tips01" id="bujimiansanzhe"> 不计免赔 √ </div>
-            </div>
-        </div>
+        
         <!--附加险-->
         <div class="f-form01-item">
             <div class="f-form01-main">
@@ -197,7 +195,7 @@
                     <option value="10000">10000元</option>
                     <option value="20000">20000元</option>
                 </select>
-                <input type="checkbox" value="" />
+                <input type="checkbox" value="" id="huahencheck" />
             </div>
         </div>
         <div class="f-form01-item">
@@ -211,7 +209,7 @@
                     <option value="1">国产玻璃</option>
                     <option value="2">进口玻璃</option>
                 </select>
-                <input type="checkbox" value="" />
+                <input type="checkbox" value="" id="bolicheck" />
             </div>
         </div>
         <div class="f-form01-item">
@@ -239,6 +237,14 @@
             </div>
             <div class="f-form01-other">
                 <input type="checkbox" id="chedeng" value="" />
+            </div>
+        </div>
+        <div class="f-form01-item">
+            <div class="f-form01-main">
+                <p class="t-p1 t-icon2">附加险（不计免赔）</p>
+            </div>
+            <div class="f-form01-other">
+                <div class="f-tips01" id="bujimianfujia"> 不计免赔 √ </div>
             </div>
         </div>
     </div>
@@ -292,6 +298,10 @@
                     if (data.BusinessStatus == 1) {
                         $(".page11-success").html("往年配置<span>获取成功</span>以下为往年配置详情");
                         $("#lastYearConfig").html("往年配置<i></i>");
+                    }
+                    else {
+                        $(".page11-success").html("往年配置<span>获取失败</span>");
+                        $("#lastYearConfig").html("自定义配置<i></i>");
                     };
                     var quote = data.SaveQuote;
                     if (quote != null) {
@@ -329,6 +339,23 @@
                             $("#bujimiansanzhe").prop("disabled", false);
                             $("#bujimiansanzhe").css("background", "#ccc");
                         }
+                        if (quote.BuJiMianRenYuan == 1) {
+                            $("#bujimianrenyuan").prop("disabled", true);
+                            $("#bujimianrenyuan").css("background", "#648feb");
+                        }
+                        else {
+                            $("#bujimianrenyuan").prop("disabled", false);
+                            $("#bujimianrenyuan").css("background", "#ccc");
+                        }
+                        if (quote.BuJiMianFuJia == 1) {
+                            $("#bujimianfujia").prop("disabled", true);
+                            $("#bujimianfujia").css("background", "#648feb");
+                        }
+                        else {
+                            $("#bujimianfujia").prop("disabled", false);
+                            $("#bujimianfujia").css("background", "#ccc");
+                        }
+                        
                         $("#jqx").val(quote.ForceTotal);
                         $("#ccs").val(quote.TaxTotal);
                         $("#chesun").val(quote.CheSun);
@@ -357,7 +384,7 @@
 
                             var url = "@Url.Action("Index")?channel=@ViewBag.channel&mobile=@ViewBag.mobile";
 
-                            //window.location.href = url;
+                            window.location.href = url;
                         }
                         layer.closeAll();
                         return;
@@ -397,7 +424,6 @@
             var daoqiang = $("#daoqiang").attr('checked') ? 1 : 0; //0,1
             var sanzhe = $("#sanzhe").val(); //0,value
             var ziran = $("#ziran").prop('checked') ? 1 : 0; //0,1
-
             var dataItem = {
                 boli: boli,
                 bujimianchesun: bujimianchesun,
@@ -467,6 +493,29 @@
                 obj.css("background", "#648feb");
                 obj.siblings("input[type=checkbox]").prop("checked", true);
                 checkBoxChange(obj.siblings("input[type=checkbox]"), "middle");
+                if(obj.prop("id")=="bujimianrenyuan")
+                {
+                    if (!$("#chengkecheck").is(":checked") && !$("#sijicheck").is(":checked"))
+                    {
+                        $("#chengkecheck").prop("checked", true);
+                        $("#sijicheck").prop("checked", true);
+                        checkBoxChange($("#chengkecheck"), "middle");
+                        checkBoxChange($("#sijicheck"), "middle");
+                    }
+                }
+                if (obj.prop("id") == "bujimianfujia")
+                {
+                    if (!$("#huahencheck").is(":checked") && !$("#bolicheck").is(":checked") && !$("#sheshui").is(":checked") && !$("#ziran").is(":checked") && !$("#chedeng").is(":checked"))
+                    {
+                        $("#huahencheck").prop("checked", true);
+                        $("#bolicheck").prop("checked", true);
+                        $("#sheshui").prop("checked", true);
+                        $("#ziran").prop("checked", true);
+                        $("#chedeng").prop("checked", true);
+                        checkBoxChange($("#huahencheck"), "middle");
+                        checkBoxChange($("#bolicheck"), "middle");
+                    }
+                }
             }
         });
 
@@ -507,6 +556,22 @@
                 $(this).siblings("input[type=checkbox]").prop("checked", true);
             } else {
                 $(this).siblings("input[type=checkbox]").prop("checked", false);
+                $(this).siblings(".f-tips01").prop("disabled", false);
+                $(this).siblings(".f-tips01").css("background", "#ccc");
+                if($(this).prop("id")=="siji"||$(this).prop("id")=="chengke")
+                {
+                    if (!$("#chengkecheck").is(":checked") && !$("#sijicheck").is(":checked")) {
+                        $("#bujimianrenyuan").prop("disabled", false);
+                        $("#bujimianrenyuan").css("background", "#ccc");
+                    }
+                }
+                if ($(this).prop("id") == "huahencheck" || $(this).prop("id") == "bolicheck" || $(this).prop("id") == "sheshui" || $(this).prop("id") == "ziran" || $(this).prop("id") == "chedeng")
+                {
+                    if (!$("#huahencheck").is(":checked") && !$("#bolicheck").is(":checked") && !$("#sheshui").is(":checked") && !$("#ziran").is(":checked") && !$("#chedeng").is(":checked")) {
+                        $("#bujimianfujia").prop("disabled", false);
+                        $("#bujimianfujia").css("background", "#ccc");
+                    }
+                }
             }
         });
 
@@ -529,11 +594,14 @@
                     source.siblings(".f-select02").val(maxValue);
                 }
                 else {
-                    
-                    var size = source.siblings(".f-select02").find("option").size();
-                    if (size > 0) {
-                        var index = parseInt(size / 2) + 1;
-                        source.siblings(".f-select02").find("option:nth-child(" + index + ")").prop("selected", true);
+                    var select = source.siblings(".f-select02").val();
+                    if (select <= 0)
+                    {
+                        var size = source.siblings(".f-select02").find("option").size();
+                        if (size > 0) {
+                            var index = parseInt(size / 2) + 1;
+                            source.siblings(".f-select02").find("option:nth-child(" + index + ")").prop("selected", true);
+                        }
                     }
                 }
             }
@@ -541,6 +609,21 @@
                 source.siblings(".f-tips01").prop("disabled", false);
                 source.siblings(".f-tips01").css("background", "#ccc");
                 source.siblings(".f-select02").val(0);
+                if (source.prop("id") == "chengkecheck" || source.prop("id") == "sijicheck")
+                {
+                    if (!$("#chengkecheck").is(":checked") && !$("#sijicheck").is(":checked"))
+                    {
+                        $("#bujimianrenyuan").prop("disabled", false);
+                        $("#bujimianrenyuan").css("background", "#ccc");
+                    }
+
+                }
+                if ($(this).prop("id") == "huahencheck" || $(this).prop("id") == "bolicheck" || $(this).prop("id") == "sheshui" || $(this).prop("id") == "ziran" || $(this).prop("id") == "chedeng") {
+                    if (!$("#huahencheck").is(":checked") && !$("#bolicheck").is(":checked") && !$("#sheshui").is(":checked") && !$("#ziran").is(":checked") && !$("#chedeng").is(":checked")) {
+                        $("#bujimianfujia").prop("disabled", false);
+                        $("#bujimianfujia").css("background", "#ccc");
+                    }
+                }
             }
         }
     </script>

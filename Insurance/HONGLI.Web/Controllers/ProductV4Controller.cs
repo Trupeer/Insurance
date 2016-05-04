@@ -334,17 +334,24 @@ namespace HONGLI.Web.Controllers
                     {
                         var item = data.Item;
                         var description = "";
-                        description += item.CheSun.BaoE > 0 ? ("车损险、") : "";
-                        description += item.SanZhe.BaoE > 0 ? (string.Format("三者险({0})、", item.SanZhe.BaoFei)) : "";
+                        description += item.CheSun.BaoE > 0 ? (string.Format("车损险({0})、", FormatNumber(item.CheSun.BaoE))) : "";
+                        description += item.BuJiMianCheSun.BaoE > 0 ? ("不计免赔车损险、") : "";
+                        description += item.SanZhe.BaoE > 0 ? (string.Format("三者险({0})、", FormatNumber(item.SanZhe.BaoE))) : "";
+                        description += item.BuJiMianSanZhe.BaoE > 0 ? ("不计免赔三者险、") : "";
                         description += item.DaoQiang.BaoE > 0 ? ("盗抢险、") : "";
-                        description += item.SiJi.BaoE > 0 ? (string.Format("座位险(司机{0})、", item.SiJi.BaoFei)) : "";
-                        description += item.ChengKe.BaoE > 0 ? (string.Format("座位险(乘客{0})、", item.ChengKe.BaoFei)) : "";
-                        description += item.HuaHen.BaoE > 0 ? (string.Format("划痕险({0})、", item.HuaHen.BaoFei)) : "";
-                        description += item.BoLi.BaoE > 0 ? (string.Format("玻璃单独破损险({0})、", item.BoLi.BaoFei)) : "";
-                        description += item.SheShui.BaoE > 0 ? ("涉水险、") : "";
-                        description += item.CheDeng.BaoE > 0 ? ("车灯单独损失险") : "";
-                        description += item.ZiRan.BaoE > 0 ? ("自然损失险") : "";
-
+                        description += item.BuJiMianDaoQiang.BaoE > 0 ? ("不计免赔盗抢险、") : "";
+                        description += item.SiJi.BaoE > 0 ? (string.Format("座位险(司机{0})、", FormatNumber(item.SiJi.BaoE))) : "";
+                        description += item.ChengKe.BaoE > 0 ? (string.Format("座位险(乘客{0})、", FormatNumber(item.ChengKe.BaoE))) : "";
+                        description += item.BuJiMianRenYuan.BaoE > 0 ? ("不计免赔车上人员、") : "";
+                        description += item.HuaHen.BaoE > 0 ? (string.Format("划痕险({0})、", FormatNumber(item.HuaHen.BaoE))) : "";
+                        description += item.BoLi.BaoE > 0 ? (string.Format("玻璃单独破损险({0})、", BoLiType(item.BoLi.BaoE))) : "";
+                        description += item.SheShui.BaoE > 0 ? ("发动机特别损失险、") : "";
+                        description += item.ZiRan.BaoE > 0 ? ("自燃险、") : "";
+                        if (intentionCompany == Convert.ToInt32(ProductCompany.PingAn)) //只有平安有此险种
+                        {
+                            description += item.CheDeng.BaoE > 0 ? ("倒车镜、车灯单独损失险") : "";
+                        }
+                        description += item.BuJiMianFuJia.BaoE > 0 ? ("不计免赔附加险、") : "";
                         data.Item.Description = description.TrimEnd('、');
                         #region 插入报价信息
 
@@ -398,15 +405,15 @@ namespace HONGLI.Web.Controllers
 
                         product_item.BizTotal = Convert.ToDecimal(data.Item.BizTotal);
                         product_item.BizRate = Convert.ToDecimal(data.Item.BizRate);
-                        product_item.BizAfterCoupon = decimal.Round(Convert.ToDecimal(data.Item.BizTotal * (1 - data.Item.BizRate + bizRate_Channel * 0.01)), 2);
+                        product_item.BizAfterCoupon = decimal.Round(Convert.ToDecimal(data.Item.BizTotal * ((100 - data.Item.BizRate + bizRate_Channel) * 0.01)), 2);
 
                         product_item.ForceTotal = Convert.ToDecimal(data.Item.ForceTotal);
                         product_item.ForceRate = Convert.ToDecimal(data.Item.ForceRate);
-                        product_item.ForceAfterCoupon = decimal.Round(Convert.ToDecimal(data.Item.ForceTotal * (1 - data.Item.ForceRate + forceRate_Channel * 0.01)), 2);
+                        product_item.ForceAfterCoupon = decimal.Round(Convert.ToDecimal(data.Item.ForceTotal * ((100 - data.Item.ForceRate + forceRate_Channel) * 0.01)), 2);
 
                         product_item.TaxTotal = Convert.ToDecimal(data.Item.TaxTotal); ;
                         product_item.TaxRate = Convert.ToDecimal(data.Item.ForceRate); //核保后，交强险费率和车船税费率相同
-                        product_item.TaxAfterCoupon = decimal.Round(Convert.ToDecimal(data.Item.TaxTotal * (1 - data.Item.ForceRate + taxRate_Channel * 0.01)), 2);
+                        product_item.TaxAfterCoupon = decimal.Round(Convert.ToDecimal(data.Item.TaxTotal * ((100 - data.Item.ForceRate + taxRate_Channel) * 0.01)), 2);
 
                         product_item.Total = product_item.BizTotal + product_item.ForceTotal + product_item.TaxTotal;
                         product_item.TotalAfterCoupon = decimal.Round(Convert.ToDecimal(product_item.BizAfterCoupon + product_item.ForceAfterCoupon + product_item.TaxAfterCoupon), 2);
@@ -431,8 +438,8 @@ namespace HONGLI.Web.Controllers
                         //进行核保，每家公司只核保一次，核保会会插入缓存
                         var keySubmit = string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, intentionCompany, "submit");
                         HttpContext.Cache.Remove(keySubmit);//核保前清除缓存
-                        GetPrecisePrice(channel, mobile, licenseNo, intentionCompany);
-                        GetSubmitInfo(channel, mobile, licenseNo, intentionCompany, data.Item.Id);
+                        //GetPrecisePrice(channel, mobile, licenseNo, intentionCompany);
+                        //GetSubmitInfo(channel, mobile, licenseNo, intentionCompany, data.Item.Id);
 
                     }
                     else
@@ -454,7 +461,30 @@ namespace HONGLI.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
-
+        public string FormatNumber(double number)
+        {
+            if (number < 10000)
+            {
+                return number.ToString() + "元";
+            }
+            else
+            {
+                var index = number.ToString().LastIndexOf('0') - 3;
+                return number.ToString().Substring(0, index) + "万";
+            }
+        }
+        public string BoLiType(double type)
+        {
+            if (type == 1)
+            {
+                return "国产";
+            }
+            else if (type == 2)
+            {
+                return "进口";
+            }
+            return "";
+        }
         #endregion
 
         #region page4-报价详情 20160323
@@ -575,6 +605,9 @@ namespace HONGLI.Web.Controllers
             View_ProductV2UserItem userItem = null;
             try
             {
+                var keyPrice = string.Format("{0}/{1}/{2}/{3}/{4}", channel, mobile, licenseNo, intentionCompany, "price");
+                var data = new PrecisePriceResultV2();
+                data= HttpContext.Session[keyPrice] as PrecisePriceResultV2;
                 //修改用户选择购买公司
                 new ProductV3Service().EditProductItemUserCheck(ProductItemId, userID);
                 //增加订单信息
@@ -587,6 +620,40 @@ namespace HONGLI.Web.Controllers
                 order_item.InsuranceLogo = intentionCompany == "" ? 0 : Convert.ToInt32(intentionCompany);
                 order_item.LicenseNo = licenseNo;
                 order_item.Channel = channel;
+                if(!string.IsNullOrEmpty(data.UserInfo.BusinessExpireDate))
+                {
+                    order_item.BusinessExpireDate = Convert.ToDateTime(data.UserInfo.BusinessExpireDate);
+                }
+                if (!string.IsNullOrEmpty(data.UserInfo.ForceExpireDate))
+                {
+                    order_item.BusinessExpireDate = Convert.ToDateTime(data.UserInfo.ForceExpireDate);
+                }
+                #region 平台自用费率，即用户的价格=总价*(1-保险公司费率+平台费率)
+                var rateList = new ProductV3Service().GetCouponRateList(Convert.ToInt32(channel), Convert.ToInt32(intentionCompany));
+                var key = string.Format("{0}_{1}_CouponRate", channel, intentionCompany);
+                var couponRate = rateList[key];
+
+                var forceRate_Channel = Convert.ToDouble(0);
+                var taxRate_Channel = Convert.ToDouble(0);
+                var bizRate_Channel = Convert.ToDouble(0);
+                if (couponRate != null)
+                {
+                    var array = couponRate.Split(',').ToArray();
+                    forceRate_Channel = Convert.ToDouble(array[0]);
+                    taxRate_Channel = Convert.ToDouble(array[1]);
+                    bizRate_Channel = Convert.ToDouble(array[2]);
+                }
+
+                ViewBag.channel_ForceCouponRate = forceRate_Channel;
+                ViewBag.channel_TaxCouponRate = taxRate_Channel;
+                ViewBag.channel_BizCouponRate = bizRate_Channel;
+                #endregion          
+                order_item.ProductDealPrice =decimal.Round(Convert.ToDecimal(data.Item.BizTotal* ((100 - data.Item.BizRate + bizRate_Channel) * 0.01)),2)+
+                decimal.Round(Convert.ToDecimal(data.Item.TaxTotal * ((100 - data.Item.ForceRate + taxRate_Channel) * 0.01)), 2)+
+                decimal.Round(Convert.ToDecimal(data.Item.ForceTotal * ((100 - data.Item.ForceRate + forceRate_Channel) * 0.01)), 2);
+                order_item.ProductOriginalPrice = decimal.Round(Convert.ToDecimal(data.Item.BizTotal+data.Item.TaxTotal+data.Item.ForceTotal),2);
+                order_item.ProductTitle =data.Item.Description;
+                order_item.Buid =data.Item.BuId;
                 Order_Base order_base = new Order_Base();
                 order_base.OrderCode = ordercode;
                 order_base.Channel = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);

@@ -11,6 +11,9 @@ using static HONGLI.Repository.OrderRepository;
 
 namespace HONGLI.Web.Controllers
 {
+#if (!DEBUG)
+    [AuthorizationFilter]
+#endif
     public class OrderV3Controller : Controller
     {
 

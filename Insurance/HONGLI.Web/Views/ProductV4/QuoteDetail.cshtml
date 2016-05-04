@@ -22,8 +22,7 @@
         <div class="f-nav-back">
             <a href="javascript:;" id="riaGoBack"><i></i></a>
         </div>
-        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.580rem;" data-reveal-id="myModal" href="#" data-animation="fade">客服</a></div>
-    </div>
+        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.521rem;" data-reveal-id="myModal" href="#" data-animation="fade">客服</a></div>    </div>
     <div class="f-nav-extend">&nbsp;</div>
     <div class="f-list01 page12-top">
         <div class="f-list01-main">
@@ -98,6 +97,10 @@
             <div class="f-list01-other"><span class='t-loading' id="chengke"></span> 元</div>
         </div>
         <div class="f-list01 page12-list02">
+            <div class="f-list01-main">不计免赔车上人员<label></label>）</div>
+            <div class="f-list01-other"><span class='t-loading' id="bujimianrenyuan"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
             <div class="f-list01-main">划痕险（<label></label>）</div>
             <div class="f-list01-other"><span class='t-loading' id="huahen"></span> 元</div>
         </div>
@@ -116,6 +119,10 @@
         <div class="f-list01 page12-list02" style="display:@(ViewBag.intentionCompany == 0 ? "list":"none")">
             <div class="f-list01-main">倒车镜、车灯单独损失险</div>
             <div class="f-list01-other"><span class='t-loading' id="chedeng"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">不计免赔车上人员<label></label>）</div>
+            <div class="f-list01-other"><span class='t-loading' id="bujimianfujia"></span> 元</div>
         </div>
     </div>
     <div class="page12-hbzt-wrap">
@@ -174,15 +181,15 @@
             $("#descriptionDetail .f-list01").each(function(){
                 $(this).hide();
             });
-            //getPrecisePrice();
-            getSpecialPrecisePrice();
+            getPrecisePrice();
+            //getSpecialPrecisePrice();
         })
 
         //意向公司报价 2343
-        @*function getPrecisePrice() {
+        function getPrecisePrice() {
             $.ajax({
                 type: "post",
-                url: '@Url.Action("GetPrecisePrice", "ProductV3")',
+                url: '@Url.Action("GetPrecisePrice", "ProductV4")',
                 dataType: "json",
                 data: {
                     channel: "@ViewBag.channel",
@@ -217,7 +224,7 @@
                     alert("请求报价信息失败！！");
                 }
             });
-        }*@
+        }
 
         //标识调用次数  loading只调两次
         var requestFlag = 0;
@@ -226,7 +233,7 @@
         function getSpecialPrecisePrice(submitStatus) {
             $.ajax({
                 type: "post",
-                url: '@Url.Action("GetSpecialPrecisePrice", "ProductV3")',
+                url: '@Url.Action("GetSpecialPrecisePrice", "ProductV4")',
                 dataType: "json",
                 data: {
                     channel: "@ViewBag.channel",
@@ -282,7 +289,8 @@
                     showItem($("#sheshui"),result.SheShui.BaoE,result.SheShui.BaoFei);
                     showItem($("#ziran"),result.ZiRan.BaoE,result.ZiRan.BaoFei);
                     showItem($("#chedeng"),result.CheDeng.BaoE,result.CheDeng.BaoFei);
-
+                    showItem($("#bujimianfujia"),result.BuJiMianFuJia.BaoE,result.BuJiMianFuJia.BaoFei);
+                    showItem($("#bujimianrenyuan"),result.BuJiMianRenYuan.BaoE,result.BuJiMianRenYuan.BaoFei);
                     //核保成功 //todo test submitStatus = 1;
                     if (submitStatus == "@(Convert.ToInt32(SubmitStatus.Success))"){
                         var channel_ForceCouponRate = @ViewBag.channel_ForceCouponRate;
@@ -369,7 +377,7 @@
         function getSubmitInfo(){
             $.ajax({
                 type: "post",
-                url: '@Url.Action("GetSubmitInfo", "ProductV3")',
+                url: '@Url.Action("GetSubmitInfo", "ProductV4")',
                 dataType: "json",
                 data: {
                     channel: "@ViewBag.channel",
@@ -407,7 +415,7 @@
                     {
                         submitStatusHtml =  "<div class='page12-hbzt-title page12-hbzt-error-title'><span>核保<br>失败</span></div>"+
                                             "<div class='page12-hbzt-content page12-hbzt-error-content'><span>原因：<br>"+result.SubmitResult+"<br>核保成功下单可享低至7折优惠</span></div>"+
-                                            "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:history.go(-2);'>重新配置</a></div>";
+                                            "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' data-reveal-id='myModal' href='#' data-animation='fade'>客服</a></div>";
 
                         //var ahtml = linkTelHtml();
                         //"<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:history.go(-2);'>重新配置</a><br><a class='page12-hbzt-error-other-400' href='javascript:void(0);'>"+ahtml+"</a></div>";
@@ -421,7 +429,7 @@
                     {
                         submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-no-title'><span>未核保</span></div>"+
                                            "<div class='page12-hbzt-content page12-hbzt-no-content'><span>亲，保险到期日三月内可以核保算费，届时试算可享低至7折优惠哦！</span></div>" +
-                                           "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:backToIndex();'>回到首页</a></div>";
+                                           "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' data-reveal-id='myModal' href='#' data-animation='fade'>客服</a></div>";
 
                         //var ahtml = linkTelHtml();
                         //"<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:backToIndex();'>回到首页</a><br><a class='page12-hbzt-error-other-400' href='javascript:void(0);'>"+ahtml+"</a></div>";
@@ -435,7 +443,7 @@
                     {
                         submitStatusHtml =  "<div class='page12-hbzt-title page12-hbzt-error-title'><span>核保<br>失败</span></div>"+
                                            "<div class='page12-hbzt-content page12-hbzt-error-content'><span>原因：<br>"+result.SubmitResult+"<br>核保成功下单可享低至7折优惠</span></div>"+
-                                           "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' href='javascript:history.go(-2);'>重新配置</a></div>";
+                                           "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' data-reveal-id='myModal' href='#' data-animation='fade'>客服</a></div>";
                     }
                     $(".page12-hbzt-wrap .page12-hbzt").html(submitStatusHtml);
 

@@ -254,17 +254,26 @@ namespace HONGLI.Web.Controllers
             product_item.TotalAfterCoupon = model.TotalAfterCoupon;
             product_item.Description = model.Description;
             product_item.CreateTime = DateTime.Now;
+
             var description = "";
-            description += product_item.CheSun_BaoE > 0 ? ("车损险、") : "";
-            description += product_item.SanZhe_BaoE > 0 ? (string.Format("三者险({0})、", product_item.SanZhe_BaoFei)) : "";
+            description += product_item.CheSun_BaoE > 0 ? (string.Format("车损险({0})、", FormatNumber(Convert.ToDouble(product_item.CheSun_BaoE)))) : "";
+            description += product_item.BuJiMianCheSun_BaoE > 0 ? ("不计免赔车损险、") : "";
+            description += product_item.SanZhe_BaoE > 0 ? (string.Format("三者险({0})、", FormatNumber(Convert.ToDouble(product_item.SanZhe_BaoE)))) : "";
+            description += product_item.BuJiMianSanZhe_BaoE > 0 ? ("不计免赔三者险、") : "";
             description += product_item.DaoQiang_BaoE > 0 ? ("盗抢险、") : "";
-            description += product_item.SiJi_BaoE > 0 ? (string.Format("座位险(司机{0})、", product_item.SiJi_BaoFei)) : "";
-            description += product_item.ChengKe_BaoE > 0 ? (string.Format("座位险(乘客{0})、", product_item.ChengKe_BaoFei)) : "";
-            description += product_item.HuaHen_BaoE > 0 ? (string.Format("划痕险({0})、", product_item.HuaHen_BaoFei)) : "";
-            description += product_item.BoLi_BaoE > 0 ? (string.Format("玻璃单独破损险({0})、", product_item.BoLi_BaoFei)) : "";
-            description += product_item.SheShui_BaoE > 0 ? (string.Format("涉水险、",product_item.SheShui_BaoFei)) : "";
-            description += product_item.CheDeng_BaoE > 0 ? (string.Format("车灯单独损失险", product_item.CheDeng_BaoFei)) : "";
-            description += product_item.ZiRan_BaoE > 0 ? (string.Format("自然损失险", product_item.ZiRan_BaoFei)) : "";
+            description += product_item.BuJiMianDaoQiang_BaoE > 0 ? ("不计免赔盗抢险、") : "";
+            description += product_item.SiJi_BaoE> 0 ? (string.Format("座位险(司机{0})、", FormatNumber(Convert.ToDouble(product_item.SiJi_BaoE)))) : "";
+            description += product_item.ChengKe_BaoE > 0 ? (string.Format("座位险(乘客{0})、", FormatNumber(Convert.ToDouble(product_item.ChengKe_BaoE)))) : "";
+            description += product_item.BuJiMianRenYuan_BaoE > 0 ? ("不计免赔车上人员、") : "";
+            description += product_item.HuaHen_BaoE> 0 ? (string.Format("划痕险({0})、", FormatNumber(Convert.ToDouble(product_item.HuaHen_BaoE)))) : "";
+            description += product_item.BoLi_BaoE > 0 ? (string.Format("玻璃单独破损险({0})、", BoLiType(Convert.ToDouble(product_item.BoLi_BaoE)))) : "";
+            description += product_item.SheShui_BaoE > 0 ? ("发动机特别损失险、") : "";
+            description += product_item.ZiRan_BaoE > 0 ? ("自燃险、") : "";
+            if (product_item.Source == Convert.ToInt32(ProductCompany.PingAn)) //只有平安有此险种
+            {
+                description += product_item.CheDeng_BaoE > 0 ? ("倒车镜、车灯单独损失险") : "";
+            }
+            description += product_item.BuJiMianFuJia_BaoE > 0 ? ("不计免赔附加险、") : "";
             product_item.Description = description;
             if (product_item.Id == 0)
             {
@@ -375,6 +384,30 @@ namespace HONGLI.Web.Controllers
             ViewBag.InsuranceCompany = model.ItemSource;
             ViewBag.UserId = model.Id;
             return View(model);
+        }
+        public string FormatNumber(double number)
+        {
+            if (number < 10000)
+            {
+                return number.ToString() + "元";
+            }
+            else
+            {
+                var index = number.ToString().LastIndexOf('0') - 3;
+                return number.ToString().Substring(0, index) + "万";
+            }
+        }
+        public string BoLiType(double type)
+        {
+            if (type == 1)
+            {
+                return "国产";
+            }
+            else if (type == 2)
+            {
+                return "进口";
+            }
+            return "";
         }
         [HttpPost]
         public int ChangeAuditDocuments(int ItemId)

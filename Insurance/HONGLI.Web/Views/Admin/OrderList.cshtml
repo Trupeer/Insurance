@@ -175,13 +175,13 @@
         var OrderState = $("#ddlOrderState").val();
         var examineState = $("#ddlexamineState").val();
         if (check != null) {
-            $.get("GetOrderListCount", { username: username, ChannelName: ChannelName, BeginInsuranceEndDate: BeginInsuranceEndDate, EndInsuranceEndDate: EndInsuranceEndDate, BeginVisitDate: BeginVisitDate, EndVisitDate: EndVisitDate, BeginDate: BeginDate, EndDate, EndDate, InsuranceCompany: InsuranceCompany, VistState: VistState, Auditdocuments: Auditdocuments, OrderState: OrderState, examineState: examineState}, function(data) {
+            $.get("GetOrderListCount", { username: username, ChannelName: ChannelName, BeginInsuranceEndDate: BeginInsuranceEndDate, EndInsuranceEndDate: EndInsuranceEndDate, BeginVisitDate: BeginVisitDate, EndVisitDate: EndVisitDate, BeginDate: BeginDate, EndDate: EndDate, InsuranceCompany: InsuranceCompany, VistState: VistState, Auditdocuments: Auditdocuments, OrderState: OrderState, examineState: examineState}, function(data) {
                 var sumcount = parseInt(data);
                 $("#SumPages").html(sumcount);
                 $("#Pagination").pagination(sumcount);
             });
             }
-        $("#recordlist").load("OrderListTable", { page: page, username: username, ChannelName: ChannelName, BeginInsuranceEndDate: BeginInsuranceEndDate, EndInsuranceEndDate: EndInsuranceEndDate, BeginVisitDate: BeginVisitDate, EndVisitDate: EndVisitDate, BeginDate: BeginDate, EndDate, EndDate, InsuranceCompany: InsuranceCompany, VistState: VistState, Auditdocuments: Auditdocuments, OrderState: OrderState, examineState: examineState }, function () {
+        $("#recordlist").load("OrderListTable", { page: page, username: username, ChannelName: ChannelName, BeginInsuranceEndDate: BeginInsuranceEndDate, EndInsuranceEndDate: EndInsuranceEndDate, BeginVisitDate: BeginVisitDate, EndVisitDate: EndVisitDate, BeginDate: BeginDate, EndDate:EndDate, InsuranceCompany: InsuranceCompany, VistState: VistState, Auditdocuments: Auditdocuments, OrderState: OrderState, examineState: examineState }, function () {
         });
     }
 </script>

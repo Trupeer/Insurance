@@ -59,7 +59,7 @@ namespace HONGLI.Service
         public static bool PostOrder(PostOrderModel model)
         {
 #if (DEBUG)
-            string apiUrl = "http://i.91bihu.com/api/Order/PostOrder";
+            string apiUrl = "http://it.91bihu.com/api/Order/PostOrder";
 #else
             var apiUrl = API_URL;
 #endif
@@ -146,7 +146,7 @@ namespace HONGLI.Service
         public static bool PostOrderStatus(PostOrderStatusModel model)
         {
 #if (DEBUG)
-            var apiUrl = "http://i.91bihu.com/api/order/update";
+            var apiUrl = "http://it.91bihu.com/api/order/update";
 #else
             var apiUrl = I.Utility.Util.GetConfigByKey("PostOrderStatusApiUrl");
 #endif

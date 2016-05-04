@@ -21,8 +21,7 @@
         <div class="f-nav-back">
             <a href="javascript:;" id="riaGoBack"><i></i></a>
         </div>
-        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.580rem;" data-reveal-id="myModal" href="#" data-animation="fade">客服</a></div>
-    </div>
+        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.521rem;" data-reveal-id="myModal" href="#" data-animation="fade">客服</a></div>    </div>
     <div class="f-nav-extend">&nbsp;</div>
     <div class="page40-user">
         <div class="f-list01">
@@ -130,7 +129,7 @@
         //获取报价信息
         function getSpecialPrecisePrice(companyId) {
             var companyObj = $("#company" + companyId);
-
+            $("#lose" + companyId).removeClass("f-list01-other-01").addClass("f-list01-go").append("<i class='f-list01-icon-arrow'></i>");
             $.ajax({
                 type: "post",
                 url: '@Url.Action("GetSpecialPrecisePrice", "ProductV4")',
@@ -193,7 +192,11 @@
         function loadErrorHtml(companyId, companyObj, errorMessage) {
             errorMessage = "试算失败:" + errorMessage;
             companyObj.removeClass("f-list01-other").addClass("f-list01-other-01").empty().append("<span class='t-error' onclick=\"showErrorMessage('" + errorMessage + "');\">试算失败</span>");
-            companyObj.siblings("div .f-list01-go").removeClass("f-list01-go").addClass("f-list01-other-01").empty().append("<i class='t-tips' onclick='getSpecialPrecisePrice(" + companyId + ");'>重新试算</i>");
+            companyObj.siblings("div .f-list01-go").attr("id", "lose" + companyId).removeClass("f-list01-go").addClass("f-list01-other-01").empty().append("<i class='t-tips' onclick='getSpecialPrecisePrice(" + companyId + ");'>重新试算</i>");
+            if (companyObj.siblings("div .f-list01-other-01").html() == "")
+            {
+                companyObj.siblings("div .f-list01-other-01").empty().append("<i class='t-tips' onclick='getSpecialPrecisePrice(" + companyId + ");'>重新试算</i>");
+            }
         }
 
         function showErrorMessage(errorMessage) {

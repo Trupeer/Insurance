@@ -868,78 +868,78 @@
         {
             $("#ItemId").val(0);
         }
-        var SubmitStatus= $("#SubmitStatus").val();
-        var SubmitResult = $("#SubmitResult").val();
-        var BizRate = $("#BizRate").val();
-        var ForceRate = $("#ForceRate").val();
-        var TaxRate = $("#TaxRate").val();
-        var BizRate_Channel = $("#BizRate_Channel").val();
-        var ForceRate_Channel = $("#ForceRate_Channel").val();
-        var TaxRate_Channel = $("#TaxRate_Channel").val();
-        var BizNo = $("#BizNo").val();
-        var ForceNo = $("#ForceNo").val();
-        var CheSun_BaoE;
-        if ($("#CheSun_BaoECheck").is(':checked') == true)
-        {
-            CheSun_BaoE = $("#CheSun_BaoE").val();;
-        }
         else
         {
-            CheSun_BaoE = 0;
-        }
-        var CheSun_BaoFei = $("#CheSun_BaoFei").val();
-        var SanZhe_BaoE = $("#SanZhe_BaoE").val();
-        var DaoQiang_BaoE =$("#DaoQiang_BaoE").is(':checked') == true ? 1 : 0;
-        var DaoQiang_BaoFei = $("#DaoQiang_BaoFei").val();
-        var SiJi_BaoE = $("#SiJi_BaoE").val();
-        var SiJi_BaoFei = $("#SiJi_BaoFei").val();
-        var ChengKe_BaoE = $("#ChengKe_BaoE").val();
-        var ChengKe_BaoFei = $("#ChengKe_BaoFei").val();
-        var BoLi_BaoE = $("#BoLi_BaoE").val();
-        var BoLi_BaoFei = $("#BoLi_BaoFei").val();
-        var HuaHen_BaoE = $("#HuaHen_BaoE").val();
-        var HuaHen_BaoFei = $("#HuaHen_BaoFei").val();
-        var BuJiMianCheSun_BaoE =$("#BuJiMianCheSun_BaoE").is(':checked') == true ? 1 : 0;
-        var BuJiMianCheSun_BaoFei = $("#BuJiMianCheSun_BaoFei").val();
-        var BuJiMianSanZhe_BaoE = $("#BuJiMianSanZhe_BaoE").is(':checked') == true ? 1 : 0;
-        var BuJiMianSanZhe_BaoFei = $("#BuJiMianSanZhe_BaoFei").val();
-        var BuJiMianDaoQiang_BaoE =  $("#BuJiMianDaoQiang_BaoE").is(':checked') == true ? 1 : 0;
-        var BuJiMianDaoQiang_BaoFei = $("#BuJiMianDaoQiang_BaoFei").val();
-        var BuJiMianRenYuan_BaoE =  $("#BuJiMianRenYuan_BaoE").is(':checked') == true ? 1 : 0;
-        var BuJiMianRenYuan_BaoFei = $("#BuJiMianRenYuan_BaoFei").val();
-        var SheShui_BaoE =  $("#SheShui_BaoE").is(':checked') == true ? 1 : 0;
-        var SheShui_BaoFei = $("#SheShui_BaoFei").val();
-        var CheDeng_BaoE = $("#CheDeng_BaoE").is(':checked') == true ? 1 : 0;
-        var CheDeng_BaoFei = $("#CheDeng_BaoFei").val();
-        var ZiRan_BaoE =  $("#ZiRan_BaoE").is(':checked') == true ? 1 : 0;
-        var ZiRan_BaoFei = $("#ZiRan_BaoFei").val();
-        var BuJiMianFuJia_BaoE =  $("#BuJiMianFuJia_BaoE").is(':checked') == true ? 1 : 0;
-        var BuJiMianFuJia_BaoFei = $("#BuJiMianFuJia_BaoFei").val();
-        var BizTotal = $("#BizTotal").val();
-        var ForceTotal = $("#ForceTotal").val();
-        var TaxTotal = $("#TaxTotal").val();
-        var Total = $("#Total").val();
-        var BizAfterCoupon = $("#BizAfterCoupon").val();
-        var ForceAfterCoupon = $("#ForceAfterCoupon").val();
-        var TaxAfterCoupon = $("#TaxAfterCoupon").val();
-        var TotalAfterCoupon = $("#TotalAfterCoupon").val();
-        var AuditOrderStatus = $("#AuditOrderStatus").val();
-        if (SubmitStatus != itemdata.SubmitStatus.toString() || SubmitResult != itemdata.SubmitResult.toString() ||
-            BizRate != itemdata.BizRate.toString() || ForceRate != itemdata.ForceRate.toString() || TaxRate != itemdata.TaxRate.toString() ||
-            BizRate_Channel != itemdata.BizRate_Channel.toString() || ForceRate_Channel != itemdata.ForceRate_Channel.toString() || TaxRate_Channel != itemdata.TaxRate_Channel.toString() ||
-            BizNo != itemdata.BizNo.toString() || ForceNo != itemdata.ForceNo.toString() || CheSun_BaoE != itemdata.CheSun_BaoE.toString() ||
-            CheSun_BaoFei != itemdata.CheSun_BaoFei.toString() || SanZhe_BaoE != itemdata.SanZhe_BaoE.toString() || DaoQiang_BaoE != itemdata.DaoQiang_BaoE.toString() ||
-            DaoQiang_BaoFei != DaoQiang_BaoFei.TaxRate.toString() || SiJi_BaoE != itemdata.SiJi_BaoE.toString() || SiJi_BaoFei != itemdata.SiJi_BaoFei.toString() ||
-            ChengKe_BaoE != itemdata.ChengKe_BaoE.toString() || ChengKe_BaoFei != itemdata.ChengKe_BaoFei.toString() || BoLi_BaoE != itemdata.BoLi_BaoE.toString() ||
-           BoLi_BaoFei != itemdata.BoLi_BaoFei.toString() || HuaHen_BaoE != itemdata.HuaHen_BaoE.toString() || HuaHen_BaoFei != itemdata.HuaHen_BaoFei.toString() ||
-            BuJiMianCheSun_BaoE != itemdata.BuJiMianCheSun_BaoE.toString() || BuJiMianCheSun_BaoFei != itemdata.BuJiMianCheSun_BaoFei.toString() || BuJiMianSanZhe_BaoE != itemdata.BuJiMianSanZhe_BaoE.toString()
-            || BuJiMianSanZhe_BaoFei != itemdata.BuJiMianSanZhe_BaoFei.toString() || BuJiMianDaoQiang_BaoE != itemdata.BuJiMianDaoQiang_BaoE.toString() || BuJiMianDaoQiang_BaoFei != itemdata.BuJiMianDaoQiang_BaoFei.toString()
-            || BuJiMianRenYuan_BaoE != itemdata.BuJiMianRenYuan_BaoE.toString() || BuJiMianRenYuan_BaoFei != itemdata.BuJiMianRenYuan_BaoFei.toString() || BizTotal != itemdata.BizTotal.toString()
-            || ForceTotal != itemdata.ForceTotal.toString() || TaxTotal != itemdata.TaxTotal.toString() || Total != itemdata.Total.toString()
-            || BizAfterCoupon != itemdata.BizAfterCoupon.toString() || ForceAfterCoupon != itemdata.ForceAfterCoupon.toString() || TaxAfterCoupon != itemdata.TaxAfterCoupon.toString()
-            || TotalAfterCoupon != itemdata.TotalAfterCoupon.toString() || AuditOrderStatus != itemdata.AuditOrderStatus.toString())
-        {
-            $("#ItemId").val(0);
+            var SubmitStatus = $("#SubmitStatus").val();
+            var SubmitResult = $("#SubmitResult").val();
+            var BizRate = $("#BizRate").val();
+            var ForceRate = $("#ForceRate").val();
+            var TaxRate = $("#TaxRate").val();
+            var BizRate_Channel = $("#BizRate_Channel").val();
+            var ForceRate_Channel = $("#ForceRate_Channel").val();
+            var TaxRate_Channel = $("#TaxRate_Channel").val();
+            var BizNo = $("#BizNo").val();
+            var ForceNo = $("#ForceNo").val();
+            var CheSun_BaoE;
+            if ($("#CheSun_BaoECheck").is(':checked') == true) {
+                CheSun_BaoE = $("#CheSun_BaoE").val();;
+            }
+            else {
+                CheSun_BaoE = 0;
+            }
+            var CheSun_BaoFei = $("#CheSun_BaoFei").val();
+            var SanZhe_BaoE = $("#SanZhe_BaoE").val();
+            var DaoQiang_BaoE = $("#DaoQiang_BaoE").is(':checked') == true ? 1 : 0;
+            var DaoQiang_BaoFei = $("#DaoQiang_BaoFei").val();
+            var SiJi_BaoE = $("#SiJi_BaoE").val();
+            var SiJi_BaoFei = $("#SiJi_BaoFei").val();
+            var ChengKe_BaoE = $("#ChengKe_BaoE").val();
+            var ChengKe_BaoFei = $("#ChengKe_BaoFei").val();
+            var BoLi_BaoE = $("#BoLi_BaoE").val();
+            var BoLi_BaoFei = $("#BoLi_BaoFei").val();
+            var HuaHen_BaoE = $("#HuaHen_BaoE").val();
+            var HuaHen_BaoFei = $("#HuaHen_BaoFei").val();
+            var BuJiMianCheSun_BaoE = $("#BuJiMianCheSun_BaoE").is(':checked') == true ? 1 : 0;
+            var BuJiMianCheSun_BaoFei = $("#BuJiMianCheSun_BaoFei").val();
+            var BuJiMianSanZhe_BaoE = $("#BuJiMianSanZhe_BaoE").is(':checked') == true ? 1 : 0;
+            var BuJiMianSanZhe_BaoFei = $("#BuJiMianSanZhe_BaoFei").val();
+            var BuJiMianDaoQiang_BaoE = $("#BuJiMianDaoQiang_BaoE").is(':checked') == true ? 1 : 0;
+            var BuJiMianDaoQiang_BaoFei = $("#BuJiMianDaoQiang_BaoFei").val();
+            var BuJiMianRenYuan_BaoE = $("#BuJiMianRenYuan_BaoE").is(':checked') == true ? 1 : 0;
+            var BuJiMianRenYuan_BaoFei = $("#BuJiMianRenYuan_BaoFei").val();
+            var SheShui_BaoE = $("#SheShui_BaoE").is(':checked') == true ? 1 : 0;
+            var SheShui_BaoFei = $("#SheShui_BaoFei").val();
+            var CheDeng_BaoE = $("#CheDeng_BaoE").is(':checked') == true ? 1 : 0;
+            var CheDeng_BaoFei = $("#CheDeng_BaoFei").val();
+            var ZiRan_BaoE = $("#ZiRan_BaoE").is(':checked') == true ? 1 : 0;
+            var ZiRan_BaoFei = $("#ZiRan_BaoFei").val();
+            var BuJiMianFuJia_BaoE = $("#BuJiMianFuJia_BaoE").is(':checked') == true ? 1 : 0;
+            var BuJiMianFuJia_BaoFei = $("#BuJiMianFuJia_BaoFei").val();
+            var BizTotal = $("#BizTotal").val();
+            var ForceTotal = $("#ForceTotal").val();
+            var TaxTotal = $("#TaxTotal").val();
+            var Total = $("#Total").val();
+            var BizAfterCoupon = $("#BizAfterCoupon").val();
+            var ForceAfterCoupon = $("#ForceAfterCoupon").val();
+            var TaxAfterCoupon = $("#TaxAfterCoupon").val();
+            var TotalAfterCoupon = $("#TotalAfterCoupon").val();
+            var AuditOrderStatus = $("#AuditOrderStatus").val();
+            if (SubmitStatus != itemdata.SubmitStatus.toString() || SubmitResult != itemdata.SubmitResult.toString() ||
+                BizRate != itemdata.BizRate.toString() || ForceRate != itemdata.ForceRate.toString() || TaxRate != itemdata.TaxRate.toString() ||
+                BizRate_Channel != itemdata.BizRate_Channel.toString() || ForceRate_Channel != itemdata.ForceRate_Channel.toString() || TaxRate_Channel != itemdata.TaxRate_Channel.toString() ||
+                BizNo != itemdata.BizNo.toString() || ForceNo != itemdata.ForceNo.toString() || CheSun_BaoE != itemdata.CheSun_BaoE.toString() ||
+                CheSun_BaoFei != itemdata.CheSun_BaoFei.toString() || SanZhe_BaoE != itemdata.SanZhe_BaoE.toString() || DaoQiang_BaoE != itemdata.DaoQiang_BaoE.toString() ||
+                DaoQiang_BaoFei != DaoQiang_BaoFei.TaxRate.toString() || SiJi_BaoE != itemdata.SiJi_BaoE.toString() || SiJi_BaoFei != itemdata.SiJi_BaoFei.toString() ||
+                ChengKe_BaoE != itemdata.ChengKe_BaoE.toString() || ChengKe_BaoFei != itemdata.ChengKe_BaoFei.toString() || BoLi_BaoE != itemdata.BoLi_BaoE.toString() ||
+               BoLi_BaoFei != itemdata.BoLi_BaoFei.toString() || HuaHen_BaoE != itemdata.HuaHen_BaoE.toString() || HuaHen_BaoFei != itemdata.HuaHen_BaoFei.toString() ||
+                BuJiMianCheSun_BaoE != itemdata.BuJiMianCheSun_BaoE.toString() || BuJiMianCheSun_BaoFei != itemdata.BuJiMianCheSun_BaoFei.toString() || BuJiMianSanZhe_BaoE != itemdata.BuJiMianSanZhe_BaoE.toString()
+                || BuJiMianSanZhe_BaoFei != itemdata.BuJiMianSanZhe_BaoFei.toString() || BuJiMianDaoQiang_BaoE != itemdata.BuJiMianDaoQiang_BaoE.toString() || BuJiMianDaoQiang_BaoFei != itemdata.BuJiMianDaoQiang_BaoFei.toString()
+                || BuJiMianRenYuan_BaoE != itemdata.BuJiMianRenYuan_BaoE.toString() || BuJiMianRenYuan_BaoFei != itemdata.BuJiMianRenYuan_BaoFei.toString() || BizTotal != itemdata.BizTotal.toString()
+                || ForceTotal != itemdata.ForceTotal.toString() || TaxTotal != itemdata.TaxTotal.toString() || Total != itemdata.Total.toString()
+                || BizAfterCoupon != itemdata.BizAfterCoupon.toString() || ForceAfterCoupon != itemdata.ForceAfterCoupon.toString() || TaxAfterCoupon != itemdata.TaxAfterCoupon.toString()
+                || TotalAfterCoupon != itemdata.TotalAfterCoupon.toString() || AuditOrderStatus != itemdata.AuditOrderStatus.toString()) {
+                $("#ItemId").val(0);
+            }
         }
         var DeliverType = $("#DeliverType").val();
         if (DeliverType == 1)

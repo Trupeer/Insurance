@@ -197,7 +197,7 @@ namespace HONGLI.Repository
             public string InvoiceTitle { get; set; }
             public Nullable<decimal> PrepaidAmount { get; set; }
 
-            public int? OrderItemId { get; set; }
+            public Nullable<int> OrderItemId { get; set; }
             public string ProductId { get; set; }
             public string ProductName { get; set; }
             public string ProductTitle { get; set; }
@@ -208,7 +208,7 @@ namespace HONGLI.Repository
             public string ForceExpireDate { get; set; }
             public string BusinessExpireDate { get; set; }
             public Nullable<int> Buid { get; set; }
-            public int DeliverId { get; set; }
+            public Nullable<int> DeliverId { get; set; }
             public Nullable<int> DeliverType { get; set; }
             public string DeliverAddress { get; set; }
             public Nullable<System.DateTime> DeliverTime { get; set; }
@@ -218,7 +218,7 @@ namespace HONGLI.Repository
             public string DeliverMobile { get; set; }
             public string DeliverDistrictCode { get; set; }
 
-            public int PolicyId { get; set; }
+            public Nullable<int> PolicyId { get; set; }
             public string Name { get; set; }
             public Nullable<int> IdCardType { get; set; }
             public string IdCard { get; set; }
