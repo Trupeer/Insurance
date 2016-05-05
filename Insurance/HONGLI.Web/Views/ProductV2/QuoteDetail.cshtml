@@ -284,9 +284,9 @@
                         var channel_TaxCouponRate = @ViewBag.channel_TaxCouponRate;
                         var channel_BizCouponRate = @ViewBag.channel_BizCouponRate;
 
-                        var forceRate = 100 - (result.ForceRate + channel_ForceCouponRate);
-                        var taxRate = 100 - (result.ForceRate + channel_TaxCouponRate);
-                        var bizRate = 100 - (result.BizRate + channel_BizCouponRate);
+                        var forceRate = 100 - result.ForceRate + channel_ForceCouponRate;
+                        var taxRate = 100 - result.ForceRate + channel_TaxCouponRate;
+                        var bizRate = 100 - result.BizRate + channel_BizCouponRate;
 
                         var forceCoupon = result.ForceTotal * (forceRate * 0.01);
                         var taxCoupon = result.TaxTotal * (taxRate * 0.01);

@@ -271,10 +271,10 @@ namespace HONGLI.Web.Controllers
             description += product_item.ZiRan_BaoE > 0 ? ("自燃险、") : "";
             if (product_item.Source == Convert.ToInt32(ProductCompany.PingAn)) //只有平安有此险种
             {
-                description += product_item.CheDeng_BaoE > 0 ? ("倒车镜、车灯单独损失险") : "";
+                description += product_item.CheDeng_BaoE > 0 ? ("倒车镜、车灯单独损失险、") : "";
             }
             description += product_item.BuJiMianFuJia_BaoE > 0 ? ("不计免赔附加险、") : "";
-            product_item.Description = description;
+            product_item.Description = description.TrimEnd('、');
             if (product_item.Id == 0)
             {
                 product_item.Id=ProductItemId = adminservice.SaveProductItem(product_item);

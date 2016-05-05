@@ -23,11 +23,11 @@
     <div class="f-nav">
         <h2>新建被保人信息</h2>
         <div class="f-nav-back">
-            <a href="@Url.Action("Do", "OrderV2", new { UserId = Model.UserId, productId = Model.ProductId, mobile = Model.Mobile, channel = Model.Channel, intentionCompany = Model.intentionCompany, OrderCode = Model.OrderCode, OrderBaseId = Model.OrderBaseId, OrderItemId = Model.OrderItemId, OrderPolicyId = Model.OrderPolicyId, OrderDeliverId = Model.OrderDeliverId })" id=""><i></i></a>
+            <a href="@Url.Action("Do", "OrderV3", new { UserId = Model.UserId, productId = Model.ProductId, mobile = Model.Mobile, channel = Model.Channel, intentionCompany = Model.intentionCompany, OrderCode = Model.OrderCode, OrderBaseId = Model.OrderBaseId, OrderItemId = Model.OrderItemId, OrderPolicyId = Model.OrderPolicyId, OrderDeliverId = Model.OrderDeliverId })" id=""><i></i></a>
         </div>
     </div>
     <div class="f-nav-extend">&nbsp;</div>
-    @using (Html.BeginForm("Edit", "PolicyHolderV2", FormMethod.Post, new { @id = "submitForm", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Edit", "PolicyHolderV3", FormMethod.Post, new { @id = "submitForm", enctype = "multipart/form-data" }))
     {
         @Html.HiddenFor(m => m.Id)
         @Html.HiddenFor(m => m.UserId)
@@ -119,7 +119,8 @@
                 </div>
             </div>
         </div>
-        <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;" value="保存">
+        @*<input class="f-button04" type="submit" id="btnSubmit" style="margin-top: 1rem;" value="保存">*@
+        <a class="f-button01" id="btnSubmit" style="margin-top: 1rem;">保存</a>
     }
     <script type="text/javascript">
         if ("@Model.Error" != "" && "@Model.Error" != null) {
@@ -270,7 +271,5 @@
         }
 
     </script>
-    <a id="udesk-im-74" target="_blank" href="http://trupeer.udesk.cn/im_client" style="text-align:center;z-index:9999;text-decoration:none;display:block;color: #fff;background-color:#009944;position: fixed;line-height: 50px;bottom:10px;right:30px;width: 60px;border-radius:30px;-moz-border-radius: 30px;-webkit-border-radius: 30px;padding: 0px;"><img src="http://qnudeskpub.flyudesk.com/im@2x-1437535730.png" style="margin:auto;float:left;height: 60px;"></a>
-    <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
 </body>
 </html>

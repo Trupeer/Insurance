@@ -68,6 +68,17 @@ namespace HONGLI.Repository
                 context.Entry(product_item).Property(t => t.SubmitResult).IsModified = true;
                 context.Entry(product_item).Property(t => t.BizNo).IsModified = true;
                 context.Entry(product_item).Property(t => t.ForceNo).IsModified = true;
+                context.Entry(product_item).Property(t => t.ForceRate_Channel).IsModified = true;
+                context.Entry(product_item).Property(t => t.TaxRate_Channel).IsModified = true;
+                context.Entry(product_item).Property(t => t.BizRate_Channel).IsModified = true;
+                context.Entry(product_item).Property(t => t.BizRate).IsModified = true;
+                context.Entry(product_item).Property(t => t.BizAfterCoupon).IsModified = true;
+                context.Entry(product_item).Property(t => t.ForceRate).IsModified = true;
+                context.Entry(product_item).Property(t => t.ForceAfterCoupon).IsModified = true;
+                context.Entry(product_item).Property(t => t.TaxRate).IsModified = true;
+                context.Entry(product_item).Property(t => t.TaxAfterCoupon).IsModified = true;
+                context.Entry(product_item).Property(t => t.TotalAfterCoupon).IsModified = true;
+                context.Entry(product_item).Property(t => t.PrepaidAmount).IsModified = true;
                 context.SaveChanges();
                 id = product_item.Id;
             }

@@ -106,7 +106,14 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(VistState))
             {
-                where.AppendFormat(" AND VistState ={0}", VistState);
+                if (VistState == "0")
+                {
+                    where.AppendFormat(" AND (VisitState ={0} OR VisitState IS NULL)", VistState);
+                }
+                else
+                {
+                    where.AppendFormat(" AND VisitState ={0}", VistState);
+                }
             }
             if (!string.IsNullOrEmpty(Auditdocuments))
             {
@@ -239,7 +246,14 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(VistState))
             {
-                where.AppendFormat(" AND VistState ={0}", VistState);
+                if(VistState=="0")
+                {
+                    where.AppendFormat(" AND (VisitState ={0} OR VisitState IS NULL)", VistState);
+                }
+                else
+                {
+                    where.AppendFormat(" AND VisitState ={0}", VistState);
+                }
             }
             if (!string.IsNullOrEmpty(Auditdocuments))
             {

@@ -132,9 +132,11 @@ common.upload = {
         if (img.fileSize > 0) {
             console.log(img.fileSize);
             if (img.fileSize > filesize) {
+                alert("上传失败");
                 return false;
             }
         }
+        alert("上传成功");
         return true;
     }
 }

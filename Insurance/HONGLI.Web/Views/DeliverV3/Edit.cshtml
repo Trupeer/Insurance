@@ -24,11 +24,11 @@
     <div class="f-nav">
         <h2>新建收单地址</h2>
         <div class="f-nav-back">
-            <a href="@Url.Action("List", "DeliverV2", new { userId= Request["userId"], productId = Request["productId"],mobile = Request["mobile"], channel= Request["userId"], intentionCompany=Request["intentionCompany"], OrderCode=Request["OrderCode"], OrderBaseId=Request["OrderBaseId"], OrderItemId=Request["OrderItemId"], OrderPolicyId=Request["OrderPolicyId"], OrderDeliverId=Request["OrderDeliverId"] })" id=""><i></i></a>
+            <a href="@Url.Action("List", "DeliverV3", new { userId= Request["userId"], productId = Request["productId"],mobile = Request["mobile"], channel= Request["channel"], intentionCompany=Request["intentionCompany"], OrderCode=Request["OrderCode"], OrderBaseId=Request["OrderBaseId"], OrderItemId=Request["OrderItemId"], OrderPolicyId=Request["OrderPolicyId"], OrderDeliverId=Request["OrderDeliverId"] })" id=""><i></i></a>
         </div>
     </div>
     <div class="f-nav-extend">&nbsp;</div>
-    @using (Html.BeginForm("Edit", "DeliverV2", FormMethod.Post, new { @id = "submitForm" }))
+    @using (Html.BeginForm("Edit", "DeliverV3", FormMethod.Post, new { @id = "submitForm" }))
     {
         @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
         @Html.HiddenFor(m => m.UserId)

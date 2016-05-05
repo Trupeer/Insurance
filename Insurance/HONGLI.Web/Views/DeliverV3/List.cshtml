@@ -18,7 +18,7 @@
     <div class="f-nav">
         <h2>收单地址</h2>
         <div class="f-nav-back">
-            <a href="@Url.Action("Do", "OrderV2", new { productId = Model.ProductId,mobile = Model.Mobile, channel= Model.Channel, intentionCompany= Model.intentionCompany, OrderCode= Model.OrderCode, OrderBaseId= Model.OrderBaseId, OrderItemId= Model.OrderItemId, OrderPolicyId= Model.OrderPolicyId, OrderDeliverId= Model.OrderDeliverId })"><i></i></a>
+            <a href="@Url.Action("Do", "OrderV3", new { productId = Model.ProductId,mobile = Model.Mobile, channel= Model.Channel, intentionCompany= Model.intentionCompany, OrderCode= Model.OrderCode, OrderBaseId= Model.OrderBaseId, OrderItemId= Model.OrderItemId, OrderPolicyId= Model.OrderPolicyId, OrderDeliverId= Model.OrderDeliverId })"><i></i></a>
         </div>
     </div>
     <div class="f-nav-extend">&nbsp;</div>
@@ -36,7 +36,7 @@
                         <p class="t-address">@deliverItem.DeliverAddress</p>
                     </div>
                     <div class="f-list01-go">
-                        <a href="@Url.Action("Edit", "DeliverV2", new { id = deliverItem.Id,productId = Model.ProductId, mobile = Model.Mobile, channel = Model.Channel, intentionCompany = Model.intentionCompany, OrderCode = Model.OrderCode, OrderBaseId = Model.OrderBaseId, OrderItemId = Model.OrderItemId, OrderPolicyId = Model.OrderPolicyId, OrderDeliverId = Model.OrderDeliverId })" id="deliver_@deliverItem.Id" class="t-icon-edit"></a>
+                        <a href="@Url.Action("Edit", "DeliverV3", new { id = deliverItem.Id,userId=Model.UserId,productId = Model.ProductId, mobile = Model.Mobile, channel = Model.Channel, intentionCompany = Model.intentionCompany, OrderCode = Model.OrderCode, OrderBaseId = Model.OrderBaseId, OrderItemId = Model.OrderItemId, OrderPolicyId = Model.OrderPolicyId, OrderDeliverId = Model.OrderDeliverId })" id="deliver_@deliverItem.Id" class="t-icon-edit"></a>
                     </div>
                 </div>
             }
@@ -46,13 +46,13 @@
     <div class="page20-submit">
         @*@if (Model.ProductId != 0)
             {*@
-        <a class="f-button02" style="margin-left:10px;" href="@Url.Action("Do", "OrderV2", new {  productId = Model.ProductId,mobile = Model.Mobile, channel= Model.Channel, intentionCompany= Model.intentionCompany, OrderCode= Model.OrderCode, OrderBaseId= Model.OrderBaseId, OrderItemId= Model.OrderItemId, OrderPolicyId= Model.OrderPolicyId, OrderDeliverId= Model.OrderDeliverId })">确定</a>
+        <a class="f-button02" style="margin-left:10px;" href="@Url.Action("Do", "OrderV3", new {  productId = Model.ProductId,mobile = Model.Mobile, channel= Model.Channel, intentionCompany= Model.intentionCompany, OrderCode= Model.OrderCode, OrderBaseId= Model.OrderBaseId, OrderItemId= Model.OrderItemId, OrderPolicyId= Model.OrderPolicyId, OrderDeliverId= Model.OrderDeliverId })">确定</a>
         @*}
             else
             {
                 <a class="f-button02" style="margin-left:10px;" href="@Model.PageUrl">确定</a>
             }*@
-        <a class="f-button02" href="@Url.Action("Edit", "DeliverV2", new {  UserId = Model.UserId,productId = Model.ProductId,mobile = Model.Mobile, channel= Model.Channel, intentionCompany= Model.intentionCompany, OrderCode= Model.OrderCode, OrderBaseId= Model.OrderBaseId, OrderItemId= Model.OrderItemId, OrderPolicyId= Model.OrderPolicyId, OrderDeliverId= Model.OrderDeliverId })">新建地址</a>
+        <a class="f-button02" href="@Url.Action("Edit", "DeliverV3", new {UserId = Model.UserId,productId = Model.ProductId,mobile = Model.Mobile, channel= Model.Channel, intentionCompany= Model.intentionCompany, OrderCode= Model.OrderCode, OrderBaseId= Model.OrderBaseId, OrderItemId= Model.OrderItemId, OrderPolicyId= Model.OrderPolicyId, OrderDeliverId= Model.OrderDeliverId })">新建地址</a>
 
     </div>
     <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/jquery/jquery-2.1.3.min.js")"></script>

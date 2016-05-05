@@ -20,7 +20,7 @@
     <div class="f-nav">
         <h2>报价详情</h2>
         <div class="f-nav-back">
-            <a href="javascript:;" id="riaGoBack"><i></i></a>
+            <a href="QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1"><i></i></a>
         </div>
         <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.521rem;" data-reveal-id="myModal" href="#" data-animation="fade">客服</a></div>    </div>
     <div class="f-nav-extend">&nbsp;</div>
@@ -62,11 +62,11 @@
             <div class="f-list01-go"><i class="f-list01-icon-arrow-down" data-sh=".page12-tips"></i></div>
         </div>
         @*<div class="page12-title02-tips page12-tips">车损险、三者险（20万）、盗抢险、划痕险(2000元）、玻璃单独破损险、座位险（司机1万）、座位险（乘客1万）、不计免赔险</div>*@
-        <div class="page12-title02-tips page12-tips"><span class='t-loading' id="description"></span></div>
+        <div class="page12-title02-tips page12-tips" style="margin-top:0.05rem"><span class='t-loading' id="description"></span></div>
     </div>
     <div class="f-list01-group page12-tips" id="descriptionDetail">
         <div class="f-list01 page12-list02">
-            <div class="f-list01-main">车损险</div>
+            <div class="f-list01-main">车损险（<label></label>）</div>
             <div class="f-list01-other"><span class='t-loading' id="chesun"> </span>元</div>
         </div><div class="f-list01 page12-list02">
             <div class="f-list01-main">不计免赔车损险</div>
@@ -97,7 +97,7 @@
             <div class="f-list01-other"><span class='t-loading' id="chengke"></span> 元</div>
         </div>
         <div class="f-list01 page12-list02">
-            <div class="f-list01-main">不计免赔车上人员<label></label>）</div>
+            <div class="f-list01-main">不计免赔车上人员</div>
             <div class="f-list01-other"><span class='t-loading' id="bujimianrenyuan"></span> 元</div>
         </div>
         <div class="f-list01 page12-list02">
@@ -109,7 +109,7 @@
             <div class="f-list01-other"><span class='t-loading' id="boli"></span> 元</div>
         </div>
         <div class="f-list01 page12-list02">
-            <div class="f-list01-main">涉水险</div>
+            <div class="f-list01-main">发动机特别损失险</div>
             <div class="f-list01-other"><span class='t-loading' id="sheshui"></span> 元</div>
         </div>
         <div class="f-list01 page12-list02">
@@ -121,7 +121,7 @@
             <div class="f-list01-other"><span class='t-loading' id="chedeng"></span> 元</div>
         </div>
         <div class="f-list01 page12-list02">
-            <div class="f-list01-main">不计免赔车上人员<label></label>）</div>
+            <div class="f-list01-main">不计免附加险</div>
             <div class="f-list01-other"><span class='t-loading' id="bujimianfujia"></span> 元</div>
         </div>
     </div>
@@ -217,11 +217,12 @@
                             message = "请求报价信息失败，服务器未返回失败原因！";
                         }
                         alert(message);
-                        //window.location.href = "";
+                        window.location.href = "QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1";
                     }
                 },
                 error: function (data) {
                     alert("请求报价信息失败！！");
+                    window.location.href = "QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1";
                 }
             });
         }
@@ -241,7 +242,7 @@
                     licenseNo: "@ViewBag.licenseNo",
                     intentionCompany:  "@ViewBag.intentionCompany",
                     userID:"@Request["userID"]",
-                ProductItemId:"@Request["ProductItemId"]"
+                    check:"1"
                 },
                 beforeSend: function () {
                     layer.open({ type:2 });
@@ -250,6 +251,7 @@
                     console.log(data);
                     if(data ==null){
                         alert("获取报价信息失败！");
+                        window.location.href = "QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1";
                         return;
                     }
                     if (data.BusinessStatus != 1) {
@@ -258,9 +260,11 @@
                             message = "获取报价信息失败，服务器未返回失败原因！";
                         }
                         alert(message);
+                        window.location.href = "QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1";
                     }
                     if (data.Item == null) {
                         alert("没有获取到报价信息！");
+                        window.location.href = "QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1";
                         return;
                     }
 
@@ -297,9 +301,9 @@
                         var channel_TaxCouponRate = @ViewBag.channel_TaxCouponRate;
                         var channel_BizCouponRate = @ViewBag.channel_BizCouponRate;
 
-                        var forceRate = 100 - (result.ForceRate + channel_ForceCouponRate);
-                        var taxRate = 100 - (result.ForceRate + channel_TaxCouponRate);
-                        var bizRate = 100 - (result.BizRate + channel_BizCouponRate);
+                        var forceRate = 100 - result.ForceRate + channel_ForceCouponRate;
+                        var taxRate = 100 - result.ForceRate + channel_TaxCouponRate;
+                        var bizRate = 100 - result.BizRate + channel_BizCouponRate;
 
                         var forceCoupon = result.ForceTotal * (forceRate * 0.01);
                         var taxCoupon = result.TaxTotal * (taxRate * 0.01);
@@ -368,6 +372,7 @@
                 },
                 error: function (data) {
                     alert("获取报价信息失败！");
+                    window.location.href = "QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1";
                     return;
                 }
             });
@@ -393,6 +398,7 @@
                     console.log(data);
                     if(data == null){
                         alert("获取核保信息失败！");
+                        window.location.href = "QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1";
                         return;
                     }
                     if (data.BusinessStatus != 1) {
@@ -401,6 +407,7 @@
                             message = "获取核保信息失败，服务器未返回失败原因！";
                         }
                         alert(message);
+                        window.location.href = "QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1";
                     }
                     if (data.Item == null) {
                         alert("没有获取到核保信息！");
@@ -453,7 +460,7 @@
                 },
                 error: function (data) {
                     alert("获取核保信息失败！！");
-
+                    window.location.href = "QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1";
                 }
             });
         }
@@ -504,7 +511,7 @@
 
             $.ajax({
                 type: "post",
-                url: '@Url.Action("Buy", "ProductV4")',
+                url: 'Buy',
                 dataType: "json",
                 data: {
                     channel: "@ViewBag.channel",
@@ -528,7 +535,7 @@
                         var order_product = new global.order.product(channel, data.Id, isuranceLogo, data.ProductName, data.Description, data.Total, data.TotalAfterCoupon, data.LicenseNo, data.ForceExpireDate,data.BussinessExpireDate, data.BuId);
                         var order_product_str = JSON.stringify(order_product);
                         common.cookie.setCookie(global.domain, global.cookie.order.product, order_product_str, global.expire);*@
-                        window.location.href = "/OrderV3/Index?productId=" + data.ItemId + "&mobile=" + data.mobeil + "&channel=" + data.channel + "&intentionCompany=" + data.source + "&OrderCode=" + data.OrderBaeOrderCode + "&OrderBaseId=" + data.OrderBaseId + "&OrderItemId=" + data.OrderItemId + "&OrderPolicyId=" + data.PolicyId + "&OrderDeliverId=" + data.OrderDeliverId;
+                        window.location.href = '@Url.Action("Index", "OrderV3")'+"?productId=" + data.ItemId + "&mobile=" + data.mobeil + "&channel=" + data.channel + "&intentionCompany=" + data.source + "&OrderCode=" + data.OrderBaeOrderCode + "&OrderBaseId=" + data.OrderBaseId + "&OrderItemId=" + data.OrderItemId + "&OrderPolicyId=" + data.PolicyId + "&OrderDeliverId=" + data.OrderDeliverId;
                         //alert("订单已提交！请耐心等待客服人员核实后与您联系！如有问题请致电：400-963-1088");
                     }
                     else {

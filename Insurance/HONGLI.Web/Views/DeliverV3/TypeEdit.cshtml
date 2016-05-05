@@ -21,11 +21,11 @@
     <div class="f-nav">
         <h2>选择支付配送</h2>
         <div class="f-nav-back">
-            <a href="@Url.Action("Do", "OrderV2", new { userId= Request["userId"], productId = Request["productId"],mobile = Request["mobile"], channel= Request["userId"], intentionCompany=Request["intentionCompany"], OrderCode=Request["OrderCode"], OrderBaseId=Request["OrderBaseId"], OrderItemId=Request["OrderItemId"], OrderPolicyId=Request["OrderPolicyId"], OrderDeliverId=Request["OrderDeliverId"]  })" id=""><i></i></a>
+            <a href="@Url.Action("Do", "OrderV3", new { userId= Request["userId"], productId = Request["productId"],mobile = Request["mobile"], channel= Request["userId"], intentionCompany=Request["intentionCompany"], OrderCode=Request["OrderCode"], OrderBaseId=Request["OrderBaseId"], OrderItemId=Request["OrderItemId"], OrderPolicyId=Request["OrderPolicyId"], OrderDeliverId=Request["OrderDeliverId"]  })" id=""><i></i></a>
         </div>
     </div>
     <div class="f-nav-extend">&nbsp;</div>
-    @using (Html.BeginForm("TypeEdit", "DeliverV2", FormMethod.Post, new { @id = "submitForm" }))
+    @using (Html.BeginForm("TypeEdit", "DeliverV3", FormMethod.Post, new { @id = "submitForm" }))
     {
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.UserId)
@@ -43,7 +43,7 @@
             <div class="f-form01-item">
                 <label class="f-form01-label">支付方式</label>
                 <div class="f-form01-main">
-                    <a href="javascript:void(0);" id="btnPayType" class="f-button02" style="background-color:#ea3c31">在线支付</a>
+                    <a href="javascript:void(0);" id="btnPayType" class="f-button02" style="background-color:#ea3c31">线下支付</a>
                    
                 </div>
             </div>
@@ -128,7 +128,7 @@
                 $("#btnPickup").css("background-color", "#ea3c31");
             });
             $("#btnSubmit").click(function () {
-                var payType = 1;
+                var payType = 0;
                 var deliverType = $("#deliverType").val();
                 var deliverPrice = 0;
                 var pickupAddress = $("#pickupAddress").val();

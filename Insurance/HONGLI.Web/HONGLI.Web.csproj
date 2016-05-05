@@ -346,6 +346,7 @@
     <Content Include="public\css\all.css" />
     <Content Include="public\imagesTemp\page01-750-368.jpg" />
     <Content Include="public\imagesTemp\page01-banner.jpg" />
+    <Content Include="public\imagesTemp\page01-banner2.jpg" />
     <Content Include="public\imagesTemp\page12-180-100.png" />
     <Content Include="public\imagesTemp\page13-690-478.jpg" />
     <Content Include="public\imagesTemp\page20-160-80.png" />
@@ -386,6 +387,7 @@
     <Content Include="public\images\page20-address-empty.png" />
     <Content Include="public\images\page40-face-100.png" />
     <Content Include="public\images\page40-face-100_c1.png" />
+    <Content Include="public\images\page40-loading.gif" />
     <Content Include="public\images\page40-loading.png" />
     <Content Include="public\images\page91-icon-1.png" />
     <Content Include="public\images\page91-icon-2.png" />

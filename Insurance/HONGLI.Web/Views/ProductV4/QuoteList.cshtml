@@ -92,19 +92,23 @@
                 data: {
                     channel: "@ViewBag.channel",
                     mobile: "@ViewBag.mobile",
-                    licenseNo: "@ViewBag.licenseNo"
+                    licenseNo: "@ViewBag.licenseNo",
+                    intentionCompany:null,
+                    check:"@Request["check"]"
                 },
                 beforeSend: function () {
                     layer.open({ type: 2 });
                 },
                 success: function (data) {
                     console.log(data);
-                    if (data == null) {
-                        alert("请求报价信息失败！");
-                        return;
+                    if ('@Request["check"]' != '')
+                    {
+                        if (data == null) {
+                            alert("请求报价信息失败！");
+                            return;
+                        }
                     }
-
-                    if (data.BusinessStatus == 1) {
+                    if (data.BusinessStatus == 1 || '@Request["check"]' != '') {
                         //单独报价
                         getSpecialPrecisePrice(0);
                         getSpecialPrecisePrice(1);
@@ -140,7 +144,8 @@
                     licenseNo: "@ViewBag.licenseNo",
                     intentionCompany: companyId,
                     UserID: parseInt('@Request["userID"]'),
-                    check:"1"
+
+                    check:"@Request["check"]"
                 },
                 beforeSend: function () {
                     companyObj.empty().append("<span class='t-loading'>试算中...</span>");
@@ -207,7 +212,7 @@
                 ],
                 content: errorMessage
             });
-        }        
+        }
     </script>
     <div id="myModal" class="reveal-modal">
         <div class="title-text">联系客服</div>

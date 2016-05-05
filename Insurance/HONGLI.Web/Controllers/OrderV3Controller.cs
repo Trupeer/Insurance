@@ -36,11 +36,7 @@ namespace HONGLI.Web.Controllers
             ViewBag.OrderItemId = OrderItemId;
             ViewBag.OrderPolicyId = OrderPolicyId;
             ViewBag.OrderDeliverId = OrderDeliverId;
-#if (!DEBUG)
       ViewBag.UserId = UserViewModel.CurrentUser.ID;
-#else
-            ViewBag.UserId = 3;
-#endif
 
             return View();
         }
@@ -105,11 +101,7 @@ namespace HONGLI.Web.Controllers
             ViewBag.OrderItemId = OrderItemId;
             ViewBag.OrderPolicyId = OrderPolicyId;
             ViewBag.OrderDeliverId = OrderDeliverId;
-#if (!DEBUG)
       ViewBag.UserId = UserViewModel.CurrentUser.ID;
-#else
-            ViewBag.UserId = 3;
-#endif
 
             return View();
         }

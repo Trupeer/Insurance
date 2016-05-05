@@ -16,7 +16,7 @@ namespace HONGLI.Web.Controllers
     {
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login( string returnUrl, string channel, string mobile = ""  )
+        public ActionResult Login(string returnUrl, string channel, string mobile = "")
         {
             //PostOrderService.PostOrderStatus();
 

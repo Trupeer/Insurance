@@ -75,7 +75,7 @@
                     return;
                 }
                 var mobileMatch = /^(1(([35][0-9])|(47)|[8][01236789]))\d{8}$/;
-                if (!mobileMatch.test(_mobile)) {
+                if (!/^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8}$/i.test(_mobile)) {
                     alert("请输入正确格式的手机号！");
                     return false;
                 }
