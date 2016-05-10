@@ -300,7 +300,7 @@ namespace HONGLI.Web.Controllers
             order_base.CreateDate = model.OrderBaeCreateDate == null ? DateTime.Now : model.OrderBaeCreateDate;
             order_base.Channel = model.OrderBaeChannel == null ? Convert.ToInt32(model.Channel) : model.OrderBaeChannel;
             order_base.UserId = model.OrderBaeUserId == null ? ClientuserId.ToString() : model.OrderBaeUserId;
-            order_base.ProductItemId = model.ItemId;
+            order_base.ProductItemId = product_item.Id;
             order_base.BackStatus = 0;
             //order_item订单详情表
             Order_Item order_item = new Order_Item();
