@@ -31,7 +31,7 @@
             </div>
         </div>
         <div style="margin-left:1.5rem;top:65%;position:absolute;z-index:999;">
-                <input id="txt_redPacketCode" type="text" class="f-input01" placeholder="请输入红包密令" />
+                <input id="txt_redPacketCode" type="text" class="f-input01" placeholder="请输入返现提取码" />
                 <br />
             <br />
             <br />
@@ -45,7 +45,7 @@
     {
         var redPacketCode = $("#txt_redPacketCode").val();
         if (redPacketCode.length == 0) {
-            alert("返现码不能为空！");
+            alert("请输入返现码！");
             return;
         }
         else {
