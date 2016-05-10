@@ -267,6 +267,12 @@ namespace HONGLI.Web.Controllers
                 
                 new OrderService().EditOrderInvoice(order_base);
                 Order_Deliver order_deliver = new Order_Deliver();
+                if(string.IsNullOrEmpty(deliver.deliverMobile)|| string.IsNullOrEmpty(deliver.deliverAddress) || string.IsNullOrEmpty(deliver.deliverName))
+                {
+                    result.Status = 0;
+                    result.Error = "对不起，信息获取错误，请您重新选择收货地址！";
+                    return result;
+                }
                 if (payAndDeliver.DeliverType == 1)
                 {
                     order_deliver.DeliverDistrictCode = deliver.deliverDistrictCode;

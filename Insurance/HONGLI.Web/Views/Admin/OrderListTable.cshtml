@@ -16,7 +16,7 @@
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>核单客服</strong></td>
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>回访状态</strong></td>
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>回访客服</strong></td>
-        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>最后核保时间</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>最后报价时间</strong></td>
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>最后回访时间</strong></td>
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>订单状态</strong></td>
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>详情</strong></td>
@@ -39,7 +39,11 @@
                else if (item["Channel"].ToString() == "2")
                 {
                 <td align="center">爱卡</td>
-                }
+                               }
+                               else if (item["Channel"].ToString() == "3")
+                               {
+                                <td align="center">易啦保</td>
+                               }
                                else
                                {
                                 <td align="center">其他渠道</td>
@@ -130,8 +134,8 @@
                     <td align="center">未回访</td>
                 }
                 <td>@item["VisitServiceUserName"]</td>
-                <td>@item["AuditOrderDate"]</td>
                 <td>@item["VisitDate"]</td>
+                <td>@item["AuditOrderDate"]</td>
                 @if (item["OrderreviewState"].ToString() == "0")
                 {
                     <td align="center">未确认</td>
