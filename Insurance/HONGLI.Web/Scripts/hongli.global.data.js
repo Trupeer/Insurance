@@ -18,10 +18,12 @@ var global = {
             deliver: "HONGLI.order.deliver",
             payAndDeliver: "HONGLI.order.payAndDeliver",
             policyHolder: "HONGLI.order.policyHolder",
+            policyHolderPic: "HONGLI.order.policyHolderPic",
             policyHolderSelected: "HONGLI.order.policyHolderSelected",
             product: "HONGLI.order.product"
         },
         user: "yidao.hongli.user",
+        OrderCode: "yidao.hongli.OrderCode"
     },
     user: function (mobile, channel, memberId) {
         this.mobile = mobile;

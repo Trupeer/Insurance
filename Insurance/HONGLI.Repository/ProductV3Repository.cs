@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HONGLI.Repository
 {
-   public class ProductV3Repository
+    public class ProductV3Repository
     {
         public View_ProductV2UserItem SaveProduct(ProductV2_Item product_item)
         {
@@ -140,6 +140,24 @@ namespace HONGLI.Repository
             }
 
             return result;
+        }
+        public Order_Base GetOrderByOrderCode(string ordercode)
+        {
+            Order_Base model = new Order_Base();
+            using (var context = new E2JOINDB())
+            {
+                model = context.Order_Base.Where(a => a.OrderCode == ordercode).FirstOrDefault();
+                return model;
+            }
+        }
+        public Order_Item GetOrdertemByOrderCode(string ordercode)
+        {
+            Order_Item model = new Order_Item();
+            using (var context = new E2JOINDB())
+            {
+                model = context.Order_Item.Where(a => a.OrderCode == ordercode).FirstOrDefault();
+                return model;
+            }
         }
     }
 }

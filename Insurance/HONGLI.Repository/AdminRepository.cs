@@ -78,7 +78,7 @@ namespace HONGLI.Repository
             StringBuilder where = new StringBuilder();
             if (!string.IsNullOrEmpty(username))
             {
-                where.AppendFormat(" AND LicenseOwner LIKE '%{0}%'", username);
+                where.AppendFormat(" AND UserName LIKE '%{0}%'", username);
             }
             if (!string.IsNullOrEmpty(CarID))
             {
@@ -86,7 +86,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(ChannelName))
             {
-                where.AppendFormat(" AND Channel ={0}", ChannelName);
+                where.AppendFormat(" AND T.Channel ={0}", ChannelName);
             }
             if (!string.IsNullOrEmpty(BeginInsuranceEndDate) && !string.IsNullOrEmpty(EndInsuranceEndDate))
             {
@@ -98,7 +98,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
             {
-                where.AppendFormat(" AND CreateTime BETWEEN '{0}' AND '{1}'", BeginDate, EndDate);
+                where.AppendFormat(" AND T.CreateTime BETWEEN '{0}' AND '{1}'", BeginDate, EndDate);
             }
             if (!string.IsNullOrEmpty(InsuranceCompany))
             {
@@ -125,7 +125,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(examineState))
             {
-                where.AppendFormat(" AND (RbOffer ={0} OR TpyOffer={0} OR PaOffer={0}", examineState);
+                where.AppendFormat(" AND (RbOffer ={0} OR TpyOffer={0} OR PaOffer={0})", examineState);
             }
             #endregion
             #region 查询内容
@@ -134,7 +134,7 @@ namespace HONGLI.Repository
             sql.Append("(SELECT ROW_NUMBER() OVER(ORDER BY T.CreateTime DESC) AS PageIndex, ");
             sql.Append("T.*,T2.Name AS ServiceUserName, ");
             sql.Append("T3.Name AS VisitServiceUserName ");
-            sql.Append("FROM (SELECT A.Id, MAX(LicenseOwner) AS UserName, MAX(LicenseNo) AS LicenseNo, ");
+            sql.Append("FROM (SELECT A.Id,MAX(LicenseOwner) AS UserName, MAX(LicenseNo) AS LicenseNo, ");
             sql.Append("MAX(A.Mobile) AS Mobile,MAX(BusinessExpireDate) AS BusinessExpireDate, ");
             sql.Append("MAX(CASE WHEN B.UserSelection=1 THEN B.Id ELSE 0 END) AS ProdunctItemID, ");
             sql.Append("MAX(A.CreateTime) AS CreateTime,MAX(A.Channel) AS Channel, ");
@@ -144,11 +144,11 @@ namespace HONGLI.Repository
             sql.Append("PaOffer=MAX(CASE WHEN B.Source=0 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
             sql.Append("MAX(B.AuditOrderStatus) AS AuditOrderState,MAX(B.ServiceUserId) AS ServiceUserId, ");
             sql.Append("MAX(VisitDate) AS VisitDate,MAX(VisitStatus) AS VisitState,MAX(VisitServiceUserId) AS VisitServiceUserId, ");
-            sql.Append("AuditOrderDate=MAX(B.CreateTime) ,MAX(C.OrderCode) AS OrderCode,MAX(C.Status) AS OrderreviewState  FROM dbo.ProductV2_User A WITH(NOLOCK) ");
+            sql.Append("AuditOrderDate=MAX(B.CreateTime),MAX(C.ProductItemId) AS  ProductItemId ,MAX(C.OrderCode) AS OrderCode,MAX(C.Status) AS OrderreviewState  FROM dbo.ProductV2_User A WITH(NOLOCK) ");
             sql.Append("LEFT JOIN dbo.ProductV2_Item B  WITH(NOLOCK) ON A.Id = B.UserId ");
-            sql.Append(" LEFT JOIN dbo.Order_Base C  WITH(NOLOCK) ON A.Id=C.UserId ");
+            sql.Append(" LEFT JOIN dbo.Order_Base C  WITH(NOLOCK) ON B.Id=C.ProductItemId ");
             sql.Append(" GROUP BY A.Id) T ");
-            sql.Append(" LEFT JOIN dbo.Order_Base T1  WITH(NOLOCK) ON T.Id=T1.UserId ");
+            sql.Append(" LEFT JOIN dbo.Order_Base T1  WITH(NOLOCK) ON T.ProductItemId=T1.ProductItemId ");
             sql.Append(" LEFT JOIN dbo.BaseInfo_UserInfo T2  WITH(NOLOCK) ON T.ServiceUserId=T2.ID ");
             sql.Append(" LEFT JOIN dbo.BaseInfo_UserInfo T3  WITH(NOLOCK) ON T.VisitServiceUserId=T3.ID ");
             sql.Append(" WHERE 1=1 ");
@@ -218,7 +218,7 @@ namespace HONGLI.Repository
             StringBuilder where = new StringBuilder();
             if (!string.IsNullOrEmpty(username))
             {
-                where.AppendFormat(" AND LicenseOwner LIKE '%{0}%'", username);
+                where.AppendFormat(" AND UserName LIKE '%{0}%'", username);
             }
             if (!string.IsNullOrEmpty(CarID))
             {
@@ -226,7 +226,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(ChannelName))
             {
-                where.AppendFormat(" AND Channel ={0}", ChannelName);
+                where.AppendFormat(" AND T.Channel ={0}", ChannelName);
             }
             if (!string.IsNullOrEmpty(BeginInsuranceEndDate) && !string.IsNullOrEmpty(EndInsuranceEndDate))
             {
@@ -238,7 +238,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
             {
-                where.AppendFormat(" AND CreateTime BETWEEN '{0}' AND '{1}'", BeginDate, EndDate);
+                where.AppendFormat(" AND T.CreateTime BETWEEN '{0}' AND '{1}'", BeginDate, EndDate);
             }
             if (!string.IsNullOrEmpty(InsuranceCompany))
             {
@@ -265,7 +265,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(examineState))
             {
-                where.AppendFormat(" AND (RbOffer ={0} OR TpyOffer={0} OR PaOffer={0}", examineState);
+                where.AppendFormat(" AND (RbOffer ={0} OR TpyOffer={0} OR PaOffer={0})", examineState);
             }
             #endregion
             #region 查询内容
@@ -284,11 +284,11 @@ namespace HONGLI.Repository
             sql.Append("PaOffer=MAX(CASE WHEN B.Source=0 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
             sql.Append("MAX(B.AuditOrderStatus) AS AuditOrderState,MAX(B.ServiceUserId) AS ServiceUserId, ");
             sql.Append("MAX(VisitDate) AS VisitDate,MAX(VisitStatus) AS VisitState,MAX(VisitServiceUserId) AS VisitServiceUserId, ");
-            sql.Append("AuditOrderDate=MAX(B.CreateTime) ,MAX(C.OrderCode) AS OrderCode,MAX(C.Status) AS OrderreviewState  FROM dbo.ProductV2_User A WITH(NOLOCK) ");
+            sql.Append("AuditOrderDate=MAX(B.CreateTime) ,MAX(C.ProductItemId) AS  ProductItemId,MAX(C.OrderCode) AS OrderCode,MAX(C.Status) AS OrderreviewState  FROM dbo.ProductV2_User A WITH(NOLOCK) ");
             sql.Append("LEFT JOIN dbo.ProductV2_Item B  WITH(NOLOCK) ON A.Id = B.UserId ");
-            sql.Append(" LEFT JOIN dbo.Order_Base C  WITH(NOLOCK) ON A.Id=C.UserId ");
+            sql.Append(" LEFT JOIN dbo.Order_Base C  WITH(NOLOCK) ON B.Id=C.ProductItemId ");
             sql.Append(" GROUP BY A.Id) T ");
-            sql.Append(" LEFT JOIN dbo.Order_Base T1  WITH(NOLOCK) ON T.Id=T1.UserId ");
+            sql.Append(" LEFT JOIN dbo.Order_Base T1  WITH(NOLOCK) ON T.ProductItemId=T1.ProductItemId ");
             sql.Append(" LEFT JOIN dbo.BaseInfo_UserInfo T2  WITH(NOLOCK) ON T.ServiceUserId=T2.ID ");
             sql.Append(" LEFT JOIN dbo.BaseInfo_UserInfo T3  WITH(NOLOCK) ON T.VisitServiceUserId=T3.ID ");
             sql.Append(" WHERE 1=1  ");
@@ -385,6 +385,7 @@ namespace HONGLI.Repository
                 context.Entry(model).Property(t => t.OrderCode).IsModified = true;
                 context.Entry(model).Property(t => t.CreateDate).IsModified = true;
                 context.Entry(model).Property(t => t.Channel).IsModified = true;
+                context.Entry(model).Property(t => t.ProductItemId).IsModified = true;
                 context.Entry(model).Property(t => t.Order_Item.FirstOrDefault().Id).IsModified = true;
                 context.Entry(model).Property(t => t.Order_Item.FirstOrDefault().OrderCode).IsModified = true;
                 context.Entry(model).Property(t => t.Order_Item.FirstOrDefault().CreateDate).IsModified = true;
@@ -423,6 +424,32 @@ namespace HONGLI.Repository
                 //LogHelper.AppError(error.Message);
             }
             return ProductUser;
+        }
+        /// <summary>
+        /// 根据手机号获取用户ID
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <returns></returns>
+        public BaseInfo_UserInfo GetUserIdByMobile(string mobile)
+        {
+            BaseInfo_UserInfo model = new BaseInfo_UserInfo();
+            try
+            {
+                using (var context = new E2JOINDB())
+                {
+
+                    var query = context.BaseInfo_UserInfo
+                        .Where(c => c.Mobile==mobile)
+                        .FirstOrDefault();
+
+                    model = query;
+                }
+            }
+            catch (Exception error)
+            {
+                //LogHelper.AppError(error.Message);
+            }
+            return model;
         }
 
         /// <summary>
@@ -617,6 +644,23 @@ namespace HONGLI.Repository
             return result;
         }
         /// <summary>
+        /// 修改支付信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int EditOrderPay(Order_Pay model)
+        {
+            int result = -1;
+            using (var context = new E2JOINDB())
+            {
+                context.Entry(model).State = EntityState.Modified;
+                context.SaveChanges();
+                result = model.Id;
+            }
+
+            return result;
+        }
+        /// <summary>
         /// 添加订单地址信息
         /// </summary>
         /// <param name="order_deliver"></param>
@@ -633,6 +677,67 @@ namespace HONGLI.Repository
             }
 
             return itemid;
+        }
+        /// <summary>
+        /// 判断收货地址是否存在
+        /// </summary>
+        /// <param name="ordercode"></param>
+        /// <returns></returns>
+        public int CHeckDeliverAdd(string ordercode)
+        {
+            int deliverId = -1;
+            using (var context = new E2JOINDB())
+            {
+                Order_Deliver model = new Order_Deliver();
+                model = context.Order_Deliver.Where(c => c.OrderCode == ordercode).FirstOrDefault();
+                if(model!=null)
+                {
+                    deliverId = model.Id;
+                }
+            }
+
+            return deliverId;
+        }
+
+        /// <summary>
+        /// 判断被保人信息是否存在
+        /// </summary>
+        /// <param name="ordercode"></param>
+        /// <returns></returns>
+        public int CHeckpolicyHolderAdd(string ordercode)
+        {
+            int policyHoldeId = -1;
+            using (var context = new E2JOINDB())
+            {
+                Order_PolicyHolder model = new Order_PolicyHolder();
+                model = context.Order_PolicyHolder.Where(c => c.OrderCode == ordercode).FirstOrDefault();
+                if (model != null)
+                {
+                    policyHoldeId = model.Id;
+                }
+            }
+
+            return policyHoldeId;
+        }
+        /// <summary>
+        /// 判断支付信息是否存在
+        /// </summary>
+        /// <param name="ordercode"></param>
+        /// <returns></returns>
+        public int CHeckpayAdd(string ordercode)
+        {
+            int payId = -1;
+            using (var context = new E2JOINDB())
+            {
+                Order_Pay model = new Order_Pay();
+                model = context.Order_Pay.Where(c => c.OrderCode == ordercode).FirstOrDefault();
+                if (model != null)
+                {
+                    payId = model.Id;
+                }
+            }
+
+            return payId;
         }
         /// <summary>
         /// 核单
@@ -709,14 +814,15 @@ namespace HONGLI.Repository
             #region 查询内容
             StringBuilder sql = new StringBuilder();
             sql.Append("SELECT * FROM ");
-            sql.Append("(SELECT ROW_NUMBER() OVER(ORDER BY A.CreateDate DESC) AS PageIndex, A.OrderCode,A.CreateDate,A.Status,B.LicenseNo, ");
-            sql.Append("D.Name,IdCardType,IdCard,F.Mobile,E.PayType,ProductId,A.UserId,B.Channel,DeliverType ");
+            sql.Append("(SELECT ROW_NUMBER() OVER(ORDER BY A.CreateDate DESC) AS PageIndex,A.Id, A.OrderCode,A.CreateDate,A.Status,A.BackStatus,B.LicenseNo,B.ProductOriginalPrice,B.ProductDealPrice, ");
+            sql.Append("D.Name,IdCardType,IdCard,C.DeliverMobile AS Mobile,E.PayType,ProductId,A.UserId,B.Channel,DeliverType,G.State AS receiveStatus ");
             sql.Append("FROM dbo.Order_Base A WITH(NOLOCK) ");
             sql.Append("LEFT JOIN dbo.Order_Item B WITH(NOLOCK) ON A.OrderCode = B.OrderCode ");
             sql.Append("LEFT JOIN dbo.Order_Deliver C WITH(NOLOCK) ON A.OrderCode = C.OrderCode ");
             sql.Append("LEFT JOIN dbo.Order_PolicyHolder D WITH(NOLOCK) ON A.OrderCode=D.OrderCode ");
             sql.Append("LEFT JOIN dbo.Order_Pay E WITH(NOLOCK) ON A.OrderCode = E.OrderCode ");
-            sql.Append("LEFT JOIN dbo.ProductV2_User F WITH(NOLOCK) ON A.UserId=F.Id ");
+            //sql.Append("LEFT JOIN dbo.ProductV2_User F WITH(NOLOCK) ON A.UserId=F.Id ");
+            sql.Append("LEFT JOIN dbo.RedPacket G WITH(NOLOCK) ON A.OrderCode=G.OrderCode ");
             sql.Append("WHERE 1=1 AND A.Status IS NOT NULL ");//AND A.Status IS NOT NULL
             if (!string.IsNullOrEmpty(licenseNo))
             {
@@ -732,7 +838,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(Createtime.ToString()))
             {
-                sql.AppendFormat(" AND A.CreateDate ={0} ", BillCode);
+                sql.AppendFormat(" AND A.CreateDate ='{0}' ", Createtime);
             }
             if (!string.IsNullOrEmpty(status.ToString()))
             {
@@ -745,9 +851,12 @@ namespace HONGLI.Repository
             {
                 DataTable dt = new DataTable();
                 var query = db.Database.SqlQuery<BillList>(sql.ToString());
+                dt.Columns.Add("Id");
                 dt.Columns.Add("OrderCode");
                 dt.Columns.Add("CreateDate");
                 dt.Columns.Add("Status");
+                dt.Columns.Add("BackStatus");
+                dt.Columns.Add("receiveStatus");
                 dt.Columns.Add("LicenseNo");
                 dt.Columns.Add("Name");
                 dt.Columns.Add("IdCardType");
@@ -758,12 +867,17 @@ namespace HONGLI.Repository
                 dt.Columns.Add("ProductId");
                 dt.Columns.Add("UserId");
                 dt.Columns.Add("Channel");
+                dt.Columns.Add("ProductOriginalPrice");
+                dt.Columns.Add("ProductDealPrice");
                 foreach (var item in query)
                 {
                     DataRow dr = dt.NewRow();
+                    dr["Id"] = item.Id;
                     dr["OrderCode"] = item.OrderCode;
                     dr["CreateDate"] = item.CreateDate;
                     dr["Status"] = item.Status;
+                    dr["BackStatus"] = item.BackStatus; ;
+                    dr["receiveStatus"] = item.receiveStatus; 
                     dr["LicenseNo"] = item.LicenseNo;
                     dr["Name"] = item.Name;
                     dr["IdCardType"] = item.IdCardType;
@@ -774,6 +888,8 @@ namespace HONGLI.Repository
                     dr["ProductId"] = item.ProductId;
                     dr["UserId"] = item.UserId;
                     dr["Channel"] = item.Channel;
+                    dr["ProductOriginalPrice"] = item.ProductOriginalPrice;
+                    dr["ProductDealPrice"] = item.ProductDealPrice;
                     dt.Rows.Add(dr);
                 }
                 return dt;
@@ -794,13 +910,14 @@ namespace HONGLI.Repository
             StringBuilder sql = new StringBuilder();
             sql.Append("SELECT COUNT(*) AS SumCount FROM ");
             sql.Append("(SELECT ROW_NUMBER() OVER(ORDER BY A.CreateDate DESC) AS PageIndex, A.OrderCode,A.CreateDate,A.Status,B.LicenseNo, ");
-            sql.Append("D.Name,IdCardType,IdCard,F.Mobile,E.PayType,ProductId,A.UserId,B.Channel,DeliverType ");
+            sql.Append("D.Name,IdCardType,IdCard,C.DeliverMobile AS Mobile,E.PayType,ProductId,A.UserId,B.Channel,DeliverType ");
             sql.Append("FROM dbo.Order_Base A WITH(NOLOCK) ");
             sql.Append("LEFT JOIN dbo.Order_Item B WITH(NOLOCK) ON A.OrderCode = B.OrderCode ");
             sql.Append("LEFT JOIN dbo.Order_Deliver C WITH(NOLOCK) ON A.OrderCode = C.OrderCode ");
             sql.Append("LEFT JOIN dbo.Order_PolicyHolder D WITH(NOLOCK) ON A.OrderCode=D.OrderCode ");
             sql.Append("LEFT JOIN dbo.Order_Pay E WITH(NOLOCK) ON A.OrderCode = E.OrderCode ");
-            sql.Append("LEFT JOIN dbo.ProductV2_User F WITH(NOLOCK) ON A.UserId=F.Id ");
+            //sql.Append("LEFT JOIN dbo.ProductV2_User F WITH(NOLOCK) ON A.UserId=F.Id ");
+            sql.Append("LEFT JOIN dbo.RedPacket G WITH(NOLOCK) ON A.OrderCode=G.OrderCode ");
             sql.Append("WHERE 1=1   AND A.Status IS NOT NULL");//AND A.Status IS NOT NULL
             if (!string.IsNullOrEmpty(licenseNo))
             {
@@ -816,7 +933,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(Createtime.ToString()))
             {
-                sql.AppendFormat(" AND A.CreateDate ={0} ", BillCode);
+                sql.AppendFormat(" AND A.CreateDate ='{0}' ", Createtime);
             }
             if (!string.IsNullOrEmpty(status.ToString()))
             {
@@ -838,12 +955,15 @@ namespace HONGLI.Repository
         }
         public class BillList
         {
+            public int Id { get; set; }
             public string OrderCode { get; set; }
             public Nullable<DateTime> CreateDate { get; set; }
             public Nullable<int> Status { get; set; }
+            public Nullable<int> BackStatus { get; set; }
             public string LicenseNo { get; set; }
             public string Name { get; set; }
             public Nullable<int> IdCardType { get; set; }
+            public Nullable<int> receiveStatus { get; set; }
             public string IdCard { get; set; }
             public string Mobile { get; set; }
             public Nullable<int> PayType { get;  set; }
@@ -851,6 +971,8 @@ namespace HONGLI.Repository
             public string ProductId { get; set; }
             public string UserId { get; set; }
             public Nullable<int> Channel { get; set; }
+            public Nullable<decimal> ProductOriginalPrice { get; set; }
+            public Nullable<decimal> ProductDealPrice { get; set; }
         }
 
         /// <summary>
@@ -957,12 +1079,12 @@ namespace HONGLI.Repository
                 sql.Append(",B.TotalAfterCoupon,B.AuditOrderStatus,B.Description,B.PrepaidAmount,F.PayType,D.Id AS OrderDeliverId, ");
                 sql.Append("D.OrderCode,D.DeliverType,D.DeliverAddress,D.DeliverTime,D.DeliverPrice,D.DeliverName ");
                 sql.Append(",D.DeliverMobile,D.DeliverDistrictCode FROM dbo.ProductV2_User A WITH(NOLOCK) ");
-                sql.AppendFormat("LEFT JOIN dbo.ProductV2_Item B WITH(NOLOCK) ON A.Id = B.UserId AND B.Id={0} ",ProductId);
-                sql.AppendFormat("LEFT JOIN dbo.Order_Base C WITH(NOLOCK) ON A.Id = C.UserId AND C.OrderCode='{0}' ", OrderCode);
+                sql.AppendFormat("LEFT JOIN dbo.ProductV2_Item B WITH(NOLOCK) ON A.Id = B.UserId  ");
+                sql.AppendFormat("LEFT JOIN dbo.Order_Base C WITH(NOLOCK) ON B.Id=C.ProductItemId AND C.OrderCode='{0}' ", OrderCode);
                 sql.Append("LEFT JOIN dbo.Order_Deliver D WITH(NOLOCK) ON C.OrderCode=D.OrderCode ");
                 sql.Append("LEFT JOIN dbo.Order_PolicyHolder E WITH(NOLOCK) ON C.OrderCode = E.OrderCode ");
                 sql.Append("LEFT JOIN dbo.Order_Pay F WITH(NOLOCK) ON C.OrderCode = F.OrderCode ");
-                sql.AppendFormat("WHERE A.Id={0} ",UserId);
+                sql.AppendFormat("WHERE B.Id={0} AND  c.UserId={1}  ", ProductId,UserId);
                 var query = db.Database.SqlQuery<BillDetails>(sql.ToString());
                 if(query.FirstOrDefault()!=null)
                 {
@@ -1122,6 +1244,23 @@ namespace HONGLI.Repository
             public string DeliverDistrictCode { get; set; }
         }
 
+        public int EditOrderStatus(int orderbaseid, string ordercode, int status)
+        {
+            int result = -1;
+            Order_Base model = new Order_Base();
+            model.Id = orderbaseid;
+            model.OrderCode = ordercode;
+            model.Status = status;
+            using (var context = new E2JOINDB())
+            {
+                context.Order_Base.Attach(model);
+                context.Entry(model).Property(t => t.Id).IsModified = true;
+                context.Entry(model).Property(t => t.Status).IsModified = true;
+                context.SaveChanges();
+                result = model.Id;
+            }
+            return result;
+        }
         /// <summary>
         /// 修改发票信息
         /// </summary>
@@ -1141,6 +1280,436 @@ namespace HONGLI.Repository
             }
 
             return result;
+        }
+        public int AddRedPacket(RedPacket model,int OrderBaseId)
+        {
+            int result = -1;
+            using (var context = new E2JOINDB())
+            {
+                context.RedPacket.Add(model);
+                Order_Base order_base = new Order_Base();
+                order_base.Id = OrderBaseId;
+                order_base.BackStatus = 1;
+                order_base.OrderCode = model.OrderCode;
+                context.Order_Base.Attach(order_base);
+                context.Entry(order_base).Property(t => t.Id).IsModified = true;
+                context.Entry(order_base).Property(t => t.BackStatus).IsModified = true;
+                context.SaveChanges();
+                result = model.Id;
+            }
+            return result;
+        }
+        public int EditRedPacket(string RedPacketCode,string openid,string infoStr,string BCNo)
+        {
+            int result = -1;
+            using (var context = new E2JOINDB())
+            {
+                RedPacket redpacket = new RedPacket();
+                redpacket=context.RedPacket.Where(c => c.RedPacketCode == RedPacketCode).FirstOrDefault();
+                redpacket.OpenId = openid;
+                redpacket.WX_UserInfo = infoStr;
+                redpacket.State = 1;
+                redpacket.SendTime = DateTime.Now;
+                redpacket.BCNo = BCNo;
+                context.SaveChanges();
+                result = redpacket.Id;
+            }
+            return result;
+        }
+        public RedPacket GetRedPacket(string RedPacketCode)
+        {
+            using (var context = new E2JOINDB())
+            {
+                RedPacket redpacket = new RedPacket();
+                redpacket = context.RedPacket.Where(c => c.RedPacketCode == RedPacketCode).FirstOrDefault();
+                return redpacket;
+            }
+        }
+        /// <summary>
+        /// 获取报表
+        /// </summary>
+        /// <param name="OrderCode"></param>
+        /// <param name="Page"></param>
+        /// <param name="BeginDate"></param>
+        /// <param name="EndDate"></param>
+        /// <param name="Source"></param>
+        /// <param name="UserName"></param>
+        /// <param name="LicenseNo"></param>
+        /// <returns></returns>
+        public DataTable GetReportList(string OrderCode, int Page, string BeginDate, string EndDate, string Source, string UserName, string LicenseNo)
+        {
+            #region SQL
+            //            SELECT ob.OrderCode,ob.CreateDate,items.LicenseNo,ph.Name,v2Items.ProductName,v2Items.ForceNo,v2Items.BizNo,v2Items.BizRate_Channel,ForceRate_Channel,v2Items.ForceRate,v2Items.BizTotal,v2Items.TaxTotal,(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',ob.PrepaidAmount,ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0)) AS 'RemainMoney'
+            //FROM dbo.Order_Base ob
+            //LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode
+            //LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode
+            //LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id
+            //WHERE 1 = 1
+            //ORDER BY ob.CreateDate DESC
+            #endregion
+
+            #region 查询条件
+            StringBuilder where = new StringBuilder();
+            if (!string.IsNullOrEmpty(UserName))
+            {
+                where.AppendFormat(" AND ph.Name LIKE '%{0}%'", UserName);
+            }
+            if (!string.IsNullOrEmpty(LicenseNo))
+            {
+                where.AppendFormat(" AND items.LicenseNo LIKE '%{0}%'", LicenseNo);
+            }
+            if (!string.IsNullOrEmpty(OrderCode))
+            {
+                where.AppendFormat(" AND ob.OrderCode LIKE '%{0}%'", OrderCode);
+            }
+            if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
+            {
+                where.AppendFormat(" AND ob.CreateDate BETWEEN '{0}' AND '{1}'", BeginDate, EndDate);
+            }
+
+            if (!string.IsNullOrEmpty(Source))
+            {
+                where.AppendFormat(" AND v2Items.Source ={0}", Source);
+            }
+            #endregion
+            #region 查询内容
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT * FROM  ");
+            sql.Append("(SELECT ROW_NUMBER() OVER(ORDER BY ob.CreateDate DESC) AS PageIndex, ");
+            sql.Append("ob.OrderCode,");
+            sql.Append("ob.CreateDate,");
+            sql.Append("items.LicenseNo,");
+            sql.Append("ph.Name,");
+            sql.Append("v2Items.ProductName,");
+            sql.Append("v2Items.ForceNo,");
+            sql.Append("v2Items.BizNo,");
+            sql.Append("v2Items.BizRate_Channel");
+            sql.Append(",ForceRate_Channel,");
+            sql.Append("v2Items.ForceTotal,");
+            sql.Append("v2Items.BizTotal,");
+            sql.Append("v2Items.TaxTotal,");
+            sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
+            sql.Append("ob.PrepaidAmount,");
+            sql.Append("ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0)) AS 'RemainMoney'");
+            sql.Append(" FROM dbo.Order_Base ob");
+            sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
+            sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
+            sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
+            sql.Append(" Where 1=1");
+            sql.Append(where.ToString());
+            sql.AppendFormat(") T4 WHERE PageIndex BETWEEN {0} AND {1}", Page * 10 - 9, Page * 10);
+            #endregion
+            using (var db = new E2JOINDB())
+            {
+                DataTable dt = new DataTable();
+                var query = db.Database.SqlQuery<ReportList>(sql.ToString());
+                object o = query as object;
+                dt.Columns.Add("OrderCode");
+                dt.Columns.Add("CreateDate");
+                dt.Columns.Add("LicenseNo");
+                dt.Columns.Add("Name");
+                dt.Columns.Add("ProductName");
+                dt.Columns.Add("ForceNo");
+                dt.Columns.Add("BizNo");
+                dt.Columns.Add("BizRate_Channel");
+                dt.Columns.Add("ForceRate_Channel");
+                dt.Columns.Add("ForceTotal");
+                dt.Columns.Add("BizTotal");
+                dt.Columns.Add("TaxTotal");
+                dt.Columns.Add("Commission");
+                dt.Columns.Add("PrepaidAmount");
+                dt.Columns.Add("RemainMoney");
+                foreach (var item in query)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["OrderCode"] = item.OrderCode;
+                    dr["CreateDate"] = item.CreateDate;
+                    dr["LicenseNo"] = item.LicenseNo;
+                    dr["Name"] = item.Name;
+                    dr["ProductName"] = item.ProductName;
+                    dr["ForceNo"] = item.ForceNo;
+                    dr["BizNo"] = item.BizNo;
+                    dr["BizRate_Channel"] = item.BizRate_Channel;
+                    dr["ForceRate_Channel"] = item.ForceRate_Channel;
+                    dr["ForceTotal"] = item.ForceTotal;
+                    dr["BizTotal"] = item.BizTotal;
+                    dr["TaxTotal"] = item.TaxTotal;
+                    dr["Commission"] = item.Commission;
+                    dr["PrepaidAmount"] = item.PrepaidAmount;
+                    dr["RemainMoney"] = item.RemainMoney;
+                    dt.Rows.Add(dr);
+                }
+                return dt;
+            }
+        }
+
+        public DataTable ExportReport(string OrderCode, string BeginDate, string EndDate, string Source, string UserName, string LicenseNo)
+        {
+            #region SQL
+            //            SELECT ob.OrderCode,ob.CreateDate,items.LicenseNo,ph.Name,v2Items.ProductName,v2Items.ForceNo,v2Items.BizNo,v2Items.BizRate_Channel,ForceRate_Channel,v2Items.ForceRate,v2Items.BizTotal,v2Items.TaxTotal,(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',ob.PrepaidAmount,ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0)) AS 'RemainMoney'
+            //FROM dbo.Order_Base ob
+            //LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode
+            //LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode
+            //LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id
+            //WHERE 1 = 1
+            //ORDER BY ob.CreateDate DESC
+            #endregion
+
+            #region 查询条件
+            StringBuilder where = new StringBuilder();
+            if (!string.IsNullOrEmpty(UserName))
+            {
+                where.AppendFormat(" AND ph.Name LIKE '%{0}%'", UserName);
+            }
+            if (!string.IsNullOrEmpty(LicenseNo))
+            {
+                where.AppendFormat(" AND items.LicenseNo LIKE '%{0}%'", LicenseNo);
+            }
+            if (!string.IsNullOrEmpty(OrderCode))
+            {
+                where.AppendFormat(" AND ob.OrderCode LIKE '%{0}%'", OrderCode);
+            }
+            if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
+            {
+                where.AppendFormat(" AND ob.CreateDate BETWEEN '{0}' AND '{1}'", BeginDate, EndDate);
+            }
+
+            if (!string.IsNullOrEmpty(Source))
+            {
+                where.AppendFormat(" AND v2Items.Source ={0}", Source);
+            }
+            #endregion
+            #region 查询内容
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT  ");
+            sql.Append("ob.OrderCode,");
+            sql.Append("ob.CreateDate,");
+            sql.Append("items.LicenseNo,");
+            sql.Append("ph.Name,");
+            sql.Append("v2Items.ProductName,");
+            sql.Append("v2Items.ForceNo,");
+            sql.Append("v2Items.BizNo,");
+            sql.Append("v2Items.BizRate_Channel");
+            sql.Append(",ForceRate_Channel,");
+            sql.Append("v2Items.ForceTotal,");
+            sql.Append("v2Items.BizTotal,");
+            sql.Append("v2Items.TaxTotal,");
+            sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
+            sql.Append("ob.PrepaidAmount,");
+            sql.Append("ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0)) AS 'RemainMoney'");
+            sql.Append(" FROM dbo.Order_Base ob");
+            sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
+            sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
+            sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
+            sql.Append(" Where 1=1");
+            sql.Append(where.ToString());
+            sql.Append(" ORDER BY ob.CreateDate DESC");
+            #endregion
+            using (var db = new E2JOINDB())
+            {
+                DataTable dt = new DataTable();
+                var query = db.Database.SqlQuery<ReportList>(sql.ToString());
+                object o = query as object;
+                dt.Columns.Add("订单编号");
+                dt.Columns.Add("出单日期");
+                dt.Columns.Add("车牌号");
+                dt.Columns.Add("被保人");
+                dt.Columns.Add("承保公司");
+                dt.Columns.Add("交强险保单号");
+                dt.Columns.Add("商业险保单号");
+                dt.Columns.Add("商业险系统费率");
+                dt.Columns.Add("交强险系统费率");
+                dt.Columns.Add("交强险保险费");
+                dt.Columns.Add("商业险保险费");
+                dt.Columns.Add("车船税保险费");
+                dt.Columns.Add("佣金");
+                dt.Columns.Add("预付金额");
+                dt.Columns.Add("待付金额");
+                foreach (var item in query)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["订单编号"] = item.OrderCode;
+                    dr["出单日期"] = item.CreateDate;
+                    dr["车牌号"] = item.LicenseNo;
+                    dr["被保人"] = item.Name;
+                    dr["承保公司"] = item.ProductName;
+                    dr["交强险保单号"] = item.ForceNo;
+                    dr["商业险保单号"] = item.BizNo;
+                    dr["商业险系统费率"] = item.BizRate_Channel;
+                    dr["交强险系统费率"] = item.ForceRate_Channel;
+                    dr["交强险保险费"] = item.ForceTotal;
+                    dr["商业险保险费"] = item.BizTotal;
+                    dr["车船税保险费"] = item.TaxTotal;
+                    dr["佣金"] = item.Commission;
+                    dr["预付金额"] = item.PrepaidAmount;
+                    dr["待付金额"] = item.RemainMoney;
+                    dt.Rows.Add(dr);
+                }
+                return dt;
+            }
+        }
+
+        public DataTable GetReportSummary(string OrderCode, string BeginDate, string EndDate, string Source, string UserName, string LicenseNo)
+        {
+            #region 查询条件
+            StringBuilder where = new StringBuilder();
+            if (!string.IsNullOrEmpty(UserName))
+            {
+                where.AppendFormat(" AND ph.Name LIKE '%{0}%'", UserName);
+            }
+            if (!string.IsNullOrEmpty(LicenseNo))
+            {
+                where.AppendFormat(" AND items.LicenseNo LIKE '%{0}%'", LicenseNo);
+            }
+            if (!string.IsNullOrEmpty(OrderCode))
+            {
+                where.AppendFormat(" AND ob.OrderCode LIKE '%{0}%'", OrderCode);
+            }
+            if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
+            {
+                where.AppendFormat(" AND ob.CreateDate BETWEEN '{0}' AND '{1}'", BeginDate, EndDate);
+            }
+
+            if (!string.IsNullOrEmpty(Source))
+            {
+                where.AppendFormat(" AND v2Items.Source ={0}", Source);
+            }
+            #endregion
+            #region 查询内容
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT ");
+            sql.Append("SUM(ISNULL(v2Items.ForceTotal,0)) ForceTotal,");
+            sql.Append("SUM(ISNULL(v2Items.BizTotal,0)) BizTotal,");
+            sql.Append("SUM(ISNULL(v2Items.TaxTotal,0)) TaxTotal,");
+            sql.Append("SUM((ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100)) AS 'Commission',");
+            sql.Append("SUM(ISNULL(ob.PrepaidAmount,0)) PrepaidAmount,");
+            sql.Append("SUM(ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0))) AS 'RemainMoney'");
+            sql.Append(" FROM dbo.Order_Base ob");
+            sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
+            sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
+            sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
+            sql.Append(" Where 1=1");
+            sql.Append(where.ToString());
+            #endregion
+            using (var db = new E2JOINDB())
+            {
+                DataTable dt = new DataTable();
+                var query = db.Database.SqlQuery<ReportSummary>(sql.ToString());
+                object o = query as object;
+                dt.Columns.Add("ForceTotal");
+                dt.Columns.Add("BizTotal");
+                dt.Columns.Add("TaxTotal");
+                dt.Columns.Add("Commission");
+                dt.Columns.Add("PrepaidAmount");
+                dt.Columns.Add("RemainMoney");
+                foreach (var item in query)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["ForceTotal"] = item.ForceTotal;
+                    dr["BizTotal"] = item.BizTotal;
+                    dr["TaxTotal"] = item.TaxTotal;
+                    dr["Commission"] = item.Commission;
+                    dr["PrepaidAmount"] = item.PrepaidAmount;
+                    dr["RemainMoney"] = item.RemainMoney;
+                    dt.Rows.Add(dr);
+                }
+                return dt;
+            }
+        }
+
+        public decimal GetReportListCount(string OrderCode, int Page, string BeginDate, string EndDate, string Source, string UserName, string LicenseNo)
+        {
+            #region 查询条件
+            StringBuilder where = new StringBuilder();
+            if (!string.IsNullOrEmpty(UserName))
+            {
+                where.AppendFormat(" AND ph.Name LIKE '%{0}%'", UserName);
+            }
+            if (!string.IsNullOrEmpty(LicenseNo))
+            {
+                where.AppendFormat(" AND items.LicenseNo LIKE '%{0}%'", LicenseNo);
+            }
+            if (!string.IsNullOrEmpty(OrderCode))
+            {
+                where.AppendFormat(" AND ob.OrderCode LIKE '%{0}%'", OrderCode);
+            }
+            if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
+            {
+                where.AppendFormat(" AND ob.CreateDate BETWEEN '{0}' AND '{1}'", BeginDate, EndDate);
+            }
+
+            if (!string.IsNullOrEmpty(Source))
+            {
+                where.AppendFormat(" AND v2Items.Source ={0}", Source);
+            }
+            #endregion
+            #region 查询内容
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT COUNT(*) AS SumCount FROM  ");
+            sql.Append("(SELECT ROW_NUMBER() OVER(ORDER BY ob.CreateDate DESC) AS PageIndex, ");
+            sql.Append("ob.OrderCode,");
+            sql.Append("ob.CreateDate,");
+            sql.Append("items.LicenseNo,");
+            sql.Append("ph.Name,");
+            sql.Append("v2Items.ProductName,");
+            sql.Append("v2Items.ForceNo,");
+            sql.Append("v2Items.BizNo,");
+            sql.Append("v2Items.BizRate_Channel,");
+            sql.Append("ForceRate_Channel,");
+            sql.Append("v2Items.ForceRate,");
+            sql.Append("v2Items.ForceTotal,");
+            sql.Append("v2Items.BizTotal,");
+            sql.Append("v2Items.TaxTotal,");
+            sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
+            sql.Append("ob.PrepaidAmount,");
+            sql.Append("ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0)) AS 'RemainMoney'");
+            sql.Append(" FROM dbo.Order_Base ob");
+            sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
+            sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
+            sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
+            sql.Append(" Where 1=1");
+            sql.Append(where.ToString());
+            sql.AppendFormat(") T4");
+            #endregion
+            using (var db = new E2JOINDB())
+            {
+                int SumCount = 0;
+                var query = db.Database.SqlQuery<OrderListCount>(sql.ToString()).ToList();
+                if (query.Count > 0)
+                {
+                    SumCount = string.IsNullOrEmpty(query.FirstOrDefault().SumCount.ToString()) ? 0 : Convert.ToInt32(query.FirstOrDefault().SumCount);
+                }
+                return Math.Ceiling(Convert.ToDecimal(SumCount) / 10);
+            }
+        }
+
+        public class ReportSummary
+        {
+            public decimal? ForceTotal { get; set; }
+            public decimal? BizTotal { get; set; }
+            public decimal? TaxTotal { get; set; }
+            public decimal? Commission { get; set; }
+            public decimal? PrepaidAmount { get; set; }
+            public decimal? RemainMoney { get; set; }
+        }
+
+        public class ReportList
+        {
+            public string OrderCode { get; set; }
+            public DateTime? CreateDate { get; set; }
+            public string LicenseNo { get; set; }
+            public string Name { get; set; }
+            public string ProductName { get; set; }
+            public string ForceNo { get; set; }
+            public string BizNo { get; set; }
+            public decimal? BizRate_Channel { get; set; }
+            public decimal? ForceRate_Channel { get; set; }
+            public decimal? ForceTotal { get; set; }
+            public decimal? BizTotal { get; set; }
+            public decimal? TaxTotal { get; set; }
+            public decimal? Commission { get; set; }
+            public decimal? PrepaidAmount { get; set; }
+            public decimal? RemainMoney { get; set; }
         }
 
     }

@@ -63,7 +63,7 @@
                 <div class="f-list01-go"><i class="f-list01-icon-arrow-down" data-sh=".page12-tips"></i></div>
             </div>
             @*<div class="page12-title02-tips page12-tips">车损险、三者险（20万）、盗抢险、划痕险(2000元）、玻璃单独破损险、座位险（司机1万）、座位险（乘客1万）、不计免赔险</div>*@
-            <div class="page12-title02-tips page12-tips">@(Model.Description)</div>
+            <div class="page12-title02-tips page12-tips"  style="margin-top:0.05rem">@(Model.Description)</div>
         </div>
         <div class="f-list01-group page12-tips">
             <div style="display:@(Model.CheSun_BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
@@ -111,7 +111,7 @@
                 <div class="f-list01-other">@(Model.BoLi_BaoFei)元</div>
             </div>
             <div style="display:@(Model.SheShui_BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
-                <div class="f-list01-main">涉水险</div>
+                <div class="f-list01-main">发动机特别损失险</div>
                 <div class="f-list01-other">@(Model.SheShui_BaoFei)元</div>
             </div>
             <div style="display:@(Model.ZiRan_BaoE > 0 ? "list":"none")" class="f-list01 page12-list02">
@@ -127,12 +127,12 @@
                 <div class="f-list01-other">@(Model.BuJiMianFuJia_BaoFei)元</div>
             </div>
         </div>
-        <div class="page12-hbzt-wrap">
+        @*<div class="page12-hbzt-wrap">
             <div class="page12-hbzt">
                 <div class="page12-hbzt-title page12-hbzt-success-title"><span>核保<br>成功</span></div>
-                @*<div class="page12-hbzt-content page12-hbzt-success-content"><span>核保内容：xxxxxxxxxxxxxxxxxxx</span></div>*@
+                @*<div class="page12-hbzt-content page12-hbzt-success-content"><span>核保内容：xxxxxxxxxxxxxxxxxxx</span></div>
             </div>
-        </div>
+        </div>*@
 
         <div class="page12-title01"><i></i>您的报价单：（优惠部分已由平台车险专项积分抵扣）</div>
 
@@ -140,9 +140,9 @@
         var forceCoupon = Model.ForceTotal * (100 - Model.ForceRate + Model.ForceRate_Channel) * Convert.ToDecimal(0.01);
         var taxCoupon = Model.TaxTotal * (100 - Model.TaxRate + Model.TaxRate_Channel) * Convert.ToDecimal(0.01);
 
-        var forceRate = 100 - Model.ForceRate + Model.ForceRate_Channel;
-        var taxRate = 100 - Model.TaxRate + Model.TaxRate_Channel;
-        var bizRate = 100 - Model.BizRate + Model.BizRate_Channel;
+        var forceRate = decimal.Round(Convert.ToDecimal(100 - (Model.ForceRate == null ? 0 : Model.ForceRate) + (Model.ForceRate_Channel == null ? 0 : Model.ForceRate_Channel)), 0);
+        var taxRate = decimal.Round(Convert.ToDecimal(100 - (Model.TaxRate == null ? 0 : Model.TaxRate) + (Model.TaxRate_Channel == null ? 0 : Model.TaxRate_Channel)), 0);
+        var bizRate = decimal.Round(Convert.ToDecimal(100 - (Model.BizRate==null?0: Model.BizRate) + (Model.BizRate_Channel==null?0: Model.BizRate_Channel)), 0);
 
 
         <div class="f-list01-group">

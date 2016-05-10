@@ -673,5 +673,13 @@ namespace HONGLI.Service
             return result;
         }
         #endregion
+        public Order_Base GetOrderByOrderCode(string ordercode)
+        {
+            return new ProductV3Repository().GetOrderByOrderCode(ordercode);
+        }
+        public Order_Item GetOrdertemByOrderCode(string ordercode)
+        {
+            return new ProductV3Repository().GetOrdertemByOrderCode(ordercode);
+        }
     }
 }

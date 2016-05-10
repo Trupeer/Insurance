@@ -1,0 +1,71 @@
+﻿
+@using System.Data;
+@{
+    DataTable dt = ViewBag.list as DataTable;
+}
+<table class="table table-bordered">
+    <tr>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>订单号</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>出单日期</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>车牌号</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>被保险人</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>承保公司</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>交强险保单号</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>商业险保单号</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>商业险系统费率</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>交强险系统费率</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>交强险保险费</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>商业险保险费</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>车船税保险费</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>佣金</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>预付金额</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>待付金额</strong></td>
+
+
+    </tr>
+    @if (dt.Rows.Count > 0)
+    {
+        foreach (DataRow item in dt.Rows)
+        {
+            <tr>
+                <td align="center">@item["OrderCode"]</td>
+                <td align="center">@item["CreateDate"]</td>
+                <td align="center">@item["LicenseNo"]</td>
+                <td align="center">@item["Name"]</td>
+                <td align="center">@item["ProductName"]</td>
+                <td align="center">@item["ForceNo"]</td>
+                <td align="center">@item["BizNo"]</td>
+                <td align="center">@item["BizRate_Channel"]</td>
+                <td align="center">@item["ForceRate_Channel"]</td>
+                <td align="center">@item["ForceTotal"]</td>
+                <td align="center">@item["BizTotal"]</td>
+                <td align="center">@item["TaxTotal"]</td>
+                <td align="center">@item["Commission"]</td>
+                <td align="center">@item["PrepaidAmount"]</td>
+                <td align="center">@item["RemainMoney"]</td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+
+        </tr>
+    }
+
+</table>

@@ -125,7 +125,19 @@
     <Compile Include="ReadPack.cs">
       <DependentUpon>E2JOINDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="RedPacket.cs">
+      <DependentUpon>E2JOINDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="ResultData.cs" />
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>E2JOINDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>E2JOINDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>E2JOINDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="SYS_LogInfo.cs">
       <DependentUpon>E2JOINDB.tt</DependentUpon>
     </Compile>

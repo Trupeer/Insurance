@@ -111,7 +111,7 @@ namespace HONGLI.Web.Controllers
                 maxFileSize = 2097152;
             }
             model.MaxUploadSize = maxFileSize;
-            OrderPolicyHolderV3 orderPolicyHolder = new OrderPolicyHolderV3();
+            OrderPolicyHolder orderPolicyHolder = new OrderPolicyHolder();
             if (model.IdCardType == 1)
             {
                 User_PolicyHolder oldPpolicyHolder = _policyHolderService.GetPolicyHolderById(model.Id);
@@ -121,7 +121,7 @@ namespace HONGLI.Web.Controllers
                     var policyHolderCookies = Request.Cookies["HONGLI.order.policyHolder"].Value;
                     if (policyHolderCookies != null)
                     {
-                        orderPolicyHolder = policyHolderCookies.FromJsonTo<OrderPolicyHolderV3>();
+                        orderPolicyHolder = policyHolderCookies.FromJsonTo<OrderPolicyHolder>();
                     }
                 }
 
@@ -261,7 +261,7 @@ namespace HONGLI.Web.Controllers
                 //common.cookie.setCookie(global.domain, global.cookie.order.policyHolder, order_policyHolder_str, global.expire);
                 if (result > 0)
                 {
-                    OrderPolicyHolderV3 newOrderPolicyHolder = new OrderPolicyHolderV3();
+                    OrderPolicyHolder newOrderPolicyHolder = new OrderPolicyHolder();
                     if (model.IdCardType == 1)
                     {
                         newOrderPolicyHolder.name = model.Name;
@@ -336,12 +336,12 @@ namespace HONGLI.Web.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Do", "OrderV2", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
+                            return RedirectToAction("Do", "OrderV3", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
                         }
                     }
                     else
                     {
-                        return RedirectToAction("Do", "OrderV2", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
+                        return RedirectToAction("Do", "OrderV3", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
                         //return View(model);
                     }
                 }

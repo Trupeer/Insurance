@@ -13,6 +13,8 @@
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>配送方式</strong></td>
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>保单状态</strong></td>
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>付款人电话 </strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>返现状态</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>领取状态</strong></td>
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>详情</strong></td>
 
     </tr>
@@ -31,6 +33,14 @@
                     {
                         <span>支付宝</span>
                     }
+                    else if(item["PayType"].ToString()=="2")
+                    {
+                    <span>全款刷卡返现</span>
+                    }
+                    else if (item["PayType"].ToString() == "3")
+                    {
+                        <span>现金折扣直付</span>
+                    }
                 </td>
                 <td align="center">
                     @if (item["DeliverType"].ToString() == "1")
@@ -42,14 +52,107 @@
                         <span>自提</span>
                     }
                 </td>
-                <td align="center">@item["Status"]</td>
+                <td align="center">
+                    <select orderbaseid="@item["Id"]" ordercode="@item["OrderCode"]" class="StatusSelect">
+                        @switch (item["Status"].ToString())
+                        {
+                            case "0":
+                        <option value="0" selected>未确认</option>
+                            <option value="1">未支付</option>
+                            <option value="2">上门收款</option>
+                            <option value="3">已支付</option>
+                            <option value="4">邮寄保单</option>
+                            <option value="5">已完成</option>
+                                break;
+                            case "1":
+                        <option value="0">未确认</option>
+                            <option value="1" selected>未支付</option>
+                            <option value="2">上门收款</option>
+                            <option value="3">已支付</option>
+                            <option value="4">邮寄保单</option>
+                            <option value="5">已完成</option>
+                                break;
+                            case "2":
+                        <option value="0">未确认</option>
+                            <option value="1">未支付</option>
+                            <option value="2" selected>上门收款</option>
+                            <option value="3">已支付</option>
+                            <option value="4">邮寄保单</option>
+                            <option value="5">已完成</option>
+                                break;
+                            case "3":
+                        <option value="0">未确认</option>
+                            <option value="1">未支付</option>
+                            <option value="2">上门收款</option>
+                            <option value="3" selected>已支付</option>
+                            <option value="4">邮寄保单</option>
+                            <option value="5">已完成</option>
+                                break;
+                            case "4":
+                        <option value="0">未确认</option>
+                            <option value="1">未支付</option>
+                            <option value="2">上门收款</option>
+                            <option value="3">已支付</option>
+                            <option value="4" selected>邮寄保单</option>
+                            <option value="5">已完成</option>
+                                break;
+                            case "5":
+                        <option value="0">未确认</option>
+                            <option value="1">未支付</option>
+                            <option value="2">上门收款</option>
+                            <option value="3">已支付</option>
+                            <option value="4">邮寄保单</option>
+                            <option value="5" selected>已完成</option>
+                                break;
+
+                        }
+                    </select>
+                </td>
                 <td align="center">@item["Mobile"]</td>
+                <td align="center">
+                    @if (item["PayType"].ToString() == "2")
+                    {
+                        if (item["Status"].ToString() == "3" || item["Status"].ToString() == "4" || item["Status"].ToString() == "5")
+                        {
+                            if (item["BackStatus"].ToString() == "0")
+                            {
+                                decimal ProductOriginalPrice = 0;
+                                decimal ProductDealPrice = 0;
+                                decimal.TryParse(item["ProductOriginalPrice"].ToString(), out ProductOriginalPrice);
+                                decimal.TryParse(item["ProductDealPrice"].ToString(), out ProductDealPrice);
+
+                                <a href="#" onclick="Backmoney(@item["Id"],'@item["OrderCode"]','@item["Name"]',@decimal.Round(ProductOriginalPrice-ProductDealPrice,2),'@item["Mobile"]')">返现</a>
+                            }
+                            else if (item["BackStatus"].ToString() == "1")
+                            {
+                                <text>已返现</text>
+                                }
+                            }
+                            else
+                            {
+                            <text>-</text>
+                            }
+                        }
+                    else
+                    {
+                        <text>-</text>
+}
+                </td>
+<td>@switch (item["receiveStatus"].ToString())
+{
+    case "0":<text>未领取</text>;
+        break;
+    case "1":<text>已领取</text>;
+        break;
+
+}
+                </td>
 <td align="center"><a href="BillDetail?UserId=@item["UserId"]&ProductId=@item["ProductId"]&OrderCode=@item["OrderCode"]">详情</a></td>
             </tr>
         }
-    }
-    else
-    {
+                }
+                else
+                {
         <tr>
             <td align="center"></td>
             <td align="center">&nbsp;</td>
@@ -61,8 +164,9 @@
             <td align="center">&nbsp;</td>
             <td align="center">&nbsp;</td>
             <td align="center">&nbsp;</td>
-            
+
+
         </tr>
-    }
+                }
 
 </table>

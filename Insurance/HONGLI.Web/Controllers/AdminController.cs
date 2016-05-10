@@ -162,8 +162,19 @@ namespace HONGLI.Web.Controllers
         [HttpPost]
         public ActionResult OrderDetail(ProductV2UserItemPolicyModels model)
         {
+            if (HttpContext.Session["UserId"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
             int userId = -1;
             int ProductItemId = -1;
+            int ClientuserId = 0;
+            BaseInfo_UserInfo baseinfo_userinfo = new BaseInfo_UserInfo();
+            baseinfo_userinfo = new AdminService().GetUserIdByMobile(model.Mobile);
+            if(baseinfo_userinfo!=null)
+            {
+                ClientuserId = baseinfo_userinfo.ID;
+            }
             #region 用户表数据重写
             ProductV2_User productv2_user = new ProductV2_User();
             productv2_user.Id = model.Id;
@@ -288,7 +299,9 @@ namespace HONGLI.Web.Controllers
             order_base.OrderCode = model.OrderBaeOrderCode == null ? ordercode : model.OrderBaeOrderCode;
             order_base.CreateDate = model.OrderBaeCreateDate == null ? DateTime.Now : model.OrderBaeCreateDate;
             order_base.Channel = model.OrderBaeChannel == null ? Convert.ToInt32(model.Channel) : model.OrderBaeChannel;
-            order_base.UserId = model.OrderBaeUserId == null ? model.Id.ToString() : model.OrderBaeUserId;
+            order_base.UserId = model.OrderBaeUserId == null ? ClientuserId.ToString() : model.OrderBaeUserId;
+            order_base.ProductItemId = model.ItemId;
+            order_base.BackStatus = 0;
             //order_item订单详情表
             Order_Item order_item = new Order_Item();
             order_item.Id = model.OrderItemId;
@@ -318,7 +331,7 @@ namespace HONGLI.Web.Controllers
             order_deliver.DeliverMobile = model.DeliverMobile;
             order_deliver.DeliverDistrictCode = model.DeliverDistrictCode;
             order_deliver.CreateDate = model.OrderBaeCreateDate==null?DateTime.Now:model.OrderBaeCreateDate;
-            order_deliver.UserId = model.Id;
+            order_deliver.UserId = order_base.UserId==null?0:Convert.ToInt32(order_base.UserId);
             //order_base.Order_Deliver = new List<Order_Deliver>() { order_deliver };
             if(order_deliver.Id!=0)
             {
@@ -351,6 +364,9 @@ namespace HONGLI.Web.Controllers
             }
 
             #endregion
+
+            //修改用户选择项
+                new ProductV3Service().EditProductItemUserCheck(model.ItemId, model.Id);
 
             var orderList = new OrderService().GetOrderByCode(order_base.OrderCode);
             if (orderList == null)
@@ -410,9 +426,14 @@ namespace HONGLI.Web.Controllers
             return "";
         }
         [HttpPost]
-        public int ChangeAuditDocuments(int ItemId)
+        public int ChangeAuditDocuments(int ItemId,int Clientuser)
         {
+            if(HttpContext.Session["UserId"]==null)
+            {
+                return 3;
+            }
             int UserId = Convert.ToInt32(HttpContext.Session["UserId"].ToString());
+            new ProductV3Service().EditProductItemUserCheck(ItemId, Clientuser);
             int result = new AdminService().ChangeAuditDocuments(UserId, ItemId);
             if(result>0)
             {
@@ -446,7 +467,7 @@ namespace HONGLI.Web.Controllers
             order_item.Buid = buid;
             order_base.Order_Item.Add(order_item);
             int result = new AdminService().ChangeOrderList(order_base);
-            if(result>0)
+            if (result>0)
             {
                 return 1;
             }
@@ -477,6 +498,18 @@ namespace HONGLI.Web.Controllers
         {
             ViewBag.list = adminservice.GetBillDetails(UserId, ProductId, OrderCode);
             return View();
+        }
+        public int EditOrderStatus(int orderbaseid,string ordercode,int status)
+        {
+            int result = adminservice.EditOrderStatus(orderbaseid, ordercode, status);
+            if(result>0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
         public int EditDeliverDetail(int? InvoiceType,string InvoiceTitle, int? PayType,int? DeliverType,int? beforeDeliverType,string DeliverName,string DeliverMobile,string DeliverDistrictCode,string DeliverAddress,int? OrderBaseId,int? OrderDeliverId,string orderCode,decimal? DeliverPrice,int? UserId,DateTime? OrderBaeCreateDate)
         {
@@ -511,6 +544,105 @@ namespace HONGLI.Web.Controllers
             }
             
         }
+        public int AddRedPacket(int Id, string OrderCode,string name,decimal money,string mobile)
+        {
+            if (HttpContext.Session["UserId"] == null)
+            {
+                return -3;
+            }
+            RedPacket redpacket = new RedPacket();
+            redpacket.OrderCode = OrderCode;
+            redpacket.RedPacketMoney = money;
+            redpacket.RedPacketName = "返现给" + name + "保费" + money + "元"; 
+            redpacket.CreateTime = DateTime.Now;
+            redpacket.State = 0;
+            redpacket.RedPacketRemark = "返现给" + name + "保费" + money + "元";
+            redpacket.CreateName = HttpContext.Session["UserId"].ToString();
+            redpacket.RedPacketCode = GetRedPacketCode();
+            int result = new AdminService().AddRedPacket(redpacket,Id);
+            if(result>-1)
+            {
+                SMSController sms = new SMSController();
+                try
+                {
+                    new Util().SendRedPacketSMS(mobile, new string[] { redpacket.RedPacketCode, "5" });
+                }
+                catch
+                {
+                    result = -2;
+                }
+            }
+            return result;
+        }
+        #endregion
+        #region 对账
+        public ActionResult ReportStatistics()
+        {
+            return View();
+        }
+
+        public ActionResult ReportDetail()
+        {
+            return View();
+        }
+
+        public ActionResult ExportExcel()
+        {
+            string OrderCode = Request["OrderCode"];
+            string Name = Request["Name"];
+            string LicenseNo = Request["LicenseNo"];
+            string BeginDate = Request["BeginDate"];
+            string EndDate = Request["EndDate"];
+            string InsuranceCompany = Request["InsuranceCompany"];
+            DataTable orderlist = adminservice.ExportReport(OrderCode, BeginDate, EndDate, InsuranceCompany, Name, LicenseNo);
+            System.IO.MemoryStream ms = HONGLI.Service.NPOIHelper.RenderDataTableToExcel(orderlist, "");
+            Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", HttpUtility.UrlEncode("报表信息" + "_" + DateTime.Now.ToString("yyyy-MM-dd"), System.Text.Encoding.UTF8)));
+            Response.BinaryWrite(ms.ToArray());
+            Response.End();
+            ms.Close();
+            ms.Dispose();
+            return View();
+        }
+
+        public ActionResult ReportStatisticsListTable()
+        {
+            int Page = Convert.ToInt32(Request["Page"]);
+            string OrderCode = Request["OrderCode"];
+            string Name = Request["Name"];
+            string LicenseNo = Request["LicenseNo"];
+            string BeginDate = Request["BeginDate"];
+            string EndDate = Request["EndDate"];
+            string InsuranceCompany = Request["InsuranceCompany"];
+            DataTable orderlist = adminservice.GetReportList(OrderCode, Page, BeginDate, EndDate, InsuranceCompany, Name, LicenseNo);
+            ViewBag.list = orderlist;
+            return PartialView();
+        }
+        [HttpGet]
+        public decimal GetReportListCount()
+        {
+            int Page = Convert.ToInt32(Request["Page"]);
+            string OrderCode = Request["OrderCode"];
+            string Name = Request["Name"];
+            string LicenseNo = Request["LicenseNo"];
+            string BeginDate = Request["BeginDate"];
+            string EndDate = Request["EndDate"];
+            string InsuranceCompany = Request["InsuranceCompany"];
+            decimal SumCount = adminservice.GetReportListCount(OrderCode, Page, BeginDate, EndDate, InsuranceCompany, Name, LicenseNo);
+            return SumCount;
+        }
+
+        public ActionResult ReportSummary()
+        {
+            string OrderCode = Request["OrderCode"];
+            string Name = Request["Name"];
+            string LicenseNo = Request["LicenseNo"];
+            string BeginDate = Request["BeginDate"];
+            string EndDate = Request["EndDate"];
+            string InsuranceCompany = Request["InsuranceCompany"];
+            DataTable orderlist = adminservice.GetReportSummary(OrderCode, BeginDate, EndDate, InsuranceCompany, Name, LicenseNo);
+            ViewBag.list = orderlist;
+            return PartialView();
+        }
         #endregion
         /// <summary>   
         /// MD5加密并输出十六进制字符串   
@@ -538,6 +670,13 @@ namespace HONGLI.Web.Controllers
                 }
             }
             return dest;
+        }
+        public static string GetRedPacketCode()
+        {
+            long i = 1;
+            foreach (byte b in Guid.NewGuid().ToByteArray())
+                i *= ((int)b + 1);
+            return string.Format("{0:x}", i - DateTime.Now.Ticks);
         }
     }
 }

@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "平台统计";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="right_cont">
+    <div class="title_right"><strong>统计详情</strong><input type="button" value="导出Excel" class="btn btn-info " style="width:80px;" onclick="ExportExcel()" /></div>
+    <div style="margin:auto">
+        <div id="recordlist"></div>
+        <div class="pages">
+            <div id="Pagination"></div>
+            <div class="searchPage">
+                <span class="page-sum">共<strong class="allPage" id="SumPages"></strong>页</span>
+                <span class="page-go">跳转<input type="text" id="anypageindex">页</span>
+                <a href="javascript:;" class="page-btn" id="goanypage">GO</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    var OrderCode = getUrlParam("OrderCode");
+    var username = getUrlParam("Name");
+    var LicenseNo = getUrlParam("LicenseNo");
+    var BeginDate = getUrlParam("BeginDate");
+    var EndDate = getUrlParam("EndDate");
+    var InsuranceCompany = getUrlParam("InsuranceCompany");
+
+    function ExportExcel()
+    {
+        window.open("ExportExcel?OrderCode=" + OrderCode + "&Name=" + username + "&LicenseNo=" + LicenseNo + "&BeginDate=" + BeginDate + "&EndDate=" + EndDate + "&InsuranceCompany=" + InsuranceCompany);
+    }
+  
+    var pageindex = 1;
+    $(function () {
+        submit(1, 1);
+        $("#goanypage").click(function () {
+            var thispage = parseInt($("#anypageindex").val());
+            submit(thispage, null);
+        });
+    });
+    var mypage = 1;
+    var pageCount = 0;
+    function submit(page,check)
+    {
+      
+
+        if (page == "99999")
+        {
+            mypage += 1;
+            page = mypage
+        }
+        else if (page == "0")
+        {
+            mypage -= 1;
+            page = mypage;
+        }
+        else if (isNaN(page))
+         {
+            page = 1;
+         }
+        else {
+            page = page;
+            mypage = page;
+        }
+        if (pageCount > 0)
+        {
+            if (page > pageCount)
+            {
+                page = 1;
+            }
+        }
+        if (check != null) {
+            $.get("GetReportListCount", {OrderCode:OrderCode,Name:username,LicenseNo:LicenseNo, BeginDate: BeginDate, EndDate, EndDate, InsuranceCompany: InsuranceCompany }, function(data) {
+                var sumcount = parseInt(data);
+                $("#SumPages").html(sumcount);
+                $("#Pagination").pagination(sumcount);
+                pageCount = sumcount;
+            });
+            }
+        $("#recordlist").load("ReportStatisticsListTable", {Page:page, OrderCode: OrderCode, Name: username, LicenseNo: LicenseNo, BeginDate: BeginDate, EndDate, EndDate, InsuranceCompany: InsuranceCompany}, function () {
+        });
+    }
+
+
+    //获取url中的参数
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+</script>
+

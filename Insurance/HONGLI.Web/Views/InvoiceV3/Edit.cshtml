@@ -54,18 +54,21 @@
                 <label><input type="radio" name="invoiceType" id="enterpriseType" value="2">企业</label>
             </div>
             <div class="page21-text">
-                @Html.TextBoxFor(m => m.Context, new { @id = "invoiceContext" })
+                @Html.TextBoxFor(m => m.Context, new { @id = "invoiceContext", @maxlength = "60" })
             </div>
         </div>
         <div class="page21-fixed-extend"></div>
         @*<div class="page21-fixed">*@
-        <a class="f-button01" id="btnSubmit" style="margin-top: 1rem;">保存</a>
-        @*<input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;" value="保存">*@
+        @*<a class="f-button01" id="btnSubmit" style="margin-top: 1rem;">保存</a>*@
+        <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;border:0;" value="保存">
         @*</div>*@
     }
 
     <script type="text/javascript">
         $(function () {
+            $("#riaGoBack").click(function () {
+                window.history.go(-1);
+            });
             var invoiceType = "@Model.Type";
             if (invoiceType == "0" || invoiceType == 0) {
                 $("#invoiceType").val(1);

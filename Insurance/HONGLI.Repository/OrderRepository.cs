@@ -30,7 +30,7 @@ namespace HONGLI.Repository
                         .Include("Order_Deliver")
                         .Include("Order_Pay")
                         .Include("Order_PolicyHolder")
-                        .Where(c => c.UserId == userId)
+                        .Where(c => c.UserId == userId).OrderByDescending(c=>c.CreateDate)
                         .ToList();
 
                     list = query;
@@ -243,6 +243,7 @@ namespace HONGLI.Repository
             }
             return result;
         }
+
         /// <summary>
         /// 修改发票信息
         /// </summary>

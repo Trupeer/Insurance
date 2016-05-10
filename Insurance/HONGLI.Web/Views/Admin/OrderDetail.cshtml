@@ -356,19 +356,21 @@
                 
             </tr>
             <tr>
-                <td colspan="2" align="center" bgcolor="#f1f1f1"></td>
                 <td align="center" bgcolor="#f1f1f1">总价格</td>
-                
                 <td align="center" bgcolor="#f1f1f1">优惠后总价格</td>
+                <td align="center" bgcolor="#f1f1f1">运费</td>
+                <td align="center" bgcolor="#f1f1f1">应付价格</td>
             </tr>
             <tr>
-                <td colspan="2"></td>
                 <td align="center">@productitemselect.Total</td>
-                
                 <td align="center">@productitemselect.TotalAfterCoupon</td>
+                <td align="center">@orderlsit.Order_Deliver.FirstOrDefault().DeliverPrice</td>
+                <td align="center">@(productitemselect.TotalAfterCoupon+orderlsit.Order_Deliver.FirstOrDefault().DeliverPrice)</td>
             </tr>
         </table>
-        <div style="float:right;margin-right:20px; font-size:16px; font-weight:600;"><span>预付金额：</span><span style="margin-right:15px;">@(productitemselect.PrepaidAmount==null?0: productitemselect.PrepaidAmount)</span><span>尾款：</span><span>@(productitemselect.TotalAfterCoupon- (productitemselect.PrepaidAmount==null?0: productitemselect.PrepaidAmount))</span></div>
+        @*<div style="float:right;margin-right:20px; font-size:16px; font-weight:600;"><span>预付金额：</span>
+        <span style="margin-right:15px;">@(productitemselect.PrepaidAmount==null?0: productitemselect.PrepaidAmount)</span>
+        <span>尾款：</span><span>@(productitemselect.TotalAfterCoupon- (productitemselect.PrepaidAmount==null?0: productitemselect.PrepaidAmount))</span></div>*@
         <br />
         <br />
         <strong>回访核单</strong><span style="color:red" id="LoseStatus"></span>
@@ -592,7 +594,7 @@
             <td align="center">@Html.TextBoxFor(m => m.HuaHen_BaoFei, new { @id = "HuaHen_BaoFei", @Class = "ItemInput" })</td>
         </tr>
         <tr>
-            <td align="center">涉水行驶损失险</td>
+            <td align="center">发动机特别损失险</td>
             <td align="center">
                 @Html.CheckBoxFor(m => m.SheShui_BaoE, new { @id = "SheShui_BaoE", @Class = "ItemCheckBox" })
             </td>
@@ -621,69 +623,60 @@
         </tr>
     </table>
     <br />
+
+
     <table class="table table-bordered" align="center">
         <tr>
-            <td align="center" bgcolor="#f1f1f1">商业险费率</td>
-            <td align="center" bgcolor="#f1f1f1">交强险费率</td>
-            <td align="center" bgcolor="#f1f1f1">车船税费率</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td align="center">@Html.TextBoxFor(m => m.BizRate, new { @id = "BizRate", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.ForceRate, new { @id = "ForceRate", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.TaxRate, new { @id = "TaxRate", @Class = "ItemInput" })</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td align="center" bgcolor="#f1f1f1">平台商业费率</td>
-            <td align="center" bgcolor="#f1f1f1">平台交强费率</td>
-            <td align="center" bgcolor="#f1f1f1">平台车船费率</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td align="center">@Html.TextBoxFor(m => m.BizRate_Channel, new { @id = "BizRate_Channel", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.ForceRate_Channel, new { @id = "ForceRate_Channel", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.TaxRate_Channel, new { @id = "TaxRate_Channel", @Class = "ItemInput" })</td>
-            <td></td>
-        </tr>
-        <tr>
             <td align="center" bgcolor="#f1f1f1">商业险总额</td>
-            <td align="center" bgcolor="#f1f1f1">交强险总额</td>
-            <td align="center" bgcolor="#f1f1f1">车船税总额</td>
-            <td align="center" bgcolor="#f1f1f1">总价格</td>
-            <td></td>
+            <td align="center" bgcolor="#f1f1f1">商业险费率</td>
+            <td align="center" bgcolor="#f1f1f1">平台商业费率</td>
+            <td align="center" bgcolor="#f1f1f1">商业险优惠后价格</td>
         </tr>
         <tr>
             <td align="center">@Html.TextBoxFor(m => m.BizTotal, new { @id = "BizTotal", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.ForceTotal, new { @id = "ForceTotal", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.TaxTotal, new { @id = "TaxTotal", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.Total, new { @id = "Total", @Class = "ItemInput" })</td>
-        </tr>
-        <tr>
-            <td align="center" bgcolor="#f1f1f1">商业险优惠后价格</td>
-            <td align="center" bgcolor="#f1f1f1">交强险优惠后价格</td>
-            <td align="center" bgcolor="#f1f1f1">车船税优惠后价格</td>
-            <td align="center" bgcolor="#f1f1f1">优惠后总价格</td>
-        </tr>
-        <tr>
+            <td align="center">@Html.TextBoxFor(m => m.BizRate, new { @id = "BizRate", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.BizRate_Channel, new { @id = "BizRate_Channel", @Class = "ItemInput" })</td>
             <td align="center">@Html.TextBoxFor(m => m.BizAfterCoupon, new { @id = "BizAfterCoupon", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">交强险总额</td>
+            <td align="center" bgcolor="#f1f1f1">交强险费率</td>
+            <td align="center" bgcolor="#f1f1f1">平台交强费率</td>
+            <td align="center" bgcolor="#f1f1f1">交强险优惠后价格</td>
+        </tr>
+        <tr>
+            <td align="center">@Html.TextBoxFor(m => m.ForceTotal, new { @id = "ForceTotal", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.ForceRate, new { @id = "ForceRate", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.ForceRate_Channel, new { @id = "ForceRate_Channel", @Class = "ItemInput" })</td>
             <td align="center">@Html.TextBoxFor(m => m.ForceAfterCoupon, new { @id = "ForceAfterCoupon", @Class = "ItemInput" })</td>
+        </tr>
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">车船税总额</td>
+            <td align="center" bgcolor="#f1f1f1">车船税费率</td>
+            <td align="center" bgcolor="#f1f1f1">平台车船费率</td>
+            <td align="center" bgcolor="#f1f1f1">车船税优惠后价格</td>
+        </tr>
+        <tr>
+            <td align="center">@Html.TextBoxFor(m => m.TaxTotal, new { @id = "TaxTotal", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.TaxRate, new { @id = "TaxRate", @Class = "ItemInput" })</td>
+            <td align="center">@Html.TextBoxFor(m => m.TaxRate_Channel, new { @id = "TaxRate_Channel", @Class = "ItemInput" })</td>
             <td align="center">@Html.TextBoxFor(m => m.TaxAfterCoupon, new { @id = "TaxAfterCoupon", @Class = "ItemInput" })</td>
+
+        </tr>
+        <tr>
+            <td align="center" bgcolor="#f1f1f1">总价格</td>
+            <td align="center" bgcolor="#f1f1f1">优惠后总价格</td>
+            <td align="center" bgcolor="#f1f1f1">运费</td>
+            <td align="center" bgcolor="#f1f1f1">应付价格</td>
+        </tr>
+        <tr>
+            <td align="center">@Html.TextBoxFor(m => m.Total, new { @id = "Total", @Class = "ItemInput" })</td>
             <td align="center">@Html.TextBoxFor(m => m.TotalAfterCoupon, new { @id = "TotalAfterCoupon", @Class = "ItemInput" })</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td align="center">预付金额</td>
-            <td align="center">尾款</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td align="center" bgcolor="#f1f1f1">@Html.TextBoxFor(m => m.PrepaidAmount, new { @id = "PrepaidAmount", @Class = "ItemInput" })</td>
-            <td align="center" bgcolor="#f1f1f1"><span id="Retainage"></span></td>
+            <td align="center">@orderlsit.Order_Deliver.FirstOrDefault().DeliverPrice</td>
+            <td align="center" id="Payableprice"></td>
         </tr>
     </table>
+
     <br/>
     <strong>收单地址</strong>
     <table class="table table-bordered" align="center">
@@ -809,6 +802,7 @@
             $("#CheSun_BaoE").val(Result.CheSun_BaoE);
             $("#CheSun_BaoFei").val(Result.CheSun_BaoFei);
             $("#SanZhe_BaoE").val(Result.SanZhe_BaoE);
+            $("#SanZhe_BaoFei").val(Result.SanZhe_BaoFei);
             $("#DaoQiang_BaoE").attr("checked", Result.DaoQiang_BaoE == 1 ? true : false);;
             $("#DaoQiang_BaoFei").val(Result.DaoQiang_BaoFei);
             $("#SiJi_BaoE").val(Result.SiJi_BaoE);
@@ -843,6 +837,7 @@
             $("#ForceAfterCoupon").val(Result.ForceAfterCoupon);
             $("#TaxAfterCoupon").val(Result.TaxAfterCoupon);
             $("#TotalAfterCoupon").val(Result.TotalAfterCoupon);
+            $("#Payableprice").html(parseFloat(Result.TotalAfterCoupon) + parseFloat(@orderlsit.Order_Deliver.FirstOrDefault().DeliverPrice))
             $("#AuditOrderStatus").val(Result.AuditOrderStatus == null ? 0 : Result.AuditOrderStatus);//设置核单装态下拉
             if (Result.AuditOrderStatus==1)
             {
@@ -954,10 +949,16 @@
     function ChangeAuditDocuments()
     {
         var ItemId = $("#ItemId").val();
-        $.post("ChangeAuditDocuments", { ItemId: ItemId }, function (data) {
+        var Clientuser = $("#Id").val();
+        $.post("ChangeAuditDocuments", { ItemId: ItemId, Clientuser: Clientuser }, function (data) {
             if(data==1)
             {
+                ChangeOrderList();
                 alert("核单成功");
+            }
+            else if(data==3)
+            {
+                alert("四不四傻，登录去！");
             }
             else
             {
@@ -986,10 +987,10 @@
         var PolicyId = $("#PolicyId").val();
         var OrderDeliverId = $("#OrderDeliverId").val();
         $.post("ChangeOrderList", { orderbaseId: OrderBaseId, orderitemId: OrderItemId, ordercode: OrderBaeOrderCode, PrepaidAmount: PrepaidAmount, Status: Status, AmountPayable: AmountPayable, buid: buid, BusinessExpireDate: BusinessExpireDate, ForceExpireDate: ForceExpireDate, ItemId: ItemId, ProductDealPrice: ProductDealPrice, ProductOriginalPrice: ProductOriginalPrice, description: description }, function (data) {
-            if(data==1)
-            {
-                window.location.href = "/OrderV2/Index?productId=" + ItemId + "&mobile=" + mobeil + "&channel=" + channel + "&intentionCompany=" + source + "&OrderCode=" + OrderBaeOrderCode + "&OrderBaseId=" + OrderBaseId + "&OrderItemId=" + OrderItemId + "&OrderPolicyId=" + PolicyId + "&OrderDeliverId=" + OrderDeliverId;
-            }
+            //if(data==1)
+            //{
+            //    window.location.href = "/OrderV3/Index?productId=" + ItemId + "&mobile=" + mobeil + "&channel=" + channel + "&intentionCompany=" + source + "&OrderCode=" + OrderBaeOrderCode + "&OrderBaseId=" + OrderBaseId + "&OrderItemId=" + OrderItemId + "&OrderPolicyId=" + PolicyId + "&OrderDeliverId=" + OrderDeliverId;
+            //}
         });
     }
 </script>

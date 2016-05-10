@@ -1,5 +1,6 @@
 ﻿using HONGLI.Entity;
 using HONGLI.Service;
+using HONGLI.Web.Models;
 using I.Utility.Extensions;
 using I.Utility.Helper;
 using System;
@@ -33,15 +34,23 @@ namespace HONGLI.Web.Controllers
         #region page2-填写信息页 20160321
 
     [AuthorizationFilter]
-        public ActionResult FillIn(int? channel, string mobile, string licenseNo, int? cityCode, int? isPublic)
+        public ActionResult FillIn(int? channel, string mobile, string licenseNo, int? cityCode, int? isPublic,string check="")
         {
             var channelValue = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
             ViewBag.channel = channelValue;
+            if(string.IsNullOrEmpty(mobile))
+            {
+                mobile = UserViewModel.CurrentUser.Mobile;
+            }
             ViewBag.mobile = mobile;
             ViewBag.licenseNo = licenseNo;
             var cityCodeX = cityCode.HasValue ? cityCode.Value : 10;
             ViewBag.cityCode = cityCodeX;
-
+            if(string.IsNullOrEmpty(check))
+            {
+                var key = string.Format("{0}/{1}/{2}/{3}", channelValue, mobile, licenseNo, "insurance");
+                HttpContext.Cache.Remove(key);
+            }
             return View();
         }
         #endregion
@@ -194,6 +203,9 @@ namespace HONGLI.Web.Controllers
                 HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, 1, "price"));
                 HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, 2, "price"));
             }
+            HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channel, mobile, licenseNo, 0, "ordercode"));
+            HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channel, mobile, licenseNo, 1, "ordercode"));
+            HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channel, mobile, licenseNo, 2, "ordercode"));
             return View();
         }
 
@@ -321,6 +333,8 @@ namespace HONGLI.Web.Controllers
                         return Json(cachresult, JsonRequestBehavior.AllowGet);
                     }
                 }
+                var ordercodecach = string.Format("{0}/{1}/{2}/{3}/{4}", channel, mobile, licenseNo, intentionCompany, "ordercode");
+                HttpContext.Cache.Remove(ordercodecach);
                 var result = new ProductV3Service().GetSpecialPrecisePrice(licenseNo, intentionCompany, channelValue, mobile);
 
                 if (string.IsNullOrWhiteSpace(result))
@@ -364,6 +378,12 @@ namespace HONGLI.Web.Controllers
                         product_item.UserId = UserID;
                         product_item.BoLi_BaoE = Convert.ToDecimal(data.Item.BoLi.BaoE);
                         product_item.BoLi_BaoFei = Convert.ToDecimal(data.Item.BoLi.BaoFei);
+                        product_item.SanZhe_BaoE = Convert.ToDecimal(data.Item.SanZhe.BaoE);
+                        product_item.SanZhe_BaoFei = Convert.ToDecimal(data.Item.SanZhe.BaoFei);
+                        product_item.SiJi_BaoE = Convert.ToDecimal(data.Item.SiJi.BaoE);
+                        product_item.SiJi_BaoFei = Convert.ToDecimal(data.Item.SiJi.BaoFei);
+                        product_item.SheShui_BaoE= Convert.ToDecimal(data.Item.SheShui.BaoE);
+                        product_item.SheShui_BaoFei = Convert.ToDecimal(data.Item.SheShui.BaoFei);
                         product_item.BuJiMianCheSun_BaoE = Convert.ToDecimal(data.Item.BuJiMianCheSun.BaoE);
                         product_item.BuJiMianCheSun_BaoFei = Convert.ToDecimal(data.Item.BuJiMianCheSun.BaoFei);
                         product_item.BuJiMianDaoQiang_BaoE = Convert.ToDecimal(data.Item.BuJiMianDaoQiang.BaoE);
@@ -388,6 +408,7 @@ namespace HONGLI.Web.Controllers
                         product_item.ZiRan_BaoFei = Convert.ToDecimal(data.Item.ZiRan.BaoFei);
                         product_item.BizTotal = Convert.ToDecimal(data.Item.BizTotal);
                         product_item.ForceTotal = Convert.ToDecimal(data.Item.ForceTotal);
+                        product_item.TaxTotal = Convert.ToDecimal(data.Item.TaxTotal);
                         product_item.Total = product_item.BizTotal + product_item.ForceTotal + product_item.TaxTotal;
                         product_item.CreateTime = DateTime.Now;
 
@@ -500,7 +521,6 @@ namespace HONGLI.Web.Controllers
 
             ViewBag.submitStatus = submitStatus;
             ViewBag.submitResult = submitResult;
-
             return View(data);
         }
 
@@ -582,7 +602,11 @@ namespace HONGLI.Web.Controllers
                 product_item.TaxRate = Convert.ToDecimal(data.Item.ForceRate); //核保后，交强险费率和车船税费率相同
                 product_item.TaxAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.TaxTotal * ((100 - data.Item.ForceRate + taxRate_Channel) * 0.01)), 2);
                 product_item.TotalAfterCoupon = decimal.Round(Convert.ToDecimal(product_item.BizAfterCoupon + product_item.ForceAfterCoupon + product_item.TaxAfterCoupon), 2);
-
+                #region  从新添加费率并加入缓存
+                databaojia.Item.BizRate =Convert.ToDouble(product_item.BizRate);
+                databaojia.Item.ForceRate = Convert.ToDouble(product_item.ForceRate);
+                HttpContext.Session[keyPrice] = databaojia;
+                #endregion
                 #region 预付比例
                 var PrepaidAmountkey = string.Format("{0}_PrepaidAmount", channelValue);
                 var prepaidlist = new ProductV3Service().GetPrepaidAmount(channelValue);
@@ -615,8 +639,31 @@ namespace HONGLI.Web.Controllers
                 data= HttpContext.Session[keyPrice] as PrecisePriceResultV2;
                 //修改用户选择购买公司
                 new ProductV3Service().EditProductItemUserCheck(ProductItemId, userID);
+                //获取缓存
+                var checkcach = string.Format("{0}/{1}/{2}/{3}/{4}", channel, mobile, licenseNo, intentionCompany, "ordercode");
+                var checkvalue = HttpContext.Cache.Get(checkcach);
+                if (checkvalue != null)
+                {
+                        string checkordercode = checkvalue.ToString();
+                        Order_Base checkorderbase = new ProductV3Service().GetOrderByOrderCode(checkordercode);
+                        Order_Item checkorderitem = new ProductV3Service().GetOrdertemByOrderCode(checkordercode);
+                         Dictionary<object, object> checkList = new Dictionary<object, object>();
+                        checkList.Add("ItemId", ProductItemId);
+                        checkList.Add("mobeil", mobile);
+                        checkList.Add("channel", channel);
+                        checkList.Add("source", intentionCompany);
+                        checkList.Add("OrderBaeOrderCode", checkorderbase.OrderCode);
+                        checkList.Add("OrderBaseId", checkorderbase.Id);
+                        checkList.Add("OrderItemId", checkorderitem.Id);
+                        checkList.Add("PolicyId", 0);
+                        checkList.Add("OrderDeliverId", 0);
+                        return Json(checkList);
+                }
+
                 //增加订单信息
                 string ordercode = "100001" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                //加入缓存
+                HttpContext.Cache.Insert(checkcach, ordercode);
                 Order_Item order_item = new Order_Item();
                 order_item.OrderCode = ordercode;
                 order_item.CreateDate = DateTime.Now;
@@ -663,7 +710,9 @@ namespace HONGLI.Web.Controllers
                 order_base.OrderCode = ordercode;
                 order_base.Channel = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
                 order_base.CreateDate = DateTime.Now;
-                order_base.UserId = userID.ToString();
+                order_base.UserId = UserViewModel.CurrentUser.ID.ToString();
+                order_base.ProductItemId = ProductItemId;
+                order_base.BackStatus = 0;
                 order_base.Order_Item = new List<Order_Item>() { order_item };
                 var code = new OrderService().AddOrder(order_base);
                 userItem = new ProductV3Service().GetProductV2(userID);
@@ -703,5 +752,13 @@ namespace HONGLI.Web.Controllers
             return View(data);
         }
         #endregion
+
+        internal class LoginUser
+        {
+            public string mobile { get; set; }
+            public string channel { get; set; }
+            public string memberId { get; set; }
+
+        }
     }
 }

@@ -280,6 +280,10 @@ namespace HONGLI.Web.Controllers
         {
             this.SendSMS(this.SMS_RegisteTemplateID, mobile, content);
         }
+        public void SendRedPacketSMS(string mobile,string[] content)
+        {
+            this.SendSMS(this.SMS_RedPacketTemplateID, mobile, content);
+        }
 
         string GetDictionaryData(Dictionary<string, object> data)
         {
@@ -307,7 +311,13 @@ namespace HONGLI.Web.Controllers
                 return ConfigurationManager.AppSettings["SMS_RegisteTemplateID"];
             }
         }
-
+        string SMS_RedPacketTemplateID
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["SMS_RedPacketTemplateID"];
+            }
+        }
         string SMS_Account
         {
             get

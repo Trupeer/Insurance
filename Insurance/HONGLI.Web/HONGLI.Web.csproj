@@ -239,6 +239,16 @@
     <Compile Include="Models\User\PolicyHolderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="WXRedirect\UserAuth.ashx.cs">
+      <DependentUpon>UserAuth.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WXRedirect\wx_redpacket.aspx.cs">
+      <DependentUpon>wx_redpacket.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WXRedirect\wx_redpacket.aspx.designer.cs">
+      <DependentUpon>wx_redpacket.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Alipay\notify_url.aspx" />
@@ -290,6 +300,7 @@
     <Content Include="Images\Temp\page40-2.png" />
     <Content Include="Images\Temp\page40-3.png" />
     <Content Include="Images\Temp\page40-4.png" />
+    <Content Include="Images\weixinbackground.png" />
     <Content Include="public\3rdLibs\jquery\jquery-2.1.3.js" />
     <Content Include="public\3rdLibs\jquery\jquery-2.1.3.min.js" />
     <Content Include="public\3rdLibs\layer.mobile\v1.7\layer.js" />
@@ -416,6 +427,7 @@
     <Content Include="Scripts\hongli.global.data.js" />
     <Content Include="Scripts\jquery\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery\jquery-2.1.3.min.js" />
+    <Content Include="Scripts\pcas.js" />
     <Content Include="Styles\all.css" />
     <Content Include="WebPage\page-10-车险询价.html" />
     <Content Include="WebPage\page-11-车险询价-填写信息-加载失败.html" />
@@ -481,6 +493,7 @@
     <Content Include="App_Code\HtmlHelper.cshtml" />
     <Content Include="Images\.DS_Store" />
     <Content Include="Images\Temp\.DS_Store" />
+    <Content Include="WXRedirect\wx_redpacket.aspx" />
     <None Include="Properties\PublishProfiles\hongli.insurance.pubxml" />
     <Content Include="public\3rdLibs\jquery\jquery-2.1.3.min.map" />
     <None Include="Properties\PublishProfiles\yidao.hongli.me.pubxml" />
@@ -610,6 +623,11 @@
     <Content Include="Views\DeliverV3\Index.cshtml" />
     <Content Include="Views\DeliverV3\List.cshtml" />
     <Content Include="Views\DeliverV3\TypeEdit.cshtml" />
+    <Content Include="WXRedirect\UserAuth.ashx" />
+    <Content Include="Views\Admin\ReportDetail.cshtml" />
+    <Content Include="Views\Admin\ReportStatistics.cshtml" />
+    <Content Include="Views\Admin\ReportStatisticsListTable.cshtml" />
+    <Content Include="Views\Admin\ReportSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -630,6 +648,10 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BeeCloud\BeeCloud.csproj">
+      <Project>{0f48fca9-e239-4f68-8d9d-cc1884067356}</Project>
+      <Name>BeeCloud</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HONGLI.Entity\HONGLI.Entity.csproj">
       <Project>{d08d2be1-ee17-49c8-a01a-d9ea42828818}</Project>
       <Name>HONGLI.Entity</Name>

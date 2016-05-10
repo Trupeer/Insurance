@@ -127,6 +127,12 @@ body input.radio:checked:before{
 .f-button04{font-size: .512rem; width: 10.976rem; height: 1.312rem; line-height: 1.312rem; background-color: #ea3c31; text-align: center; color: #ffffff; display: block; margin: 0 auto; border-radius: 0.1rem;display: inline-block;}
 .f-button04:active{ opacity: .8;}
 
+.f-button05{font-size:  .512rem; width: 9rem; height: 1.312rem; line-height:  1.312rem; background-color: #ffb906; text-align: center; border-radius: 0.1rem;color: #ffffff; display: inline-block;}
+.f-button05:active{ opacity: .8;}
+
+.f-input01{font-size:  .512rem; width: 9rem; height: 1.312rem; line-height:  1.312rem; background-color: #ffffff; text-align: center; border-radius: 0.1rem; display: inline-block;}
+.f-input01:active{ opacity: .8;}
+
 /* f-form01 */
 .f-form01-group{
     background-color: #ffffff;

@@ -25,17 +25,23 @@
                 <td align="center"><input id="InvoiceTitle" value="@list["InvoiceTitle"]" /></td>
             </tr>
             <tr>
+                @{decimal TotalAfterCoupon;
+                    decimal DeliverPrice;
+                    decimal.TryParse(list["DeliverPrice"].ToString(), out DeliverPrice);
+                    decimal.TryParse(list["TotalAfterCoupon"].ToString(), out TotalAfterCoupon);
+                    }
                 <td bgcolor="#f1f1f1" align="center">应付保费</td>
-                <td align="center">@list["TotalAfterCoupon"]</td>
+                <td align="center">@(DeliverPrice+TotalAfterCoupon)</td>
                 <td bgcolor="#f1f1f1" align="center">预付保费</td>
                 <td align="center">@list["PrepaidAmount"]</td>
                 <td bgcolor="#f1f1f1" align="center">净费录入</td>
-                <td align="center">@list["PrepaidAmount"]</td>
+                <td align="center">@list["TotalAfterCoupon"]</td>
                 <td bgcolor="#f1f1f1" align="center">支付方式</td>
-                <td align="center">@list["InvoiceTitle"]
+                <td align="center">
                     <select id="PayType" name="select3">
                         <option value="1">支付宝</option>
-                        <option value="">其他</option>
+                        <option value="2">全款刷卡返现</option>
+                        <option value="3">现金折扣直付</option>
                     </select>
                 </td>
             </tr>
@@ -140,7 +146,7 @@
                 <td align="center">@list["BuJiMianFuJia_BaoFei"]</td>
             </tr>
             <tr>
-                <td align="center">涉水行驶损失险</td>
+                <td align="center">发动机特别损失险</td>
                 <td align="center">@list["SheShui_BaoE"]</td>
                 <td align="center">@list["SheShui_BaoFei"]</td>
             </tr>
@@ -218,8 +224,9 @@
                                 <option Value="1">上门签约</option>
                                 <option Value="2">自提</option>
                             </select>
+                            运费
                             <input id="DeliverPrice" value="@list["DeliverPrice"]" />
-                            <input  id="OrderBaeCreateDate" type="hidden" value="@list["DeliverPrice"]"/>
+                            <input  id="OrderBaeCreateDate" type="hidden" value="@list["OrderBaeCreateDate"]"/>
                         </td>
                     </tr>
                     <tr>

@@ -25,6 +25,9 @@ namespace HONGLI.Web.Controllers
 
 
         // GET: Order/index
+#if (!DEBUG)
+    [AuthorizationFilter]
+#endif
         public ActionResult Index(int? productId, string mobile, string channel, int? intentionCompany, string OrderCode, int? OrderBaseId, int? OrderItemId, int? OrderPolicyId, int? OrderDeliverId)
         {
             ViewBag.ProductId = productId;
@@ -36,7 +39,7 @@ namespace HONGLI.Web.Controllers
             ViewBag.OrderItemId = OrderItemId;
             ViewBag.OrderPolicyId = OrderPolicyId;
             ViewBag.OrderDeliverId = OrderDeliverId;
-      ViewBag.UserId = UserViewModel.CurrentUser.ID;
+            ViewBag.UserId = UserViewModel.CurrentUser.ID;
 
             return View();
         }
@@ -90,6 +93,9 @@ namespace HONGLI.Web.Controllers
         /// 下订单
         /// </summary>
         /// <returns></returns>
+#if (!DEBUG)
+    [AuthorizationFilter]
+#endif
         public ActionResult Do(int? productId, string mobile, string channel, int? intentionCompany, string OrderCode, int? OrderBaseId, int? OrderItemId, int? OrderPolicyId, int? OrderDeliverId)
         {
             ViewBag.ProductId = productId;
@@ -169,7 +175,9 @@ namespace HONGLI.Web.Controllers
             Response.Write(response);
             return null;
         }
-
+#if (!DEBUG)
+    [AuthorizationFilter]
+#endif
         public ActionResult List()
         {
             var userid = UserViewModel.CurrentUser.ID.ToString();
@@ -177,10 +185,11 @@ namespace HONGLI.Web.Controllers
             var orderlist = _orderService.GetOrderListByUserId(userid);
             if (orderlist != null)
             {
+                orderlist = orderlist.Where(d =>d.AmountPayable != null).ToList();
                 model = orderlist.Select(c => new OrderListModel()
                 {
                     OrderCode = c.OrderCode,
-                    OrderStatus = c.Status,
+                    OrderStatus = c.Status==null?0: c.Status,
                     AmountPayable = c.AmountPayable,
                     PaidAmount = c.PaidAmount,
                     InsuranceLogo = c.Order_Item.FirstOrDefault().InsuranceLogo,
@@ -189,8 +198,8 @@ namespace HONGLI.Web.Controllers
                     BusinessExpireDate = c.Order_Item.FirstOrDefault().BusinessExpireDate
                 }).ToList();
             }
-
-            return View(model);
+            ViewBag.list = model;
+            return View();
         }
 
 
@@ -215,18 +224,18 @@ namespace HONGLI.Web.Controllers
 #else
                 var userid = "3";
 #endif
-                decimal productDealPrice = -1;
-                try
-                {
-                    productDealPrice = _productV2Service.GetProductV2(Convert.ToInt32(product.ProductId)).TotalAfterCoupon.Value;
-                }
-                catch (Exception ex)
-                {
-                    I.Utility.Helper.LogHelper.AppError("获取产品金额失败" + product.ProductId + ",error:" + ex.Message);
-                    result.Status = 0;
-                    result.Error = "获取产品金额失败";
-                    return result;
-                }
+                decimal productDealPrice = product.DealPrice==null?0:Convert.ToDecimal(product.DealPrice);
+                //try
+                //{
+                //   productDealPrice = _productV2Service.GetProductV2(Convert.ToInt32(product.ProductId)).TotalAfterCoupon.Value;
+                //}
+                //catch (Exception ex)
+                //{
+                //    I.Utility.Helper.LogHelper.AppError("获取产品金额失败" + product.ProductId + ",error:" + ex.Message);
+                //    result.Status = 0;
+                //    result.Error = "获取产品金额失败";
+                //    return result;
+                //}
 
                 if (productDealPrice <= 0)
                 {
@@ -255,6 +264,7 @@ namespace HONGLI.Web.Controllers
                 order_base.InvoiceType = invoice.InvoiceType;
                 order_base.AmountPayable = productDealPrice + payAndDeliver.DeliverPrice;
                 order_base.PaidAmount = productDealPrice + payAndDeliver.DeliverPrice;
+                
                 new OrderService().EditOrderInvoice(order_base);
                 Order_Deliver order_deliver = new Order_Deliver();
                 if (payAndDeliver.DeliverType == 1)
@@ -285,12 +295,22 @@ namespace HONGLI.Web.Controllers
                 }
                 else
                 {
-                    new AdminService().SaveOrderDeliver(order_deliver);
+                    int checkdeliverid = new AdminService().CHeckDeliverAdd(OrderCode);
+                    if(checkdeliverid>-1)
+                    {
+                        order_deliver.Id = checkdeliverid;
+                        new AdminService().EditOrderDeliver(order_deliver);
+                    }
+                    else
+                    {
+                        new AdminService().SaveOrderDeliver(order_deliver);
+                    }
                 }
 
                 Order_PolicyHolder order_policyHolder = new Order_PolicyHolder()
                 {
                     Name = policyHolder.Name,
+                    OrderCode=OrderCode,
                     IdCard = policyHolder.Idcard,
                     IdCardType = policyHolder.IdcardType,
                     IdCardFacePicUrl = policyHolder.IdcardFacePicUrl,
@@ -300,21 +320,39 @@ namespace HONGLI.Web.Controllers
                 if (OrderPolicyId != 0 && OrderPolicyId != null)
                 {
                     order_policyHolder.Id = (OrderPolicyId == null ? 0 : Convert.ToInt32(OrderPolicyId));
-                    new AdminService().SavePolicyHolder(order_policyHolder);
+                    new AdminService().EditPolicyHolder(order_policyHolder);
                 }
                 else
                 {
-                    new AdminService().EditPolicyHolder(order_policyHolder);
+                    int checkpolicyHolderid = new AdminService().CHeckpolicyHolderAdd(OrderCode);
+                    if (checkpolicyHolderid > -1)
+                    {
+                        order_policyHolder.Id = checkpolicyHolderid;
+                        new AdminService().EditPolicyHolder(order_policyHolder);
+                    }
+                    else
+                    {
+                        new AdminService().SavePolicyHolder(order_policyHolder); ;
+                    }
                 }
                 Order_Pay order_pay = new Order_Pay()
                 {
                     PayBank = 1,
-                    PayType = 1,
+                    PayType = payAndDeliver.PayType,
                     CreateDate = DateTime.Now,
                     OrderCode = OrderCode
                 };
+                int checkpayId = new AdminService().CHeckpayAdd(OrderCode);
+                if(checkpayId>-1)
+                {
+                    order_pay.Id = checkpayId;
+                    new AdminService().EditOrderPay(order_pay);
+                }
+                else
+                {
+                    new OrderService().AddPay(order_pay);
+                }
 
-                new OrderService().AddPay(order_pay);
                 if (string.IsNullOrEmpty(OrderCode))
                 {
                     result.Status = 0;

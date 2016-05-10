@@ -19,7 +19,10 @@
     <option value="">全部</option>
     <option value="0">未确认</option>
     <option value="1">已订未支付</option>
-    <option value="2">已支付</option>
+    <option value="2">上门收款</option>
+    <option value="3">已支付</option>
+    <option value="4">邮寄保单</option>
+    <option value="5">邮寄保单</option>
 </select></td>
             </tr>
             <tr>
@@ -61,20 +64,30 @@
             submit(thispage, null);
         });
     });
+    var mypage = 1;
+    var pageCount = 0;
     function submit(page,check)
     {
 
-        if (page == "99999")
-        {
-            page = pageindex + 1;
+        if (page == "99999") {
+            mypage += 1;
+            page = mypage
         }
-        else if (page == "0")
-        {
-            page = pageindex - 1;
+        else if (page == "0") {
+            mypage -= 1;
+            page = mypage;
         }
-        else
-        {
-            pageindex = page;
+        else if (isNaN(page)) {
+            page = 1;
+        }
+        else {
+            page = page;
+            mypage = page;
+        }
+        if (pageCount > 0) {
+            if (page > pageCount) {
+                page = 1;
+            }
         }
         var CarID = $("#CarID").val();
         var PolicyName = $("#PolicyName").val();
@@ -89,6 +102,50 @@
             });
             }
         $("#recordlist").load("BillListTable", { page: page, CarID: CarID, PolicyName: PolicyName, BillCreateDate: BillCreateDate, ddlOrderState: ddlOrderState, BillCode: BillCode }, function () {
+            $(".StatusSelect").change(function () {
+                var orderbaseid = $(this).attr("orderbaseid");
+                var ordercode = $(this).attr("ordercode");
+                var status = $(this).val();
+                $.post('@Url.Action("EditOrderStatus", "Admin")', { orderbaseid: orderbaseid, ordercode: ordercode, status: status }, function (data) {
+                    if(data==1)
+                    {
+                        alert("单号：" + ordercode + ",订单状态已修改");
+                    }
+                    else
+                    {
+                        alert("单号：" + ordercode + ",订单状态修改失败");
+                    }
+                });
+            });
         });
+    }
+    function Backmoney(Id,OrderCode,name,money,mobile)
+    {
+        if(confirm("是否确认返现?"))
+        {
+            $.post('@Url.Action("AddRedPacket", "Admin")', { Id:Id,OrderCode: OrderCode, name: name, money: money, mobile: mobile }, function (data)
+            {
+                if(data==1)
+                {
+                    alert("操作成功！");
+                    submit(1, 1);
+                    return;
+                }
+                if (data == -1) {
+                    alert("生成返现码失败，请联系技术。");
+                    return;
+                }
+                if (data == -2) {
+                    alert("发送返现码失败，请联系技术。");
+                    return;
+                }
+                if (data == -3) {
+                    alert("用户ID丢了！");
+                    return;
+                }
+
+        })
+        }
+
     }
 </script>

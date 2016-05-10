@@ -118,6 +118,9 @@ body input.radio:checked:before{
 .f-button02{font-size: .448rem; width: 2.88rem; height: .8rem; line-height: .8rem; background-color: #ea3c31; text-align: center; color: #ffffff;border-radius: 0.1rem; display: inline-block;}
 .f-button02:active{ opacity: .8;}
 
+.f-button03{font-size: .448rem; width: 2.88rem; height: .8rem; line-height: .8rem; background-color: #ffb906; text-align: center; color: #ffffff;border-radius: 0.1rem; display: inline-block;}
+.f-button03:active{ opacity: .8;}
+
 /* f-form01 */
 .f-form01-group{
     background-color: #ffffff;

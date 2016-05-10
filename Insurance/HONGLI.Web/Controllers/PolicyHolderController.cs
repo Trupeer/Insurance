@@ -45,13 +45,19 @@ namespace HONGLI.Web.Controllers
 
         // GET: /PolicyHolder/Edit
         [AllowAnonymous]
-        public ActionResult Edit(int id = 0, int userId = 0, int productId = 0, string mobile = "", string channel = "")
+        public ActionResult Edit(int id = 0, int userId = 0, int productId = 0, string mobile = "", string channel = "", int intentionCompany = 0, string OrderCode = "", int OrderBaseId = 0, int OrderItemId = 0, int OrderPolicyId = 0, int OrderDeliverId = 0)
         {
             PolicyHolderModel model = new PolicyHolderModel();
 
             model.Channel = channel;
             model.Mobile = mobile;
             model.ProductId = productId;
+            model.intentionCompany = intentionCompany;
+            model.OrderCode = OrderCode;
+            model.OrderBaseId = OrderBaseId;
+            model.OrderItemId = OrderItemId;
+            model.OrderPolicyId = OrderPolicyId;
+            model.OrderDeliverId = OrderDeliverId;
 
             if (!string.IsNullOrEmpty(AppRootPath) && !string.IsNullOrEmpty(AppRootUrl))
             {
@@ -85,15 +91,23 @@ namespace HONGLI.Web.Controllers
             else
             {
                 User_PolicyHolder policyHolder = _policyHolderService.GetPolicyHolderById(id);
-
-                model.Id = policyHolder.Id;
-                model.IdCard = policyHolder.IdCard;
-                model.IdCardBackPicUrl = policyHolder.IdCardBackPicUrl;
-                model.IdCardFacePicUrl = policyHolder.IdCardFacePicUrl;
-                model.IdCardType = policyHolder.IdCardType;
-                model.UserId = policyHolder.UserId;
-                model.OrganizationCode = policyHolder.OrganizationCode;
-                model.CreateDate = policyHolder.CreateDate;
+                if (policyHolder != null)
+                {
+                    model.Id = policyHolder.Id;
+                    model.IdCard = policyHolder.IdCard;
+                    model.Name = policyHolder.Name;
+                    model.IdCardBackPicUrl = policyHolder.IdCardBackPicUrl;
+                    model.IdCardFacePicUrl = policyHolder.IdCardFacePicUrl;
+                    model.IdCardType = policyHolder.IdCardType;
+                    model.UserId = policyHolder.UserId;
+                    model.OrganizationCode = policyHolder.OrganizationCode;
+                    model.CreateDate = policyHolder.CreateDate;
+                }
+                else
+                {
+                    model.UserId = userId;
+                    model.IdCardType = 1;
+                }
 
                 return View(model);
             }
@@ -127,7 +141,7 @@ namespace HONGLI.Web.Controllers
             OrderPolicyHolderPic orderPolicyHolderPic = new OrderPolicyHolderPic();
             if (model.IdCardType == 1)
             {
-                User_PolicyHolder oldPpolicyHolder = _policyHolderService.GetPolicyHolderById(model.Id);
+                User_PolicyHolder oldPpolicyHolder = _policyHolderService.GetPolicyHolderById(Convert.ToInt32(model.Id));
 
                 if (Request.Cookies["HONGLI.order.policyHolder"] != null)
                 {
@@ -346,6 +360,12 @@ namespace HONGLI.Web.Controllers
                         dict.Add("productId", model.ProductId.ToString());
                         dict.Add("mobile", model.Mobile);
                         dict.Add("channel", model.Channel);
+                        dict.Add("intentionCompany", model.intentionCompany.ToString());
+                        dict.Add("OrderCode", model.OrderCode);
+                        dict.Add("OrderBaseId", model.OrderBaseId.ToString());
+                        dict.Add("OrderItemId", model.OrderItemId.ToString());
+                        dict.Add("OrderPolicyId", model.OrderPolicyId.ToString());
+                        dict.Add("OrderDeliverId", model.OrderDeliverId.ToString());
                         string url = GetUrl(reurl, dict);
                         if (!string.IsNullOrEmpty(url))
                         {
@@ -353,12 +373,12 @@ namespace HONGLI.Web.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Do", "Order", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel });
+                            return RedirectToAction("Do", "OrderV3", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
                         }
                     }
                     else
                     {
-                        return RedirectToAction("Do", "Order", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel });
+                        return RedirectToAction("Do", "OrderV3", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
                         //return View(model);
                     }
                 }

@@ -37,6 +37,8 @@ namespace HONGLI.Entity
         public Nullable<int> InvoiceType { get; set; }
         public string InvoiceTitle { get; set; }
         public Nullable<decimal> PrepaidAmount { get; set; }
+        public Nullable<int> BackStatus { get; set; }
+        public Nullable<int> ProductItemId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order_Deliver> Order_Deliver { get; set; }

@@ -1,4 +1,5 @@
 ﻿using HONGLI.Entity;
+using I.Utility.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,9 +79,9 @@ namespace HONGLI.Repository.User
                     result = context.SaveChanges();
                 }
             }
-            catch (Exception)
+            catch (Exception error)
             {
-                //LogHelper.AppError(error.Message);
+                LogHelper.AppError(error.Message);
             }
             return result;
         }
@@ -103,11 +104,10 @@ namespace HONGLI.Repository.User
                     result = context.SaveChanges();
                 }
 
-                //this.AddLog(JsonConvert.SerializeObject(order), "增加订单", 20, order.CreateMemberID.Value);
             }
-            catch (Exception)
+            catch (Exception error)
             {
-                //LogHelper.AppError(error.Message);
+                LogHelper.AppError(error.Message);
             }
             return result;
         }

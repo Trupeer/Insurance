@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "平台统计";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="right_cont">
+
+    <div class="title_right"><strong>平台统计</strong></div>
+    <div style="margin:auto">
+        
+        <table class="table table-bordered">
+            <tr><td><strong>查询选项</strong></td></tr>
+            <tr>
+                <td style="width:180px;" align="right" bgcolor="#f1f1f1">订单号 ：</td>
+                <td style="width:350px;"><input type="text" name="input18" id="OrderCode" style="width:156px;" /></td>
+                <td style="width:180px;" align="right" bgcolor="#f1f1f1">车牌号：</td>
+                <td style="width:350px;"><input type="text" name="" id="LicenseNo" /></td>
+            </tr>
+            <tr>
+                <td style="width:180px;" align="right" bgcolor="#f1f1f1">出单日期：</td>
+                <td style="width:350px;"><input type="text" class="laydate-icon" id="BeginDate" value="" readonly />至<input type="text" class="laydate-icon" id="EndDate" value="" readonly /></td>
+                <td style="width:180px;" align="right" bgcolor="#f1f1f1">被保险人：</td>
+                <td style="width:350px;"><input type="text" name="" id="Name" /></td>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+        
+        <table class="table table-bordered">
+            <tr><td><strong>筛选项</strong></td></tr>
+            <tr>
+                <td style="width:180px;" align="right" bgcolor="#f1f1f1">承报公司：</td>
+                <td style="width:350px;">
+                    <select id="InsuranceCompany" name="select3" style="width:156px;">
+                        <option value="">全部</option>
+                        <option value="2">人保</option>
+                        <option value="1">太平洋</option>
+                        <option value="0">平安</option>
+                    </select>
+                </td>
+                <td style="width:530px;" align="left">
+                <input type="button" value="查询" class="btn btn-info " style="width:80px;" onclick="submit(1,1)" />
+                </td>
+            </tr>
+        </table>
+        <div id="recordlist"></div>
+
+    </div>
+
+</div>
+<script type="text/javascript">
+   
+    jeDate({
+        dateCell: '#BeginDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: jeDate.now(0) //1代表明天，2代表后天，以此类推
+    });
+    jeDate({
+        dateCell: '#EndDate',
+        format: "YYYY-MM-DD",
+        minDate: "1900-01-01", //0代表今天，-1代表昨天，-2代表前天，以此类推
+        maxDate: jeDate.now(0) //1代表明天，2代表后天，以此类推
+    });
+    $(function () {
+        submit();
+    });
+
+    function submit()
+    {
+        var OrderCode = $("#OrderCode").val();
+        var username = $("#Name").val();
+        var LicenseNo = $("#LicenseNo").val();
+        var BeginDate = $("#BeginDate").val();
+        var EndDate = $("#EndDate").val();
+        var InsuranceCompany = $("#InsuranceCompany").val();
+        if (BeginDate > EndDate) {
+            alert("结束日期不能大于开始日期！");
+            return;
+        }
+        $("#recordlist").load("ReportSummary", {OrderCode: OrderCode, Name: username, LicenseNo: LicenseNo, BeginDate: BeginDate, EndDate, EndDate, InsuranceCompany: InsuranceCompany}, function () {
+        });
+    }
+</script>
+

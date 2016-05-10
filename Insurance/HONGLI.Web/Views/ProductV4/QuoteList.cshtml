@@ -19,7 +19,7 @@
     <div class="f-nav">
         <h2>询价结果</h2>
         <div class="f-nav-back">
-            <a href="javascript:;" id="riaGoBack"><i></i></a>
+            <a href="@Url.Action("FillIn", "ProductV4")?channel=@ViewBag.channel&licenseNo=@ViewBag.licenseNo&cityCode=1" id="riaGoBack"><i></i></a>
         </div>
         <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.521rem;" data-reveal-id="myModal" href="#" data-animation="fade">客服</a></div>    </div>
     <div class="f-nav-extend">&nbsp;</div>
@@ -77,7 +77,6 @@
     <script src="~/public/js/all.js"></script>
     <script src="~/Scripts/hongli.common.tools.js"></script>
     <script src="~/public/3rdLibs/layer.mobile/v1.7/layer.js"></script>
-
     <script type="text/javascript">
         $(function () {
             getPrecisePrice();

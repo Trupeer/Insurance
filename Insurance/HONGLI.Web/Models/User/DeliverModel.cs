@@ -55,6 +55,7 @@ namespace HONGLI.Web.Models.User
         public int? OrderItemId { get; set; }
         public int? OrderPolicyId { get; set; }
         public int? OrderDeliverId { get; set; }
+        public int? PayType { get; set; }
 
     }
 }

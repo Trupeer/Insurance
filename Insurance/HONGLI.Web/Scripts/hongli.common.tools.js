@@ -162,6 +162,10 @@ common.operateNum = {
             if (num.substr(num.length - 1, num.length) == 0) {
                 num = num.substr(0, num.length - 1);
             }
+            if(num.indexOf('.')==num.length-1)
+            {
+                num = num + "00";
+            }
         }
         return num;
     }

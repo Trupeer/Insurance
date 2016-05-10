@@ -15,8 +15,8 @@
     <meta content="telephone=no,email=no" name="format-detection" />
     <meta content="portrait" name="screen-orientation" />
     <meta content="portrait" name="x5-orientation" />
-    <link rel="stylesheet" type="text/css" href="../public/css/all.css">
-    <script src="../public/js/base.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/public/css/all.css">
+    <script src="~/public/js/base.js"></script>
     <link href="~/public/Popup/reveal.css" rel="stylesheet" />
     <script src="~/public/Popup/jquery-1.6.min.js"></script>
     <script src="~/public/Popup/jquery.reveal.js"></script>
@@ -32,7 +32,7 @@
     <div class="f-nav-extend">&nbsp;</div>
 
     <div class="page94-Image">
-        <img src="../public/Images/Order-index.gif" />
+        <img src="~/public/Images/Order-index.gif" />
     </div>
     <div class="page94-form">
         <div class="f-form01-item" id="product">
@@ -48,17 +48,38 @@
         <div class="f-form01-item">
             <div class="explain">
                 <p class="t-p1" id="FavorablePrice">已为您优惠 ￥999</p>
-                <p class="t-26">再需交<span id="PrepaidAmount"></span>预定金，我方服务人员会为您按预约时间上门签订合同！</p>
+                <p class="t-26">我方服务人员会为您按预约时间上门服务！</p>
             </div>
         </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
     </div>
     <div class="page94-submit">
         <a href="@Url.Action("Do", "OrderV3")?productId=@ViewBag.ProductId&mobile=@ViewBag.Mobile&channel=@ViewBag.Channel&intentionCompany=@ViewBag.intentionCompany&OrderCode=@ViewBag.OrderCode&OrderBaseId=@ViewBag.OrderBaseId&OrderItemId=@ViewBag.OrderItemId&OrderPolicyId=@ViewBag.OrderPolicyId&OrderDeliverId=@ViewBag.OrderDeliverId" class="f-button03">确认订单信息</a>
     </div>
     <div class="page20-submit-fixed-extend"></div>
 
-    <script src="../public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
-    <script src="../public/js/all.js"></script>
+    <script src="~/public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
+    <script src="~/public/js/all.js"></script>
 
 
     <script src="~/Scripts/hongli.common.tools.js"></script>
@@ -101,20 +122,20 @@
             $("#product-originalPrice").html(result.ProductOriginalPrice);
             $("#PrepaidAmount").html(result.PrepaidAmount);
             var price = parseFloat(result.ProductOriginalPrice) - parseFloat(result.ProductDealPrice);
-            $("#FavorablePrice").html("已为您优惠 ￥" + common.operateNum.formatNum(price, 2));
+            $("#FavorablePrice").html("已为您优惠 ￥" + common.operateNum.formatNum(price, 2) + ",优惠价 ￥" + common.operateNum.formatNum(result.ProductDealPrice, 2));
         });
     });
     function getIsuranceLogoUrl(logo) {
         var logoUrl = "";
         switch (logo) {
             case 0:
-                logoUrl = "../public/imagesTemp/page40-2.png";
+                logoUrl = "../yidaoV1.app/public/imagesTemp/page40-2.png";
                 break;
             case 1:
-                logoUrl = "../public/imagesTemp/page40-3.png";
+                logoUrl = "../yidaoV1.app/public/imagesTemp/page40-3.png";
                 break;
             case 2:
-                logoUrl = "../public/imagesTemp/page40-1.png";
+                logoUrl = "../yidaoV1.app/public/imagesTemp/page40-1.png";
                 break;
             default:
                 logoUrl = "";

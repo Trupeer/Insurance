@@ -135,7 +135,7 @@
         }
 
         $("#toOrder").click(function () {
-            var mobile = $("#mobileNo").val();
+            var mobile = '@Request["mobile"]';
             window.location.href = "@Url.Action("List","OrderV3")?channel=@ViewBag.channel&mobile=" + mobile;
         });
 
@@ -153,7 +153,7 @@
             var url = "@Url.Action("FillIn")?channel=@ViewBag.channel"
                                             //+ "&mobile=" + mobile
                                             + "&licenseNo=" + licenseNo
-                                            + "&cityCode=" + cityCode;
+                                            + "&cityCode=" + cityCode+"&check=1";
             //var url = "@ViewBag.loginUrl";
             window.location.href = url;
         });

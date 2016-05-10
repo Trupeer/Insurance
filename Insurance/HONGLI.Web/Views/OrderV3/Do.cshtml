@@ -64,7 +64,7 @@
         </div>
         <div class="f-form01-item1" id="PolicyEmpty" style="padding:0">
             <div class="page20-address-empty">
-                <a href="@Url.Action("Edit","PolicyHolderV3",new { userId= ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId } )"><span>添加被保人信息</span><span class="f-list01-icon-arrow" style="margin-left:6.75rem;"></span></a>
+                <a href="@Url.Action("Edit","PolicyHolderV3",new {Id=ViewBag.OrderPolicyId,userId= ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId } )"><span>添加被保人信息</span><span class="f-list01-icon-arrow" style="margin-left:6.75rem;"></span></a>
             </div>
         </div>
            
@@ -74,38 +74,59 @@
                     <p id="policyHolder-name" class="t-26">被保人：</p>
                     <p id="policyHolder-idcard" class="t-26">身份证：</p>
                 </div>
-                <div class="f-list01-go" style="margin-left:0.2rem"><a href="@Url.Action("Edit","PolicyHolderV3",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId} )" class="f-list01-icon-arrow"></a></div>
+                <div class="f-list01-go" style="margin-left:0.2rem"><a href="@Url.Action("Edit","PolicyHolderV3",new {Id=ViewBag.OrderPolicyId,userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId} )" class="f-list01-icon-arrow"></a></div>
             </div>
             <div class="f-form01-item">
-                <div class="explain"><span class="t-p1">发票信息</span><span class="t-26" style="float:right" id="invoice"></span></div>
+                <div class="explain"><span class="t-p1">发票信息</span><span class="t-26" style="float:right ;text-align:right;width:6rem;word-wrap: break-word;" id="invoice"></span></div>
                 <div class="f-list01-go" style="margin-left:0.2rem;"><a href="@Url.Action("Edit","InvoiceV3",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a></div>
             </div>
-            <div class="f-form01-item" id="PayAndDeliver">
+            @*<div class="f-form01-item" id="PayAndDeliver">
                 <div class="explain"><span class="t-p1">支付配送</span></div>
                 <div class="f-list01-go" style="margin-left:0.2rem;"><a href="@Url.Action("TypeEdit","DeliverV3",new {userid=ViewBag.UserId,productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a></div>
-            </div>
-            <div class="f-form01-item" id="PayType" style="display:none;">
-                <div class="explain"><span class="t-p1">支付方式</span><span class="t-26" style="float:right">线下支付</span></div>
+            </div>*@
+            <div class="f-form01-item" id="PayType">
+                <div class="explain"><span class="t-p1">支付方式</span><span class="t-26" style="float:right" id="payTypename"></span></div>
                 <div class="f-list01-go" style="margin-left:0.2rem;">
                     <a href="@Url.Action("TypeEdit","DeliverV3",new {userid=ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile,channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a>
                 </div>
             </div>
-            <div class="f-form01-item" id="DeliverType" style="display:none;">
+        <div class="f-form01-item" style="margin-bottom:2rem">
+            <div class="explain">
+                <span class="t-p1">优惠价：</span><span class="t-25" id="TotalAfter">9999</span>
+                <span class="t-p1" style="margin-left:2rem;">运费：</span><span class="t-25" id="deliverPrice">0</span>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+            @*<div class="f-form01-item" id="DeliverType" style="display:none;">
                 <div class="explain"><span class="t-p1">配送信息</span><span class="t-26" style="float:right" id="payAndDeliver-viewText"></span></div>
                 <div class="f-list01-go" style="margin-left:0.2rem;">
                     <a href="@Url.Action("TypeEdit","DeliverV3",new { userid = ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId})" class="f-list01-icon-arrow"></a>
                 </div>
-            </div>
-            @*<div class="f-form01-item" style="margin-bottom:2rem">
-                <div class="explain">
-                    <span class="t-p1">保费总额：</span><span class="t-25" id="Total">9999</span>
-                    @*<span class="t-p1" style="margin-left:2rem;">预约金：</span><span class="t-25" id="PrepaidAmount">9999</span>
-                </div>
             </div>*@
+
         </div>
     <div class="page20-submit">
-        <a href="#" class="f-button02" onclick="javascript:orderSubmit()">提交订单</a>
-        <div>优惠价：<span id="Total">￥</span></div>
+        <a href="#" class="f-button02" onclick="orderSubmit()">提交订单</a>
+        <div>总金额：<span id="Total">￥</span></div>
     </div>
     <script src="~/public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
     <script src="~/public/js/all.js"></script>
@@ -188,7 +209,6 @@
         var policyHolderCookie = common.cookie.getCookie(global.cookie.order.policyHolder);
         //支付配送
         var payAndDeliverCookie = common.cookie.getCookie(global.cookie.order.payAndDeliver);
-        if (productCookie == null || productCookie == "" || deliverCookie == null || deliverCookie == "" || policyHolderCookie == null || policyHolderCookie == "" || payAndDeliverCookie == null || payAndDeliverCookie == "") {
             $.get("GetOrderByCode", { OrderCode: '@Request["OrderCode"]' }, function (data) {
                 if (data == null)
                 {
@@ -198,30 +218,38 @@
                 //product
                 var channel = result.Channel;
                 var isuranceLogo = '@ViewBag.intentionCompany';
-                var order_product = new global.order.product(channel, result.UserId, result.InsuranceLogo, result.ProductName, result.ProductTitle, result.ProductOriginalPrice, result.ProductDealPrice, result.LicenseNo, result.ForceExpireDate, result.BusinessExpireDate, result.Buid, result.PrepaidAmount);
+                var order_product = new global.order.product(channel, result.ProductId, result.InsuranceLogo, result.ProductName, result.ProductTitle, result.ProductOriginalPrice, result.ProductDealPrice, result.LicenseNo, result.ForceExpireDate, result.BusinessExpireDate, result.Buid, result.PrepaidAmount);
                 var order_product_str = JSON.stringify(order_product);
                 common.cookie.setCookie(global.domain, global.cookie.order.product, order_product_str, global.expire);
                 //deliver
-                if (result.DeliverName != null && result.DeliverMobile != null && result.DeliverAddress != null)
+                if(deliverCookie=="")
                 {
-                    var order_deliver = new global.order.deliver(result.DeliverName, result.DeliverMobile, result.DeliverDistrictCode, result.DeliverAddress);
-                    var order_deliver_str = JSON.stringify(order_deliver);
-                    common.cookie.setCookie(global.domain, global.cookie.order.deliver, order_deliver_str, global.expire);
+                    if (result.DeliverName != null && result.DeliverMobile != null && result.DeliverAddress != null)
+                    {
+                        var order_deliver = new global.order.deliver(result.DeliverName, result.DeliverMobile, result.DeliverDistrictCode, result.DeliverAddress);
+                        var order_deliver_str = JSON.stringify(order_deliver);
+                        common.cookie.setCookie(global.domain, global.cookie.order.deliver, order_deliver_str, global.expire);
+                    }
                 }
                 //payAndDeliver
-                var order_payAndDeliver = new global.order.payAndDeliver(1, result.DeliverType, result.DeliverPrice, result.DeliverAddress, result.DeliverTime);
-                var order_payAndDeliver_str = JSON.stringify(order_payAndDeliver);
-                common.cookie.setCookie(global.domain, global.cookie.order.payAndDeliver, order_payAndDeliver_str, global.expire);
-                //policyHolder
-                if (result.Name != null && result.IdCard != null)
+                if(payAndDeliverCookie=="")
                 {
-                    var order_policyHolder = new global.order.policyHolder(result.Name, result.IdCardType, result.IdCard, result.IdCardFacePicUrl, result.IdCardBackPicUrl);
-                    var order_policyHolder_str = JSON.stringify(order_policyHolder);
-                    common.cookie.setCookie(global.domain, global.cookie.order.policyHolder, order_policyHolder_str, global.expire);
+                    var order_payAndDeliver = new global.order.payAndDeliver(result, result.DeliverType, result.DeliverPrice, result.DeliverAddress, result.DeliverTime);
+                    var order_payAndDeliver_str = JSON.stringify(order_payAndDeliver);
+                    common.cookie.setCookie(global.domain, global.cookie.order.payAndDeliver, order_payAndDeliver_str, global.expire);
+                }
+                //policyHolder
+                if(policyHolderCookie=="")
+                {
+                    if (result.Name != null && result.IdCard != null)
+                    {
+                        var order_policyHolder = new global.order.policyHolder(result.Name, result.IdCardType, result.IdCard, result.IdCardFacePicUrl, result.IdCardBackPicUrl);
+                        var order_policyHolder_str = JSON.stringify(order_policyHolder);
+                        common.cookie.setCookie(global.domain, global.cookie.order.policyHolder, order_policyHolder_str, global.expire);
+                    }
                 }
                 load();
             });
-        }
 
 
         function load()
@@ -233,13 +261,13 @@
                 if (order_product_json != null) {
                     var ForceExpireDate = "";
                     var BusinessExpireDate = "";
-                    if( order_product_json.ForceExpireDate!=null)
+                    if( order_product_json.forceExpireDate!=null)
                     {
-                        ForceExpireDate = order_product_json.ForceExpireDate;
+                        ForceExpireDate = order_product_json.forceExpireDate;
                     }
-                    if( order_product_json.BusinessExpireDate!=null)
+                    if( order_product_json.businessExpireDate!=null)
                     {
-                        BusinessExpireDate = order_product_json.BusinessExpireDate;
+                        BusinessExpireDate = order_product_json.businessExpireDate;
                     }
                     $("#product-isuranceLogoUrl").attr("src", getIsuranceLogoUrl(order_product_json.isuranceLogo));
                     $("#product-title").html(order_product_json.LicenseNo + "保费,交强险起保日期" + ForceExpireDate+ ",商业保险起保日期" + BusinessExpireDate);
@@ -249,6 +277,7 @@
                     //$("#product-PrepaidAmount").html(order_product_json.PrepaidAmount);
                     $("#order-productPrice").html("￥" + order_product_json.dealPrice);
                     //$("#PrepaidAmount").html(order_product_json.PrepaidAmount);
+                    $("#TotalAfter").html("￥" + order_product_json.dealPrice);
                 }
                 else {
                     //TODO by guoqiangs
@@ -298,42 +327,32 @@
             var payAndDeliverCookieValue = common.cookie.getCookie(global.cookie.order.payAndDeliver);
             if (payAndDeliverCookieValue != null && payAndDeliverCookieValue != "") {
                 order_payAndDeliver_json = $.parseJSON(payAndDeliverCookieValue);
-                $("#PayAndDeliver").hide();
 
-                if (order_payAndDeliver_json.deliverType == 2) {//自取
-                    $("#payAndDeliver-viewText").html("自取");
-                } else {
+                if (order_payAndDeliver_json.payType == 2) {//自取
+                    $("#payTypename").html("全款刷卡返现");
+                } else if (order_payAndDeliver_json.payType == 3){
 
-                    $("#payAndDeliver-viewText").html("快递");
+                    $("#payTypename").html("现金折扣直付");
                 }
 
-                $("#order-deliverPrice").html("￥" + order_payAndDeliver_json.deliverPrice);
-
-                $("#PayType").show();
-                $("#DeliverType").show();
-
             } else {
-                $("#order-deliverPrice").html("￥" + 0);
             }
 
 
             //最终价格=产品价格+配送费
 
-            var totalPrice = 0;
             var endprice=0;
-            if (order_product_json != null && order_product_json.PrepaidAmount != null) {
-                totalPrice = parseFloat(order_product_json.PrepaidAmount == null ? 0 : order_product_json.PrepaidAmount);
-            }
             if (order_product_json != null && order_product_json.dealPrice != null) {
                 endprice = parseFloat(order_product_json.dealPrice == null ? 0 : order_product_json.dealPrice);
+
             }
             if (order_payAndDeliver_json != null && order_payAndDeliver_json.deliverPrice != null) {
-                totalPrice = totalPrice + parseFloat(order_payAndDeliver_json.deliverPrice);
                 endprice=endprice + parseFloat(order_payAndDeliver_json.deliverPrice);
+                $("#deliverPrice").html( "￥" + parseFloat(order_payAndDeliver_json.deliverPrice));
             }
 
             //$("#Total").html(endprice);
-            $("#Total").html("￥" + totalPrice);
+            $("#Total").html("￥" + endprice);
         }
 
 
@@ -383,7 +402,8 @@
                 },
                 success: function (response) {
                     if (response.Status == 1) {
-                       alert("订单已提交！请耐心等待客服人员核实后与您联系！如有问题请致电：400-963-1088");
+                        window.location.href='@Url.Action("Index", "ProductV4")?channel=@Request["channel"]&mobile=@Request["mobile"]'
+                        alert("订单已提交！请耐心等待，客服人员核实后将与您联系！如有问题请致电：400-963-1088");
                     }
                     else {
                         alert(response.Error);

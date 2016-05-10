@@ -19,7 +19,7 @@
     <div class="f-nav">
         <h2>填写信息</h2>
         <div class="f-nav-back">
-            <a href="javascript:history.go(-1);" class="riaGoBack"><i></i></a>
+            <a href="@Url.Action("Index", "ProductV4")?channel=@ViewBag.channel&mobile=@ViewBag.mobile" class="riaGoBack"><i></i></a>
         </div>
         <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.521rem;" data-reveal-id="myModal" href="#"  data-animation="fade">客服</a></div>
 

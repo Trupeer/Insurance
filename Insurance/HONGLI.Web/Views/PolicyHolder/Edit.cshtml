@@ -23,7 +23,7 @@
     <div class="f-nav">
         <h2>新建被保人信息</h2>
         <div class="f-nav-back">
-            <a href="@Url.Action("Do", "Order", new { UserId = Model.UserId,productId = Model.ProductId, mobile = Model.Mobile,channel = Model.Channel })" id=""><i></i></a>
+            <a href="@Url.Action("Do", "OrderV3", new { UserId = Model.UserId, productId = Model.ProductId, mobile = Model.Mobile, channel = Model.Channel, intentionCompany = Model.intentionCompany, OrderCode = Model.OrderCode, OrderBaseId = Model.OrderBaseId, OrderItemId = Model.OrderItemId, OrderPolicyId = Model.OrderPolicyId, OrderDeliverId = Model.OrderDeliverId })" id=""><i></i></a>
         </div>
     </div>
     <div class="f-nav-extend">&nbsp;</div>
@@ -35,6 +35,12 @@
         @Html.HiddenFor(m => m.ProductId)
         @Html.HiddenFor(m => m.Channel)
         @Html.HiddenFor(model => model.ReturnUrl)
+        @Html.HiddenFor(m => m.intentionCompany)
+        @Html.HiddenFor(m => m.OrderCode)
+        @Html.HiddenFor(m => m.OrderBaseId)
+        @Html.HiddenFor(m => m.OrderItemId)
+        @Html.HiddenFor(m => m.OrderPolicyId)
+        @Html.HiddenFor(m => m.OrderDeliverId)
         <div class="page27-form">
             <div class="f-form01-item">
                 <label class="f-form01-label">被保人姓名</label>
@@ -100,7 +106,7 @@
                         上传身份证正面
                     </div>
                     <a href="#" id="btnUploadFacePic" class="f-button02">上传正面</a>
-                    <input class="f-button02" name="IdCardFacePic" id="IdCardFacePicUrl" type="file" style="display:none" autocomplete="off" disableautocomplete="">
+                    <input class="f-button02" name="IdCardFacePic" id="IdCardFacePicUrl" type="file" style="display:none" autocomplete="on" disableautocomplete="">
                 </div>
             </div>
             <div class="f-form01-item">

@@ -159,7 +159,7 @@ namespace HONGLI.Web.Controllers
                     }
                     Response.Cookies["HONGLI.order.policyHolderSelected"].Value = result.ToString();
                     string OrderCode = Request["OrderCode"];
-                    return RedirectToAction("List", "DeliverV2", new { UserId = model.UserId, PageType = "Edit", productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
+                    return RedirectToAction("List", "DeliverV3", new { UserId = model.UserId, PageType = "Edit", productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
                 }
                 else
                 {
@@ -306,12 +306,12 @@ namespace HONGLI.Web.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Do", "OrderV2", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
+                        return RedirectToAction("Do", "OrderV3", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Do", "OrderV2", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
+                    return RedirectToAction("Do", "OrderV3", new { UserId = model.UserId, productId = model.ProductId, mobile = model.Mobile, channel = model.Channel, intentionCompany = model.intentionCompany, OrderCode = model.OrderCode, OrderBaseId = model.OrderBaseId, OrderItemId = model.OrderItemId, OrderPolicyId = model.OrderPolicyId, OrderDeliverId = model.OrderDeliverId });
                     //return View(model);
                 }
             }
@@ -356,7 +356,7 @@ namespace HONGLI.Web.Controllers
             model.Mobile = mobile;
             model.ProductId = productId;
             List<User_Deliver> deliverList = _deliverService.GetDeliverByUser(userId);
-            deliverList.Where(d => d.DeliverName != "" && d.DeliverName != null).ToList();
+            deliverList=deliverList.Where(d => d.DeliverName != "" && d.DeliverName != null).ToList();
             deliverList.ForEach(deliver => model.DeliverList.Add(
                new DeliverModel
                {
