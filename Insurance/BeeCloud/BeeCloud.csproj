@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LitJson">
-      <HintPath>bin\LitJson.dll</HintPath>
+      <HintPath>..\..\..\..\下载\WxPayAPI_CS_v3\WxPayAPI_CS_v3\WxPayAPI_CS_v3\WxPayAPI\WxPayAPI\bin\LitJson.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

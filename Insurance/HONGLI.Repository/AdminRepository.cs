@@ -1383,19 +1383,21 @@ namespace HONGLI.Repository
             sql.Append("v2Items.ProductName,");
             sql.Append("v2Items.ForceNo,");
             sql.Append("v2Items.BizNo,");
-            sql.Append("v2Items.BizRate_Channel");
-            sql.Append(",ForceRate_Channel,");
-            sql.Append("v2Items.ForceTotal,");
-            sql.Append("v2Items.BizTotal,");
-            sql.Append("v2Items.TaxTotal,");
+            sql.Append("ISNULL(v2Items.BizRate_Channel,0) as BizRate_Channel,");
+            sql.Append("ISNULL(ForceRate_Channel,0) as ForceRate_Channel,");
+            sql.Append("ISNULL(v2Items.ForceTotal,0) as ForceTotal,");
+            sql.Append("ISNULL(v2Items.BizTotal,0) as BizTotal,");
+            sql.Append("ISNULL(v2Items.TaxTotal,0) as TaxTotal,");
             sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
-            sql.Append("ob.PrepaidAmount,");
-            sql.Append("ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0)) AS 'RemainMoney'");
+            sql.Append("ISNULL(ob.PrepaidAmount,0) as PrepaidAmount,");
+            sql.Append("ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0) + 7) AS 'RemainMoney'");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
             sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
             sql.Append(" Where 1=1");
+            sql.Append(" AND ob.Status IN (3,4,5)");
+
             sql.Append(where.ToString());
             sql.AppendFormat(") T4 WHERE PageIndex BETWEEN {0} AND {1}", Page * 10 - 9, Page * 10);
             #endregion
@@ -1489,19 +1491,20 @@ namespace HONGLI.Repository
             sql.Append("v2Items.ProductName,");
             sql.Append("v2Items.ForceNo,");
             sql.Append("v2Items.BizNo,");
-            sql.Append("v2Items.BizRate_Channel");
-            sql.Append(",ForceRate_Channel,");
-            sql.Append("v2Items.ForceTotal,");
-            sql.Append("v2Items.BizTotal,");
-            sql.Append("v2Items.TaxTotal,");
+            sql.Append("ISNULL(v2Items.BizRate_Channel,0) as BizRate_Channel,");
+            sql.Append("ISNULL(ForceRate_Channel,0) as ForceRate_Channel,");
+            sql.Append("ISNULL(v2Items.ForceTotal,0) as ForceTotal,");
+            sql.Append("ISNULL(v2Items.BizTotal,0) as BizTotal,");
+            sql.Append("ISNULL(v2Items.TaxTotal,0) as TaxTotal,");
             sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
-            sql.Append("ob.PrepaidAmount,");
-            sql.Append("ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0)) AS 'RemainMoney'");
+            sql.Append("ISNULL(ob.PrepaidAmount,0) as PrepaidAmount,");
+            sql.Append("ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0) + 7) AS 'RemainMoney'");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
             sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
             sql.Append(" Where 1=1");
+            sql.Append(" AND ob.Status IN (3,4,5)");
             sql.Append(where.ToString());
             sql.Append(" ORDER BY ob.CreateDate DESC");
             #endregion
@@ -1578,17 +1581,18 @@ namespace HONGLI.Repository
             #region 查询内容
             StringBuilder sql = new StringBuilder();
             sql.Append("SELECT ");
-            sql.Append("SUM(ISNULL(v2Items.ForceTotal,0)) ForceTotal,");
-            sql.Append("SUM(ISNULL(v2Items.BizTotal,0)) BizTotal,");
-            sql.Append("SUM(ISNULL(v2Items.TaxTotal,0)) TaxTotal,");
-            sql.Append("SUM((ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100)) AS 'Commission',");
-            sql.Append("SUM(ISNULL(ob.PrepaidAmount,0)) PrepaidAmount,");
-            sql.Append("SUM(ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0))) AS 'RemainMoney'");
+            sql.Append("ISNULL(SUM(v2Items.ForceTotal),0) ForceTotal,");
+            sql.Append("ISNULL(SUM(v2Items.BizTotal),0) BizTotal,");
+            sql.Append("ISNULL(SUM(v2Items.TaxTotal),0) TaxTotal,");
+            sql.Append("ISNULL(SUM((ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100)),0) AS 'Commission',");
+            sql.Append("ISNULL(SUM(ob.PrepaidAmount),0) PrepaidAmount,");
+            sql.Append("(ISNULL(SUM(ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0))),0) + COUNT(ob.Id)*7) AS 'RemainMoney'");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
             sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
             sql.Append(" Where 1=1");
+            sql.Append(" AND ob.Status IN (3,4,5)");
             sql.Append(where.ToString());
             #endregion
             using (var db = new E2JOINDB())
@@ -1645,31 +1649,31 @@ namespace HONGLI.Repository
             #endregion
             #region 查询内容
             StringBuilder sql = new StringBuilder();
-            sql.Append("SELECT COUNT(*) AS SumCount FROM  ");
-            sql.Append("(SELECT ROW_NUMBER() OVER(ORDER BY ob.CreateDate DESC) AS PageIndex, ");
-            sql.Append("ob.OrderCode,");
-            sql.Append("ob.CreateDate,");
-            sql.Append("items.LicenseNo,");
-            sql.Append("ph.Name,");
-            sql.Append("v2Items.ProductName,");
-            sql.Append("v2Items.ForceNo,");
-            sql.Append("v2Items.BizNo,");
-            sql.Append("v2Items.BizRate_Channel,");
-            sql.Append("ForceRate_Channel,");
-            sql.Append("v2Items.ForceRate,");
-            sql.Append("v2Items.ForceTotal,");
-            sql.Append("v2Items.BizTotal,");
-            sql.Append("v2Items.TaxTotal,");
-            sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
-            sql.Append("ob.PrepaidAmount,");
-            sql.Append("ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0)) AS 'RemainMoney'");
+            sql.Append("SELECT COUNT(*) AS SumCount  ");
+            //sql.Append("(SELECT ROW_NUMBER() OVER(ORDER BY ob.CreateDate DESC) AS PageIndex ");
+            //sql.Append("ob.OrderCode,");
+            //sql.Append("ob.CreateDate,");
+            //sql.Append("items.LicenseNo,");
+            //sql.Append("ph.Name,");
+            //sql.Append("v2Items.ProductName,");
+            //sql.Append("v2Items.ForceNo,");
+            //sql.Append("v2Items.BizNo,");
+            //sql.Append("v2Items.BizRate_Channel,");
+            //sql.Append("ForceRate_Channel,");
+            //sql.Append("v2Items.ForceRate,");
+            //sql.Append("v2Items.ForceTotal,");
+            //sql.Append("v2Items.BizTotal,");
+            //sql.Append("v2Items.TaxTotal,");
+            //sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
+            //sql.Append("ob.PrepaidAmount,");
+            //sql.Append("ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0)) AS 'RemainMoney'");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
             sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
             sql.Append(" Where 1=1");
+            sql.Append(" AND ob.Status IN (3,4,5)");
             sql.Append(where.ToString());
-            sql.AppendFormat(") T4");
             #endregion
             using (var db = new E2JOINDB())
             {

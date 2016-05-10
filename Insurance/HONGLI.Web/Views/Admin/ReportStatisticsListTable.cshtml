@@ -37,12 +37,12 @@
                 <td align="center">@item["BizNo"]</td>
                 <td align="center">@item["BizRate_Channel"]</td>
                 <td align="center">@item["ForceRate_Channel"]</td>
-                <td align="center">@item["ForceTotal"]</td>
-                <td align="center">@item["BizTotal"]</td>
-                <td align="center">@item["TaxTotal"]</td>
-                <td align="center">@item["Commission"]</td>
-                <td align="center">@item["PrepaidAmount"]</td>
-                <td align="center">@item["RemainMoney"]</td>
+                <td align="center">@Convert.ToDecimal(item["ForceTotal"]).ToString("F2")</td>
+                <td align="center">@Convert.ToDecimal(item["BizTotal"]).ToString("F2")</td>
+                <td align="center">@Convert.ToDecimal(item["TaxTotal"]).ToString("F2")</td>
+                <td align="center">@Convert.ToDecimal(item["Commission"]).ToString("F2")</td>
+                <td align="center">@Convert.ToDecimal(item["PrepaidAmount"]).ToString("F2")</td>
+                <td align="center">@Convert.ToDecimal(item["RemainMoney"]).ToString("F2")</td>
             </tr>
         }
     }
