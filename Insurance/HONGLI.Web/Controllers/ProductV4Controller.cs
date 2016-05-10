@@ -599,8 +599,8 @@ namespace HONGLI.Web.Controllers
 
                 product_item.ForceRate = Convert.ToDecimal(data.Item.ForceRate);
                 product_item.ForceAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.ForceTotal * ((100 - data.Item.ForceRate + forceRate_Channel) * 0.01)), 2);
-                product_item.TaxRate = Convert.ToDecimal(data.Item.ForceRate); //核保后，交强险费率和车船税费率相同
-                product_item.TaxAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.TaxTotal * ((100 - data.Item.ForceRate + taxRate_Channel) * 0.01)), 2);
+                product_item.TaxRate = 0; //核保后，交强险费率和车船税费率相同
+                product_item.TaxAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.TaxTotal), 2);
                 product_item.TotalAfterCoupon = decimal.Round(Convert.ToDecimal(product_item.BizAfterCoupon + product_item.ForceAfterCoupon + product_item.TaxAfterCoupon), 2);
                 #region  从新添加费率并加入缓存
                 databaojia.Item.BizRate =Convert.ToDouble(product_item.BizRate);

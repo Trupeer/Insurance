@@ -705,46 +705,68 @@
     <table class="table table-bordered" align="center">
     <tr>
         <td bgcolor="#f1f1f1">收件人姓名</td>
-        <td>@Html.TextBoxFor(m => m.DeliverName, new { @id = "DeliverName" })</td>
+        <td>@Html.TextBoxFor(m => m.DeliverName, new { @id = "DeliverName",@Value= orderlsit.Order_Deliver.FirstOrDefault().DeliverName })</td>
         <td bgcolor="#f1f1f1">下单人联系方式</td>
         <td>@productuser.Mobile</td>
         <td bgcolor="#f1f1f1">收货人联系方式</td>
-        <td>@Html.TextBoxFor(m => m.DeliverMobile, new { @id = "DeliverMobile" })</td>
+        <td>@Html.TextBoxFor(m => m.DeliverMobile, new { @id = "DeliverMobile", @Value = @orderlsit.Order_Deliver.FirstOrDefault().DeliverMobile })</td>
     </tr>
     <tr>
         <td>选择地区</td>
-        <td>@Html.HiddenFor(m => m.DeliverDistrictCode, new { @id = "DeliverDistrictCode" })
-        <select class="f-select01" id="s_province" name="s_province"></select>
-        <select class="f-select01" id="s_city" name="s_city"></select>
-        <select class="f-select01" id="s_county" name="s_county"></select></td>
+        <td>@Html.HiddenFor(m => m.DeliverDistrictCode, new { @id = "DeliverDistrictCode", @Value = @orderlsit.Order_Deliver.FirstOrDefault().DeliverDistrictCode })
+            <select class="f-select01" id="deliverProvince" name="deliverProvince"></select>
+            <select class="f-select01" id="deliverCity" name="deliverCity"></select>
+            <select class="f-select01" id="deliverArea" name="deliverArea"></select>
         <td bgcolor="#f1f1f1">详细地址</td>
-        <td colspan="3">@Html.TextBoxFor(m => m.DeliverAddress, new { @id = "DeliverAddress",@style="Width:380px;" })</td>
+        <td colspan="3">@Html.TextBoxFor(m => m.DeliverAddress, new { @id = "DeliverAddress",@style="Width:380px;",@Value = orderlsit.Order_Deliver.FirstOrDefault().DeliverAddress })</td>
     </tr>
 </table>
     <input type="submit" id="SaveModel" value="保存" onclick="CheckItemChange()" />
-    <input type="button" id="ChangeAuditDocuments" value="核单通过"/>
     @*<input type="button" id="ChangeAuditMessage" value="核单并发送短信" />*@
 }
+        <input type="button" id="ChangeAuditDocuments" value="核单通过" />
 </div>
     </div>
 <script src="@Url.Content("~/Scripts/area.js")" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/pcas.js")"></script>
 <script>
     var itemdata;
-    _init_area();
     $(function () {
         $("#VisitStatus").val(@productuser.VisitStatus);//设置回访装态下拉
         $("#CheckCompany").val(@ViewBag.InsuranceCompany);
         $("#PolicyIdCardType").val(@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardType);
         GetProductItem();
         $("#CheckCompany").change(function () { GetProductItem(); });
-        $('#s_province').change(function () {
-            $('#DeliverDistrictCode').val($('#s_province').val());
+        var deliverLocation = $("#DeliverDistrictCode").val();
+        if (deliverLocation != null && deliverLocation != "") {
+            var locationArrar = deliverLocation.split('|');
+            console.log(locationArrar);
+            //$("#s_province option[value=" + locationArrar[0] + "]").attr("selected", "selected");
+            //$('#s_province').onchange();
+
+            //$("#s_city option[value=" + locationArrar[1] + "]").attr("selected", "selected");
+
+            //$("#s_county option[value=" + locationArrar[2] + "]").attr("selected", "selected");
+            //$('#s_province').val(locationArrar[0]);
+            //$('#s_city').val(locationArrar[1]);
+            //console.log(locationArrar[1]);
+            //$('#s_county').val(locationArrar[2]);
+            new PCAS("deliverProvince", "deliverCity", "deliverArea", locationArrar[0], locationArrar[1], locationArrar[2]);
+        }
+        else {
+            new PCAS("deliverProvince", "deliverCity", "deliverArea");
+        }
+        $('#deliverProvince').change(function () {
+            $('#deliverLocation').val($('#deliverProvince').val());
         });
-        $('#s_city').change(function () {
-            $('#DeliverDistrictCode').val($('#DeliverDistrictCode').val() + "|" + $('#s_city').val());
+        $('#deliverCity').change(function () {
+            $('#deliverLocation').val($('#deliverProvince').val() + "|" + $('#deliverCity').val());
         });
-        $('#s_county').change(function () {
-            $('#DeliverDistrictCode').val($('#DeliverDistrictCode').val() + "|" + $('#s_county').val());
+        $('#deliverArea').change(function () {
+            $('#deliverLocation').val($('#deliverProvince').val() + "|" + $('#deliverCity').val() + "|" + $('#deliverArea').val());
+        });
+        $("#deliverAddress").focus(function () {
+            $('html,body').animate({ scrollTop: $("#deliverAddress").offset().top }, 500);
         });
         $("#ChangeAuditDocuments").click(function () { ChangeAuditDocuments(); });
         $("#ChangeAuditMessage").click(function () { ChangeAuditDocuments(); ChangeOrderList(); });
@@ -997,7 +1019,8 @@
         var OrderItemId = $("#OrderItemId").val();
         var PolicyId = $("#PolicyId").val();
         var OrderDeliverId = $("#OrderDeliverId").val();
-        $.post("ChangeOrderList", { orderbaseId: OrderBaseId, orderitemId: OrderItemId, ordercode: OrderBaeOrderCode, PrepaidAmount: PrepaidAmount, Status: Status, AmountPayable: AmountPayable, buid: buid, BusinessExpireDate: BusinessExpireDate, ForceExpireDate: ForceExpireDate, ItemId: ItemId, ProductDealPrice: ProductDealPrice, ProductOriginalPrice: ProductOriginalPrice, description: description }, function (data) {
+        var ProductItemId = $("#ItemId").val();
+        $.post("ChangeOrderList", { ProductItemId:ProductItemId,orderbaseId: OrderBaseId, orderitemId: OrderItemId, ordercode: OrderBaeOrderCode, PrepaidAmount: PrepaidAmount, Status: Status, AmountPayable: AmountPayable, buid: buid, BusinessExpireDate: BusinessExpireDate, ForceExpireDate: ForceExpireDate, ItemId: ItemId, ProductDealPrice: ProductDealPrice, ProductOriginalPrice: ProductOriginalPrice, description: description }, function (data) {
             //if(data==1)
             //{
             //    window.location.href = "/OrderV3/Index?productId=" + ItemId + "&mobile=" + mobeil + "&channel=" + channel + "&intentionCompany=" + source + "&OrderCode=" + OrderBaeOrderCode + "&OrderBaseId=" + OrderBaseId + "&OrderItemId=" + OrderItemId + "&OrderPolicyId=" + PolicyId + "&OrderDeliverId=" + OrderDeliverId;

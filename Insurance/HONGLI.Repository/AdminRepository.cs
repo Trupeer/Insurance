@@ -780,6 +780,7 @@ namespace HONGLI.Repository
                 context.Entry(order_base).Property(t => t.Status).IsModified = true;
                 //context.Entry(order_base).Property(t => t.PrepaidAmount).IsModified = true;
                 context.Entry(order_base).Property(t => t.CreateDate).IsModified = true;
+                context.Entry(order_base).Property(t => t.ProductItemId).IsModified = true;
                 //context.Entry(order_base).Property(t => t.AmountPayable).IsModified = true;
                 context.SaveChanges();
                 context.Order_Item.Attach(order_base.Order_Item.FirstOrDefault());
