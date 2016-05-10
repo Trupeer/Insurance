@@ -445,7 +445,7 @@ namespace HONGLI.Web.Controllers
             }
         }
         [HttpPost]
-        public int ChangeOrderList(int orderbaseId,int orderitemId,string ordercode, decimal? PrepaidAmount, int? Status, decimal? AmountPayable,int? buid,DateTime? BusinessExpireDate,DateTime? ForceExpireDate,int? ItemId,decimal? ProductDealPrice,decimal? ProductOriginalPrice,string description)
+        public int ChangeOrderList(int ProductItemId, int orderbaseId,int orderitemId,string ordercode, decimal? PrepaidAmount, int? Status, decimal? AmountPayable,int? buid,DateTime? BusinessExpireDate,DateTime? ForceExpireDate,int? ItemId,decimal? ProductDealPrice,decimal? ProductOriginalPrice,string description)
         {
             Order_Base order_base = new Order_Base();
             order_base.Id = orderbaseId;
@@ -454,6 +454,7 @@ namespace HONGLI.Web.Controllers
             //order_base.PrepaidAmount = PrepaidAmount;
             //order_base.AmountPayable = AmountPayable;
             order_base.CreateDate = DateTime.Now;
+            order_base.ProductItemId = ProductItemId;
             Order_Item order_item = new Order_Item();
             order_item.Id = orderitemId;
             order_item.OrderCode = ordercode;
