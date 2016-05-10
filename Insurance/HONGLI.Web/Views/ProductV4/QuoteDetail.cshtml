@@ -15,168 +15,20 @@
     <script src="~/public/js/base.js"></script>
     <link href="~/public/Popup/reveal.css" rel="stylesheet" />
     <script src="~/public/Popup/jquery-1.6.min.js"></script>
-    <script src="~/public/Popup/jquery.reveal.js"></script></head>
-<body>
-    <div class="f-nav">
-        <h2>报价详情</h2>
-        <div class="f-nav-back">
-            <a href="QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1"><i></i></a>
-        </div>
-        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.521rem;" data-reveal-id="myModal" href="#" data-animation="fade">客服</a></div>    </div>
-    <div class="f-nav-extend">&nbsp;</div>
-    <div class="f-list01 page12-top">
-        <div class="f-list01-main">
-
-            @{
-                var intentionCompany = ViewBag.intentionCompany;
-                if (intentionCompany == 0) //pingan
-                {
-                    <img src="~/public/imagesTemp/page40-2.png" />
-                }
-                else if (intentionCompany == 1)  //taipingyang
-                {
-                    <img src="~/public/imagesTemp/page40-3.png" />
-                }
-                else if (intentionCompany == 2)  //renbao
-                {
-                    <img src="~/public/imagesTemp/page40-1.png" />
-                }
-            }
-        </div>
-        <div class="f-list01-main"><del><span class='t-loading' id="total"></span> 元</del></div>
-    </div>
-
-    <div class="f-list01 page12-list01">
-        <div class="f-list01-main">交强险</div>
-        <div class="f-list01-other"><span class='t-loading' id="forceTotal"></span> 元</div>
-    </div>
-    <div class="f-list01 page12-list01">
-        <div class="f-list01-main">车船税</div>
-        <div class="f-list01-other"><span class='t-loading' id="taxTotal"></span> 元</div>
-    </div>
-    <div class="page12-title02">
-        <i class="page12-title02-line"></i>
-        <div class="f-list01">
-            <div class="f-list01-main">商业险</div>
-            <div class="f-list01-other"><span class='t-loading' id="bizTotal"></span>元</div>
-            <div class="f-list01-go"><i class="f-list01-icon-arrow-down" data-sh=".page12-tips"></i></div>
-        </div>
-        @*<div class="page12-title02-tips page12-tips">车损险、三者险（20万）、盗抢险、划痕险(2000元）、玻璃单独破损险、座位险（司机1万）、座位险（乘客1万）、不计免赔险</div>*@
-        <div class="page12-title02-tips page12-tips" style="margin-top:0.05rem"><span class='t-loading' id="description"></span></div>
-    </div>
-    <div class="f-list01-group page12-tips" id="descriptionDetail">
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">车损险（<label></label>）</div>
-            <div class="f-list01-other"><span class='t-loading' id="chesun"> </span>元</div>
-        </div><div class="f-list01 page12-list02">
-            <div class="f-list01-main">不计免赔车损险</div>
-            <div class="f-list01-other"><span class='t-loading' id="bujimianchesun"> </span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">三者险（<label></label>）</div>
-            <div class="f-list01-other"><span class='t-loading' id="sanzhe"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">不计免赔三者险</div>
-            <div class="f-list01-other"><span class='t-loading' id="bujimiansanzhe"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">盗抢险</div>
-            <div class="f-list01-other"><span class='t-loading' id="daoqiang"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">不计免赔盗抢险</div>
-            <div class="f-list01-other"><span class='t-loading' id="bujimiandaoqiang"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">座位险（司机<label></label>）</div>
-            <div class="f-list01-other"><span class='t-loading' id="siji"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">座位险（乘客<label></label>）</div>
-            <div class="f-list01-other"><span class='t-loading' id="chengke"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">不计免赔车上人员</div>
-            <div class="f-list01-other"><span class='t-loading' id="bujimianrenyuan"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">划痕险（<label></label>）</div>
-            <div class="f-list01-other"><span class='t-loading' id="huahen"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">玻璃单独破损险（<label></label>）</div>
-            <div class="f-list01-other"><span class='t-loading' id="boli"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">发动机特别损失险</div>
-            <div class="f-list01-other"><span class='t-loading' id="sheshui"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">自燃险</div>
-            <div class="f-list01-other"><span class='t-loading' id="ziran"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02" style="display:@(ViewBag.intentionCompany == 0 ? "list":"none")">
-            <div class="f-list01-main">倒车镜、车灯单独损失险</div>
-            <div class="f-list01-other"><span class='t-loading' id="chedeng"></span> 元</div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main">不计免附加险</div>
-            <div class="f-list01-other"><span class='t-loading' id="bujimianfujia"></span> 元</div>
-        </div>
-    </div>
-    <div class="page12-hbzt-wrap">
-        <div class="page12-hbzt">
-            <!--核保状态-->
-            <div class="page12-hbzt-title page12-hbzt-loading-title"><span>核保中</span></div>
-            <div class="page12-hbzt-content page12-hbzt-loading-content"><span>请稍等...</span></div>
-        </div>
-    </div>
-    <div class="page12-title01 formula"><i></i>您的报价单：（优惠部分已由平台车险专项积分抵扣）</div>
-    <div class="f-list01-group formula">
-        <div class="f-list01 page12-list04" id="bizCoupon">
-            @*<div class="f-list01-main" id="bizCoupon">商业险优惠费率  <span class='t-loading'></span> % x <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>*@
-            <div class="f-list01-main" style="width: 3.5rem;">商业险优惠费率</div>
-            <div class="f-list01-main page40-list" style="width: 1rem;"><span class='t-loading'></span>%</div>
-            <div class="f-list01-main" style="width: 4.5rem;">x 元（原价）</div>
-            <div class="f-list01-main page40-list" style="width: 1.5rem;">= <span class='t-loading'></span></div>
-        </div>
-        <div class="f-list01 page12-list04" id="forceCoupon">
-            @*<div class="f-list01-main" id="forceCoupon">交强险优惠费率   <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>*@
-            <div class="f-list01-main" style="width: 3.5rem;">交强险优惠费率</div>
-            <div class="f-list01-main page40-list" style="width: 1rem;"><span class='t-loading'></span>%</div>
-            <div class="f-list01-main" style="width: 4.5rem;">x 元（原价）</div>
-            <div class="f-list01-main page40-list" style="width: 1.5rem;">= <span class='t-loading'></span></div>
-        </div>
-        <div class="f-list01 page12-list04" id="taxCoupon">
-            @*<div class="f-list01-main" id="taxCoupon">车船税优惠费率    <span class='t-loading'></span> % x <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>*@
-            <div class="f-list01-main" style="width: 3.5rem;">车船税优惠费率</div>
-            <div class="f-list01-main page40-list" style="width: 1rem;"><span class='t-loading'></span>%</div>
-            <div class="f-list01-main" style="width: 4.5rem;">x 元（原价）</div>
-            <div class="f-list01-main page40-list" style="width: 1.5rem;">= <span class='t-loading'></span></div>
-        </div>
-        <div class="f-list01 page12-list02">
-            <div class="f-list01-main" id="totalCoupon">为您节省：<span class='t-loading'></span> 元</div>
-            <div class="f-list01-main" id="afterCouponTotal">优惠价后总价：<span class='t-loading'></span> 元</div>
-        </div>
-    </div>
-    <div class="page12-submit formulaBuy">
-        <div class="t-info">
-            <p>保险总价：<span><del id="totalFooter"><span class='t-loading'></span> 元</del></span></p>
-            <p>优惠价：<span id="afterCouponTotalFooter"><span class='t-loading'></span> 元</span></p>
-        </div>
-        <a href="javascript:void(0);" class="f-button02 t-disable" id="submit">我要购买</a>
-    </div>
-    <div class="page12-submit-fixed-extend"></div>
-
+    <script src="~/public/Popup/jquery.reveal.js"></script>
     <script src="~/public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
     <script src="~/public/js/all.js"></script>
     <script src="~/Scripts/hongli.common.tools.js"></script>
     <script src="~/Scripts/hongli.global.data.js"></script>
     <script src="~/public/3rdLibs/layer.mobile/v1.7/layer.js"></script>
-
     <script type="text/javascript">
-
+        //android适配
+        if (/android/i.test(navigator.userAgent)) {
+            $(".js-element-focus-top").click(function () {
+                var top = $(this).offset().top - 100;
+                window.scrollTo(0, top);
+            });
+        }
         $(function(){
             $("#descriptionDetail .f-list01").each(function(){
                 $(this).hide();
@@ -552,6 +404,162 @@
         })
 
     </script>
+</head>
+<body>
+    <div class="f-nav">
+        <h2>报价详情</h2>
+        <div class="f-nav-back">
+            <a href="QuoteList?channel=@ViewBag.channel&mobile=@ViewBag.mobile&licenseNo=@ViewBag.licenseNo&dataItem=&userID=@ViewBag.userID&check=1"><i></i></a>
+        </div>
+        <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.521rem;" data-reveal-id="myModal" href="#" data-animation="fade">客服</a></div>    </div>
+    <div class="f-nav-extend">&nbsp;</div>
+    <div class="f-list01 page12-top">
+        <div class="f-list01-main">
+
+            @{
+                var intentionCompany = ViewBag.intentionCompany;
+                if (intentionCompany == 0) //pingan
+                {
+                    <img src="~/public/imagesTemp/page40-2.png" />
+                }
+                else if (intentionCompany == 1)  //taipingyang
+                {
+                    <img src="~/public/imagesTemp/page40-3.png" />
+                }
+                else if (intentionCompany == 2)  //renbao
+                {
+                    <img src="~/public/imagesTemp/page40-1.png" />
+                }
+            }
+        </div>
+        <div class="f-list01-main"><del><span class='t-loading' id="total"></span> 元</del></div>
+    </div>
+
+    <div class="f-list01 page12-list01">
+        <div class="f-list01-main">交强险</div>
+        <div class="f-list01-other"><span class='t-loading' id="forceTotal"></span> 元</div>
+    </div>
+    <div class="f-list01 page12-list01">
+        <div class="f-list01-main">车船税</div>
+        <div class="f-list01-other"><span class='t-loading' id="taxTotal"></span> 元</div>
+    </div>
+    <div class="page12-title02">
+        <i class="page12-title02-line"></i>
+        <div class="f-list01">
+            <div class="f-list01-main">商业险</div>
+            <div class="f-list01-other"><span class='t-loading' id="bizTotal"></span>元</div>
+            <div class="f-list01-go"><i class="f-list01-icon-arrow-down" data-sh=".page12-tips"></i></div>
+        </div>
+        @*<div class="page12-title02-tips page12-tips">车损险、三者险（20万）、盗抢险、划痕险(2000元）、玻璃单独破损险、座位险（司机1万）、座位险（乘客1万）、不计免赔险</div>*@
+        <div class="page12-title02-tips page12-tips" style="margin-top:0.05rem"><span class='t-loading' id="description"></span></div>
+    </div>
+    <div class="f-list01-group page12-tips" id="descriptionDetail">
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">车损险（<label></label>）</div>
+            <div class="f-list01-other"><span class='t-loading' id="chesun"> </span>元</div>
+        </div><div class="f-list01 page12-list02">
+            <div class="f-list01-main">不计免赔车损险</div>
+            <div class="f-list01-other"><span class='t-loading' id="bujimianchesun"> </span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">三者险（<label></label>）</div>
+            <div class="f-list01-other"><span class='t-loading' id="sanzhe"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">不计免赔三者险</div>
+            <div class="f-list01-other"><span class='t-loading' id="bujimiansanzhe"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">盗抢险</div>
+            <div class="f-list01-other"><span class='t-loading' id="daoqiang"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">不计免赔盗抢险</div>
+            <div class="f-list01-other"><span class='t-loading' id="bujimiandaoqiang"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">座位险（司机<label></label>）</div>
+            <div class="f-list01-other"><span class='t-loading' id="siji"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">座位险（乘客<label></label>）</div>
+            <div class="f-list01-other"><span class='t-loading' id="chengke"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">不计免赔车上人员</div>
+            <div class="f-list01-other"><span class='t-loading' id="bujimianrenyuan"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">划痕险（<label></label>）</div>
+            <div class="f-list01-other"><span class='t-loading' id="huahen"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">玻璃单独破损险（<label></label>）</div>
+            <div class="f-list01-other"><span class='t-loading' id="boli"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">发动机特别损失险</div>
+            <div class="f-list01-other"><span class='t-loading' id="sheshui"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">自燃险</div>
+            <div class="f-list01-other"><span class='t-loading' id="ziran"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02" style="display:@(ViewBag.intentionCompany == 0 ? "list":"none")">
+            <div class="f-list01-main">倒车镜、车灯单独损失险</div>
+            <div class="f-list01-other"><span class='t-loading' id="chedeng"></span> 元</div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main">不计免附加险</div>
+            <div class="f-list01-other"><span class='t-loading' id="bujimianfujia"></span> 元</div>
+        </div>
+    </div>
+    <div class="page12-hbzt-wrap">
+        <div class="page12-hbzt">
+            <!--核保状态-->
+            <div class="page12-hbzt-title page12-hbzt-loading-title"><span>核保中</span></div>
+            <div class="page12-hbzt-content page12-hbzt-loading-content"><span>请稍等...</span></div>
+        </div>
+    </div>
+    <div class="page12-title01 formula"><i></i>您的报价单：（优惠部分已由平台车险专项积分抵扣）</div>
+    <div class="f-list01-group formula">
+        <div class="f-list01 page12-list04" id="bizCoupon">
+            @*<div class="f-list01-main" id="bizCoupon">商业险优惠费率  <span class='t-loading'></span> % x <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>*@
+            <div class="f-list01-main" style="width: 3.5rem;">商业险优惠费率</div>
+            <div class="f-list01-main page40-list" style="width: 1rem;"><span class='t-loading'></span>%</div>
+            <div class="f-list01-main" style="width: 4.5rem;">x 元（原价）</div>
+            <div class="f-list01-main page40-list" style="width: 1.5rem;">= <span class='t-loading'></span></div>
+        </div>
+        <div class="f-list01 page12-list04" id="forceCoupon">
+            @*<div class="f-list01-main" id="forceCoupon">交强险优惠费率   <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>*@
+            <div class="f-list01-main" style="width: 3.5rem;">交强险优惠费率</div>
+            <div class="f-list01-main page40-list" style="width: 1rem;"><span class='t-loading'></span>%</div>
+            <div class="f-list01-main" style="width: 4.5rem;">x 元（原价）</div>
+            <div class="f-list01-main page40-list" style="width: 1.5rem;">= <span class='t-loading'></span></div>
+        </div>
+        <div class="f-list01 page12-list04" id="taxCoupon">
+            @*<div class="f-list01-main" id="taxCoupon">车船税优惠费率    <span class='t-loading'></span> % x <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>*@
+            <div class="f-list01-main" style="width: 3.5rem;">车船税优惠费率</div>
+            <div class="f-list01-main page40-list" style="width: 1rem;"><span class='t-loading'></span>%</div>
+            <div class="f-list01-main" style="width: 4.5rem;">x 元（原价）</div>
+            <div class="f-list01-main page40-list" style="width: 1.5rem;">= <span class='t-loading'></span></div>
+        </div>
+        <div class="f-list01 page12-list02">
+            <div class="f-list01-main" id="totalCoupon">为您节省：<span class='t-loading'></span> 元</div>
+            <div class="f-list01-main" id="afterCouponTotal">优惠价后总价：<span class='t-loading'></span> 元</div>
+        </div>
+    </div>
+    <div class="page12-submit formulaBuy">
+        <div class="t-info">
+            <p>保险总价：<span><del id="totalFooter"><span class='t-loading'></span> 元</del></span></p>
+            <p>优惠价：<span id="afterCouponTotalFooter"><span class='t-loading'></span> 元</span></p>
+        </div>
+        <a href="javascript:void(0);" class="f-button02 t-disable" id="submit">我要购买</a>
+    </div>
+    <div class="page12-submit-fixed-extend"></div>
+
+
+    
     <div id="myModal" class="reveal-modal">
         <div class="title-text">联系客服</div>
         <div class="Online-Service">

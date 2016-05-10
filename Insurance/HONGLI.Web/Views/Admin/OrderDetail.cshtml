@@ -919,20 +919,20 @@
             var TaxAfterCoupon = $("#TaxAfterCoupon").val();
             var TotalAfterCoupon = $("#TotalAfterCoupon").val();
             var AuditOrderStatus = $("#AuditOrderStatus").val();
-            if (SubmitStatus != itemdata.SubmitStatus.toString() || SubmitResult != itemdata.SubmitResult.toString() ||
-                BizRate != itemdata.BizRate.toString() || ForceRate != itemdata.ForceRate.toString() || TaxRate != itemdata.TaxRate.toString() ||
-                BizRate_Channel != itemdata.BizRate_Channel.toString() || ForceRate_Channel != itemdata.ForceRate_Channel.toString() || TaxRate_Channel != itemdata.TaxRate_Channel.toString() ||
-                BizNo != itemdata.BizNo.toString() || ForceNo != itemdata.ForceNo.toString() || CheSun_BaoE != itemdata.CheSun_BaoE.toString() ||
-                CheSun_BaoFei != itemdata.CheSun_BaoFei.toString() || SanZhe_BaoE != itemdata.SanZhe_BaoE.toString() || DaoQiang_BaoE != itemdata.DaoQiang_BaoE.toString() ||
-                DaoQiang_BaoFei != DaoQiang_BaoFei.TaxRate.toString() || SiJi_BaoE != itemdata.SiJi_BaoE.toString() || SiJi_BaoFei != itemdata.SiJi_BaoFei.toString() ||
-                ChengKe_BaoE != itemdata.ChengKe_BaoE.toString() || ChengKe_BaoFei != itemdata.ChengKe_BaoFei.toString() || BoLi_BaoE != itemdata.BoLi_BaoE.toString() ||
-               BoLi_BaoFei != itemdata.BoLi_BaoFei.toString() || HuaHen_BaoE != itemdata.HuaHen_BaoE.toString() || HuaHen_BaoFei != itemdata.HuaHen_BaoFei.toString() ||
-                BuJiMianCheSun_BaoE != itemdata.BuJiMianCheSun_BaoE.toString() || BuJiMianCheSun_BaoFei != itemdata.BuJiMianCheSun_BaoFei.toString() || BuJiMianSanZhe_BaoE != itemdata.BuJiMianSanZhe_BaoE.toString()
-                || BuJiMianSanZhe_BaoFei != itemdata.BuJiMianSanZhe_BaoFei.toString() || BuJiMianDaoQiang_BaoE != itemdata.BuJiMianDaoQiang_BaoE.toString() || BuJiMianDaoQiang_BaoFei != itemdata.BuJiMianDaoQiang_BaoFei.toString()
-                || BuJiMianRenYuan_BaoE != itemdata.BuJiMianRenYuan_BaoE.toString() || BuJiMianRenYuan_BaoFei != itemdata.BuJiMianRenYuan_BaoFei.toString() || BizTotal != itemdata.BizTotal.toString()
-                || ForceTotal != itemdata.ForceTotal.toString() || TaxTotal != itemdata.TaxTotal.toString() || Total != itemdata.Total.toString()
-                || BizAfterCoupon != itemdata.BizAfterCoupon.toString() || ForceAfterCoupon != itemdata.ForceAfterCoupon.toString() || TaxAfterCoupon != itemdata.TaxAfterCoupon.toString()
-                || TotalAfterCoupon != itemdata.TotalAfterCoupon.toString() || AuditOrderStatus != itemdata.AuditOrderStatus.toString()) {
+            if (checknull(SubmitStatus) != checknull(itemdata.SubmitStatus) || SubmitResult != checknull(itemdata.SubmitResult) ||
+                BizRate != checknull(itemdata.BizRate) || ForceRate != checknull(itemdata.ForceRate) || TaxRate != checknull(itemdata.TaxRate) ||
+                BizRate_Channel != checknull(itemdata.BizRate_Channel) || ForceRate_Channel != checknull(itemdata.ForceRate_Channel) || TaxRate_Channel != checknull(itemdata.TaxRate_Channel) ||
+                BizNo != checknull(itemdata.BizNo) || ForceNo != checknull(itemdata.ForceNo) || CheSun_BaoE != checknull(itemdata.CheSun_BaoE) ||
+                CheSun_BaoFei != checknull(itemdata.CheSun_BaoFei) || SanZhe_BaoE != checknull(itemdata.SanZhe_BaoE) || DaoQiang_BaoE != checknull(itemdata.DaoQiang_BaoE) ||
+                DaoQiang_BaoFei != checknull(DaoQiang_BaoFei.TaxRate) || SiJi_BaoE != checknull(itemdata.SiJi_BaoE) || SiJi_BaoFei != checknull(itemdata.SiJi_BaoFei) ||
+                ChengKe_BaoE != checknull(itemdata.ChengKe_BaoE) || ChengKe_BaoFei != checknull(itemdata.ChengKe_BaoFei) || BoLi_BaoE != checknull(itemdata.BoLi_BaoE) ||
+               BoLi_BaoFei != checknull(itemdata.BoLi_BaoFei) || HuaHen_BaoE != checknull(itemdata.HuaHen_BaoE) || HuaHen_BaoFei != checknull(itemdata.HuaHen_BaoFei) ||
+                BuJiMianCheSun_BaoE != checknull(itemdata.BuJiMianCheSun_BaoE) || BuJiMianCheSun_BaoFei != checknull(itemdata.BuJiMianCheSun_BaoFei) || BuJiMianSanZhe_BaoE != checknull(itemdata.BuJiMianSanZhe_BaoE)
+                || BuJiMianSanZhe_BaoFei != checknull(itemdata.BuJiMianSanZhe_BaoFei) || BuJiMianDaoQiang_BaoE != checknull(itemdata.BuJiMianDaoQiang_BaoE) || BuJiMianDaoQiang_BaoFei != checknull(itemdata.BuJiMianDaoQiang_BaoFei)
+                || BuJiMianRenYuan_BaoE != checknull(itemdata.BuJiMianRenYuan_BaoE) || BuJiMianRenYuan_BaoFei != checknull(itemdata.BuJiMianRenYuan_BaoFei) || BizTotal != checknull(itemdata.BizTotal)
+                || ForceTotal != checknull(itemdata.ForceTotal) || TaxTotal != checknull(itemdata.TaxTotal) || Total != checknull(itemdata.Total)
+                || BizAfterCoupon != checknull(itemdata.BizAfterCoupon) || ForceAfterCoupon != checknull(itemdata.ForceAfterCoupon) || TaxAfterCoupon != checknull(itemdata.TaxAfterCoupon)
+                || TotalAfterCoupon != checknull(itemdata.TotalAfterCoupon) || AuditOrderStatus != checknull(itemdata.AuditOrderStatus)) {
                 $("#ItemId").val(0);
             }
         }
@@ -944,6 +944,17 @@
         else
         {
             $("#DeliverPrice").val("");
+        }
+    }
+    function checknull(str)
+    {
+        if(str==null||str==undefined)
+        {
+            return "";
+        }
+        else
+        {
+            return str;
         }
     }
     function ChangeAuditDocuments()

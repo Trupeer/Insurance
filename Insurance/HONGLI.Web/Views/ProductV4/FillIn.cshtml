@@ -374,11 +374,29 @@
                         $("#ziran").val(quote.ZiRan);
                         $("#chedeng").val(quote.CheDeng);
                     }
+                    else
+                    {
+                        //checkbox全部勾选，且切换最高保额
+                        $("input[type=checkbox]").each(function () {
+                            $(this).prop("checked", true);
+                            checkBoxChange($(this), "max");
+                        });
+                        //不计免赔选中
+                        $(".f-tips01").each(function () {
+                            var obj = $(this);
+                            obj.css("background", "#648feb");
+                            obj.prop("disabled", true);
+                        });
+                    }
                     if (data.BusinessStatus != 1) {
                         if (data.BusinessStatus != 3) {
                             var message = data.StatusMessage;
                             if (message == null) {
                                 message = "获取续保信息失败，服务器未返回失败原因！";
+                            }
+                            if (message.indexOf("输入参数错误") > -1)
+                            {
+                                message = "亲，请输入正确的车牌号";
                             }
                             alert(message);
 

@@ -42,7 +42,7 @@
             <div id="Pagination"></div>
             <div class="searchPage">
                 <span class="page-sum">共<strong class="allPage" id="SumPages"></strong>页</span>
-                <span class="page-go">跳转<input type="text" id="anypageindex">页</span>
+                <span class="page-go">跳转<input type="text" id="anypageindex" style="width:40px;">页</span>
                 <a href="javascript:;" class="page-btn" id="goanypage">GO</a>
             </div>
         </div>
@@ -57,10 +57,15 @@
         maxDate: jeDate.now(0) //1代表明天，2代表后天，以此类推
     });
     var pageindex = 1;
+    var sumcount = 1;
     $(function () {
         submit(1, 1);
         $("#goanypage").click(function () {
             var thispage = parseInt($("#anypageindex").val());
+            if (thispage > sumcount) {
+                alert("没有此页面！");
+                return;
+            }
             submit(thispage, null);
         });
     });
@@ -96,7 +101,7 @@
         var BillCode = $("#BillCode").val();
         if (check != null) {
             $.get("GetBillListCount", { CarID: CarID, PolicyName: PolicyName, BillCreateDate: BillCreateDate, ddlOrderState: ddlOrderState, BillCode: BillCode }, function (data) {
-                var sumcount = parseInt(data);
+                sumcount = parseInt(data);
                 $("#SumPages").html(sumcount);
                 $("#Pagination").pagination(sumcount);
             });
