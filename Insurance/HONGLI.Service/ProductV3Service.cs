@@ -681,5 +681,20 @@ namespace HONGLI.Service
         {
             return new ProductV3Repository().GetOrdertemByOrderCode(ordercode);
         }
-    }
+        public int CheckOrderBase(int UserId)
+        {
+            int result;
+            try
+            {
+                result = new ProductV3Repository().CheckOrderBase(UserId);
+            }
+            catch (Exception ex)
+            {
+                result = -1;
+                //todo log
+                LogHelper.AppError(string.Format("删除重复订单数据异常，异常信息：{0}，异常跟踪：{1}.", ex.Message, ex.StackTrace));
+            }
+            return result;
+        }
+        }
 }

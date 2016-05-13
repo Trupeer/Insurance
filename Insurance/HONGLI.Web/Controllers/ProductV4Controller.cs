@@ -659,7 +659,8 @@ namespace HONGLI.Web.Controllers
                         checkList.Add("OrderDeliverId", 0);
                         return Json(checkList);
                 }
-
+                //判断是否存在重复订单数据（存在立即删除）
+                new ProductV3Service().CheckOrderBase(userID);
                 //增加订单信息
                 string ordercode = "100001" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
                 //加入缓存

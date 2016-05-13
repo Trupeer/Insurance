@@ -23,31 +23,37 @@
    
 @helper GetOrderStatusText(EnumOrderStatus status)
 {
-    var text = "";
-    switch (status)
-    {
-        case EnumOrderStatus.UnPay:
-            text = "未支付";
-            break;
-        case EnumOrderStatus.Wating:
-            text = "未支付";
-            break;
-        case EnumOrderStatus.Paid:
-            text = "已支付";
-            break;
-        case EnumOrderStatus.Success:
-            text = "已支付";
-            break;
-        case EnumOrderStatus.Failed:
-            text = "未支付";
-            break;
-        case EnumOrderStatus.Quit:
-            text = "撤销";
-            break;
-        default:
-            text = "";
-            break;
-    }
+var text = "";
+switch (status)
+{
+    case EnumOrderStatus.NAK:
+        text = "未确认";
+        break;
+    case EnumOrderStatus.UnPay:
+        text = "已订未支付";
+        break;
+    case EnumOrderStatus.Homecollection:
+        text = "上门收款";
+        break;
+    case EnumOrderStatus.Paid:
+        text = "已支付";
+        break;
+    case EnumOrderStatus.Mailingpolicy:
+        text = "邮寄保单";
+        break;
+    case EnumOrderStatus.Success:
+        text = "已完成";
+        break;
+    case EnumOrderStatus.Failed:
+        text = "失败";
+        break;
+    case EnumOrderStatus.Cancel:
+        text = "已取消";
+        break;
+    default:
+        text = "";
+        break;
+}
     @:@text
 }
 

@@ -90,15 +90,15 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(BeginInsuranceEndDate) && !string.IsNullOrEmpty(EndInsuranceEndDate))
             {
-                where.AppendFormat(" AND Convert(varchar(10),BusinessExpireDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)' ", Convert.ToDateTime(BeginInsuranceEndDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndInsuranceEndDate).ToString("yyyy-MM-dd"));
+                where.AppendFormat(" AND Convert(varchar(10),BusinessExpireDate,120) BETWEEN Convert(varchar(10),'{0}',120) AND Convert(varchar(10),'{1}',120) ", Convert.ToDateTime(BeginInsuranceEndDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndInsuranceEndDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(BeginVisitDate) && !string.IsNullOrEmpty(EndVisitDate))
             {
-                where.AppendFormat(" AND  Convert(varchar(10),VisitDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)'", Convert.ToDateTime(BeginVisitDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndVisitDate).ToString("yyyy-MM-dd"));
+                where.AppendFormat(" AND  Convert(varchar(10),VisitDate,120) BETWEEN Convert(varchar(10),'{0}',120) AND Convert(varchar(10),'{1}',120)", Convert.ToDateTime(BeginVisitDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndVisitDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
             {
-                where.AppendFormat(" AND Convert(varchar(10),T.CreateTime,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)'", Convert.ToDateTime(BeginDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndDate).ToString("yyyy-MM-dd"));
+                where.AppendFormat(" AND Convert(varchar(10),T.CreateTime,120) BETWEEN Convert(varchar(10),'{0}',120) AND Convert(varchar(10),'{1}',120)", Convert.ToDateTime(BeginDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(InsuranceCompany))
             {
@@ -121,7 +121,14 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(OrderState))
             {
-                where.AppendFormat(" AND OrderreviewState ={0}", OrderState);
+                if (OrderState == "0")
+                {
+                    where.AppendFormat(" AND (OrderreviewState ={0} OR OrderreviewState IS NULL)", OrderState);
+                }
+                else
+                {
+                    where.AppendFormat(" AND OrderreviewState ={0}", OrderState);
+                }
             }
             if (!string.IsNullOrEmpty(examineState))
             {
@@ -230,15 +237,15 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(BeginInsuranceEndDate) && !string.IsNullOrEmpty(EndInsuranceEndDate))
             {
-                where.AppendFormat(" AND Convert(varchar(10),BusinessExpireDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)' ", Convert.ToDateTime(BeginInsuranceEndDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndInsuranceEndDate).ToString("yyyy-MM-dd"));
+                where.AppendFormat(" AND Convert(varchar(10),BusinessExpireDate,120) BETWEEN Convert(varchar(10),'{0}',120) AND Convert(varchar(10),'{1}',120) ", Convert.ToDateTime(BeginInsuranceEndDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndInsuranceEndDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(BeginVisitDate) && !string.IsNullOrEmpty(EndVisitDate))
             {
-                where.AppendFormat(" AND  Convert(varchar(10),VisitDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)'", Convert.ToDateTime(BeginVisitDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndVisitDate).ToString("yyyy-MM-dd"));
+                where.AppendFormat(" AND  Convert(varchar(10),VisitDate,120) BETWEEN Convert(varchar(10),'{0}',120) AND Convert(varchar(10),'{1}',120)", Convert.ToDateTime(BeginVisitDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndVisitDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
             {
-                where.AppendFormat(" AND Convert(varchar(10),T.CreateTime,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)'", Convert.ToDateTime(BeginDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndDate).ToString("yyyy-MM-dd"));
+                where.AppendFormat(" AND Convert(varchar(10),T.CreateTime,120) BETWEEN Convert(varchar(10),'{0}',120) AND Convert(varchar(10),'{1}',120)", Convert.ToDateTime(BeginDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(InsuranceCompany))
             {
@@ -261,7 +268,14 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(OrderState))
             {
-                where.AppendFormat(" AND OrderreviewState ={0}", OrderState);
+                if (OrderState == "0")
+                {
+                    where.AppendFormat(" AND (OrderreviewState ={0} OR OrderreviewState IS NULL)", OrderState);
+                }
+                else
+                {
+                    where.AppendFormat(" AND OrderreviewState ={0}", OrderState);
+                }
             }
             if (!string.IsNullOrEmpty(examineState))
             {
@@ -824,7 +838,7 @@ namespace HONGLI.Repository
             sql.Append("LEFT JOIN dbo.Order_Pay E WITH(NOLOCK) ON A.OrderCode = E.OrderCode ");
             //sql.Append("LEFT JOIN dbo.ProductV2_User F WITH(NOLOCK) ON A.UserId=F.Id ");
             sql.Append("LEFT JOIN dbo.RedPacket G WITH(NOLOCK) ON A.OrderCode=G.OrderCode ");
-            sql.Append("WHERE 1=1 AND A.Status IS NOT NULL ");//AND A.Status IS NOT NULL
+            sql.Append("WHERE 1=1 AND A.Status IS NOT NULL  AND A.Status!=0 ");//AND A.Status IS NOT NULL
             if (!string.IsNullOrEmpty(licenseNo))
             {
                 sql.AppendFormat(" AND B.LicenseNo LIKE '%{0}%' ", licenseNo);
@@ -919,7 +933,7 @@ namespace HONGLI.Repository
             sql.Append("LEFT JOIN dbo.Order_Pay E WITH(NOLOCK) ON A.OrderCode = E.OrderCode ");
             //sql.Append("LEFT JOIN dbo.ProductV2_User F WITH(NOLOCK) ON A.UserId=F.Id ");
             sql.Append("LEFT JOIN dbo.RedPacket G WITH(NOLOCK) ON A.OrderCode=G.OrderCode ");
-            sql.Append("WHERE 1=1   AND A.Status IS NOT NULL");//AND A.Status IS NOT NULL
+            sql.Append("WHERE 1=1   AND A.Status IS NOT NULL AND A.Status!=0");//AND A.Status IS NOT NULL
             if (!string.IsNullOrEmpty(licenseNo))
             {
                 sql.AppendFormat(" AND B.LicenseNo LIKE '%{0}%' ", licenseNo);

@@ -76,8 +76,8 @@
                 <td align="center" bgcolor="#f1f1f1" colspan="2">身份证反面：</td>
             </tr>
             <tr>
-                <td align="center"  colspan="2"><img src="@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardFacePicUrl" style="width:40px;height:40px;"/></td>
-                <td align="center" colspan="2"><img src="@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardBackPicUrl" style="width:40px;height:40px;" /></td>
+                <td align="center"  colspan="2"><img src="@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardFacePicUrl" style="width:300px;height:200px;"/></td>
+                <td align="center" colspan="2"><img src="@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardBackPicUrl" style="width:300px;height:200px;" /></td>
             </tr>
         }
     </table>
@@ -999,6 +999,7 @@
             {
                 ChangeOrderList();
                 alert("核单成功");
+                window.location.href = window.location.href;
             }
             else if(data==3)
             {
