@@ -90,15 +90,15 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(BeginInsuranceEndDate) && !string.IsNullOrEmpty(EndInsuranceEndDate))
             {
-                where.AppendFormat(" AND BusinessExpireDate BETWEEN '{0}' AND '{1}'", BeginInsuranceEndDate, EndInsuranceEndDate);
+                where.AppendFormat(" AND Convert(varchar(10),BusinessExpireDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)' ", Convert.ToDateTime(BeginInsuranceEndDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndInsuranceEndDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(BeginVisitDate) && !string.IsNullOrEmpty(EndVisitDate))
             {
-                where.AppendFormat(" AND VisitDate BETWEEN '{0}' AND '{1}'", BeginVisitDate, EndVisitDate);
+                where.AppendFormat(" AND  Convert(varchar(10),VisitDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)'", Convert.ToDateTime(BeginVisitDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndVisitDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
             {
-                where.AppendFormat(" AND T.CreateTime BETWEEN '{0}' AND '{1}'", BeginDate, EndDate);
+                where.AppendFormat(" AND Convert(varchar(10),T.CreateTime,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)'", Convert.ToDateTime(BeginDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(InsuranceCompany))
             {
@@ -230,15 +230,15 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(BeginInsuranceEndDate) && !string.IsNullOrEmpty(EndInsuranceEndDate))
             {
-                where.AppendFormat(" AND BusinessExpireDate BETWEEN '{0}' AND '{1}'", BeginInsuranceEndDate, EndInsuranceEndDate);
+                where.AppendFormat(" AND Convert(varchar(10),BusinessExpireDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)' ",Convert.ToDateTime(BeginInsuranceEndDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndInsuranceEndDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(BeginVisitDate) && !string.IsNullOrEmpty(EndVisitDate))
             {
-                where.AppendFormat(" AND VisitDate BETWEEN '{0}' AND '{1}'", BeginVisitDate, EndVisitDate);
+                where.AppendFormat(" AND  Convert(varchar(10),VisitDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)'", Convert.ToDateTime(BeginVisitDate).ToString("yyyy-MM-dd") , Convert.ToDateTime(EndVisitDate).ToString("yyyy-MM-dd") );
             }
             if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
             {
-                where.AppendFormat(" AND T.CreateTime BETWEEN '{0}' AND '{1}'", BeginDate, EndDate);
+                where.AppendFormat(" AND Convert(varchar(10),T.CreateTime,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)'", Convert.ToDateTime(BeginDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(InsuranceCompany))
             {
@@ -839,7 +839,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(Createtime.ToString()))
             {
-                sql.AppendFormat(" AND A.CreateDate ='{0}' ", Createtime);
+                sql.AppendFormat(" AND Convert(varchar(10),A.CreateDate,120) =Convert(varchar(10),'{0}',120) ", Convert.ToDateTime(Createtime).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(status.ToString()))
             {
@@ -934,7 +934,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(Createtime.ToString()))
             {
-                sql.AppendFormat(" AND A.CreateDate ='{0}' ", Createtime);
+                sql.AppendFormat(" AND Convert(varchar(10),A.CreateDate,120) =Convert(varchar(10),'{0}',120) ", Convert.ToDateTime(Createtime).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(status.ToString()))
             {
