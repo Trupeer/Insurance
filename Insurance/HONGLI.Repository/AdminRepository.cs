@@ -230,11 +230,11 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(BeginInsuranceEndDate) && !string.IsNullOrEmpty(EndInsuranceEndDate))
             {
-                where.AppendFormat(" AND Convert(varchar(10),BusinessExpireDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)' ",Convert.ToDateTime(BeginInsuranceEndDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndInsuranceEndDate).ToString("yyyy-MM-dd"));
+                where.AppendFormat(" AND Convert(varchar(10),BusinessExpireDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)' ", Convert.ToDateTime(BeginInsuranceEndDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndInsuranceEndDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(BeginVisitDate) && !string.IsNullOrEmpty(EndVisitDate))
             {
-                where.AppendFormat(" AND  Convert(varchar(10),VisitDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)'", Convert.ToDateTime(BeginVisitDate).ToString("yyyy-MM-dd") , Convert.ToDateTime(EndVisitDate).ToString("yyyy-MM-dd") );
+                where.AppendFormat(" AND  Convert(varchar(10),VisitDate,120) BETWEEN 'Convert(varchar(10),{0},120)' AND 'Convert(varchar(10),{1},120)'", Convert.ToDateTime(BeginVisitDate).ToString("yyyy-MM-dd"), Convert.ToDateTime(EndVisitDate).ToString("yyyy-MM-dd"));
             }
             if (!string.IsNullOrEmpty(BeginDate) && !string.IsNullOrEmpty(EndDate))
             {
@@ -1521,8 +1521,8 @@ namespace HONGLI.Repository
                 dt.Columns.Add("承保公司");
                 dt.Columns.Add("交强险保单号");
                 dt.Columns.Add("商业险保单号");
-                dt.Columns.Add("商业险系统费率");
-                dt.Columns.Add("交强险系统费率");
+                dt.Columns.Add("商业险平台费率");
+                dt.Columns.Add("交强险平台费率");
                 dt.Columns.Add("交强险保险费");
                 dt.Columns.Add("商业险保险费");
                 dt.Columns.Add("车船税保险费");
@@ -1539,14 +1539,14 @@ namespace HONGLI.Repository
                     dr["承保公司"] = item.ProductName;
                     dr["交强险保单号"] = item.ForceNo;
                     dr["商业险保单号"] = item.BizNo;
-                    dr["商业险系统费率"] = item.BizRate_Channel;
-                    dr["交强险系统费率"] = item.ForceRate_Channel;
-                    dr["交强险保险费"] = item.ForceTotal;
-                    dr["商业险保险费"] = item.BizTotal;
-                    dr["车船税保险费"] = item.TaxTotal;
-                    dr["佣金"] = item.Commission;
-                    dr["预付金额"] = item.PrepaidAmount;
-                    dr["待付金额"] = item.RemainMoney;
+                    dr["商业险平台费率"] = Convert.ToDecimal(item.BizRate_Channel).ToString("F2");
+                    dr["交强险平台费率"] = Convert.ToDecimal(item.ForceRate_Channel).ToString("F2");
+                    dr["交强险保险费"] = Convert.ToDecimal(item.ForceTotal).ToString("F2");
+                    dr["商业险保险费"] = Convert.ToDecimal(item.BizTotal).ToString("F2");
+                    dr["车船税保险费"] = Convert.ToDecimal(item.TaxTotal).ToString("F2");
+                    dr["佣金"] = Convert.ToDecimal(item.Commission).ToString("F2");
+                    dr["预付金额"] = Convert.ToDecimal(item.PrepaidAmount).ToString("F2");
+                    dr["待付金额"] = Convert.ToDecimal(item.RemainMoney).ToString("F2");
                     dt.Rows.Add(dr);
                 }
                 return dt;
