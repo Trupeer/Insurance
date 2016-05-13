@@ -161,10 +161,13 @@ namespace HONGLI.Repository
                 {
                     foreach(var item in query)
                     {
-                        var deletequery = db.Order_Base.Where(c => c.OrderCode == item.OrderCode).FirstOrDefault();
-                        db.Order_Base.Remove(deletequery);
+                        db.Database.ExecuteSqlCommand(string.Format("DELETE FROM dbo.Order_PolicyHolder WHERE OrderCode='{0}'", item.OrderCode));
+                        db.Database.ExecuteSqlCommand(string.Format("DELETE FROM dbo.Order_Pay WHERE OrderCode='{0}'", item.OrderCode));
+                        db.Database.ExecuteSqlCommand(string.Format("DELETE FROM dbo.Order_Item WHERE OrderCode='{0}'", item.OrderCode));
+                        db.Database.ExecuteSqlCommand(string.Format("DELETE FROM dbo.Order_Deliver WHERE OrderCode='{0}'", item.OrderCode));
+                        db.Database.ExecuteSqlCommand(string.Format("DELETE FROM dbo.Order_Base WHERE OrderCode='{0}'",item.OrderCode));
                         db.SaveChanges();
-                        result = deletequery.Id;
+                        result = 1;
                     }
                 }
                 return result;
