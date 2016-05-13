@@ -69,6 +69,17 @@
             <td align="center">@Html.TextBoxFor(m => m.PolicyIdCard, new { @id = "PolicyHolderIdCard", @Value = orderlsit.Order_PolicyHolder.Count < 1 ? "" : orderlsit.Order_PolicyHolder.FirstOrDefault().IdCard })</td>
             
         </tr>
+        @if (orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardType == 1)
+        {
+            <tr>
+                <td align="center" bgcolor="#f1f1f1" colspan="2">身份证正面：</td>
+                <td align="center" bgcolor="#f1f1f1" colspan="2">身份证反面：</td>
+            </tr>
+            <tr>
+                <td align="center"  colspan="2"><img src="@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardFacePicUrl" style="width:300px;height:200px;"/></td>
+                <td align="center" colspan="2"><img src="@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardBackPicUrl" style="width:300px;height:200px;" /></td>
+            </tr>
+        }
     </table>
     <strong>车辆详情</strong>
         <table class="table table-bordered">
@@ -825,7 +836,7 @@
             $("#CheSun_BaoFei").val(Result.CheSun_BaoFei);
             $("#SanZhe_BaoE").val(Result.SanZhe_BaoE);
             $("#SanZhe_BaoFei").val(Result.SanZhe_BaoFei);
-            $("#DaoQiang_BaoE").attr("checked", Result.DaoQiang_BaoE == 1 ? true : false);;
+            $("#DaoQiang_BaoE").attr("checked", Result.DaoQiang_BaoE >0 ? true : false);;
             $("#DaoQiang_BaoFei").val(Result.DaoQiang_BaoFei);
             $("#SiJi_BaoE").val(Result.SiJi_BaoE);
             $("#SiJi_BaoFei").val(Result.SiJi_BaoFei);
@@ -835,21 +846,21 @@
             $("#BoLi_BaoFei").val(Result.BoLi_BaoFei);
             $("#HuaHen_BaoE").val(Result.HuaHen_BaoE);
             $("#HuaHen_BaoFei").val(Result.HuaHen_BaoFei);
-            $("#BuJiMianCheSun_BaoE").attr("checked", Result.BuJiMianCheSun_BaoE == 1 ? true : false);
+            $("#BuJiMianCheSun_BaoE").attr("checked", Result.BuJiMianCheSun_BaoE > 0 ? true : false);
             $("#BuJiMianCheSun_BaoFei").val(Result.BuJiMianCheSun_BaoFei);
-            $("#BuJiMianSanZhe_BaoE").attr("checked", Result.BuJiMianSanZhe_BaoE == 1 ? true : false);
+            $("#BuJiMianSanZhe_BaoE").attr("checked", Result.BuJiMianSanZhe_BaoE >0 ? true : false);
             $("#BuJiMianSanZhe_BaoFei").val(Result.BuJiMianSanZhe_BaoFei);
-            $("#BuJiMianDaoQiang_BaoE").attr("checked", Result.BuJiMianDaoQiang_BaoE == 1 ? true : false);
+            $("#BuJiMianDaoQiang_BaoE").attr("checked", Result.BuJiMianDaoQiang_BaoE >0 ? true : false);
             $("#BuJiMianDaoQiang_BaoFei").val(Result.BuJiMianDaoQiang_BaoFei);
-            $("#BuJiMianRenYuan_BaoE").attr("checked", Result.BuJiMianRenYuan_BaoE == 1 ? true : false);
+            $("#BuJiMianRenYuan_BaoE").attr("checked", Result.BuJiMianRenYuan_BaoE >0 ? true : false);
             $("#BuJiMianRenYuan_BaoFei").val(Result.BuJiMianRenYuan_BaoFei);
-            $("#SheShui_BaoE").attr("checked", Result.SheShui_BaoE == 1 ? true : false);
+            $("#SheShui_BaoE").attr("checked", Result.SheShui_BaoE >0 ? true : false);
             $("#SheShui_BaoFei").val(Result.SheShui_BaoFei);
-            $("#CheDeng_BaoE").attr("checked", Result.CheDeng_BaoE == 1 ? true : false);
+            $("#CheDeng_BaoE").attr("checked", Result.CheDeng_BaoE >0 ? true : false);
             $("#CheDeng_BaoFei").val(Result.CheDeng_BaoFei);
             $("#ZiRan_BaoE").attr("checked", Result.ZiRan_BaoE == 1 ? true : false);
             $("#ZiRan_BaoFei").val(Result.ZiRan_BaoFei);
-            $("#BuJiMianFuJia_BaoE").attr("checked", Result.BuJiMianFuJia_BaoE == 1 ? true : false);
+            $("#BuJiMianFuJia_BaoE").attr("checked", Result.BuJiMianFuJia_BaoE >0 ? true : false);
             $("#BuJiMianFuJia_BaoFei").val(Result.BuJiMianFuJia_BaoFei);
             $("#BizTotal").val(Result.BizTotal);
             $("#ForceTotal").val(Result.ForceTotal);
@@ -863,15 +874,15 @@
             $("#AuditOrderStatus").val(Result.AuditOrderStatus == null ? 0 : Result.AuditOrderStatus);//设置核单装态下拉
             if (Result.AuditOrderStatus==1)
             {
-                $("LastAuditOrderStatus").html("已核单");
+                $("#LastAuditOrderStatus").html("已核单");
             }
             else if(Result.AuditOrderStatus==2)
             {
-                $("LastAuditOrderStatus").html("无法出单");
+                $("#LastAuditOrderStatus").html("无法出单");
             }
             else
             {
-                $("LastAuditOrderStatus").html("未核单");
+                $("#LastAuditOrderStatus").html("未核单");
             }
             $("#ItemCreateTime").val(Result.CreateTime);
             $("#PrepaidAmount").val(Result.PrepaidAmount);
@@ -988,6 +999,7 @@
             {
                 ChangeOrderList();
                 alert("核单成功");
+                window.location.href = window.location.href;
             }
             else if(data==3)
             {

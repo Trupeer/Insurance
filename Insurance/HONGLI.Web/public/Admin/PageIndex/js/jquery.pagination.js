@@ -172,8 +172,10 @@
       if(goPage > -1 && goPage < allPage){
 				opts.current_page = goPage;
       	$("#Pagination").pagination(allPage,opts);
-      }else {
-      	$("#Pagination").pagination(allPage);
+      } else {
+          var thispage = $("#Pagination .current").text().replace("上一页", "").replace("下一页", "");
+          opts.current_page = thispage-1;
+          $("#Pagination").pagination(allPage,opts);
       }
       //清空用户跳转页数
       $(".page-go input").val("");

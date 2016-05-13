@@ -150,6 +150,30 @@ namespace HONGLI.Repository
                 return model;
             }
         }
+        public int CheckOrderBase(int UserId)
+        {
+            int result = -1;
+            string sql = string.Format("SELECT OrderCode FROM dbo.Order_Base WHERE ProductItemId IN (SELECT Id FROM dbo.ProductV2_Item WHERE UserId={0})", UserId);
+            using (var db = new E2JOINDB())
+            {
+                var query = db.Database.SqlQuery<CheckOrderCodeList>(sql.ToString()).ToList();
+                if (query.Count > 0)
+                {
+                    foreach(var item in query)
+                    {
+                        var deletequery = db.Order_Base.Where(c => c.OrderCode == item.OrderCode).FirstOrDefault();
+                        db.Order_Base.Remove(deletequery);
+                        db.SaveChanges();
+                        result = deletequery.Id;
+                    }
+                }
+                return result;
+            }
+        }
+        public class CheckOrderCodeList
+        {
+            public string  OrderCode { get; set; }
+        }
         public Order_Item GetOrdertemByOrderCode(string ordercode)
         {
             Order_Item model = new Order_Item();

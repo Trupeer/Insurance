@@ -32,7 +32,7 @@
             </tr>
             <tr>
                
-                <td align="right" bgcolor="#f1f1f1">起止时间：</td>
+                <td align="right" bgcolor="#f1f1f1">申请时间：</td>
                 <td colspan="2"><input type="text" class="laydate-icon" id="BeginDate" value="" readonly/>至<input type="text" class="laydate-icon" id="EndDate" value="" readonly/></td>
             <td></td><td colspan="2"></td>
 </tr>
@@ -75,11 +75,12 @@
                     <select id="ddlOrderState" name="select3">
                         <option value="">全部</option>
                         <option value="0">未确认</option>
-                        <option value="1">已订未支付</option>
+                        <option value="1">未支付</option>
                         <option value="2">上门收款</option>
                         <option value="3">已支付</option>
                         <option value="4">邮寄保单</option>
-                        <option value="5">邮寄保单</option>
+                        <option value="5">已完成</option>
+                        <option value="9">已取消</option>
                     </select>
                 </td>
                 <td align="right" bgcolor="#f1f1f1">核保状态：</td>
@@ -156,9 +157,12 @@
             if (thispage > sumcount)
             {
                 alert("没有此页面！");
-                return;
             }
-            submit(thispage, null);
+            else
+            {
+                submit(thispage, null);
+
+            }
         });
     });
     var mypage = 1;

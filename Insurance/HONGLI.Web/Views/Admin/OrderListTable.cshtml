@@ -142,15 +142,31 @@
                 }
                 else if (item["OrderreviewState"].ToString() == "1")
                 {
-                    <td align="center">已订未支付</td>
+                    <td align="center">未支付</td>
                 }
                 else if (item["OrderreviewState"].ToString() == "2")
                 {
+                    <td align="center">上门收款</td>
+                }
+                else if (item["OrderreviewState"].ToString() == "3")
+                {
                     <td align="center">已支付</td>
+                }
+                else if (item["OrderreviewState"].ToString() == "4")
+                {
+                    <td align="center">邮寄保单</td>
+                }
+                else if (item["OrderreviewState"].ToString() == "5")
+                {
+                    <td align="center">已完成</td>
+                }
+                else if (item["OrderreviewState"].ToString() == "9")
+                {
+                    <td align="center">已取消</td>
                 }
                 else
                 {
-                    <td align="center">订单未出</td>
+                    <td align="center">未确认</td>
                 }
                 <td align="center"><a href="OrderDetail?UserId=@item["ID"]&ItemId=@item["ProdunctItemID"]&OrderCode=@item["OrderCode"]&InsuranceCompany=@item["InsuranceCompany"]">详情</a></td>
             </tr>

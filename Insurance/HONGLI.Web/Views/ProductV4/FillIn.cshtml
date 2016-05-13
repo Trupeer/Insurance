@@ -19,7 +19,7 @@
     <div class="f-nav">
         <h2>填写信息</h2>
         <div class="f-nav-back">
-            <a href="@Url.Action("Index", "ProductV4")?channel=@ViewBag.channel&mobile=@ViewBag.mobile" class="riaGoBack"><i></i></a>
+            <a href="@Url.Action("Index", "ProductV4")?channel=@ViewBag.channel&mobile=@ViewBag.mobile"><i></i></a>
         </div>
         <div class="f-nav-action"><a style="float:right;color:#ea3c3a;font-size:.521rem;" data-reveal-id="myModal" href="#"  data-animation="fade">客服</a></div>
 
@@ -434,12 +434,12 @@
             var bujimianrenyuan = $("#bujimianrenyuan").prop("disabled") ? 1 : 0;  //0,1
             var bujimiansanzhe = $("#bujimiansanzhe").prop("disabled") ? 1 : 0;  //0,1
             var chedeng = $("#chedeng").prop('checked') ? 1 : 0;  //0,1
-            var sheshui = $("#chesun").prop('checked') ? 1 : 0;  //0,1
+            var sheshui = $("#sheshui").prop('checked') ? 1 : 0;  //0,1
             var huahen = $("#huahen").val(); //0,value
             var siji = $("#siji").val(); //0,value
             var chengke = $("#chengke").val();//0,value
             var chesun = $("#chesun").prop('checked') ? 1 : 0;   //0,1
-            var daoqiang = $("#daoqiang").attr('checked') ? 1 : 0; //0,1
+            var daoqiang = $("#daoqiang").prop('checked') ? 1 : 0; //0,1
             var sanzhe = $("#sanzhe").val(); //0,value
             var ziran = $("#ziran").prop('checked') ? 1 : 0; //0,1
             var dataItem = {

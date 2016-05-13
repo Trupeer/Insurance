@@ -342,12 +342,12 @@ body input.radio:checked:before{
 
 
 .page12-hbzt-wrap{ padding: 0.064rem;}
-.page12-hbzt{ border-bottom: 1px solid #cbc9c9; border-radius: 5px; height: 1.856rem; background-color: #faf9f9; overflow: hidden;
+.page12-hbzt{ border-bottom: 1px solid #cbc9c9; border-radius: 5px; background-color: #faf9f9; overflow: hidden;
     display:-moz-box;
     display:-webkit-box;
     display:box;}
 .page12-hbzt-title{
-    font-size: .416rem; color: #ffffff; display: block; height: 1.856rem; width: 1.92rem; text-align: center;
+    font-size: .416rem; color: #ffffff; display: block; width: 1.92rem; text-align: center;
     display:-moz-box;
     display:-webkit-box;
     display:box;
@@ -381,7 +381,7 @@ body input.radio:checked:before{
     -webkit-box-align:start;
     box-align:start;
 }
-.page12-hbzt-error-other{ width: 3.2rem; display:  block;}
+.page12-hbzt-error-other{ width: 3.2rem; display:  block;vertical-align: middle;line-height: 1.5rem;}
 .page12-hbzt-error-other a{font-size: .416rem; width: 2.88rem; height: .8rem; line-height: .8rem; background-color: #5b6271; text-align: center; color: #fffefe;border-radius: 0.1rem; display: inline-block;}
 .page12-hbzt-error-other a:active{ opacity: .8;}
 .page12-hbzt-error-other span{ font-size: .256rem; color: #e32f2f;}

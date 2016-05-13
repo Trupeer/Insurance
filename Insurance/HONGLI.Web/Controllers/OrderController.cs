@@ -129,7 +129,7 @@ namespace HONGLI.Web.Controllers
 
         public ActionResult Quit(string ordercode)
         {
-            var result = _orderService.UpdateOrderStatus(ordercode, (int)EnumOrderStatus.Quit);
+            var result = _orderService.UpdateOrderStatus(ordercode, (int)EnumOrderStatus.Cancel);
             return RedirectToAction("List");            
         }
 
