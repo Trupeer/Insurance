@@ -35,8 +35,8 @@
                 <td align="center">@item["ProductName"]</td>
                 <td align="center">@item["ForceNo"]</td>
                 <td align="center">@item["BizNo"]</td>
-                <td align="center">@item["BizRate_Channel"]</td>
-                <td align="center">@item["ForceRate_Channel"]</td>
+                <td align="center">@Convert.ToDecimal(item["BizRate_Channel"]).ToString("F2")</td>
+                <td align="center">@Convert.ToDecimal(item["ForceRate_Channel"]).ToString("F2")</td>
                 <td align="center">@Convert.ToDecimal(item["ForceTotal"]).ToString("F2")</td>
                 <td align="center">@Convert.ToDecimal(item["BizTotal"]).ToString("F2")</td>
                 <td align="center">@Convert.ToDecimal(item["TaxTotal"]).ToString("F2")</td>

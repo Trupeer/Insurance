@@ -1499,7 +1499,7 @@ namespace HONGLI.Repository
             sql.Append("ISNULL(v2Items.TaxTotal,0) as TaxTotal,");
             sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
             sql.Append("ISNULL(ob.PrepaidAmount,0) as PrepaidAmount,");
-            sql.Append("ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0) + 7) AS 'RemainMoney'");
+            sql.Append("(ISNULL(v2Items.TotalAfterCoupon, 0) - ISNULL(ob.PrepaidAmount, 0) + 7) AS 'RemainMoney'");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
