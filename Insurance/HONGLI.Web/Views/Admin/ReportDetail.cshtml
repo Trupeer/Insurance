@@ -35,11 +35,18 @@
     }
   
     var pageindex = 1;
+    var sumcount = 1;
     $(function () {
         submit(1, 1);
         $("#goanypage").click(function () {
             var thispage = parseInt($("#anypageindex").val());
-            submit(thispage, null);
+            if (thispage > sumcount) {
+                alert("没有此页面！");
+            }
+            else {
+                submit(thispage, null);
+
+            }
         });
     });
     var mypage = 1;
@@ -75,7 +82,7 @@
         }
         if (check != null) {
             $.get("GetReportListCount", {OrderCode:OrderCode,Name:username,LicenseNo:LicenseNo, BeginDate: BeginDate, EndDate, EndDate, InsuranceCompany: InsuranceCompany }, function(data) {
-                var sumcount = parseInt(data);
+                 sumcount = parseInt(data);
                 $("#SumPages").html(sumcount);
                 $("#Pagination").pagination(sumcount);
                 pageCount = sumcount;
