@@ -46,7 +46,7 @@ namespace HONGLI.Web.Controllers
             ViewBag.licenseNo = licenseNo;
             var cityCodeX = cityCode.HasValue ? cityCode.Value : 10;
             ViewBag.cityCode = cityCodeX;
-            if(string.IsNullOrEmpty(check))
+            if(!string.IsNullOrEmpty(check))
             {
                 var key = string.Format("{0}/{1}/{2}/{3}", channelValue, mobile, licenseNo, "insurance");
                 HttpContext.Cache.Remove(key);
@@ -64,7 +64,7 @@ namespace HONGLI.Web.Controllers
         {
             var channelValue = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
             ViewBag.channel = channelValue;
-            ViewBag.mobile = mobile;
+            ViewBag.mobile = mobile=string.IsNullOrEmpty(mobile)?UserViewModel.CurrentUser.Mobile:mobile;
             ViewBag.licenseNo = licenseNo;
             var cityCodeX = cityCode.HasValue ? cityCode.Value : 10;
             ViewBag.cityCode = cityCodeX;
@@ -132,7 +132,7 @@ namespace HONGLI.Web.Controllers
                             product_user.InsuredName = data.UserInfo.InsuredName;
                             product_user.PurchasePrice = Convert.ToDecimal(data.UserInfo.PurchasePrice);
                             product_user.IdType = data.UserInfo.IdType;
-                            product_user.CredentislasNum = data.UserInfo.CredentislasNum.Trim();
+                            product_user.CredentislasNum = data.UserInfo.CredentislasNum==null?"":data.UserInfo.CredentislasNum.Trim();
                             product_user.CityCode = data.UserInfo.CityCode;
                             product_user.EngineNo = data.UserInfo.EngineNo;
                             product_user.ModleName = data.UserInfo.ModleName;
@@ -701,7 +701,7 @@ namespace HONGLI.Web.Controllers
                 ViewBag.channel_BizCouponRate = bizRate_Channel;
                 #endregion          
                 order_item.ProductDealPrice =decimal.Round(Convert.ToDecimal(data.Item.BizTotal* ((100 - data.Item.BizRate + bizRate_Channel) * 0.01)),2)+
-                decimal.Round(Convert.ToDecimal(data.Item.TaxTotal * ((100 - data.Item.ForceRate + taxRate_Channel) * 0.01)), 2)+
+                decimal.Round(Convert.ToDecimal(data.Item.TaxTotal * ((100 + taxRate_Channel) * 0.01)), 2)+
                 decimal.Round(Convert.ToDecimal(data.Item.ForceTotal * ((100 - data.Item.ForceRate + forceRate_Channel) * 0.01)), 2);
                 order_item.ProductOriginalPrice = decimal.Round(Convert.ToDecimal(data.Item.BizTotal+data.Item.TaxTotal+data.Item.ForceTotal),2);
                 order_item.ProductTitle =data.Item.Description;
@@ -713,6 +713,7 @@ namespace HONGLI.Web.Controllers
                 order_base.UserId = UserViewModel.CurrentUser.ID.ToString();
                 order_base.ProductItemId = ProductItemId;
                 order_base.BackStatus = 0;
+                order_base.Status = 0;
                 order_base.Order_Item = new List<Order_Item>() { order_item };
                 var code = new OrderService().AddOrder(order_base);
                 userItem = new ProductV3Service().GetProductV2(userID);

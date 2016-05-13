@@ -64,14 +64,14 @@
                 </div>
                 <div class="f-list01-other">                    
                     <p class="t-red">@HtmlHelper.GetOrderStatusText((EnumOrderStatus)item.OrderStatus)</p>
-                    @if (((EnumOrderStatus)item.OrderStatus) == EnumOrderStatus.Paid || ((EnumOrderStatus)item.OrderStatus) == EnumOrderStatus.Success)
+                    @if (((EnumOrderStatus)item.OrderStatus) == EnumOrderStatus.Paid || ((EnumOrderStatus)item.OrderStatus) == EnumOrderStatus.Success || ((EnumOrderStatus)item.OrderStatus) == EnumOrderStatus.Mailingpolicy)
                     {
                         <p class="t-money">实付金额:￥@item.PaidAmount</p>                        
                     }
                     else
                     {
                         <p class="t-money">应付金额:￥@item.AmountPayable</p>
-                        @*<p class="t-pay"><a href="@Url.Action("PayConfirm",new { ordercode =item.OrderCode})" class="f-button02">去支付</a></p>*@
+                        <p class="t-pay"><a href="#" class="f-button02" onclick="changeOrderStatus(@item.Id,@item.OrderCode)">取消订单</a></p>
                     }
 
                 </div>
@@ -144,6 +144,25 @@
             </a>
         </div>
     </div>
+    <script>
+        function changeOrderStatus(orderbaseid,ordercode)
+        {
+            if(confirm("是否确认返现?"))
+            {
+                $.post('@Url.Action("EditOrderStatus", "Admin")', { orderbaseid: orderbaseid, ordercode: ordercode, status: 9 }, function (data) {
+                    if(data==1)
+                    {
+                        alert("单号：" + ordercode + ",订单状态已修改");
+                        history.go(0);
+                    }
+                    else
+                    {
+                        alert("单号：" + ordercode + ",订单状态修改失败");
+                    }
+                });
+            }
+        }
+    </script>
     <script>function getReferrer(){var imEle = document.getElementById("udesk-im-74");if(imEle.href.indexOf("?")>-1){imEle.href+="&"}else{imEle.href+="?"}imEle.href+="cur_url="+encodeURIComponent(location.href);imEle.href+="&";imEle.href+="pre_url="+encodeURIComponent(document.referrer);}window.onload = getReferrer();</script>
 </body>
 </html>

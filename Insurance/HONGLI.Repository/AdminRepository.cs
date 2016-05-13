@@ -73,7 +73,7 @@ namespace HONGLI.Repository
         /// <returns></returns>
         public DataTable GetOrderList(int Page, string CarID, string username, string ChannelName, string BeginInsuranceEndDate, string EndInsuranceEndDate, string BeginVisitDate, string EndVisitDate, string BeginDate, string EndDate, string InsuranceCompany, string VistState, string Auditdocuments, string OrderState, string examineState)
         {
-            
+
             #region 查询条件
             StringBuilder where = new StringBuilder();
             if (!string.IsNullOrEmpty(username))
@@ -181,37 +181,37 @@ namespace HONGLI.Repository
                 dt.Columns.Add("OrderreviewState");
                 dt.Columns.Add("ServiceUserName");
                 dt.Columns.Add("VisitServiceUserName");
-                foreach(var item in query)
+                foreach (var item in query)
                 {
                     DataRow dr = dt.NewRow();
-                    dr["Id"]=item.Id;
-                    dr["UserName"]=item.UserName;
-                    dr["LicenseNo"]=item.LicenseNo;
-                    dr["Mobile"]=item.Mobile;
-                    dr["BusinessExpireDate"]=item.BusinessExpireDate;
-                    dr["ProdunctItemID"]=item.ProdunctItemID;
-                    dr["CreateTime"]=item.CreateTime;
-                    dr["InsuranceCompany"]=item.InsuranceCompany;
-                    dr["RbOffer"]=item.RbOffer;
-                    dr["TpyOffer"]=item.TpyOffer;
-                    dr["PaOffer"]=item.PaOffer;
-                    dr["AuditOrderState"]=item.AuditOrderState;
-                    dr["Channel"]=item.Channel;
-                    dr["ServiceUserId"]=item.ServiceUserId;
-                    dr["VisitDate"]=item.VisitDate;
-                    dr["VisitState"]=item.VisitState;
-                    dr["VisitServiceUserId"]=item.VisitServiceUserId;
-                    dr["AuditOrderDate"]=item.AuditOrderDate;
-                    dr["OrderCode"]=item.OrderCode;
-                    dr["OrderreviewState"]=item.OrderreviewState;
-                    dr["ServiceUserName"]=item.ServiceUserName;
-                    dr["VisitServiceUserName"]=item.VisitServiceUserName;
+                    dr["Id"] = item.Id;
+                    dr["UserName"] = item.UserName;
+                    dr["LicenseNo"] = item.LicenseNo;
+                    dr["Mobile"] = item.Mobile;
+                    dr["BusinessExpireDate"] = item.BusinessExpireDate;
+                    dr["ProdunctItemID"] = item.ProdunctItemID;
+                    dr["CreateTime"] = item.CreateTime;
+                    dr["InsuranceCompany"] = item.InsuranceCompany;
+                    dr["RbOffer"] = item.RbOffer;
+                    dr["TpyOffer"] = item.TpyOffer;
+                    dr["PaOffer"] = item.PaOffer;
+                    dr["AuditOrderState"] = item.AuditOrderState;
+                    dr["Channel"] = item.Channel;
+                    dr["ServiceUserId"] = item.ServiceUserId;
+                    dr["VisitDate"] = item.VisitDate;
+                    dr["VisitState"] = item.VisitState;
+                    dr["VisitServiceUserId"] = item.VisitServiceUserId;
+                    dr["AuditOrderDate"] = item.AuditOrderDate;
+                    dr["OrderCode"] = item.OrderCode;
+                    dr["OrderreviewState"] = item.OrderreviewState;
+                    dr["ServiceUserName"] = item.ServiceUserName;
+                    dr["VisitServiceUserName"] = item.VisitServiceUserName;
                     dt.Rows.Add(dr);
                 }
                 return dt;
             }
         }
-        public decimal GetOrderListCount( string CarID, string username, string ChannelName, string BeginInsuranceEndDate, string EndInsuranceEndDate, string BeginVisitDate, string EndVisitDate, string BeginDate, string EndDate, string InsuranceCompany, string VistState, string Auditdocuments, string OrderState, string examineState)
+        public decimal GetOrderListCount(string CarID, string username, string ChannelName, string BeginInsuranceEndDate, string EndInsuranceEndDate, string BeginVisitDate, string EndVisitDate, string BeginDate, string EndDate, string InsuranceCompany, string VistState, string Auditdocuments, string OrderState, string examineState)
         {
 
             #region 查询条件
@@ -246,7 +246,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(VistState))
             {
-                if(VistState=="0")
+                if (VistState == "0")
                 {
                     where.AppendFormat(" AND (VisitState ={0} OR VisitState IS NULL)", VistState);
                 }
@@ -299,11 +299,11 @@ namespace HONGLI.Repository
             {
                 int SumCount = 0;
                 var query = db.Database.SqlQuery<OrderListCount>(sql.ToString()).ToList();
-              if(query.Count>0)
+                if (query.Count > 0)
                 {
-                    SumCount =string.IsNullOrEmpty(query.FirstOrDefault().SumCount.ToString())?0:Convert.ToInt32(query.FirstOrDefault().SumCount);
+                    SumCount = string.IsNullOrEmpty(query.FirstOrDefault().SumCount.ToString()) ? 0 : Convert.ToInt32(query.FirstOrDefault().SumCount);
                 }
-                return Math.Ceiling(Convert.ToDecimal(SumCount)/10);
+                return Math.Ceiling(Convert.ToDecimal(SumCount) / 10);
             }
         }
         public class OrderList
@@ -316,7 +316,7 @@ namespace HONGLI.Repository
             public string BusinessExpireDate { get; set; }
             public Nullable<int> ProdunctItemID { get; set; }
             public Nullable<DateTime> CreateTime { get; set; }
-            
+
             public Nullable<int> InsuranceCompany { get; set; }
             public Nullable<int> RbOffer { get; set; }
             public Nullable<int> TpyOffer { get; set; }
@@ -439,7 +439,7 @@ namespace HONGLI.Repository
                 {
 
                     var query = context.BaseInfo_UserInfo
-                        .Where(c => c.Mobile==mobile)
+                        .Where(c => c.Mobile == mobile)
                         .FirstOrDefault();
 
                     model = query;
@@ -690,7 +690,7 @@ namespace HONGLI.Repository
             {
                 Order_Deliver model = new Order_Deliver();
                 model = context.Order_Deliver.Where(c => c.OrderCode == ordercode).FirstOrDefault();
-                if(model!=null)
+                if (model != null)
                 {
                     deliverId = model.Id;
                 }
@@ -745,7 +745,7 @@ namespace HONGLI.Repository
         /// <param name="UserId"></param>
         /// <param name="ItemId"></param>
         /// <returns></returns>
-        public int ChangeAuditDocuments(int UserId,int ItemId)
+        public int ChangeAuditDocuments(int UserId, int ItemId)
         {
             int result = -1;
             ProductV2_Item model = new ProductV2_Item();
@@ -810,7 +810,7 @@ namespace HONGLI.Repository
         /// <param name="Createtime"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public DataTable GetBillList(int Page, string licenseNo,string Name,string BillCode,DateTime? Createtime,int? status)
+        public DataTable GetBillList(int Page, string licenseNo, string Name, string BillCode, DateTime? Createtime, int? status)
         {
             #region 查询内容
             StringBuilder sql = new StringBuilder();
@@ -878,7 +878,7 @@ namespace HONGLI.Repository
                     dr["CreateDate"] = item.CreateDate;
                     dr["Status"] = item.Status;
                     dr["BackStatus"] = item.BackStatus; ;
-                    dr["receiveStatus"] = item.receiveStatus; 
+                    dr["receiveStatus"] = item.receiveStatus;
                     dr["LicenseNo"] = item.LicenseNo;
                     dr["Name"] = item.Name;
                     dr["IdCardType"] = item.IdCardType;
@@ -895,7 +895,7 @@ namespace HONGLI.Repository
                 }
                 return dt;
             }
-            }
+        }
         /// <summary>
         /// 查询订单总条数
         /// </summary>
@@ -967,7 +967,7 @@ namespace HONGLI.Repository
             public Nullable<int> receiveStatus { get; set; }
             public string IdCard { get; set; }
             public string Mobile { get; set; }
-            public Nullable<int> PayType { get;  set; }
+            public Nullable<int> PayType { get; set; }
             public Nullable<int> DeliverType { get; set; }
             public string ProductId { get; set; }
             public string UserId { get; set; }
@@ -983,7 +983,7 @@ namespace HONGLI.Repository
         /// <param name="ProductId"></param>
         /// <param name="OrderCode"></param>
         /// <returns></returns>
-        public DataRow GetBillDetails(int? UserId,int? ProductId,string OrderCode)
+        public DataRow GetBillDetails(int? UserId, int? ProductId, string OrderCode)
         {
             using (var db = new E2JOINDB())
             {
@@ -1085,83 +1085,83 @@ namespace HONGLI.Repository
                 sql.Append("LEFT JOIN dbo.Order_Deliver D WITH(NOLOCK) ON C.OrderCode=D.OrderCode ");
                 sql.Append("LEFT JOIN dbo.Order_PolicyHolder E WITH(NOLOCK) ON C.OrderCode = E.OrderCode ");
                 sql.Append("LEFT JOIN dbo.Order_Pay F WITH(NOLOCK) ON C.OrderCode = F.OrderCode ");
-                sql.AppendFormat("WHERE B.Id={0} AND  c.UserId={1}  ", ProductId,UserId);
+                sql.AppendFormat("WHERE B.Id={0} AND  c.UserId={1}  ", ProductId, UserId);
                 var query = db.Database.SqlQuery<BillDetails>(sql.ToString());
-                if(query.FirstOrDefault()!=null)
+                if (query.FirstOrDefault() != null)
                 {
-                    dr["Id"]=query.FirstOrDefault().Id;
-                    dr["ModleName"]=query.FirstOrDefault().ModleName;
+                    dr["Id"] = query.FirstOrDefault().Id;
+                    dr["ModleName"] = query.FirstOrDefault().ModleName;
                     dr["ProductName"] = query.FirstOrDefault().ProductName;
                     dr["Mobile"] = query.FirstOrDefault().Mobile;
-                    dr["ForceExpireDate"]=query.FirstOrDefault().ForceExpireDate;
-                    dr["InvoiceTitle"]=query.FirstOrDefault().InvoiceTitle;
-                    dr["InvoiceType"]=query.FirstOrDefault().InvoiceType;
-                    dr["orderBaseId"]=query.FirstOrDefault().orderBaseId;
+                    dr["ForceExpireDate"] = query.FirstOrDefault().ForceExpireDate;
+                    dr["InvoiceTitle"] = query.FirstOrDefault().InvoiceTitle;
+                    dr["InvoiceType"] = query.FirstOrDefault().InvoiceType;
+                    dr["orderBaseId"] = query.FirstOrDefault().orderBaseId;
                     dr["OrderBaeCreateDate"] = query.FirstOrDefault().OrderBaeCreateDate;
-                    dr["itemId"]=query.FirstOrDefault().itemId;
-                    dr["BizRate"]=query.FirstOrDefault().BizRate;
-                    dr["BizTotal"]=query.FirstOrDefault().BizTotal;
-                    dr["ForceRate"]=query.FirstOrDefault().ForceRate;
-                    dr["ForceTotal"]=query.FirstOrDefault().ForceTotal;
-                    dr["TaxRate"]=query.FirstOrDefault().TaxRate;
-                    dr["TaxTotal"]=query.FirstOrDefault().TaxTotal;
-                    dr["QuoteStatus"]=query.FirstOrDefault().QuoteStatus;
-                    dr["QuoteResult"]=query.FirstOrDefault().QuoteResult;
-                    dr["CheSun_BaoE"]=query.FirstOrDefault().CheSun_BaoE;
-                    dr["CheSun_BaoFei"]=query.FirstOrDefault().CheSun_BaoFei;
-                    dr["SanZhe_BaoE"]=query.FirstOrDefault().SanZhe_BaoE;
-                    dr["SanZhe_BaoFei"]=query.FirstOrDefault().SanZhe_BaoFei;
-                    dr["DaoQiang_BaoE"]=query.FirstOrDefault().DaoQiang_BaoE;
-                    dr["DaoQiang_BaoFei"]=query.FirstOrDefault().DaoQiang_BaoFei;
-                    dr["SiJi_BaoE"]=query.FirstOrDefault().SiJi_BaoE;
-                    dr["SiJi_BaoFei"]=query.FirstOrDefault().SiJi_BaoFei;
-                    dr["ChengKe_BaoE"]=query.FirstOrDefault().ChengKe_BaoE;
-                    dr["ChengKe_BaoFei"]=query.FirstOrDefault().ChengKe_BaoFei;
-                    dr["BoLi_BaoE"]=query.FirstOrDefault().BoLi_BaoE;
-                    dr["BoLi_BaoFei"]=query.FirstOrDefault().BoLi_BaoFei;
-                    dr["HuaHen_BaoE"]=query.FirstOrDefault().HuaHen_BaoE;
-                    dr["HuaHen_BaoFei"]=query.FirstOrDefault().HuaHen_BaoFei;
-                    dr["BuJiMianCheSun_BaoE"]=query.FirstOrDefault().BuJiMianCheSun_BaoE;
-                    dr["BuJiMianCheSun_BaoFei"]=query.FirstOrDefault().BuJiMianCheSun_BaoFei;
-                    dr["BuJiMianSanZhe_BaoE"]=query.FirstOrDefault().BuJiMianSanZhe_BaoE;
-                    dr["BuJiMianSanZhe_BaoFei"]=query.FirstOrDefault().BuJiMianSanZhe_BaoFei;
-                    dr["BuJiMianDaoQiang_BaoE"]=query.FirstOrDefault().BuJiMianDaoQiang_BaoE;
-                    dr["BuJiMianDaoQiang_BaoFei"]=query.FirstOrDefault().BuJiMianDaoQiang_BaoFei;
-                    dr["BuJiMianRenYuan_BaoE"]=query.FirstOrDefault().BuJiMianRenYuan_BaoE;
-                    dr["BuJiMianRenYuan_BaoFei"]=query.FirstOrDefault().BuJiMianRenYuan_BaoFei;
-                    dr["BuJiMianFuJia_BaoE"]=query.FirstOrDefault().BuJiMianFuJia_BaoE;
-                    dr["BuJiMianFuJia_BaoFei"]=query.FirstOrDefault().BuJiMianFuJia_BaoFei;
-                    dr["SheShui_BaoE"]=query.FirstOrDefault().SheShui_BaoE;
-                    dr["SheShui_BaoFei"]=query.FirstOrDefault().SheShui_BaoFei;
-                    dr["CheDeng_BaoE"]=query.FirstOrDefault().CheDeng_BaoE;
-                    dr["CheDeng_BaoFei"]=query.FirstOrDefault().CheDeng_BaoFei;
-                    dr["ZiRan_BaoE"]=query.FirstOrDefault().ZiRan_BaoE;
-                    dr["ZiRan_BaoFei"]=query.FirstOrDefault().ZiRan_BaoFei;
-                    dr["BuId"]=query.FirstOrDefault().BuId;
-                    dr["SubmitStatus"]=query.FirstOrDefault().SubmitStatus;
-                    dr["SubmitResult"]=query.FirstOrDefault().SubmitResult;
-                    dr["BizNo"]=query.FirstOrDefault().BizNo;
-                    dr["ForceNo"]=query.FirstOrDefault().ForceNo;
-                    dr["BizRate_Channel"]=query.FirstOrDefault().BizRate_Channel;
-                    dr["ForceRate_Channel"]=query.FirstOrDefault().ForceRate_Channel;
-                    dr["TaxRate_Channel"]=query.FirstOrDefault().TaxRate_Channel;
-                    dr["BizAfterCoupon"]=query.FirstOrDefault().BizAfterCoupon;
-                    dr["ForceAfterCoupon"]=query.FirstOrDefault().ForceAfterCoupon;
-                    dr["TaxAfterCoupon"]=query.FirstOrDefault().TaxAfterCoupon;
-                    dr["Total"]=query.FirstOrDefault().Total;
-                    dr["TotalAfterCoupon"]=query.FirstOrDefault().TotalAfterCoupon;
-                    dr["AuditOrderStatus"]=query.FirstOrDefault().AuditOrderStatus;
-                    dr["Description"]=query.FirstOrDefault().Description;
-                    dr["PrepaidAmount"]=query.FirstOrDefault().PrepaidAmount;
-                    dr["PayType"]=query.FirstOrDefault().PayType;
-                    dr["OrderDeliverId"]=query.FirstOrDefault().OrderDeliverId;
-                    dr["DeliverType"]=query.FirstOrDefault().DeliverType;
-                    dr["DeliverAddress"]=query.FirstOrDefault().DeliverAddress;
-                    dr["DeliverTime"]=query.FirstOrDefault().DeliverTime;
-                    dr["DeliverPrice"]=query.FirstOrDefault().DeliverPrice;
-                    dr["DeliverName"]=query.FirstOrDefault().DeliverName;
-                    dr["DeliverMobile"]=query.FirstOrDefault().DeliverMobile;
-                    dr["DeliverDistrictCode"]=query.FirstOrDefault().DeliverDistrictCode;
+                    dr["itemId"] = query.FirstOrDefault().itemId;
+                    dr["BizRate"] = query.FirstOrDefault().BizRate;
+                    dr["BizTotal"] = query.FirstOrDefault().BizTotal;
+                    dr["ForceRate"] = query.FirstOrDefault().ForceRate;
+                    dr["ForceTotal"] = query.FirstOrDefault().ForceTotal;
+                    dr["TaxRate"] = query.FirstOrDefault().TaxRate;
+                    dr["TaxTotal"] = query.FirstOrDefault().TaxTotal;
+                    dr["QuoteStatus"] = query.FirstOrDefault().QuoteStatus;
+                    dr["QuoteResult"] = query.FirstOrDefault().QuoteResult;
+                    dr["CheSun_BaoE"] = query.FirstOrDefault().CheSun_BaoE;
+                    dr["CheSun_BaoFei"] = query.FirstOrDefault().CheSun_BaoFei;
+                    dr["SanZhe_BaoE"] = query.FirstOrDefault().SanZhe_BaoE;
+                    dr["SanZhe_BaoFei"] = query.FirstOrDefault().SanZhe_BaoFei;
+                    dr["DaoQiang_BaoE"] = query.FirstOrDefault().DaoQiang_BaoE;
+                    dr["DaoQiang_BaoFei"] = query.FirstOrDefault().DaoQiang_BaoFei;
+                    dr["SiJi_BaoE"] = query.FirstOrDefault().SiJi_BaoE;
+                    dr["SiJi_BaoFei"] = query.FirstOrDefault().SiJi_BaoFei;
+                    dr["ChengKe_BaoE"] = query.FirstOrDefault().ChengKe_BaoE;
+                    dr["ChengKe_BaoFei"] = query.FirstOrDefault().ChengKe_BaoFei;
+                    dr["BoLi_BaoE"] = query.FirstOrDefault().BoLi_BaoE;
+                    dr["BoLi_BaoFei"] = query.FirstOrDefault().BoLi_BaoFei;
+                    dr["HuaHen_BaoE"] = query.FirstOrDefault().HuaHen_BaoE;
+                    dr["HuaHen_BaoFei"] = query.FirstOrDefault().HuaHen_BaoFei;
+                    dr["BuJiMianCheSun_BaoE"] = query.FirstOrDefault().BuJiMianCheSun_BaoE;
+                    dr["BuJiMianCheSun_BaoFei"] = query.FirstOrDefault().BuJiMianCheSun_BaoFei;
+                    dr["BuJiMianSanZhe_BaoE"] = query.FirstOrDefault().BuJiMianSanZhe_BaoE;
+                    dr["BuJiMianSanZhe_BaoFei"] = query.FirstOrDefault().BuJiMianSanZhe_BaoFei;
+                    dr["BuJiMianDaoQiang_BaoE"] = query.FirstOrDefault().BuJiMianDaoQiang_BaoE;
+                    dr["BuJiMianDaoQiang_BaoFei"] = query.FirstOrDefault().BuJiMianDaoQiang_BaoFei;
+                    dr["BuJiMianRenYuan_BaoE"] = query.FirstOrDefault().BuJiMianRenYuan_BaoE;
+                    dr["BuJiMianRenYuan_BaoFei"] = query.FirstOrDefault().BuJiMianRenYuan_BaoFei;
+                    dr["BuJiMianFuJia_BaoE"] = query.FirstOrDefault().BuJiMianFuJia_BaoE;
+                    dr["BuJiMianFuJia_BaoFei"] = query.FirstOrDefault().BuJiMianFuJia_BaoFei;
+                    dr["SheShui_BaoE"] = query.FirstOrDefault().SheShui_BaoE;
+                    dr["SheShui_BaoFei"] = query.FirstOrDefault().SheShui_BaoFei;
+                    dr["CheDeng_BaoE"] = query.FirstOrDefault().CheDeng_BaoE;
+                    dr["CheDeng_BaoFei"] = query.FirstOrDefault().CheDeng_BaoFei;
+                    dr["ZiRan_BaoE"] = query.FirstOrDefault().ZiRan_BaoE;
+                    dr["ZiRan_BaoFei"] = query.FirstOrDefault().ZiRan_BaoFei;
+                    dr["BuId"] = query.FirstOrDefault().BuId;
+                    dr["SubmitStatus"] = query.FirstOrDefault().SubmitStatus;
+                    dr["SubmitResult"] = query.FirstOrDefault().SubmitResult;
+                    dr["BizNo"] = query.FirstOrDefault().BizNo;
+                    dr["ForceNo"] = query.FirstOrDefault().ForceNo;
+                    dr["BizRate_Channel"] = query.FirstOrDefault().BizRate_Channel;
+                    dr["ForceRate_Channel"] = query.FirstOrDefault().ForceRate_Channel;
+                    dr["TaxRate_Channel"] = query.FirstOrDefault().TaxRate_Channel;
+                    dr["BizAfterCoupon"] = query.FirstOrDefault().BizAfterCoupon;
+                    dr["ForceAfterCoupon"] = query.FirstOrDefault().ForceAfterCoupon;
+                    dr["TaxAfterCoupon"] = query.FirstOrDefault().TaxAfterCoupon;
+                    dr["Total"] = query.FirstOrDefault().Total;
+                    dr["TotalAfterCoupon"] = query.FirstOrDefault().TotalAfterCoupon;
+                    dr["AuditOrderStatus"] = query.FirstOrDefault().AuditOrderStatus;
+                    dr["Description"] = query.FirstOrDefault().Description;
+                    dr["PrepaidAmount"] = query.FirstOrDefault().PrepaidAmount;
+                    dr["PayType"] = query.FirstOrDefault().PayType;
+                    dr["OrderDeliverId"] = query.FirstOrDefault().OrderDeliverId;
+                    dr["DeliverType"] = query.FirstOrDefault().DeliverType;
+                    dr["DeliverAddress"] = query.FirstOrDefault().DeliverAddress;
+                    dr["DeliverTime"] = query.FirstOrDefault().DeliverTime;
+                    dr["DeliverPrice"] = query.FirstOrDefault().DeliverPrice;
+                    dr["DeliverName"] = query.FirstOrDefault().DeliverName;
+                    dr["DeliverMobile"] = query.FirstOrDefault().DeliverMobile;
+                    dr["DeliverDistrictCode"] = query.FirstOrDefault().DeliverDistrictCode;
                 }
                 return dr;
             }
@@ -1282,7 +1282,7 @@ namespace HONGLI.Repository
 
             return result;
         }
-        public int AddRedPacket(RedPacket model,int OrderBaseId)
+        public int AddRedPacket(RedPacket model, int OrderBaseId)
         {
             int result = -1;
             using (var context = new E2JOINDB())
@@ -1300,13 +1300,13 @@ namespace HONGLI.Repository
             }
             return result;
         }
-        public int EditRedPacket(string RedPacketCode,string openid,string infoStr,string BCNo)
+        public int EditRedPacket(string RedPacketCode, string openid, string infoStr, string BCNo)
         {
             int result = -1;
             using (var context = new E2JOINDB())
             {
                 RedPacket redpacket = new RedPacket();
-                redpacket=context.RedPacket.Where(c => c.RedPacketCode == RedPacketCode).FirstOrDefault();
+                redpacket = context.RedPacket.Where(c => c.RedPacketCode == RedPacketCode).FirstOrDefault();
                 redpacket.OpenId = openid;
                 redpacket.WX_UserInfo = infoStr;
                 redpacket.State = 1;
@@ -1325,6 +1325,7 @@ namespace HONGLI.Repository
                 redpacket = context.RedPacket.Where(c => c.RedPacketCode == RedPacketCode).FirstOrDefault();
                 return redpacket;
             }
+
         }
         /// <summary>
         /// 获取报表

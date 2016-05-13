@@ -8,6 +8,7 @@ namespace HONGLI.Web.Models
 {
     public class OrderListModel
     {
+        public int? Id { get; set; }
         public string OrderCode { get; set; }
         public decimal? AmountPayable { get; set; }    
         public decimal? PaidAmount { get; set; }

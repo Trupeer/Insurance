@@ -163,7 +163,7 @@ namespace HONGLI.Web.Controllers
 
         public ActionResult Quit(string ordercode)
         {
-            var result = _orderService.UpdateOrderStatus(ordercode, (int)EnumOrderStatus.Quit);
+            var result = _orderService.UpdateOrderStatus(ordercode, (int)EnumOrderStatus.Cancel);
             return RedirectToAction("List");
         }
 
@@ -188,6 +188,7 @@ namespace HONGLI.Web.Controllers
                 orderlist = orderlist.Where(d =>d.AmountPayable != null).ToList();
                 model = orderlist.Select(c => new OrderListModel()
                 {
+                    Id=c.Id,
                     OrderCode = c.OrderCode,
                     OrderStatus = c.Status==null?0: c.Status,
                     AmountPayable = c.AmountPayable,
@@ -267,7 +268,7 @@ namespace HONGLI.Web.Controllers
                 
                 new OrderService().EditOrderInvoice(order_base);
                 Order_Deliver order_deliver = new Order_Deliver();
-                if(string.IsNullOrEmpty(deliver.deliverMobile)|| string.IsNullOrEmpty(deliver.deliverAddress) || string.IsNullOrEmpty(deliver.deliverName))
+                if(string.IsNullOrEmpty(deliver.deliverMobile.Trim())|| string.IsNullOrEmpty(deliver.deliverAddress.Trim()) || string.IsNullOrEmpty(deliver.deliverName.Trim()))
                 {
                     result.Status = 0;
                     result.Error = "对不起，信息获取错误，请您重新选择收货地址！";
