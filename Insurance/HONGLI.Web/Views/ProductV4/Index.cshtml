@@ -142,6 +142,7 @@
         $("#submit").click(function () {
             var licenseNo = $("#cityName option:selected").text() + $("#car-number").val();
             var cityCode = $("#cityCode").attr("code");
+            var name = $("#name").val();
             //var mobile = $("#mobileNo").val();
             //var isPublic = $("input[name=isPublic][checked]").val();
 
@@ -153,7 +154,7 @@
             var url = "@Url.Action("FillIn")?channel=@ViewBag.channel"
                                             //+ "&mobile=" + mobile
                                             + "&licenseNo=" + licenseNo
-                                            + "&cityCode=" + cityCode+"&check=1";
+                                            + "&cityCode=" + cityCode + "&check=1&name=" + name;
             //var url = "@ViewBag.loginUrl";
             window.location.href = url;
         });

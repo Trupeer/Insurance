@@ -117,7 +117,14 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(Auditdocuments))
             {
-                where.AppendFormat(" AND AuditOrderState ={0}", Auditdocuments);
+                if (VistState == "0")
+                {
+                    where.AppendFormat(" AND (AuditOrderState ={0} OR AuditOrderState IS NULL)", Auditdocuments);
+                }
+                else
+                {
+                    where.AppendFormat(" AND AuditOrderState ={0}", Auditdocuments);
+                }
             }
             if (!string.IsNullOrEmpty(OrderState))
             {
@@ -1026,6 +1033,7 @@ namespace HONGLI.Repository
                 dt.Columns.Add("ProductName");
                 dt.Columns.Add("Mobile");
                 dt.Columns.Add("ForceExpireDate");
+                dt.Columns.Add("BusinessExpireDate");
                 dt.Columns.Add("InvoiceTitle");
                 dt.Columns.Add("InvoiceType");
                 dt.Columns.Add("orderBaseId");
@@ -1097,7 +1105,7 @@ namespace HONGLI.Repository
                 #endregion
                 DataRow dr = dt.NewRow();
                 StringBuilder sql = new StringBuilder();
-                sql.Append("SELECT A.Id,A.ModleName,A.Mobile,B.ProductName,A.ForceExpireDate, ");
+                sql.Append("SELECT A.Id,A.ModleName,A.Mobile,B.ProductName,A.ForceExpireDate,A.BusinessExpireDate, ");
                 sql.Append("C.InvoiceTitle,C.InvoiceType,C.Id AS orderBaseId,C.CreateDate AS OrderBaeCreateDate,B.Id AS itemId, ");
                 sql.Append("B.BizRate,B.BizTotal,B.ForceRate,B.ForceTotal,B.TaxRate,B.TaxTotal ");
                 sql.Append(",B.QuoteStatus,B.QuoteResult,B.CheSun_BaoE,B.CheSun_BaoFei,B.SanZhe_BaoE ");
@@ -1126,6 +1134,7 @@ namespace HONGLI.Repository
                     dr["ProductName"] = query.FirstOrDefault().ProductName;
                     dr["Mobile"] = query.FirstOrDefault().Mobile;
                     dr["ForceExpireDate"] = query.FirstOrDefault().ForceExpireDate;
+                    dr["BusinessExpireDate"] = query.FirstOrDefault().BusinessExpireDate;
                     dr["InvoiceTitle"] = query.FirstOrDefault().InvoiceTitle;
                     dr["InvoiceType"] = query.FirstOrDefault().InvoiceType;
                     dr["orderBaseId"] = query.FirstOrDefault().orderBaseId;
@@ -1206,6 +1215,7 @@ namespace HONGLI.Repository
             public string Mobile { get; set; }
             public string ProductName { get; set; }
             public string ForceExpireDate { get; set; }
+            public string BusinessExpireDate { get; set; }
             public string InvoiceTitle { get; set; }
             public Nullable<int> InvoiceType { get; set; }
             public Nullable<int> orderBaseId { get; set; }

@@ -13,7 +13,7 @@
                 <td bgcolor="#f1f1f1"  align="center">车型</td>
                 <td align="center">@list["ModleName"]</td>
                 <td bgcolor="#f1f1f1" align="center">保险到期时间</td>
-                <td align="center">@list["ForceExpireDate"]</td>
+                <td align="center">@list["BusinessExpireDate"]</td>
                 <td bgcolor="#f1f1f1" align="center">发票类型</td>
                 <td align="center">
                 <select id="InvoiceType"  name="select3">
@@ -165,19 +165,16 @@
         <table class="table table-bordered" align="center">
             <tr>
                 <td align="center" bgcolor="#f1f1f1">商业险总额</td>
-                <td align="center" bgcolor="#f1f1f1">商业险费率</td>
                 <td align="center" bgcolor="#f1f1f1">平台商业费率</td>
                 <td align="center" bgcolor="#f1f1f1">商业险优惠后价格</td>
             </tr>
             <tr>
                 <td align="center">@list["BizTotal"]</td>
-                <td align="center">@list["BizRate"]</td>
                 <td align="center">@list["BizRate_Channel"]</td>
                 <td align="center">@list["BizAfterCoupon"]</td>
             </tr>
             <tr>
                 <td align="center" bgcolor="#f1f1f1">交强险总额</td>
-                <td align="center" bgcolor="#f1f1f1">交强险费率</td>
                 <td align="center" bgcolor="#f1f1f1">平台交强费率</td>
                 <td align="center" bgcolor="#f1f1f1">交强险优惠后价格</td>
             </tr>
@@ -189,19 +186,17 @@
             </tr>
             <tr>
                 <td align="center" bgcolor="#f1f1f1">车船税总额</td>
-                <td align="center" bgcolor="#f1f1f1">车船税费率</td>
                 <td align="center" bgcolor="#f1f1f1">平台车船费率</td>
                 <td align="center" bgcolor="#f1f1f1">车船税优惠后价格</td>
             </tr>
             <tr>
                 <td align="center">@list["TaxTotal"]</td>
-                <td align="center">@list["TaxRate"]</td>
                 <td align="center">@list["TaxRate_Channel"]</td>
                 <td align="center">@list["TaxAfterCoupon"]</td>
 
             </tr>
             <tr>
-                <td colspan="2" align="center" bgcolor="#f1f1f1"></td>
+                <td align="center" bgcolor="#f1f1f1"></td>
                 <td align="center" bgcolor="#f1f1f1">总价格</td>
 
                 <td align="center" bgcolor="#f1f1f1">优惠后总价格</td>
@@ -329,7 +324,14 @@
         var DeliverAddress = $("#DeliverAddress").val();
         var OrderBaeCreateDate = $("#OrderBaeCreateDate").val();
         $.post("EditDeliverDetail", { InvoiceType: InvoiceType, InvoiceTitle: InvoiceTitle, PayType: PayType, DeliverType: DeliverType, beforeDeliverType: beforeDeliverType, DeliverName: DeliverName, DeliverMobile: DeliverMobile, DeliverDistrictCode: DeliverDistrictCode, DeliverAddress: DeliverAddress, OrderBaseId: '@list["orderBaseId"]', OrderDeliverId: '@list["OrderDeliverId"]', orderCode: '@Request["OrderCode"]', DeliverPrice: DeliverPrice, UserId: '@Request["UserId"]', OrderBaeCreateDate: OrderBaeCreateDate }, function (data) {
-
+            if(data==1)
+            {
+                alert("保存成功");
+            }
+            else
+            {
+                alert("保存失败");
+            }
         });
     }
 </script>

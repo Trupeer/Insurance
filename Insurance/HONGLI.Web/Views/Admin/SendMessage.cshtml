@@ -1,0 +1,103 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="right_cont">
+
+    <div class="title_right"><strong>发送短信</strong></div>
+    <div style="margin:auto">
+        <table class="table table-bordered">
+            <tr>
+                <td colspan="8">用户邀约</td>
+            </tr>
+            <tr>
+                <td align="right" bgcolor="#f1f1f1">手机号：</td>
+                <td><input type="text" name="input18" id="InvitationbtnPhoneNumber" /></td>
+                <td align="right" bgcolor="#f1f1f1">姓名：</td>
+                <td><input type="text" name="input18" id="InvitationbtnName" /></td>
+                <td align="right" bgcolor="#f1f1f1">时间：</td>
+                <td><input type="text" name="" id="InvitationbtnDate" /></td>
+                <td align="right" bgcolor="#f1f1f1">地址：</td>
+                <td>
+                    <textarea id="InvitationbtnAdderss" style="width:350px;height:50px;" ></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" style="text-align:center;">
+                    <input type="button" name="" id="UserInvitationbtn" value="发&nbsp;送" style="width:120px; font-size:25px;" onclick="SendUserInvitation()"/>
+                </td>
+            </tr>
+        </table>
+        <br /><br /><br /><br />
+        <table class="table table-bordered">
+            <tr>
+                <td colspan="6">用户到场前一天提醒</td>
+            </tr>
+            <tr>
+                <td align="right" bgcolor="#f1f1f1">手机号：</td>
+                <td><input type="text" name="input18" id="RemindPhoneNumber" /></td>
+                <td align="right" bgcolor="#f1f1f1">姓名：</td>
+                <td><input type="text" name="input18" id="RemindName" /></td>
+                <td align="right" bgcolor="#f1f1f1">时间：</td>
+                <td>明日<input type="text" name="" id="RemindDate" />周<input type="text" name="" id="RemindWeekDay" /></td>
+            </tr>
+            <tr>
+                <td align="right" bgcolor="#f1f1f1">温度：</td>
+                <td>
+                    <input type="text" name="" id="RemindTemperature" />
+                </td>
+                <td align="right" bgcolor="#f1f1f1">穿衣指数：</td>
+                <td>
+                    <input type="text" name="" id="RemindDressingindex" />
+                </td>
+                <td align="right" bgcolor="#f1f1f1">乘车路线：</td>
+                <td>
+                    <textarea id="RemindBusLine" style="width:350px;height:50px;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align:center;">
+                    <input type="button" name="" id="UserRemind" value="发&nbsp;送" style="width:120px; font-size:25px;" onclick="SendUserRemind()" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<script>
+    function SendUserInvitation()
+    {
+        var InvitationPhoneNumber = $("#InvitationPhoneNumber").val();
+        var InvitationName = $("#InvitationName").val();
+        var InvitationDate = $("#InvitationDate").val();
+        var InvitationAdderss = $("#InvitationAdderss").val();
+        $.post('@Url.Action("SendUserInvitation", "Admin")', { InvitationPhoneNumber: InvitationPhoneNumber, InvitationName: InvitationName, InvitationDate: InvitationDate, InvitationAdderss: InvitationAdderss }, function (data)
+        {
+            if(data==1)
+            {
+                alert("发送成功");
+            }
+            else
+            {
+                alert("发送失败");
+            }
+        });
+    }
+    function SendUserRemind() {
+        var RemindPhoneNumber = $("#RemindPhoneNumber").val();
+        var RemindName = $("#RemindName").val();
+        var RemindDate = $("#RemindDate").val();
+        var RemindWeekDay = $("#RemindWeekDay").val();
+        var RemindTemperature = $("#RemindTemperature").val();
+        var RemindDressingindex = $("#RemindDressingindex").val();
+        var RemindBusLine = $("#RemindBusLine").val();
+        $.post('@Url.Action("SendUserRemind", "Admin")', { RemindPhoneNumber: RemindPhoneNumber, RemindName: RemindName, RemindDate: RemindDate, RemindWeekDay: RemindWeekDay, RemindTemperature: RemindTemperature, RemindDressingindex: RemindDressingindex, RemindBusLine: RemindBusLine }, function (data) {
+            if (data == 1) {
+                alert("发送成功");
+            }
+            else {
+                alert("发送失败");
+            }
+        });
+    }
+</script>

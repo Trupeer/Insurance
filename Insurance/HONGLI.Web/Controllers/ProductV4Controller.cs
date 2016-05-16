@@ -34,7 +34,7 @@ namespace HONGLI.Web.Controllers
         #region page2-填写信息页 20160321
 
     [AuthorizationFilter]
-        public ActionResult FillIn(int? channel, string mobile, string licenseNo, int? cityCode, int? isPublic,string check="")
+        public ActionResult FillIn(int? channel, string mobile, string licenseNo, int? cityCode, int? isPublic,string check="",string name="")
         {
             var channelValue = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
             ViewBag.channel = channelValue;
@@ -43,6 +43,7 @@ namespace HONGLI.Web.Controllers
                 mobile = UserViewModel.CurrentUser.Mobile;
             }
             ViewBag.mobile = mobile;
+            ViewBag.Name = name;
             ViewBag.licenseNo = licenseNo;
             var cityCodeX = cityCode.HasValue ? cityCode.Value : 10;
             ViewBag.cityCode = cityCodeX;
@@ -64,7 +65,7 @@ namespace HONGLI.Web.Controllers
 #if (!DEBUG)
     [AuthorizationFilter]
 #endif
-        public JsonResult GetReInfo(int? channel, string mobile, string licenseNo, int? cityCode, int? isPublic)
+        public JsonResult GetReInfo(int? channel, string mobile, string licenseNo, int? cityCode, int? isPublic,string name="")
         {
             var channelValue = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
             ViewBag.channel = channelValue;
@@ -131,7 +132,7 @@ namespace HONGLI.Web.Controllers
                             var product_user = new ProductV2_User();
                             product_user.CarUsedType = data.UserInfo.CarUsedType;
                             product_user.LicenseNo = data.UserInfo.LicenseNo;
-                            product_user.LicenseOwner = data.UserInfo.LicenseOwner;
+                            product_user.LicenseOwner = string.IsNullOrEmpty(data.UserInfo.LicenseOwner)?name: data.UserInfo.LicenseOwner;
                             product_user.PostedName = data.UserInfo.PostedName;
                             product_user.InsuredName = data.UserInfo.InsuredName;
                             product_user.PurchasePrice = Convert.ToDecimal(data.UserInfo.PurchasePrice);

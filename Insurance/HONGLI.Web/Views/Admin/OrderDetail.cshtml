@@ -79,8 +79,8 @@
                 <td align="center" bgcolor="#f1f1f1" colspan="2">身份证反面：</td>
             </tr>
             <tr>
-                <td align="center"  colspan="2"><img src="@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardFacePicUrl" style="width:300px;height:200px;"/></td>
-                <td align="center" colspan="2"><img src="@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardBackPicUrl" style="width:300px;height:200px;" /></td>
+                <td align="center"  colspan="2"><img src="..@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardFacePicUrl" style="width:300px;height:200px;"/></td>
+                <td align="center" colspan="2"><img src="..@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardBackPicUrl" style="width:300px;height:200px;" /></td>
             </tr>
         }
     </table>
@@ -662,7 +662,7 @@
         <tr>
             <td align="center">@Html.TextBoxFor(m => m.TaxTotal, new { @id = "TaxTotal", @Class = "ItemInput" })</td>
             <td align="center">@Html.TextBoxFor(m => m.TaxRate_Channel, new { @id = "TaxRate_Channel", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.TaxAfterCoupon, new { @id = "TaxAfterCoupon", @Class = "ItemInput" })</td>
+            <td align="center"  colspan="2">@Html.TextBoxFor(m => m.TaxAfterCoupon, new { @id = "TaxAfterCoupon", @Class = "ItemInput" })</td>
 
         </tr>
         <tr>

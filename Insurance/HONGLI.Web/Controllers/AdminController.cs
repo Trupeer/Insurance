@@ -271,7 +271,7 @@ namespace HONGLI.Web.Controllers
             product_item.TotalAfterCoupon = model.TotalAfterCoupon;
             product_item.Description = model.Description;
             product_item.CreateTime = DateTime.Now;
-
+            product_item.AuditOrderStatus = model.AuditOrderStatus;
             var description = "";
             description += product_item.CheSun_BaoE > 0 ? (string.Format("车损险({0})、", FormatNumber(Convert.ToDouble(product_item.CheSun_BaoE)))) : "";
             description += product_item.BuJiMianCheSun_BaoE > 0 ? ("不计免赔车损险、") : "";
@@ -712,6 +712,40 @@ namespace HONGLI.Web.Controllers
             foreach (byte b in Guid.NewGuid().ToByteArray())
                 i *= ((int)b + 1);
             return string.Format("{0:x}", i - DateTime.Now.Ticks);
+        }
+        public ActionResult SendMessage()
+        {
+            return View();
+        }
+        public int SendUserInvitation(string InvitationPhoneNumber, string InvitationName, string InvitationDate, string InvitationAdderss)
+        {
+            int result = -1;
+                SMSController sms = new SMSController();
+                try
+                {
+                    new Util().SendUserInvitationSMS(InvitationPhoneNumber, new string[] { InvitationName, InvitationDate, InvitationAdderss });
+                result = 1;
+                }
+                catch
+                {
+                    result = -2;
+                }
+            return result;
+        }
+        public int SendUserRemind(string RemindPhoneNumber, string RemindName, string RemindDate,string RemindBusLine,string RemindWeekDay,string RemindTemperature,string RemindDressingindex)
+        {
+            int result = -1;
+            SMSController sms = new SMSController();
+            try
+            {
+                new Util().SendUserRemindSMS(RemindPhoneNumber, new string[] { RemindName, RemindDate, RemindBusLine, RemindWeekDay, RemindTemperature, RemindDressingindex });
+                result = 1;
+            }
+            catch
+            {
+                result = -2;
+            }
+            return result;
         }
     }
 }

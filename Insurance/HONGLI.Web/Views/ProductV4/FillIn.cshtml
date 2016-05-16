@@ -277,7 +277,8 @@
                     channel: "@ViewBag.channel",
                     mobile: "@ViewBag.mobile",
                     licenseNo: "@ViewBag.licenseNo",
-                    cityCode: "@ViewBag.cityCode"
+                    cityCode: "@ViewBag.cityCode",
+                    name: "@ViewBag.Name"
                 },
                 beforeSend: function () {
                     layer.open({ type: 2 });
@@ -355,7 +356,7 @@
                             $("#bujimianfujia").prop("disabled", false);
                             $("#bujimianfujia").css("background", "#ccc");
                         }
-                        
+
                         $("#jqx").val(quote.ForceTotal);
                         $("#ccs").val(quote.TaxTotal);
                         $("#chesun").val(quote.CheSun);
