@@ -134,6 +134,12 @@ namespace HONGLI.Web.Controllers
                 order_policyholder.Id = 0;
                 orderList.Order_PolicyHolder.Add(order_policyholder);
             }
+            if(orderList.Order_Pay.Count==0)
+            {
+                Order_Pay order_pay = new Order_Pay();
+                order_pay.Id = 0;
+                orderList.Order_Pay.Add(order_pay);
+            }
             ViewBag.OrderList = orderList;
             ViewBag.Product_User = new AdminService().GetProductUser(UserId);
             ViewBag.Product_Renewal = new AdminService().GetProductRenewal(UserId);
@@ -341,8 +347,25 @@ namespace HONGLI.Web.Controllers
             {
                 adminservice.SaveOrderDeliver(order_deliver);   
             }
+
             #endregion
 
+            #region 支付方式
+            Order_Pay order_pay = new Order_Pay();
+            order_pay.Id = model.OrderPayId;
+            order_pay.OrderCode = order_base.OrderCode;
+            order_pay.PayType = model.OrderPayPayType;
+            order_pay.PayBank = model.OrderPayPayBank;
+            order_pay.CreateDate = model.OrderPayCreateDate == null ? DateTime.Now : model.OrderPayCreateDate;
+            if (order_pay.Id!=0)
+            {
+                adminservice.EditOrderPay(order_pay);
+            }
+            else
+            {
+                adminservice.SaveOrderPay(order_pay);
+            }
+            #endregion
             #region 被保人信息
             Order_PolicyHolder user_policyholder = new Order_PolicyHolder();
             user_policyholder.Id = Convert.ToInt32(model.PolicyId);
@@ -391,6 +414,12 @@ namespace HONGLI.Web.Controllers
                 Order_PolicyHolder order_policyholder = new Order_PolicyHolder();
                 order_policyholder.Id = 0;
                 orderList.Order_PolicyHolder.Add(order_policyholder);
+            }
+            if (orderList.Order_Pay.Count == 0)
+            {
+                Order_Pay order_paylist = new Order_Pay();
+                order_paylist.Id = 0;
+                orderList.Order_Pay.Add(order_paylist);
             }
             ViewBag.OrderList = orderList;
             ViewBag.Product_User = new AdminService().GetProductUser(model.Id);
@@ -517,6 +546,7 @@ namespace HONGLI.Web.Controllers
             int result = -1;
             Order_Base order_base = new Order_Base();
             order_base.Id = OrderBaseId == null ? 0 :Convert.ToInt32(OrderBaseId);
+            order_base.OrderCode = orderCode;
             order_base.InvoiceTitle = InvoiceTitle;
             order_base.InvoiceType = InvoiceType;
             Order_Deliver order_deliver = new Order_Deliver();
@@ -530,7 +560,11 @@ namespace HONGLI.Web.Controllers
             order_deliver.DeliverDistrictCode = DeliverDistrictCode;
             order_deliver.CreateDate = OrderBaeCreateDate == null ? DateTime.Now : OrderBaeCreateDate;
             order_deliver.UserId = UserId;
-            if(DeliverType!=null|| DeliverAddress!=""|| DeliverPrice!=null|| DeliverPrice!=0|| DeliverName!=""|| DeliverMobile!=""|| DeliverDistrictCode!="")
+            Order_Pay order_pay = new Order_Pay();
+            order_pay.OrderCode = orderCode;
+            order_pay.PayType = PayType;
+            order_base.Order_Pay.Add(order_pay);
+            if (DeliverType!=null|| DeliverAddress!=""|| DeliverPrice!=null|| DeliverPrice!=0|| DeliverName!=""|| DeliverMobile!=""|| DeliverDistrictCode!="")
             {
                 result=adminservice.EditOrderDeliver(order_deliver);
             }

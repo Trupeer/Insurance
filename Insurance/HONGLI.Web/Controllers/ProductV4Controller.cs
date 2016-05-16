@@ -51,6 +51,10 @@ namespace HONGLI.Web.Controllers
                 var key = string.Format("{0}/{1}/{2}/{3}", channelValue, mobile, licenseNo, "insurance");
                 HttpContext.Cache.Remove(key);
             }
+            
+            HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, 0, "submit"));
+            HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, 0, "submit"));
+            HttpContext.Cache.Remove(string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, 0, "submit"));
             return View();
         }
         #endregion
@@ -594,19 +598,19 @@ namespace HONGLI.Web.Controllers
                 product_item.TaxRate_Channel = Convert.ToDecimal(taxRate_Channel);
                 product_item.BizRate_Channel = Convert.ToDecimal(bizRate_Channel);
                 #endregion
-                product_item.BizRate = Convert.ToDecimal(data.Item.BizRate);
-                product_item.BizAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.BizTotal * ((100 - data.Item.BizRate + bizRate_Channel) * 0.01)), 2);
+                //product_item.BizRate = Convert.ToDecimal(data.Item.BizRate);
+                product_item.BizAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.BizTotal * ((100 -  bizRate_Channel) * 0.01)), 2);
 
-                product_item.ForceRate = Convert.ToDecimal(data.Item.ForceRate);
-                product_item.ForceAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.ForceTotal * ((100 - data.Item.ForceRate + forceRate_Channel) * 0.01)), 2);
-                product_item.TaxRate = 0; //核保后，交强险费率和车船税费率相同
-                product_item.TaxAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.TaxTotal), 2);
+               // product_item.ForceRate = Convert.ToDecimal(data.Item.ForceRate);
+                product_item.ForceAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.ForceTotal * ((100 -  forceRate_Channel) * 0.01)), 2);
+                //product_item.TaxRate = 0; //核保后，交强险费率和车船税费率相同
+                product_item.TaxAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.TaxTotal * ((100 - taxRate_Channel) * 0.01)), 2);
                 product_item.TotalAfterCoupon = decimal.Round(Convert.ToDecimal(product_item.BizAfterCoupon + product_item.ForceAfterCoupon + product_item.TaxAfterCoupon), 2);
-                #region  从新添加费率并加入缓存
-                databaojia.Item.BizRate =Convert.ToDouble(product_item.BizRate);
-                databaojia.Item.ForceRate = Convert.ToDouble(product_item.ForceRate);
-                HttpContext.Session[keyPrice] = databaojia;
-                #endregion
+                //#region  从新添加费率并加入缓存
+                //databaojia.Item.BizRate =Convert.ToDouble(product_item.BizRate);
+                //databaojia.Item.ForceRate = Convert.ToDouble(product_item.ForceRate);
+                //HttpContext.Session[keyPrice] = databaojia;
+                //#endregion
                 #region 预付比例
                 var PrepaidAmountkey = string.Format("{0}_PrepaidAmount", channelValue);
                 var prepaidlist = new ProductV3Service().GetPrepaidAmount(channelValue);
@@ -701,9 +705,9 @@ namespace HONGLI.Web.Controllers
                 ViewBag.channel_TaxCouponRate = taxRate_Channel;
                 ViewBag.channel_BizCouponRate = bizRate_Channel;
                 #endregion          
-                order_item.ProductDealPrice =decimal.Round(Convert.ToDecimal(data.Item.BizTotal* ((100 - data.Item.BizRate + bizRate_Channel) * 0.01)),2)+
-                decimal.Round(Convert.ToDecimal(data.Item.TaxTotal * ((100 + taxRate_Channel) * 0.01)), 2)+
-                decimal.Round(Convert.ToDecimal(data.Item.ForceTotal * ((100 - data.Item.ForceRate + forceRate_Channel) * 0.01)), 2);
+                order_item.ProductDealPrice =decimal.Round(Convert.ToDecimal(data.Item.BizTotal* ((100 -  bizRate_Channel) * 0.01)),2)+
+                decimal.Round(Convert.ToDecimal(data.Item.TaxTotal * ((100 - taxRate_Channel) * 0.01)), 2)+
+                decimal.Round(Convert.ToDecimal(data.Item.ForceTotal * ((100 - forceRate_Channel) * 0.01)), 2);
                 order_item.ProductOriginalPrice = decimal.Round(Convert.ToDecimal(data.Item.BizTotal+data.Item.TaxTotal+data.Item.ForceTotal),2);
                 order_item.ProductTitle =data.Item.Description;
                 order_item.Buid =data.Item.BuId;

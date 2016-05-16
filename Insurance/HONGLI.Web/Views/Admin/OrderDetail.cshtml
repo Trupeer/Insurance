@@ -37,6 +37,9 @@
     @Html.HiddenFor(m => m.PolicyId, new { @Value = orderlsit.Order_PolicyHolder.FirstOrDefault().Id });
     @Html.HiddenFor(m => m.ItemUserId);
     @Html.HiddenFor(m => m.Description);
+    @Html.HiddenFor(m => m.OrderPayId, new { @Value = orderlsit.Order_Pay.FirstOrDefault().Id });
+    @Html.HiddenFor(m => m.OrderPayOrderCode, new { @Value = orderlsit.Order_Pay.FirstOrDefault().OrderCode });
+    @Html.HiddenFor(m => m.OrderPayPayBank, new { @Value = orderlsit.Order_Pay.FirstOrDefault().PayBank });
     <strong>@orderlsit.OrderCode</strong>
     <strong>车主/被保人信息</strong>
     <table class="table table-bordered">
@@ -331,39 +334,33 @@
         <table class="table table-bordered" align="center">
             <tr>
                 <td align="center" bgcolor="#f1f1f1">商业险总额</td>
-                <td align="center" bgcolor="#f1f1f1">商业险费率</td>
                 <td align="center" bgcolor="#f1f1f1">平台商业费率</td>
-                <td align="center" bgcolor="#f1f1f1">商业险优惠后价格</td>
+                <td align="center" bgcolor="#f1f1f1" colspan="2">商业险优惠后价格</td>
             </tr>
             <tr>
                 <td align="center">@productitemselect.BizTotal</td>
-                <td align="center">@productitemselect.BizRate</td>
                 <td align="center">@productitemselect.BizRate_Channel</td>
-                <td align="center">@productitemselect.BizAfterCoupon</td>
+                <td align="center" colspan="2">@productitemselect.BizAfterCoupon</td>
             </tr>
             <tr>
                 <td align="center" bgcolor="#f1f1f1">交强险总额</td>
-                <td align="center" bgcolor="#f1f1f1">交强险费率</td>
                 <td align="center" bgcolor="#f1f1f1">平台交强费率</td>
-                <td align="center" bgcolor="#f1f1f1">交强险优惠后价格</td>
+                <td align="center" bgcolor="#f1f1f1" colspan="2">交强险优惠后价格</td>
             </tr>
             <tr>
                 <td align="center">@productitemselect.ForceTotal</td>
-                <td align="center">@productitemselect.ForceRate</td>
                 <td align="center">@productitemselect.ForceRate_Channel</td>
-                <td align="center">@productitemselect.ForceAfterCoupon</td>
+                <td align="center" colspan="2">@productitemselect.ForceAfterCoupon</td>
             </tr>
             <tr>
                 <td align="center" bgcolor="#f1f1f1">车船税总额</td>
-                <td align="center" bgcolor="#f1f1f1">车船税费率</td>
                 <td align="center" bgcolor="#f1f1f1">平台车船费率</td>
-                <td align="center" bgcolor="#f1f1f1">车船税优惠后价格</td>   
+                <td align="center" bgcolor="#f1f1f1" colspan="2">车船税优惠后价格</td>   
             </tr>
             <tr>
                 <td align="center">@productitemselect.TaxTotal</td>
-                <td align="center">@productitemselect.TaxRate</td>
                 <td align="center">@productitemselect.TaxRate_Channel</td>
-                <td align="center">@productitemselect.TaxAfterCoupon</td>
+                <td align="center" colspan="2">@productitemselect.TaxAfterCoupon</td>
                 
             </tr>
             <tr>
@@ -639,37 +636,31 @@
     <table class="table table-bordered" align="center">
         <tr>
             <td align="center" bgcolor="#f1f1f1">商业险总额</td>
-            <td align="center" bgcolor="#f1f1f1">商业险费率</td>
             <td align="center" bgcolor="#f1f1f1">平台商业费率</td>
-            <td align="center" bgcolor="#f1f1f1">商业险优惠后价格</td>
+            <td align="center" bgcolor="#f1f1f1"  colspan="2">商业险优惠后价格</td>
         </tr>
         <tr>
             <td align="center">@Html.TextBoxFor(m => m.BizTotal, new { @id = "BizTotal", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.BizRate, new { @id = "BizRate", @Class = "ItemInput" })</td>
             <td align="center">@Html.TextBoxFor(m => m.BizRate_Channel, new { @id = "BizRate_Channel", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.BizAfterCoupon, new { @id = "BizAfterCoupon", @Class = "ItemInput" })</td>
+            <td align="center"  colspan="2">@Html.TextBoxFor(m => m.BizAfterCoupon, new { @id = "BizAfterCoupon", @Class = "ItemInput" })</td>
         </tr>
         <tr>
             <td align="center" bgcolor="#f1f1f1">交强险总额</td>
-            <td align="center" bgcolor="#f1f1f1">交强险费率</td>
             <td align="center" bgcolor="#f1f1f1">平台交强费率</td>
-            <td align="center" bgcolor="#f1f1f1">交强险优惠后价格</td>
+            <td align="center" bgcolor="#f1f1f1"  colspan="2">交强险优惠后价格</td>
         </tr>
         <tr>
             <td align="center">@Html.TextBoxFor(m => m.ForceTotal, new { @id = "ForceTotal", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.ForceRate, new { @id = "ForceRate", @Class = "ItemInput" })</td>
             <td align="center">@Html.TextBoxFor(m => m.ForceRate_Channel, new { @id = "ForceRate_Channel", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.ForceAfterCoupon, new { @id = "ForceAfterCoupon", @Class = "ItemInput" })</td>
+            <td align="center"  colspan="2">@Html.TextBoxFor(m => m.ForceAfterCoupon, new { @id = "ForceAfterCoupon", @Class = "ItemInput" })</td>
         </tr>
         <tr>
             <td align="center" bgcolor="#f1f1f1">车船税总额</td>
-            <td align="center" bgcolor="#f1f1f1">车船税费率</td>
             <td align="center" bgcolor="#f1f1f1">平台车船费率</td>
-            <td align="center" bgcolor="#f1f1f1">车船税优惠后价格</td>
+            <td align="center" bgcolor="#f1f1f1"  colspan="2">车船税优惠后价格</td>
         </tr>
         <tr>
             <td align="center">@Html.TextBoxFor(m => m.TaxTotal, new { @id = "TaxTotal", @Class = "ItemInput" })</td>
-            <td align="center">@Html.TextBoxFor(m => m.TaxRate, new { @id = "TaxRate", @Class = "ItemInput" })</td>
             <td align="center">@Html.TextBoxFor(m => m.TaxRate_Channel, new { @id = "TaxRate_Channel", @Class = "ItemInput" })</td>
             <td align="center">@Html.TextBoxFor(m => m.TaxAfterCoupon, new { @id = "TaxAfterCoupon", @Class = "ItemInput" })</td>
 
@@ -693,11 +684,20 @@
     <table class="table table-bordered" align="center">
         <tr>
             <td  bgcolor="#f1f1f1">保单邮寄方式</td>
-            <td colspan="5">@Html.DropDownListFor(m => m.DeliverType, new SelectList(new List<SelectListItem>()
+            <td colspan="2">@Html.DropDownListFor(m => m.DeliverType, new SelectList(new List<SelectListItem>()
             {
                 new SelectListItem(){Text="上门签约", Value="1"},
                 new SelectListItem(){Text="自提", Value="2"}
             }, "Value", "Text"))</td>
+            <td bgcolor="#f1f1f1">支付方式</td>
+            <td colspan="2">
+                @Html.DropDownListFor(m => m.OrderPayPayType, new SelectList(new List<SelectListItem>()
+            {
+                new SelectListItem(){Text="支付宝", Value="1"},
+                new SelectListItem(){Text="全款刷卡返现", Value="2"},
+                new SelectListItem(){Text="现金折扣直付", Value="3"}
+            }, "Value", "Text"))
+        </td>
         </tr>
         <tr>
             <td bgcolor="#f1f1f1">收件人姓名</td>
@@ -746,6 +746,7 @@
         $("#VisitStatus").val(@productuser.VisitStatus);//设置回访装态下拉
         $("#CheckCompany").val(@ViewBag.InsuranceCompany);
         $("#PolicyIdCardType").val(@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardType);
+        $("#OrderPayPayType").val(@orderlsit.Order_Pay.FirstOrDefault().PayType);
         GetProductItem();
         $("#CheckCompany").change(function () { GetProductItem(); });
         var deliverLocation = $("#DeliverDistrictCode").val();
@@ -892,7 +893,7 @@
     }
     function CheckItemChange()
     {
-        if (itemdata == "null")
+        if (itemdata == null||itemdata ==undefined||itemdata =="")
         {
             $("#ItemId").val(0);
         }
@@ -994,12 +995,12 @@
     {
         var ItemId = $("#ItemId").val();
         var Clientuser = $("#Id").val();
-        $.post("ChangeAuditDocuments", { ItemId: ItemId, Clientuser: Clientuser }, function (data) {
+        $.post('@Url.Action("ChangeAuditDocuments", "Admin")', { ItemId: ItemId, Clientuser: Clientuser }, function (data) {
             if(data==1)
             {
                 ChangeOrderList();
                 alert("核单成功");
-                window.location.href = window.location.href;
+                window.location.href = '@Url.Action("OrderList", "Admin")';
             }
             else if(data==3)
             {
@@ -1032,7 +1033,7 @@
         var PolicyId = $("#PolicyId").val();
         var OrderDeliverId = $("#OrderDeliverId").val();
         var ProductItemId = $("#ItemId").val();
-        $.post("ChangeOrderList", { ProductItemId:ProductItemId,orderbaseId: OrderBaseId, orderitemId: OrderItemId, ordercode: OrderBaeOrderCode, PrepaidAmount: PrepaidAmount, Status: Status, AmountPayable: AmountPayable, buid: buid, BusinessExpireDate: BusinessExpireDate, ForceExpireDate: ForceExpireDate, ItemId: ItemId, ProductDealPrice: ProductDealPrice, ProductOriginalPrice: ProductOriginalPrice, description: description }, function (data) {
+        $.post('@Url.Action("ChangeOrderList", "Admin")', { ProductItemId:ProductItemId,orderbaseId: OrderBaseId, orderitemId: OrderItemId, ordercode: OrderBaeOrderCode, PrepaidAmount: PrepaidAmount, Status: Status, AmountPayable: AmountPayable, buid: buid, BusinessExpireDate: BusinessExpireDate, ForceExpireDate: ForceExpireDate, ItemId: ItemId, ProductDealPrice: ProductDealPrice, ProductOriginalPrice: ProductOriginalPrice, description: description }, function (data) {
             //if(data==1)
             //{
             //    window.location.href = "/OrderV3/Index?productId=" + ItemId + "&mobile=" + mobeil + "&channel=" + channel + "&intentionCompany=" + source + "&OrderCode=" + OrderBaeOrderCode + "&OrderBaseId=" + OrderBaseId + "&OrderItemId=" + OrderItemId + "&OrderPolicyId=" + PolicyId + "&OrderDeliverId=" + OrderDeliverId;

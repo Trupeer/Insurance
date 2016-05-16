@@ -693,6 +693,24 @@ namespace HONGLI.Repository
             return itemid;
         }
         /// <summary>
+        /// 添加支付信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int SaveOrderPay(Order_Pay model)
+        {
+            int itemid;
+            using (var context = new E2JOINDB())
+            {
+                //事务提交
+                context.Order_Pay.Add(model);
+                context.SaveChanges();
+                itemid = model.Id;
+            }
+
+            return itemid;
+        }
+        /// <summary>
         /// 判断收货地址是否存在
         /// </summary>
         /// <param name="ordercode"></param>
@@ -1290,6 +1308,7 @@ namespace HONGLI.Repository
                 context.Entry(model).Property(t => t.Id).IsModified = true;
                 context.Entry(model).Property(t => t.InvoiceTitle).IsModified = true;
                 context.Entry(model).Property(t => t.InvoiceType).IsModified = true;
+                context.Database.ExecuteSqlCommand(string.Format("UPDATE dbo.Order_Pay SET PayType={0} WHERE OrderCode='{1}'", model.Order_Pay.FirstOrDefault().PayType, model.Order_Pay.FirstOrDefault().OrderCode));
                 context.SaveChanges();
                 result = model.Id;
             }

@@ -138,6 +138,12 @@ namespace HONGLI.Web.Models
         public Nullable<System.DateTime> OrderItemBusinessExpireDate { get; set; }
         public Nullable<int> OrderItemBuid { get; set; }
 
+        public int OrderPayId { get; set; }
+        public string OrderPayOrderCode { get; set; }
+        public Nullable<int> OrderPayPayType { get; set; }
+        public Nullable<int> OrderPayPayBank { get; set; }
+        public Nullable<System.DateTime> OrderPayCreateDate { get; set; }
+
 
         public int PolicyId { get; set; }
         public string PolicyOrderCode { get; set; }
