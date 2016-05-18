@@ -1405,8 +1405,8 @@ namespace HONGLI.Repository
             sql.Append("ISNULL(v2Items.BizTotal,0) as BizTotal,");
             sql.Append("ISNULL(v2Items.TaxTotal,0) as TaxTotal,");
             sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
-            sql.Append("ISNULL(ob.PrepaidAmount,0) as PrepaidAmount,");
-            sql.Append("(ISNULL(v2Items.TotalAfterCoupon, 0) - ISNULL(ob.PrepaidAmount, 0) + 7) AS 'RemainMoney'");
+            sql.Append("ISNULL(v2Items.Total,0) as Total,");
+            sql.Append("(ISNULL(v2Items.Total, 0) - ISNULL(v2Items.TotalAfterCoupon, 0)) AS 'BackMoney'");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
@@ -1435,8 +1435,8 @@ namespace HONGLI.Repository
                 dt.Columns.Add("BizTotal");
                 dt.Columns.Add("TaxTotal");
                 dt.Columns.Add("Commission");
-                dt.Columns.Add("PrepaidAmount");
-                dt.Columns.Add("RemainMoney");
+                dt.Columns.Add("Total");
+                dt.Columns.Add("BackMoney");
                 foreach (var item in query)
                 {
                     DataRow dr = dt.NewRow();
@@ -1453,8 +1453,8 @@ namespace HONGLI.Repository
                     dr["BizTotal"] = item.BizTotal;
                     dr["TaxTotal"] = item.TaxTotal;
                     dr["Commission"] = item.Commission;
-                    dr["PrepaidAmount"] = item.PrepaidAmount;
-                    dr["RemainMoney"] = item.RemainMoney;
+                    dr["Total"] = item.Total;
+                    dr["BackMoney"] = item.BackMoney;
                     dt.Rows.Add(dr);
                 }
                 return dt;
@@ -1513,8 +1513,8 @@ namespace HONGLI.Repository
             sql.Append("ISNULL(v2Items.BizTotal,0) as BizTotal,");
             sql.Append("ISNULL(v2Items.TaxTotal,0) as TaxTotal,");
             sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
-            sql.Append("ISNULL(ob.PrepaidAmount,0) as PrepaidAmount,");
-            sql.Append("(ISNULL(v2Items.TotalAfterCoupon, 0) - ISNULL(ob.PrepaidAmount, 0) + 7) AS 'RemainMoney'");
+            sql.Append("ISNULL(v2Items.Total,0) as Total,");
+            sql.Append("(ISNULL(v2Items.Total, 0) - ISNULL(v2Items.TotalAfterCoupon, 0)) AS 'BackMoney'");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
@@ -1542,8 +1542,8 @@ namespace HONGLI.Repository
                 dt.Columns.Add("商业险保险费");
                 dt.Columns.Add("车船税保险费");
                 dt.Columns.Add("佣金");
-                dt.Columns.Add("预付金额");
-                dt.Columns.Add("待付金额");
+                dt.Columns.Add("总价格");
+                dt.Columns.Add("返现");
                 foreach (var item in query)
                 {
                     DataRow dr = dt.NewRow();
@@ -1560,8 +1560,8 @@ namespace HONGLI.Repository
                     dr["商业险保险费"] = Convert.ToDecimal(item.BizTotal).ToString("F2");
                     dr["车船税保险费"] = Convert.ToDecimal(item.TaxTotal).ToString("F2");
                     dr["佣金"] = Convert.ToDecimal(item.Commission).ToString("F2");
-                    dr["预付金额"] = Convert.ToDecimal(item.PrepaidAmount).ToString("F2");
-                    dr["待付金额"] = Convert.ToDecimal(item.RemainMoney).ToString("F2");
+                    dr["总价格"] = Convert.ToDecimal(item.Total).ToString("F2");
+                    dr["返现"] = Convert.ToDecimal(item.BackMoney).ToString("F2");
                     dt.Rows.Add(dr);
                 }
                 return dt;
@@ -1601,8 +1601,8 @@ namespace HONGLI.Repository
             sql.Append("ISNULL(SUM(v2Items.BizTotal),0) BizTotal,");
             sql.Append("ISNULL(SUM(v2Items.TaxTotal),0) TaxTotal,");
             sql.Append("ISNULL(SUM((ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100)),0) AS 'Commission',");
-            sql.Append("ISNULL(SUM(ob.PrepaidAmount),0) PrepaidAmount,");
-            sql.Append("(ISNULL(SUM(ISNULL(v2Items.TotalAfterCoupon, 0) - (ISNULL(ob.PrepaidAmount, 0))),0) + COUNT(ob.Id)*7) AS 'RemainMoney'");
+            sql.Append("ISNULL(SUM(v2Items.Total),0) Total,");
+            sql.Append("(ISNULL(SUM(ISNULL(v2Items.Total, 0) - (ISNULL(v2Items.TotalAfterCoupon, 0))),0)) AS 'BackMoney'");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
@@ -1620,8 +1620,8 @@ namespace HONGLI.Repository
                 dt.Columns.Add("BizTotal");
                 dt.Columns.Add("TaxTotal");
                 dt.Columns.Add("Commission");
-                dt.Columns.Add("PrepaidAmount");
-                dt.Columns.Add("RemainMoney");
+                dt.Columns.Add("Total");
+                dt.Columns.Add("BackMoney");
                 foreach (var item in query)
                 {
                     DataRow dr = dt.NewRow();
@@ -1629,8 +1629,8 @@ namespace HONGLI.Repository
                     dr["BizTotal"] = item.BizTotal;
                     dr["TaxTotal"] = item.TaxTotal;
                     dr["Commission"] = item.Commission;
-                    dr["PrepaidAmount"] = item.PrepaidAmount;
-                    dr["RemainMoney"] = item.RemainMoney;
+                    dr["Total"] = item.Total;
+                    dr["BackMoney"] = item.BackMoney;
                     dt.Rows.Add(dr);
                 }
                 return dt;
@@ -1709,8 +1709,8 @@ namespace HONGLI.Repository
             public decimal? BizTotal { get; set; }
             public decimal? TaxTotal { get; set; }
             public decimal? Commission { get; set; }
-            public decimal? PrepaidAmount { get; set; }
-            public decimal? RemainMoney { get; set; }
+            public decimal? Total { get; set; }
+            public decimal? BackMoney { get; set; }
         }
 
         public class ReportList
@@ -1728,8 +1728,8 @@ namespace HONGLI.Repository
             public decimal? BizTotal { get; set; }
             public decimal? TaxTotal { get; set; }
             public decimal? Commission { get; set; }
-            public decimal? PrepaidAmount { get; set; }
-            public decimal? RemainMoney { get; set; }
+            public decimal? Total { get; set; }
+            public decimal? BackMoney { get; set; }
         }
 
     }

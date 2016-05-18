@@ -18,8 +18,8 @@
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>商业险保险费</strong></td>
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>车船税保险费</strong></td>
         <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>佣金</strong></td>
-        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>预付金额</strong></td>
-        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>待付金额</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>总价格</strong></td>
+        <td align="center" nowrap="nowrap" bgcolor="#f1f1f1"><strong>返现</strong></td>
 
 
     </tr>
@@ -41,8 +41,8 @@
                 <td align="center">@Convert.ToDecimal(item["BizTotal"]).ToString("F2")</td>
                 <td align="center">@Convert.ToDecimal(item["TaxTotal"]).ToString("F2")</td>
                 <td align="center">@Convert.ToDecimal(item["Commission"]).ToString("F2")</td>
-                <td align="center">@Convert.ToDecimal(item["PrepaidAmount"]).ToString("F2")</td>
-                <td align="center">@Convert.ToDecimal(item["RemainMoney"]).ToString("F2")</td>
+                <td align="center">@Convert.ToDecimal(item["Total"]).ToString("F2")</td>
+                <td align="center">@Convert.ToDecimal(item["BackMoney"]).ToString("F2")</td>
             </tr>
         }
     }
