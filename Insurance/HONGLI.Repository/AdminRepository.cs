@@ -117,7 +117,14 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(Auditdocuments))
             {
-                where.AppendFormat(" AND AuditOrderState ={0}", Auditdocuments);
+                if (Auditdocuments == "0")
+                {
+                    where.AppendFormat(" AND (AuditOrderState ={0} OR AuditOrderState IS NULL)", Auditdocuments);
+                }
+                else
+                {
+                    where.AppendFormat(" AND AuditOrderState ={0}", Auditdocuments);
+                }
             }
             if (!string.IsNullOrEmpty(OrderState))
             {
@@ -149,7 +156,7 @@ namespace HONGLI.Repository
             sql.Append("RbOffer=MAX(CASE WHEN B.Source=2 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
             sql.Append("TpyOffer=MAX(CASE WHEN B.Source=1 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
             sql.Append("PaOffer=MAX(CASE WHEN B.Source=0 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
-            sql.Append("MAX(B.AuditOrderStatus) AS AuditOrderState,MAX(B.ServiceUserId) AS ServiceUserId, ");
+            sql.Append("MAX(CASE WHEN UserSelection=1 THEN B.AuditOrderStatus ELSE 0 END) AS AuditOrderState,MAX(B.ServiceUserId) AS ServiceUserId, ");
             sql.Append("MAX(VisitDate) AS VisitDate,MAX(VisitStatus) AS VisitState,MAX(VisitServiceUserId) AS VisitServiceUserId, ");
             sql.Append("AuditOrderDate=MAX(B.CreateTime),MAX(C.ProductItemId) AS  ProductItemId ,MAX(C.OrderCode) AS OrderCode,MAX(C.Status) AS OrderreviewState  FROM dbo.ProductV2_User A WITH(NOLOCK) ");
             sql.Append("LEFT JOIN dbo.ProductV2_Item B  WITH(NOLOCK) ON A.Id = B.UserId ");
@@ -296,7 +303,7 @@ namespace HONGLI.Repository
             sql.Append("RbOffer=MAX(CASE WHEN B.Source=2 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
             sql.Append("TpyOffer=MAX(CASE WHEN B.Source=1 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
             sql.Append("PaOffer=MAX(CASE WHEN B.Source=0 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
-            sql.Append("MAX(B.AuditOrderStatus) AS AuditOrderState,MAX(B.ServiceUserId) AS ServiceUserId, ");
+            sql.Append("MAX(CASE WHEN UserSelection=1 THEN B.AuditOrderStatus ELSE 0 END) AS AuditOrderState,MAX(B.ServiceUserId) AS ServiceUserId, ");
             sql.Append("MAX(VisitDate) AS VisitDate,MAX(VisitStatus) AS VisitState,MAX(VisitServiceUserId) AS VisitServiceUserId, ");
             sql.Append("AuditOrderDate=MAX(B.CreateTime) ,MAX(C.ProductItemId) AS  ProductItemId,MAX(C.OrderCode) AS OrderCode,MAX(C.Status) AS OrderreviewState  FROM dbo.ProductV2_User A WITH(NOLOCK) ");
             sql.Append("LEFT JOIN dbo.ProductV2_Item B  WITH(NOLOCK) ON A.Id = B.UserId ");
@@ -693,6 +700,24 @@ namespace HONGLI.Repository
             return itemid;
         }
         /// <summary>
+        /// 添加支付信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int SaveOrderPay(Order_Pay model)
+        {
+            int itemid;
+            using (var context = new E2JOINDB())
+            {
+                //事务提交
+                context.Order_Pay.Add(model);
+                context.SaveChanges();
+                itemid = model.Id;
+            }
+
+            return itemid;
+        }
+        /// <summary>
         /// 判断收货地址是否存在
         /// </summary>
         /// <param name="ordercode"></param>
@@ -1008,6 +1033,7 @@ namespace HONGLI.Repository
                 dt.Columns.Add("ProductName");
                 dt.Columns.Add("Mobile");
                 dt.Columns.Add("ForceExpireDate");
+                dt.Columns.Add("BusinessExpireDate");
                 dt.Columns.Add("InvoiceTitle");
                 dt.Columns.Add("InvoiceType");
                 dt.Columns.Add("orderBaseId");
@@ -1079,7 +1105,7 @@ namespace HONGLI.Repository
                 #endregion
                 DataRow dr = dt.NewRow();
                 StringBuilder sql = new StringBuilder();
-                sql.Append("SELECT A.Id,A.ModleName,A.Mobile,B.ProductName,A.ForceExpireDate, ");
+                sql.Append("SELECT A.Id,A.ModleName,A.Mobile,B.ProductName,A.ForceExpireDate,A.BusinessExpireDate, ");
                 sql.Append("C.InvoiceTitle,C.InvoiceType,C.Id AS orderBaseId,C.CreateDate AS OrderBaeCreateDate,B.Id AS itemId, ");
                 sql.Append("B.BizRate,B.BizTotal,B.ForceRate,B.ForceTotal,B.TaxRate,B.TaxTotal ");
                 sql.Append(",B.QuoteStatus,B.QuoteResult,B.CheSun_BaoE,B.CheSun_BaoFei,B.SanZhe_BaoE ");
@@ -1108,6 +1134,7 @@ namespace HONGLI.Repository
                     dr["ProductName"] = query.FirstOrDefault().ProductName;
                     dr["Mobile"] = query.FirstOrDefault().Mobile;
                     dr["ForceExpireDate"] = query.FirstOrDefault().ForceExpireDate;
+                    dr["BusinessExpireDate"] = query.FirstOrDefault().BusinessExpireDate;
                     dr["InvoiceTitle"] = query.FirstOrDefault().InvoiceTitle;
                     dr["InvoiceType"] = query.FirstOrDefault().InvoiceType;
                     dr["orderBaseId"] = query.FirstOrDefault().orderBaseId;
@@ -1188,6 +1215,7 @@ namespace HONGLI.Repository
             public string Mobile { get; set; }
             public string ProductName { get; set; }
             public string ForceExpireDate { get; set; }
+            public string BusinessExpireDate { get; set; }
             public string InvoiceTitle { get; set; }
             public Nullable<int> InvoiceType { get; set; }
             public Nullable<int> orderBaseId { get; set; }
@@ -1290,6 +1318,7 @@ namespace HONGLI.Repository
                 context.Entry(model).Property(t => t.Id).IsModified = true;
                 context.Entry(model).Property(t => t.InvoiceTitle).IsModified = true;
                 context.Entry(model).Property(t => t.InvoiceType).IsModified = true;
+                context.Database.ExecuteSqlCommand(string.Format("UPDATE dbo.Order_Pay SET PayType={0} WHERE OrderCode='{1}'", model.Order_Pay.FirstOrDefault().PayType, model.Order_Pay.FirstOrDefault().OrderCode));
                 context.SaveChanges();
                 result = model.Id;
             }

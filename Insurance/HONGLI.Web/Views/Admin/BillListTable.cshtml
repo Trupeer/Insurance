@@ -39,7 +39,7 @@
                     }
                     else if (item["PayType"].ToString() == "3")
                     {
-                        <span>现金折扣直付</span>
+                        <span>现金支付返现</span>
                     }
                 </td>
                 <td align="center">
@@ -118,26 +118,29 @@
                 </td>
                 <td align="center">@item["Mobile"]</td>
                 <td align="center">
-                    @if (item["PayType"].ToString() == "2")
+                    @{ 
+                        decimal ProductOriginalPrice = 0;
+                        decimal ProductDealPrice = 0;
+                        decimal.TryParse(item["ProductOriginalPrice"].ToString(), out ProductOriginalPrice);
+                        decimal.TryParse(item["ProductDealPrice"].ToString(), out ProductDealPrice);
+                    }
+                    @if (item["PayType"].ToString() == "2"|| item["PayType"].ToString() == "3")
                     {
                         if (item["Status"].ToString() == "3" || item["Status"].ToString() == "4" || item["Status"].ToString() == "5")
                         {
                             if (item["BackStatus"].ToString() == "0")
                             {
-                                decimal ProductOriginalPrice = 0;
-                                decimal ProductDealPrice = 0;
-                                decimal.TryParse(item["ProductOriginalPrice"].ToString(), out ProductOriginalPrice);
-                                decimal.TryParse(item["ProductDealPrice"].ToString(), out ProductDealPrice);
 
-                                <a href="#" onclick="Backmoney(@item["Id"],'@item["OrderCode"]','@item["Name"]',@decimal.Round(ProductOriginalPrice-ProductDealPrice,2),'@item["Mobile"]')">返现</a>
+
+                                <a href="#" onclick="Backmoney(@item["Id"],'@item["OrderCode"]','@item["Name"]',@decimal.Round(ProductOriginalPrice-ProductDealPrice,2),'@item["Mobile"]')">返现&nbsp;<text>@decimal.Round(ProductOriginalPrice - ProductDealPrice, 2)</text>元</a>
                             }
                             else if (item["BackStatus"].ToString() == "1")
                             {
-                                <text>已返现</text>
-                                }
-                            }
-                            else
-                            {
+                                <text>已返现&nbsp;</text><text>@decimal.Round(ProductOriginalPrice - ProductDealPrice, 2)</text><text>元</text>
+        }
+    }
+    else
+    {
                             <text>-</text>
                             }
                         }
@@ -146,7 +149,7 @@
                         <text>-</text>
 }
                 </td>
-<td>@switch (item["receiveStatus"].ToString())
+<td align="center">@switch (item["receiveStatus"].ToString())
 {
     case "0":<text>未领取</text>;
         break;

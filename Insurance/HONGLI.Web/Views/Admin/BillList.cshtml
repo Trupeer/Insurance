@@ -115,6 +115,7 @@
                     if(data==1)
                     {
                         alert("单号：" + ordercode + ",订单状态已修改");
+                        submit(mypage, 1);
                     }
                     else
                     {
@@ -130,10 +131,10 @@
         {
             $.post('@Url.Action("AddRedPacket", "Admin")', { Id:Id,OrderCode: OrderCode, name: name, money: money, mobile: mobile }, function (data)
             {
-                if(data==1)
+                if(data>0)
                 {
                     alert("操作成功！");
-                    submit(1, 1);
+                    submit(mypage, 1);
                     return;
                 }
                 if (data == -1) {

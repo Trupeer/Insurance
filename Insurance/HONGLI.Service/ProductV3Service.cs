@@ -696,5 +696,25 @@ namespace HONGLI.Service
             }
             return result;
         }
+        /// <summary>
+        /// 如果续保信息获取失败则删除用户信息重新获取
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        public int DeleteProductUser(int UserId)
+        {
+            int result;
+            try
+            {
+                result = new ProductV3Repository().DeleteProductUser(UserId);
+            }
+            catch (Exception ex)
+            {
+                result = -1;
+                //todo log
+                LogHelper.AppError(string.Format("续保信息获取失败则删除用户信息重新获取异常，异常信息：{0}，异常跟踪：{1}.", ex.Message, ex.StackTrace));
+            }
+            return result;
+        }
         }
 }

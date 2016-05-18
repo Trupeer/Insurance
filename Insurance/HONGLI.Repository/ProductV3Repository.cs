@@ -186,5 +186,29 @@ namespace HONGLI.Repository
                 return model;
             }
         }
+        /// <summary>
+        /// 如果续保信息获取失败则删除用户信息重新获取
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        public int DeleteProductUser(int UserId)
+        {
+            int result = -1;
+            try
+            {
+                using (var context = new E2JOINDB())
+                {
+                    context.Database.ExecuteSqlCommand(string.Format("DELETE FROM dbo.ProductV2_User WHERE Id={0}",UserId));
+                    context.Database.ExecuteSqlCommand(string.Format("DELETE FROM dbo.ProductV2_Renewal WHERE UserId={0}", UserId));
+                    context.SaveChanges();
+                    result = 1;
+                }
+            }
+            catch
+            {
+
+            }
+            return result;
+        }
     }
 }

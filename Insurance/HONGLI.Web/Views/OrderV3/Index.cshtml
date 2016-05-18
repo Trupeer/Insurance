@@ -41,7 +41,7 @@
             </label>
             <div class="f-form01-main">
                 <p class="t-24" id="product-title"></p>
-                <p class="t-money01"><i id="product-dealPrice">￥</i><del id="product-originalPrice">￥</del></p>
+                <p class="t-money01"><i id="product-dealPrice">￥</i><i id="product-originalPrice">￥</i></p>
             </div>
         </div>
 
@@ -51,16 +51,6 @@
                 <p class="t-26">我方服务人员会为您按预约时间上门服务！</p>
             </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         <br />
         <br />
         <br />
@@ -122,7 +112,7 @@
             $("#product-originalPrice").html(result.ProductOriginalPrice);
             $("#PrepaidAmount").html(result.PrepaidAmount);
             var price = parseFloat(result.ProductOriginalPrice) - parseFloat(result.ProductDealPrice);
-            $("#FavorablePrice").html("已为您优惠 ￥" + common.operateNum.formatNum(price, 2) + ",优惠价 ￥" + common.operateNum.formatNum(result.ProductDealPrice, 2));
+            $("#FavorablePrice").html("投保成功后返现￥" + common.operateNum.formatNum(price, 2));
         });
     });
     function getIsuranceLogoUrl(logo) {

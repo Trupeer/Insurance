@@ -337,7 +337,27 @@ namespace HONGLI.Service
             }
             return userid;
         }
-
+        /// <summary>
+        /// 添加支付信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int SaveOrderPay(Order_Pay model)
+        {
+            int id;
+            try
+            {
+                var repository = new Repository.AdminRepository();
+                id = repository.SaveOrderPay(model);
+            }
+            catch (Exception ex)
+            {
+                id = -1;
+                //todo log
+                LogHelper.AppError(string.Format("保存产品详细SaveOrderPay异常，异常信息：{0}，异常跟踪：{1}.", ex.Message, ex.StackTrace));
+            }
+            return id;
+        }
         /// <summary>
         /// 判断收货地址是否存在
         /// </summary>

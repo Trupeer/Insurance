@@ -226,6 +226,7 @@ namespace HONGLI.Web.Controllers
                 var userid = "3";
 #endif
                 decimal productDealPrice = product.DealPrice==null?0:Convert.ToDecimal(product.DealPrice);
+                decimal productOriginalPrice = product.OriginalPrice == null ? 0 : Convert.ToDecimal(product.OriginalPrice);
                 //try
                 //{
                 //   productDealPrice = _productV2Service.GetProductV2(Convert.ToInt32(product.ProductId)).TotalAfterCoupon.Value;
@@ -264,7 +265,7 @@ namespace HONGLI.Web.Controllers
                 order_base.InvoiceTitle = invoice.InvoiceTitle;
                 order_base.InvoiceType = invoice.InvoiceType;
                 order_base.AmountPayable = productDealPrice + payAndDeliver.DeliverPrice;
-                order_base.PaidAmount = productDealPrice + payAndDeliver.DeliverPrice;
+                order_base.PaidAmount = productOriginalPrice + payAndDeliver.DeliverPrice;
                 
                 new OrderService().EditOrderInvoice(order_base);
                 Order_Deliver order_deliver = new Order_Deliver();

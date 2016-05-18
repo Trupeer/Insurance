@@ -34,7 +34,7 @@
                 <td align="center">@(string.IsNullOrEmpty(item["CreateTime"].ToString())?"": Convert.ToDateTime(item["CreateTime"]).ToString("yyyy-MM-dd"))</td>
                                @if (item["Channel"].ToString() == "1")
                                {
-                                <td align="center">易车</td>
+                                <td align="center">其它</td>
                                }
                else if (item["Channel"].ToString() == "2")
                 {
@@ -42,7 +42,19 @@
                                }
                                else if (item["Channel"].ToString() == "3")
                                {
+                                <td align="center">易车</td>
+                               }
+                               else if (item["Channel"].ToString() == "4")
+                               {
                                 <td align="center">易啦保</td>
+                               }
+                               else if (item["Channel"].ToString() == "9")
+                               {
+                                <td align="center">代理人</td>
+                               }
+                               else if (item["Channel"].ToString() == "10")
+                               {
+                                <td align="center">特殊</td>
                                }
                                else
                                {

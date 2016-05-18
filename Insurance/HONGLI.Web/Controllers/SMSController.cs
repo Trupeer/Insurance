@@ -284,7 +284,14 @@ namespace HONGLI.Web.Controllers
         {
             this.SendSMS(this.SMS_RedPacketTemplateID, mobile, content);
         }
-
+        public void SendUserInvitationSMS(string mobile, string[] content)
+        {
+            this.SendSMS(this.SMS_UserInvitationTemplateID, mobile, content);
+        }
+        public void SendUserRemindSMS(string mobile, string[] content)
+        {
+            this.SendSMS(this.SMS_UserRemindTemplateID, mobile, content);
+        }
         string GetDictionaryData(Dictionary<string, object> data)
         {
             string ret = null;
@@ -316,6 +323,20 @@ namespace HONGLI.Web.Controllers
             get
             {
                 return ConfigurationManager.AppSettings["SMS_RedPacketTemplateID"];
+            }
+        }
+        string SMS_UserInvitationTemplateID
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["SMS_UserInvitationTemplateID"];
+            }
+        }
+        string SMS_UserRemindTemplateID
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["SMS_UserRemindTemplateID"];
             }
         }
         string SMS_Account

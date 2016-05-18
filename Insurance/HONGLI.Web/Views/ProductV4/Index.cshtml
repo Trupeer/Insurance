@@ -111,16 +111,6 @@
     <br />
     <br />
     <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
     <script src="~/public/3rdLibs/jquery/jquery-2.1.3.min.js"></script>
     <script src="~/public/js/all.js"></script>
 
@@ -142,6 +132,7 @@
         $("#submit").click(function () {
             var licenseNo = $("#cityName option:selected").text() + $("#car-number").val();
             var cityCode = $("#cityCode").attr("code");
+            var name = $("#name").val();
             //var mobile = $("#mobileNo").val();
             //var isPublic = $("input[name=isPublic][checked]").val();
 
@@ -153,7 +144,7 @@
             var url = "@Url.Action("FillIn")?channel=@ViewBag.channel"
                                             //+ "&mobile=" + mobile
                                             + "&licenseNo=" + licenseNo
-                                            + "&cityCode=" + cityCode+"&check=1";
+                                            + "&cityCode=" + cityCode + "&check=1&name=" + name;
             //var url = "@ViewBag.loginUrl";
             window.location.href = url;
         });

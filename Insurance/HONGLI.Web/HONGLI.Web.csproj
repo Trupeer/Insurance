@@ -367,6 +367,7 @@
     <Content Include="public\imagesTemp\page40-3.png" />
     <Content Include="public\imagesTemp\page40-5.png" />
     <Content Include="public\imagesTemp\page40-4.png" />
+    <Content Include="public\images\chongzhi.png" />
     <Content Include="public\images\f-select01-arrow.png" />
     <Content Include="public\images\f-select02.png" />
     <Content Include="public\images\f-tips01.png" />
@@ -628,6 +629,7 @@
     <Content Include="Views\Admin\ReportStatistics.cshtml" />
     <Content Include="Views\Admin\ReportStatisticsListTable.cshtml" />
     <Content Include="Views\Admin\ReportSummary.cshtml" />
+    <Content Include="Views\Admin\SendMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

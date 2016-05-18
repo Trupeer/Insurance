@@ -13,7 +13,7 @@
                 <td bgcolor="#f1f1f1"  align="center">车型</td>
                 <td align="center">@list["ModleName"]</td>
                 <td bgcolor="#f1f1f1" align="center">保险到期时间</td>
-                <td align="center">@list["ForceExpireDate"]</td>
+                <td align="center">@list["BusinessExpireDate"]</td>
                 <td bgcolor="#f1f1f1" align="center">发票类型</td>
                 <td align="center">
                 <select id="InvoiceType"  name="select3">
@@ -25,13 +25,13 @@
                 <td align="center"><input id="InvoiceTitle" value="@list["InvoiceTitle"]" /></td>
             </tr>
             <tr>
-                @{decimal TotalAfterCoupon;
+                @{decimal Total;
                     decimal DeliverPrice;
                     decimal.TryParse(list["DeliverPrice"].ToString(), out DeliverPrice);
-                    decimal.TryParse(list["TotalAfterCoupon"].ToString(), out TotalAfterCoupon);
+                    decimal.TryParse(list["Total"].ToString(), out Total);
                     }
                 <td bgcolor="#f1f1f1" align="center">应付保费</td>
-                <td align="center">@(DeliverPrice+TotalAfterCoupon)</td>
+                <td align="center">@(DeliverPrice+Total)</td>
                 <td bgcolor="#f1f1f1" align="center">预付保费</td>
                 <td align="center">@list["PrepaidAmount"]</td>
                 <td bgcolor="#f1f1f1" align="center">净费录入</td>
@@ -41,7 +41,7 @@
                     <select id="PayType" name="select3">
                         <option value="1">支付宝</option>
                         <option value="2">全款刷卡返现</option>
-                        <option value="3">现金折扣直付</option>
+                        <option value="3">现金支付返现</option>
                     </select>
                 </td>
             </tr>
@@ -165,49 +165,43 @@
         <table class="table table-bordered" align="center">
             <tr>
                 <td align="center" bgcolor="#f1f1f1">商业险总额</td>
-                <td align="center" bgcolor="#f1f1f1">商业险费率</td>
                 <td align="center" bgcolor="#f1f1f1">平台商业费率</td>
                 <td align="center" bgcolor="#f1f1f1">商业险优惠后价格</td>
             </tr>
             <tr>
                 <td align="center">@list["BizTotal"]</td>
-                <td align="center">@list["BizRate"]</td>
                 <td align="center">@list["BizRate_Channel"]</td>
                 <td align="center">@list["BizAfterCoupon"]</td>
             </tr>
             <tr>
                 <td align="center" bgcolor="#f1f1f1">交强险总额</td>
-                <td align="center" bgcolor="#f1f1f1">交强险费率</td>
                 <td align="center" bgcolor="#f1f1f1">平台交强费率</td>
                 <td align="center" bgcolor="#f1f1f1">交强险优惠后价格</td>
             </tr>
             <tr>
                 <td align="center">@list["ForceTotal"]</td>
-                <td align="center">@list["ForceRate"]</td>
                 <td align="center">@list["ForceRate_Channel"]</td>
                 <td align="center">@list["ForceAfterCoupon"]</td>
             </tr>
             <tr>
                 <td align="center" bgcolor="#f1f1f1">车船税总额</td>
-                <td align="center" bgcolor="#f1f1f1">车船税费率</td>
                 <td align="center" bgcolor="#f1f1f1">平台车船费率</td>
                 <td align="center" bgcolor="#f1f1f1">车船税优惠后价格</td>
             </tr>
             <tr>
                 <td align="center">@list["TaxTotal"]</td>
-                <td align="center">@list["TaxRate"]</td>
                 <td align="center">@list["TaxRate_Channel"]</td>
                 <td align="center">@list["TaxAfterCoupon"]</td>
 
             </tr>
             <tr>
-                <td colspan="2" align="center" bgcolor="#f1f1f1"></td>
+                <td align="center" bgcolor="#f1f1f1"></td>
                 <td align="center" bgcolor="#f1f1f1">总价格</td>
 
                 <td align="center" bgcolor="#f1f1f1">优惠后总价格</td>
             </tr>
             <tr>
-                <td colspan="2"></td>
+                <td ></td>
                 <td align="center">@list["Total"]</td>
 
                 <td align="center">@list["TotalAfterCoupon"]</td>
@@ -225,7 +219,7 @@
                                 <option Value="2">自提</option>
                             </select>
                             运费
-                            <input id="DeliverPrice" value="@list["DeliverPrice"]" />
+                            <input id="DeliverPrice" value="@list["DeliverPrice"]" readonly="readonly" />
                             <input  id="OrderBaeCreateDate" type="hidden" value="@list["OrderBaeCreateDate"]"/>
                         </td>
                     </tr>
@@ -267,7 +261,7 @@
                         <input id="DeliverAddress" type="text" style="width:380px;" value="@list["DeliverAddress"]" /></td>
                     </tr>
                 </table>
-                <input type="submit" id="SaveModel" value="保存修改" onclick="CheckItemChange()" />
+                <input type="submit" id="SaveModel" value="保存修改" onclick="Submit()" />
     </div>
 </div>
 <script type="text/javascript" language="javascript" src="@Url.Content("~/Scripts/pcas.js")"></script>
@@ -296,13 +290,13 @@
             new PCAS("deliverProvince", "deliverCity", "deliverArea");
         }
         $('#deliverProvince').change(function () {
-            $('#deliverLocation').val($('#deliverProvince').val());
+            $('#DeliverDistrictCode').val($('#deliverProvince').val());
         });
         $('#deliverCity').change(function () {
-            $('#deliverLocation').val($('#deliverProvince').val() + "|" + $('#deliverCity').val());
+            $('#DeliverDistrictCode').val($('#deliverProvince').val() + "|" + $('#deliverCity').val());
         });
         $('#deliverArea').change(function () {
-            $('#deliverLocation').val($('#deliverProvince').val() + "|" + $('#deliverCity').val() + "|" + $('#deliverArea').val());
+            $('#DeliverDistrictCode').val($('#deliverProvince').val() + "|" + $('#deliverCity').val() + "|" + $('#deliverArea').val());
         });
         $("#deliverAddress").focus(function () {
             $('html,body').animate({ scrollTop: $("#deliverAddress").offset().top }, 500);
@@ -329,7 +323,14 @@
         var DeliverAddress = $("#DeliverAddress").val();
         var OrderBaeCreateDate = $("#OrderBaeCreateDate").val();
         $.post("EditDeliverDetail", { InvoiceType: InvoiceType, InvoiceTitle: InvoiceTitle, PayType: PayType, DeliverType: DeliverType, beforeDeliverType: beforeDeliverType, DeliverName: DeliverName, DeliverMobile: DeliverMobile, DeliverDistrictCode: DeliverDistrictCode, DeliverAddress: DeliverAddress, OrderBaseId: '@list["orderBaseId"]', OrderDeliverId: '@list["OrderDeliverId"]', orderCode: '@Request["OrderCode"]', DeliverPrice: DeliverPrice, UserId: '@Request["UserId"]', OrderBaeCreateDate: OrderBaeCreateDate }, function (data) {
-
+            if(data==1)
+            {
+                alert("保存成功");
+            }
+            else
+            {
+                alert("保存失败");
+            }
         });
     }
 </script>

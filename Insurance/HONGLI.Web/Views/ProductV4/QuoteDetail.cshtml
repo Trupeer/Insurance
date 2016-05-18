@@ -136,24 +136,24 @@
     <div class="f-list01-group formula">
         <div class="f-list01 page12-list04" id="bizCoupon">
             @*<div class="f-list01-main" id="bizCoupon">商业险优惠费率  <span class='t-loading'></span> % x <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>*@
-            <div class="f-list01-main" style="width: 3.5rem;">商业险优惠费率</div>
+            <div class="f-list01-main" style="width: 3.2rem;">商业险优惠费率</div>
             <div class="f-list01-main page40-list" style="width: 1rem;"><span class='t-loading'></span>%</div>
-            <div class="f-list01-main" style="width: 4.5rem;">x 元（原价）</div>
-            <div class="f-list01-main page40-list" style="width: 1.5rem;">= <span class='t-loading'></span></div>
+            <div class="f-list01-main" style="width: 4.0rem;">x 元（原价）</div>
+            <div class="f-list01-main page40-list" style="width: 2.6rem;">= <span class='t-loading'></span></div>
         </div>
         <div class="f-list01 page12-list04" id="forceCoupon">
             @*<div class="f-list01-main" id="forceCoupon">交强险优惠费率   <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>*@
-            <div class="f-list01-main" style="width: 3.5rem;">交强险优惠费率</div>
-            <div class="f-list01-main page40-list" style="width: 1rem;"><span class='t-loading'></span>%</div>
-            <div class="f-list01-main" style="width: 4.5rem;">x 元（原价）</div>
-            <div class="f-list01-main page40-list" style="width: 1.5rem;">= <span class='t-loading'></span></div>
+            <div class="f-list01-main" style="width: 3.2rem;">交强险</div>
+            <div class="f-list01-main page40-list" style="width: 1rem;"></div>
+            <div class="f-list01-main" style="width: 4.0rem;"></div>
+            <div class="f-list01-main page40-list" style="width: 2.6rem;"> <span class='t-loading'></span></div>
         </div>
         <div class="f-list01 page12-list04" id="taxCoupon">
             @*<div class="f-list01-main" id="taxCoupon">车船税优惠费率    <span class='t-loading'></span> % x <span class='t-loading'></span> 元（原价） =  <span class='t-loading'></span> 元</div>*@
-            <div class="f-list01-main" style="width: 3.5rem;">车船税优惠费率</div>
-            <div class="f-list01-main page40-list" style="width: 1rem;"><span class='t-loading'></span>%</div>
-            <div class="f-list01-main" style="width: 4.5rem;">x 元（原价）</div>
-            <div class="f-list01-main page40-list" style="width: 1.5rem;">= <span class='t-loading'></span></div>
+            <div class="f-list01-main" style="width: 3.2rem;">车船税</div>
+            <div class="f-list01-main page40-list" style="width: 1rem;"></div>
+            <div class="f-list01-main" style="width: 4.0rem;"></div>
+            <div class="f-list01-main page40-list" style="width: 2.6rem;"><span class='t-loading'></span></div>
         </div>
         <div class="f-list01 page12-list02">
             <div class="f-list01-main" id="totalCoupon">为您节省：<span class='t-loading'></span> 元</div>
@@ -307,9 +307,9 @@
                         var channel_TaxCouponRate = @ViewBag.channel_TaxCouponRate;
                         var channel_BizCouponRate = @ViewBag.channel_BizCouponRate;
 
-                        var forceRate = 100 - result.ForceRate + channel_ForceCouponRate;
-                        var taxRate = 100;
-                        var bizRate = 100 - result.BizRate + channel_BizCouponRate;
+                        var forceRate = 100 - channel_ForceCouponRate;
+                        var taxRate = 100-channel_TaxCouponRate;
+                        var bizRate = 100 - channel_BizCouponRate;
 
                         var forceCoupon = result.ForceTotal * (forceRate * 0.01);
                         var taxCoupon = result.TaxTotal * (taxRate * 0.01);
@@ -318,16 +318,16 @@
                         var afterCouponTotal = total - (bizCoupon + forceCoupon + taxCoupon);
 
                         $("#bizCoupon>div:eq(1)").html(bizRate +"%");
-                        $("#bizCoupon>div:eq(2)").html(" x " + result.BizTotal + "元（原价）");
+                        $("#bizCoupon>div:eq(2)").html(" x " + result.BizTotal + "(原价)");
                         $("#bizCoupon>div:eq(3)").html(" = "+common.operateNum.formatNum(bizCoupon,2) + "元");
 
-                        $("#forceCoupon>div:eq(1)").html(forceRate+"%");
-                        $("#forceCoupon>div:eq(2)").html(" x "+result.ForceTotal + "元（原价）");
-                        $("#forceCoupon>div:eq(3)").html(" = "+common.operateNum.formatNum(forceCoupon,2) + "元");
+                        //$("#forceCoupon>div:eq(1)").html(forceRate+"%");
+                        //$("#forceCoupon>div:eq(2)").html(" x "+result.ForceTotal + "元（原价）");
+                        $("#forceCoupon>div:eq(3)").html(common.operateNum.formatNum(forceCoupon,2) + "元");
 
-                        $("#taxCoupon>div:eq(1)").html(taxRate+"%");
-                        $("#taxCoupon>div:eq(2)").html(" x "+result.TaxTotal + "元（原价）");
-                        $("#taxCoupon>div:eq(3)").html(" = "+common.operateNum.formatNum(taxCoupon,2) + "元");
+                        //$("#taxCoupon>div:eq(1)").html(taxRate+"%");
+                        //$("#taxCoupon>div:eq(2)").html(" x "+result.TaxTotal + "元（原价）");
+                        $("#taxCoupon>div:eq(3)").html(common.operateNum.formatNum(taxCoupon,2) + "元");
 
                         var totalCouponHtml = "为您节省："+common.operateNum.formatNum(afterCouponTotal,2)+" 元";
                         $("#totalCoupon").html(totalCouponHtml);
@@ -352,8 +352,8 @@
                         //新版UI核保中，显示公式部分，且费率显示loading
 
                         $("#bizCoupon>div:eq(2)").html("x"+result.BizTotal + "元（原价）");
-                        $("#forceCoupon>div:eq(2)").html("x"+result.ForceTotal + "元（原价）");
-                        $("#taxCoupon>div:eq(2)").html("x"+result.TaxTotal + "元（原价）");
+                        //$("#forceCoupon>div:eq(3)").html("x"+result.ForceTotal + "元（原价）");
+                        //$("#taxCoupon>div:eq(2)").html("x"+result.TaxTotal + "元（原价）");
 
                         $(".formula").show();
                         $(".formulaBuy .t-info").hide();
@@ -427,7 +427,7 @@
                     if (submitStatus == "@(Convert.ToInt32(SubmitStatus.Fail))")
                     {
                         submitStatusHtml =  "<div class='page12-hbzt-title page12-hbzt-error-title'><span>核保<br>失败</span></div>"+
-                                            "<div class='page12-hbzt-content page12-hbzt-error-content'><span>原因：<br>"+result.SubmitResult+"<br>核保成功下单可享低至7折优惠</span></div>"+
+                                            "<div class='page12-hbzt-content page12-hbzt-error-content'><span>原因：<br>"+result.SubmitResult+"<br>核保成功下单可享超值优惠</span></div>"+
                                             "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' data-reveal-id='myModal' href='#' data-animation='fade'>客服</a></div>";
 
                         //var ahtml = linkTelHtml();
@@ -441,7 +441,7 @@
                     else if (submitStatus == "@(Convert.ToInt32(SubmitStatus.UnCheck))")
                     {
                         submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-no-title'><span>未核保</span></div>"+
-                                           "<div class='page12-hbzt-content page12-hbzt-no-content'><span>亲，保险到期日三月内可以核保算费，届时试算可享低至7折优惠哦！</span></div>" +
+                                           "<div class='page12-hbzt-content page12-hbzt-no-content'><span>亲，保险到期日三月内可以核保算费，届时试算可享超值优惠哦！</span></div>" +
                                            "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' data-reveal-id='myModal' href='#' data-animation='fade'>客服</a></div>";
 
                         //var ahtml = linkTelHtml();
@@ -455,7 +455,7 @@
                     else
                     {
                         submitStatusHtml =  "<div class='page12-hbzt-title page12-hbzt-error-title'><span>核保<br>失败</span></div>"+
-                                           "<div class='page12-hbzt-content page12-hbzt-error-content'><span>原因：<br>"+result.SubmitResult+"<br>核保成功下单可享低至7折优惠</span></div>"+
+                                           "<div class='page12-hbzt-content page12-hbzt-error-content'><span>原因：<br>"+result.SubmitResult+"<br>核保成功下单可享超值优惠</span></div>"+
                                            "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' data-reveal-id='myModal' href='#' data-animation='fade'>客服</a></div>";
                     }
                     $(".page12-hbzt-wrap .page12-hbzt").html(submitStatusHtml);

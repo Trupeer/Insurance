@@ -134,6 +134,12 @@ namespace HONGLI.Web.Controllers
                 order_policyholder.Id = 0;
                 orderList.Order_PolicyHolder.Add(order_policyholder);
             }
+            if(orderList.Order_Pay.Count==0)
+            {
+                Order_Pay order_pay = new Order_Pay();
+                order_pay.Id = 0;
+                orderList.Order_Pay.Add(order_pay);
+            }
             ViewBag.OrderList = orderList;
             ViewBag.Product_User = new AdminService().GetProductUser(UserId);
             ViewBag.Product_Renewal = new AdminService().GetProductRenewal(UserId);
@@ -265,7 +271,7 @@ namespace HONGLI.Web.Controllers
             product_item.TotalAfterCoupon = model.TotalAfterCoupon;
             product_item.Description = model.Description;
             product_item.CreateTime = DateTime.Now;
-
+            product_item.AuditOrderStatus = model.AuditOrderStatus;
             var description = "";
             description += product_item.CheSun_BaoE > 0 ? (string.Format("车损险({0})、", FormatNumber(Convert.ToDouble(product_item.CheSun_BaoE)))) : "";
             description += product_item.BuJiMianCheSun_BaoE > 0 ? ("不计免赔车损险、") : "";
@@ -302,6 +308,8 @@ namespace HONGLI.Web.Controllers
             order_base.UserId = model.OrderBaeUserId == null ? ClientuserId.ToString() : model.OrderBaeUserId;
             order_base.ProductItemId = product_item.Id;
             order_base.BackStatus = 0;
+            order_base.AmountPayable = product_item.TotalAfterCoupon;
+            order_base.PaidAmount = product_item.Total;
             //order_item订单详情表
             Order_Item order_item = new Order_Item();
             order_item.Id = model.OrderItemId;
@@ -341,8 +349,25 @@ namespace HONGLI.Web.Controllers
             {
                 adminservice.SaveOrderDeliver(order_deliver);   
             }
+
             #endregion
 
+            #region 支付方式
+            Order_Pay order_pay = new Order_Pay();
+            order_pay.Id = model.OrderPayId;
+            order_pay.OrderCode = order_base.OrderCode;
+            order_pay.PayType = model.OrderPayPayType;
+            order_pay.PayBank = model.OrderPayPayBank;
+            order_pay.CreateDate = model.OrderPayCreateDate == null ? DateTime.Now : model.OrderPayCreateDate;
+            if (order_pay.Id!=0)
+            {
+                adminservice.EditOrderPay(order_pay);
+            }
+            else
+            {
+                adminservice.SaveOrderPay(order_pay);
+            }
+            #endregion
             #region 被保人信息
             Order_PolicyHolder user_policyholder = new Order_PolicyHolder();
             user_policyholder.Id = Convert.ToInt32(model.PolicyId);
@@ -366,7 +391,7 @@ namespace HONGLI.Web.Controllers
             #endregion
 
             //修改用户选择项
-                new ProductV3Service().EditProductItemUserCheck(model.ItemId, model.Id);
+                new ProductV3Service().EditProductItemUserCheck(product_item.Id, model.Id);
 
             var orderList = new OrderService().GetOrderByCode(order_base.OrderCode);
             if (orderList == null)
@@ -391,6 +416,12 @@ namespace HONGLI.Web.Controllers
                 Order_PolicyHolder order_policyholder = new Order_PolicyHolder();
                 order_policyholder.Id = 0;
                 orderList.Order_PolicyHolder.Add(order_policyholder);
+            }
+            if (orderList.Order_Pay.Count == 0)
+            {
+                Order_Pay order_paylist = new Order_Pay();
+                order_paylist.Id = 0;
+                orderList.Order_Pay.Add(order_paylist);
             }
             ViewBag.OrderList = orderList;
             ViewBag.Product_User = new AdminService().GetProductUser(model.Id);
@@ -517,6 +548,7 @@ namespace HONGLI.Web.Controllers
             int result = -1;
             Order_Base order_base = new Order_Base();
             order_base.Id = OrderBaseId == null ? 0 :Convert.ToInt32(OrderBaseId);
+            order_base.OrderCode = orderCode;
             order_base.InvoiceTitle = InvoiceTitle;
             order_base.InvoiceType = InvoiceType;
             Order_Deliver order_deliver = new Order_Deliver();
@@ -530,7 +562,11 @@ namespace HONGLI.Web.Controllers
             order_deliver.DeliverDistrictCode = DeliverDistrictCode;
             order_deliver.CreateDate = OrderBaeCreateDate == null ? DateTime.Now : OrderBaeCreateDate;
             order_deliver.UserId = UserId;
-            if(DeliverType!=null|| DeliverAddress!=""|| DeliverPrice!=null|| DeliverPrice!=0|| DeliverName!=""|| DeliverMobile!=""|| DeliverDistrictCode!="")
+            Order_Pay order_pay = new Order_Pay();
+            order_pay.OrderCode = orderCode;
+            order_pay.PayType = PayType;
+            order_base.Order_Pay.Add(order_pay);
+            if (DeliverType!=null|| DeliverAddress!=""|| DeliverPrice!=null|| DeliverPrice!=0|| DeliverName!=""|| DeliverMobile!=""|| DeliverDistrictCode!="")
             {
                 result=adminservice.EditOrderDeliver(order_deliver);
             }
@@ -566,7 +602,7 @@ namespace HONGLI.Web.Controllers
                 SMSController sms = new SMSController();
                 try
                 {
-                    new Util().SendRedPacketSMS(mobile, new string[] { redpacket.RedPacketCode, "5" });
+                    new Util().SendRedPacketSMS(mobile, new string[] { decimal.Round(money,2).ToString(), redpacket.RedPacketCode });
                 }
                 catch
                 {
@@ -678,6 +714,40 @@ namespace HONGLI.Web.Controllers
             foreach (byte b in Guid.NewGuid().ToByteArray())
                 i *= ((int)b + 1);
             return string.Format("{0:x}", i - DateTime.Now.Ticks);
+        }
+        public ActionResult SendMessage()
+        {
+            return View();
+        }
+        public int SendUserInvitation(string InvitationPhoneNumber, string InvitationName, string InvitationDate, string InvitationAdderss)
+        {
+            int result = -1;
+                SMSController sms = new SMSController();
+                try
+                {
+                    new Util().SendUserInvitationSMS(InvitationPhoneNumber, new string[] { InvitationName, InvitationDate, InvitationAdderss });
+                result = 1;
+                }
+                catch
+                {
+                    result = -2;
+                }
+            return result;
+        }
+        public int SendUserRemind(string RemindPhoneNumber, string RemindName, string RemindDate,string RemindBusLine,string RemindWeekDay,string RemindTemperature,string RemindDressingindex)
+        {
+            int result = -1;
+            SMSController sms = new SMSController();
+            try
+            {
+                new Util().SendUserRemindSMS(RemindPhoneNumber, new string[] { RemindName, RemindDate, RemindBusLine, RemindWeekDay, RemindTemperature, RemindDressingindex });
+                result = 1;
+            }
+            catch
+            {
+                result = -2;
+            }
+            return result;
         }
     }
 }
