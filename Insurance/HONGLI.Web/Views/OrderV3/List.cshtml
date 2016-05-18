@@ -66,7 +66,7 @@
                     <p class="t-red">@HtmlHelper.GetOrderStatusText((EnumOrderStatus)item.OrderStatus)</p>
                     @if (((EnumOrderStatus)item.OrderStatus) == EnumOrderStatus.Paid || ((EnumOrderStatus)item.OrderStatus) == EnumOrderStatus.Success || ((EnumOrderStatus)item.OrderStatus) == EnumOrderStatus.Mailingpolicy)
                     {
-                        <p class="t-money">实付金额:￥@item.PaidAmount</p>                        
+                        <p class="t-money">实付金额:￥@item.AmountPayable</p>                        
                     }
                     else
                     {
@@ -147,7 +147,7 @@
     <script>
         function changeOrderStatus(orderbaseid,ordercode)
         {
-            if(confirm("是否确认返现?"))
+            if(confirm("是否确认取消订单?"))
             {
                 $.post('@Url.Action("EditOrderStatus", "Admin")', { orderbaseid: orderbaseid, ordercode: ordercode, status: 9 }, function (data) {
                     if(data==1)

@@ -278,7 +278,8 @@
                     mobile: "@ViewBag.mobile",
                     licenseNo: "@ViewBag.licenseNo",
                     cityCode: "@ViewBag.cityCode",
-                    name: "@ViewBag.Name"
+                    name: "@ViewBag.Name",
+                    userID: userID
                 },
                 beforeSend: function () {
                     layer.open({ type: 2 });
@@ -301,7 +302,7 @@
                         $("#lastYearConfig").html("往年配置<i></i>");
                     }
                     else {
-                        $(".page11-success").html("往年配置<span>获取失败</span>");
+                        $(".page11-success").html("往年配置<span>获取失败</span><span style='float:right;background:none;margin-top:0.1rem;'><a onclick='repeatGetInfo()'><img src='../public/images/chongzhi.png' style='width:1.8rem;height:0.6rem' /></a></span>");
                         $("#lastYearConfig").html("自定义配置<i></i>");
                     };
                     var quote = data.SaveQuote;
@@ -418,7 +419,12 @@
             });
         }
 
-
+        function repeatGetInfo()
+        {
+            $(".page11-success").html("往年配置<span>获取中</span>");
+            $("#lastYearConfig").html("往年配置<i></i>");
+            getReInfo();
+        }
         //提交查询
         $("#submit").click(function () {
             var jqx = ($("#jqx").prop("checked") == true) ? 1 : 0;

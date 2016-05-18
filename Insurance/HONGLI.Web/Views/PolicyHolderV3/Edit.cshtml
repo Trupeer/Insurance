@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="f-nav-extend">&nbsp;</div>
-    @using (Html.BeginForm("Edit", "PolicyHolderV3", FormMethod.Post, new { @id = "submitForm", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Edit", "PolicyHolder", FormMethod.Post, new { @id = "submitForm", enctype = "multipart/form-data" }))
     {
         @Html.HiddenFor(m => m.Id)
         @Html.HiddenFor(m => m.UserId)
@@ -82,17 +82,29 @@
                     <div class="f-form01-main" id="IdCardFacePicText">
                         上传身份证正面
                     </div>
-                    <div class="f-form01-main" id="IdCardFacePicImgs" style="display:none">
+                    <div class="f-form01-main" id="IdCardFacePicImgs" style="display:none;">
                         <img src="" id="IdCardFacePicSrc" width="100px" height="50px" alt="身份证正面" />
+
+                    </div>
+                    <div class="f-form01-main" style="">
+                        <div class="f-form01-main IdCardFaceText" style="display:none;float:right;color:red;text-align:center;vertical-align:middle;overflow:hidden;padding:0.55rem 0.8rem;">
+                            上传身份证正面
+                        </div>
                     </div>
                 }
                 else
                 {
                     <div class="f-form01-main">
                         <img src="@Url.Content(Model.UploadUrl + Model.IdCardFacePicUrl)" id="IdCardFacePicSrc" width="100px" height="50px" alt="身份证正面" />
+                        <div class="IdCardFaceText" style="float:right;color:red;text-align:center;vertical-align:middle;overflow:hidden;padding: 0.55rem 0.8rem;">
+                            上传身份证正面
+                        </div>
                     </div>
                 }
                 <div class="f-form01-other">
+                    <div class="f-form01-main" id="IdCardFacePicMsg" style="display:none">
+                        上传身份证正面
+                    </div>
                     <a href="#" id="btnUploadFacePic" class="f-button02">上传正面</a>
                     <input class="f-button02" name="IdCardFacePic" id="IdCardFacePicUrl" type="file" style="display:none" autocomplete="off" disableautocomplete="">
                 </div>
@@ -105,28 +117,65 @@
                     </div>
                     <div class="f-form01-main" id="IdCardBackPicImgs" style="display:none">
                         <img src="" id="IdCardBackPicSrc" width="100px" height="50px" alt="身份证反面" />
+
+                    </div>
+                    <div class="f-form01-main" style="">
+                        <div class="f-form01-main IdCardBackText" style="display:none;float:right;color:red;text-align:center;vertical-align:middle;overflow:hidden;padding:0.55rem 0.8rem;">
+                            上传身份证正面
+                        </div>
                     </div>
                 }
                 else
                 {
                     <div class="f-form01-main">
                         <img src="@Url.Content(Model.UploadUrl + Model.IdCardBackPicUrl)" id="IdCardBackPicSrc" width="100px" height="50px" alt="身份证反面" />
+                        <div class="f-form01-main IdCardBackText" style="float:right;color:red;text-align:center;vertical-align:middle;overflow:hidden;padding:0.55rem 0.8rem;">
+                            上传身份证正面
+                        </div>
                     </div>
                 }
                 <div class="f-form01-other">
+                    <div class="f-form01-main" id="IdCardBackPicMsg" style="display:none">
+                        上传身份证正面
+                    </div>
                     <a href="#" id="btnUploadBackPic" class="f-button02">上传反面</a>
                     <input class="f-button02" name="IdCardBackPic" id="IdCardBackPicUrl" type="file" style="display:none" autocomplete="off" disableautocomplete="">
                 </div>
             </div>
         </div>
-        <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;" value="保存">
+        <input class="f-button01" type="submit" id="btnSubmit" style="margin-top: 1rem;border: 0;" value="保存">
     }
     <script type="text/javascript">
         if ("@Model.Error" != "" && "@Model.Error" != null) {
             alert("@Model.Error");
         }
         var uploadUrl = "@Model.UploadUrl";
-
+        $("#policyHolderIdCardNumber").focus(function () {
+            $('html,body').animate({ scrollTop: $("#policyHolderIdCardNumber").offset().top }, 500);
+        });
+        $("#policyHolderOrganizationCode").focus(function () {
+            $('html,body').animate({ scrollTop: $("#policyHolderOrganizationCode").offset().top }, 500);
+        });
+        $("#IdCardFacePicUrl").change(function () {
+            if ($('#IdCardFacePicUrl')[0].files[0].size > 0) {
+                $(".IdCardFaceText").html("已选择").show();
+                $("#btnUploadFacePic").css("background-color", "#888787");
+            }
+            else
+            {
+                $("#IdCardFaceText").html("未选择").show();
+            }
+        });
+        $("#IdCardBackPicUrl").change(function () {
+            if ($('#IdCardBackPicUrl')[0].files[0].size > 0) {
+                $("#btnUploadBackPic").css("background-color", "#888787");
+                $(".IdCardBackText").html("已选择").show();
+            }
+            else
+            {
+                $(".IdCardBackText").html("未选择").show();
+            }
+        });
         $("#btnUploadFacePic").click(function () {
             return $("#IdCardFacePicUrl").click();
         });
@@ -147,6 +196,7 @@
             }
         });
         var policyHolder = common.cookie.getCookie(global.cookie.order.policyHolder);
+        var policyHolderPic = common.cookie.getCookie(global.cookie.order.policyHolderPic);
         $("#btnSubmit").click(function () {
             var msg = '';
             var policyHolderName = $('#policyHolderName').val();
@@ -250,16 +300,19 @@
                 }
                 else {
                     $("#policyHolderIdCardNumber").val(policyHolder['idcard']);
-
-                    if (policyHolder['idcardFacePicUrl'] != null && policyHolder['idcardFacePicUrl'] != "") {
-                        $("#IdCardFacePicText").hide();
-                        $("#IdCardFacePicImgs").show();
-                        $("#IdCardFacePicSrc").attr("src", uploadUrl + policyHolder['idcardFacePicUrl']);
-                    }
-                    if (policyHolder['idcardBackPicUrl'] != null && policyHolder['idcardBackPicUrl'] != "") {
-                        $("#IdCardBackPicText").hide();
-                        $("#IdCardBackPicImgs").show();
-                        $("#IdCardBackPicSrc").attr("src", uploadUrl + policyHolder['idcardBackPicUrl']);
+                    if(policyHolderPic != null && policyHolderPic != "")
+                    {
+                        var policyHolderPic = JSON.parse(policyHolderPic);
+                        if (policyHolderPic['idcardFacePicUrl'] != null && policyHolderPic['idcardFacePicUrl'] != "") {
+                            $("#IdCardFacePicText").hide();
+                            $("#IdCardFacePicImgs").show();
+                            $("#IdCardFacePicSrc").attr("src", uploadUrl + policyHolderPic['idcardFacePicUrl']);
+                        }
+                        if (policyHolderPic['idcardBackPicUrl'] != null && policyHolderPic['idcardBackPicUrl'] != "") {
+                            $("#IdCardBackPicText").hide();
+                            $("#IdCardBackPicImgs").show();
+                            $("#IdCardBackPicSrc").attr("src", uploadUrl + policyHolderPic['idcardBackPicUrl']);
+                        }
                     }
                     $('#policyHolderType').val(1);
                     $('#divIdCardBox').show();

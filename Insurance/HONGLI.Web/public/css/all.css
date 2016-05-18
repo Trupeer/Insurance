@@ -310,7 +310,7 @@ body input.radio:checked:before{
 .page12-list01 .f-list01-main{color: #000;}
 /*==========*/
 .page12-list02{ background-color: #f4f4f6; padding: .18rem .64rem;}
-.page12-list02 .f-list01-main{color: #000;}
+.page12-list02 .f-list01-main{color: #000;font-size: .416rem;}
 /*==========*/
 .page12-list03{ padding:.32rem .64rem; background-color: #fff; border-bottom: 1px solid #d9d9da; color: #000; font-size: .416rem; margin-bottom: .16rem;}
 .page12-list03 p{ line-height: .64rem;}
@@ -320,10 +320,10 @@ body input.radio:checked:before{
 .page12-hb-loading{color: #8484fa;}
 .page12-hb-loading-tips{ float: right; font-size: .32rem; color: #9c9c9c;}
 /*==========*/
-.page12-list04{ background-color: #f4f4f6; padding: .18rem .64rem;}
+.page12-list04{ background-color: #f4f4f6; padding: .18rem .64rem; font-size:.416rem;}
 .page12-list04 .f-list01-main{color: #656565;}
 /*==========*/
-.page12-title01{ height: 1.44rem; line-height: 1.44rem; position: relative; padding-left: 0.64rem; background-color: #fff; color: #000;}
+.page12-title01{ height: 1.44rem; line-height: 1.44rem; position: relative; padding-left: 0.64rem; background-color: #fff; color: #000; font-size:.450rem;}
 .page12-title01 i{ display: block; width: 5px; height: 100%; position: absolute; top: 0; left: 0; background-color: #fb5d38;}
 /*==========*/
 .page12-title02{ position: relative; background-color: #fff; padding:.32rem .64rem;}

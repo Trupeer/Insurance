@@ -135,43 +135,31 @@
         </div>*@
 
         <div class="page12-title01"><i></i>您的报价单：（优惠部分已由平台车险专项积分抵扣）</div>
+            var bizCoupon = Model.BizTotal * (100 - Model.BizRate_Channel) * Convert.ToDecimal(0.01);
+            var forceCoupon = Model.ForceTotal * (100 - Model.ForceRate_Channel) * Convert.ToDecimal(0.01);
+            var taxCoupon = Model.TaxTotal * (100 - Model.TaxRate_Channel) * Convert.ToDecimal(0.01);
 
-        var bizCoupon = Model.BizTotal * (100 - Model.BizRate_Channel) * Convert.ToDecimal(0.01);
-        var forceCoupon = Model.ForceTotal * (100 -  Model.ForceRate_Channel) * Convert.ToDecimal(0.01);
-        var taxCoupon = Model.TaxTotal * (100 - Model.TaxRate_Channel) * Convert.ToDecimal(0.01);
-
-        var forceRate = decimal.Round(Convert.ToDecimal(100 - (Model.ForceRate_Channel == null ? 0 : Model.ForceRate_Channel)), 0);
-        var taxRate = decimal.Round(Convert.ToDecimal(100 -  (Model.TaxRate_Channel == null ? 0 : Model.TaxRate_Channel)), 0);
-        var bizRate = decimal.Round(Convert.ToDecimal(100 -  (Model.BizRate_Channel==null?0: Model.BizRate_Channel)), 0);
-
-
+            var forceRate = decimal.Round(Convert.ToDecimal(100 - (Model.ForceRate_Channel == null ? 0 : Model.ForceRate_Channel)), 0);
+            var taxRate = decimal.Round(Convert.ToDecimal(100 - (Model.TaxRate_Channel == null ? 0 : Model.TaxRate_Channel)), 0);
+            var bizRate = decimal.Round(Convert.ToDecimal(100 - (Model.BizRate_Channel == null ? 0 : Model.BizRate_Channel)), 0);
         <div class="f-list01-group">
-            @*<div class="f-list01 page12-list04">
-                    <div class="f-list01-main">商业险优惠费率   @bizRate % x @Model.BizTotal 元（原价） =  @(bizCoupon.HasValue ? bizCoupon.Value.ToString("f2") : "" ) 元</div>
-                </div>
-                <div class="f-list01 page12-list04">
-                    <div class="f-list01-main">交强险优惠费率    @forceRate % x @Model.ForceTotal 元（原价） =  @(forceCoupon.HasValue ? forceCoupon.Value.ToString("f2") : "") 元</div>
-                </div>
-                <div class="f-list01 page12-list04">
-                    <div class="f-list01-main">车船税优惠费率    @taxRate % x @Model.TaxTotal 元（原价） =  @(taxCoupon.HasValue ? taxCoupon.Value.ToString("f2") : "") 元</div>
-                </div>*@
             <div class="f-list01 page12-list04">
-                <div class="f-list01-main" style="width: 3.5rem;">商业险优惠费率</div>
+                <div class="f-list01-main" style="width: 3.2rem;">商业险优惠费率</div>
                 <div class="f-list01-main" style="width: 1rem;">@bizRate%</div>
-                <div class="f-list01-main" style="width: 4.5rem;">x @(Model.BizTotal)元（原价）</div>
-                <div class="f-list01-main" style="width: 1.5rem;">= @(bizCoupon.HasValue ? bizCoupon.Value.ToString("f2") : "" )</div>
+                <div class="f-list01-main" style="width: 4.0rem;">x @(Model.BizTotal)（原价）</div>
+                <div class="f-list01-main" style="width: 2.6rem;">= @(bizCoupon.HasValue ? bizCoupon.Value.ToString("f2") : "" )元</div>
             </div>
             <div class="f-list01 page12-list04">
-                <div class="f-list01-main" style="width: 3.5rem;">交强险</div>
+                <div class="f-list01-main" style="width: 3.0rem;">交强险</div>
                 <div class="f-list01-main" style="width: 1rem;"></div>
-                <div class="f-list01-main" style="width: 4.5rem;"></div>
-                <div class="f-list01-main" style="width: 1.5rem;">= @(forceCoupon.HasValue ? forceCoupon.Value.ToString("f2") : "")</div>
+                <div class="f-list01-main" style="width: 4.1rem;"></div>
+                <div class="f-list01-main" style="width: 2.4rem;"> @(forceCoupon.HasValue ? forceCoupon.Value.ToString("f2") : "")元</div>
             </div>
             <div class="f-list01 page12-list04">
-                <div class="f-list01-main" style="width: 3.5rem;">车船税</div>
+                <div class="f-list01-main" style="width: 3.0rem;">车船税</div>
                 <div class="f-list01-main" style="width: 1rem;"></div>
-                <div class="f-list01-main" style="width: 4.5rem;"></div>
-                <div class="f-list01-main" style="width: 1.5rem;">= @(taxCoupon.HasValue ? taxCoupon.Value.ToString("f2") : "")</div>
+                <div class="f-list01-main" style="width: 4.1rem;"></div>
+                <div class="f-list01-main" style="width: 2.4rem;"> @(taxCoupon.HasValue ? taxCoupon.Value.ToString("f2") : "")元</div>
             </div>
             <div class="f-list01 page12-list02">
                 <div class="f-list01-main">为您节省：@((Model.Total - (bizCoupon + forceCoupon + taxCoupon)).HasValue ? (Model.Total - (bizCoupon + forceCoupon + taxCoupon)).Value.ToString("f2") : "") 元</div>

@@ -65,7 +65,8 @@ namespace HONGLI.Web.Controllers
 #if (!DEBUG)
     [AuthorizationFilter]
 #endif
-        public JsonResult GetReInfo(int? channel, string mobile, string licenseNo, int? cityCode, int? isPublic,string name="")
+        public JsonResult GetReInfo(int? channel, string mobile, string licenseNo, int? cityCode, int? isPublic, int? userID,string name="")
+
         {
             var channelValue = channel.HasValue ? channel.Value : Convert.ToInt32(Channel.Wap);
             ViewBag.channel = channelValue;
@@ -88,6 +89,12 @@ namespace HONGLI.Web.Controllers
             int userid = -1;
             try
             {
+                if(userID>0)
+                {
+                    HttpContext.Cache.Remove(key);
+                    new ProductV3Service().DeleteProductUser(Convert.ToInt32(userID));
+
+                }
                 //有cache读cache
                 if (HttpContext.Cache.Get(key) != null)
                 {

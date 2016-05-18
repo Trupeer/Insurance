@@ -117,7 +117,7 @@ namespace HONGLI.Repository
             }
             if (!string.IsNullOrEmpty(Auditdocuments))
             {
-                if (VistState == "0")
+                if (Auditdocuments == "0")
                 {
                     where.AppendFormat(" AND (AuditOrderState ={0} OR AuditOrderState IS NULL)", Auditdocuments);
                 }
@@ -156,7 +156,7 @@ namespace HONGLI.Repository
             sql.Append("RbOffer=MAX(CASE WHEN B.Source=2 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
             sql.Append("TpyOffer=MAX(CASE WHEN B.Source=1 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
             sql.Append("PaOffer=MAX(CASE WHEN B.Source=0 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
-            sql.Append("MAX(B.AuditOrderStatus) AS AuditOrderState,MAX(B.ServiceUserId) AS ServiceUserId, ");
+            sql.Append("MAX(CASE WHEN UserSelection=1 THEN B.AuditOrderStatus ELSE 0 END) AS AuditOrderState,MAX(B.ServiceUserId) AS ServiceUserId, ");
             sql.Append("MAX(VisitDate) AS VisitDate,MAX(VisitStatus) AS VisitState,MAX(VisitServiceUserId) AS VisitServiceUserId, ");
             sql.Append("AuditOrderDate=MAX(B.CreateTime),MAX(C.ProductItemId) AS  ProductItemId ,MAX(C.OrderCode) AS OrderCode,MAX(C.Status) AS OrderreviewState  FROM dbo.ProductV2_User A WITH(NOLOCK) ");
             sql.Append("LEFT JOIN dbo.ProductV2_Item B  WITH(NOLOCK) ON A.Id = B.UserId ");
@@ -303,7 +303,7 @@ namespace HONGLI.Repository
             sql.Append("RbOffer=MAX(CASE WHEN B.Source=2 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
             sql.Append("TpyOffer=MAX(CASE WHEN B.Source=1 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
             sql.Append("PaOffer=MAX(CASE WHEN B.Source=0 AND SubmitStatus=1 THEN 1 ELSE 0 END), ");
-            sql.Append("MAX(B.AuditOrderStatus) AS AuditOrderState,MAX(B.ServiceUserId) AS ServiceUserId, ");
+            sql.Append("MAX(CASE WHEN UserSelection=1 THEN B.AuditOrderStatus ELSE 0 END) AS AuditOrderState,MAX(B.ServiceUserId) AS ServiceUserId, ");
             sql.Append("MAX(VisitDate) AS VisitDate,MAX(VisitStatus) AS VisitState,MAX(VisitServiceUserId) AS VisitServiceUserId, ");
             sql.Append("AuditOrderDate=MAX(B.CreateTime) ,MAX(C.ProductItemId) AS  ProductItemId,MAX(C.OrderCode) AS OrderCode,MAX(C.Status) AS OrderreviewState  FROM dbo.ProductV2_User A WITH(NOLOCK) ");
             sql.Append("LEFT JOIN dbo.ProductV2_Item B  WITH(NOLOCK) ON A.Id = B.UserId ");

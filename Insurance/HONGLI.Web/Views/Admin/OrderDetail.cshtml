@@ -35,6 +35,8 @@
     @Html.HiddenFor(m => m.ItemCreateTime, new { @Class = "ItemInput" });
     @Html.HiddenFor(m => m.OrderDeliverOrderCode, new { @Value = orderlsit.Order_Deliver.FirstOrDefault().OrderCode });
     @Html.HiddenFor(m => m.PolicyId, new { @Value = orderlsit.Order_PolicyHolder.FirstOrDefault().Id });
+    @Html.HiddenFor(m => m.PolicyIdCardFacePicUrl, new { @Value = orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardFacePicUrl });
+    @Html.HiddenFor(m => m.PolicyIdCardBackPicUrl, new { @Value = orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardBackPicUrl });
     @Html.HiddenFor(m => m.ItemUserId);
     @Html.HiddenFor(m => m.Description);
     @Html.HiddenFor(m => m.OrderPayId, new { @Value = orderlsit.Order_Pay.FirstOrDefault().Id });
@@ -373,7 +375,7 @@
                 <td align="center">@productitemselect.Total</td>
                 <td align="center">@productitemselect.TotalAfterCoupon</td>
                 <td align="center">@orderlsit.Order_Deliver.FirstOrDefault().DeliverPrice</td>
-                <td align="center">@(productitemselect.TotalAfterCoupon+orderlsit.Order_Deliver.FirstOrDefault().DeliverPrice)</td>
+                <td align="center">@(productitemselect.Total + orderlsit.Order_Deliver.FirstOrDefault().DeliverPrice)</td>
             </tr>
         </table>
         @*<div style="float:right;margin-right:20px; font-size:16px; font-weight:600;"><span>预付金额：</span>
@@ -747,6 +749,7 @@
         $("#CheckCompany").val(@ViewBag.InsuranceCompany);
         $("#PolicyIdCardType").val(@orderlsit.Order_PolicyHolder.FirstOrDefault().IdCardType);
         $("#OrderPayPayType").val(@orderlsit.Order_Pay.FirstOrDefault().PayType);
+        $("#DeliverType").val(@orderlsit.Order_Deliver.FirstOrDefault().DeliverType);
         GetProductItem();
         $("#CheckCompany").change(function () { GetProductItem(); });
         var deliverLocation = $("#DeliverDistrictCode").val();
@@ -871,7 +874,7 @@
             $("#ForceAfterCoupon").val(Result.ForceAfterCoupon);
             $("#TaxAfterCoupon").val(Result.TaxAfterCoupon);
             $("#TotalAfterCoupon").val(Result.TotalAfterCoupon);
-            $("#Payableprice").html(parseFloat(Result.TotalAfterCoupon) + parseFloat(@orderlsit.Order_Deliver.FirstOrDefault().DeliverPrice))
+            $("#Payableprice").html(parseFloat(Result.Total) + parseFloat(@orderlsit.Order_Deliver.FirstOrDefault().DeliverPrice))
             $("#AuditOrderStatus").val(Result.AuditOrderStatus == null ? 0 : Result.AuditOrderStatus);//设置核单装态下拉
             if (Result.AuditOrderStatus==1)
             {
@@ -977,7 +980,7 @@
         }
         else
         {
-            $("#DeliverPrice").val("");
+            $("#DeliverPrice").val(0);
         }
     }
     function checknull(str)

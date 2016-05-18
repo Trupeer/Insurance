@@ -308,6 +308,8 @@ namespace HONGLI.Web.Controllers
             order_base.UserId = model.OrderBaeUserId == null ? ClientuserId.ToString() : model.OrderBaeUserId;
             order_base.ProductItemId = product_item.Id;
             order_base.BackStatus = 0;
+            order_base.AmountPayable = product_item.TotalAfterCoupon;
+            order_base.PaidAmount = product_item.Total;
             //order_item订单详情表
             Order_Item order_item = new Order_Item();
             order_item.Id = model.OrderItemId;
@@ -389,7 +391,7 @@ namespace HONGLI.Web.Controllers
             #endregion
 
             //修改用户选择项
-                new ProductV3Service().EditProductItemUserCheck(model.ItemId, model.Id);
+                new ProductV3Service().EditProductItemUserCheck(product_item.Id, model.Id);
 
             var orderList = new OrderService().GetOrderByCode(order_base.OrderCode);
             if (orderList == null)
@@ -600,7 +602,7 @@ namespace HONGLI.Web.Controllers
                 SMSController sms = new SMSController();
                 try
                 {
-                    new Util().SendRedPacketSMS(mobile, new string[] { redpacket.RedPacketCode, "5" });
+                    new Util().SendRedPacketSMS(mobile, new string[] { decimal.Round(money,2).ToString(), redpacket.RedPacketCode });
                 }
                 catch
                 {

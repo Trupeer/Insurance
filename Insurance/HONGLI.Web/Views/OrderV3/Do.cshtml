@@ -31,15 +31,15 @@
     <div class="f-nav-extend">&nbsp;</div>
     <div class="page20-address">
         <div class="page20-address-empty" id="deliverEmpty">
-            <a href="@Url.Action("List","DeliverV3",new { userId= ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId } )"><p></p><span>添加订单信息</span><span class="f-list01-icon-arrow" style="margin-left:6.75rem;"></span></a>
+            <a href="@Url.Action("List","DeliverV3",new { userId= ViewBag.UserId, productId = ViewBag.ProductId,mobile = ViewBag.Mobile, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId } )"><p></p><span>添加配送地址</span><span class="f-list01-icon-arrow" style="margin-left:6.75rem;"></span></a>
         </div>
         <div class="f-list01" id="deliverAddress" style="display:none;">
             <div class="f-list01-main">
                 <p class="t-p1">
-                    <span>姓名</span><span class="t-span" id="product-Name">jalsjdlaks</span>
-                    <span style="margin-left:0.2rem">电话</span><span class="t-span" id="product-mobile">12525256636</span>
+                    <span>姓名</span><span class="t-span" id="product-Name"></span>
+                    <span style="margin-left:0.2rem">电话</span><span class="t-span" id="product-mobile"></span>
                 </p>
-                <p class="t-p2"><span>地址</span><span class="t-span" id="Product-Address">北京市朝阳区建外大街南区345栋</span></p>
+                <p class="t-p2"><span>地址</span><span class="t-span" id="Product-Address"></span></p>
             </div>
             <div class="f-list01-go"><a href="@Url.Action("List","DeliverV3",new {productId = ViewBag.ProductId,mobile = ViewBag.Mobile,userid=ViewBag.UserId, channel= ViewBag.Channel, intentionCompany=ViewBag.intentionCompany, OrderCode=ViewBag.OrderCode, OrderBaseId=ViewBag.OrderBaseId, OrderItemId=ViewBag.OrderItemId, OrderPolicyId=ViewBag.OrderPolicyId, OrderDeliverId=ViewBag.OrderDeliverId } )" class="f-list01-icon-arrow"></a></div>
         </div>
@@ -51,7 +51,7 @@
             </label>
             <div>
                 <p class="t-24" id="product-title"></p>
-                <p class="t-money01" style="margin-top:0.1rem;"><del id="product-originalPrice">12345</del><span class="t-24" style="margin-left:0.3rem;">优惠价：</span><span class="t-25" id="product-Discount">9999</span></p>@*<i id="product-dealPrice">￥</i>*@
+                <p class="t-money01" style="margin-top:0.1rem;"><text id="product-originalPrice"></text><span class="t-24" style="margin-left:0.3rem;">返现：</span><span class="t-25" id="product-Discount"></span></p>@*<i id="product-dealPrice">￥</i>*@
                 @*<p style="margin-top:0.1rem;" class="t-money01"><span class="t-24" style="margin-left:2.13rem;">预约金：</span><span class="t-25" id="product-PrepaidAmount">9999</span></p>*@
             </div>
             <div class="f-list01-go" style="margin-left:0.2rem"><a href="@Url.Action("Detail","ProductV4",new {ProductId = ViewBag.ProductId, mobile = ViewBag.Mobile,channel = ViewBag.Channel} )" class="f-list01-icon-arrow"></a></div>
@@ -92,8 +92,9 @@
             </div>
         <div class="f-form01-item" style="margin-bottom:2rem">
             <div class="explain">
-                <span class="t-p1">优惠价：</span><span class="t-25" id="TotalAfter">9999</span>
-                <span class="t-p1" style="margin-left:2rem;">运费：</span><span class="t-25" id="deliverPrice">0</span>
+                <span class="t-p1">总价：</span><span class="t-25" id="TotalAfter"></span>
+                <span class="t-p1" style="margin-left:0.1rem;">返现：</span><span class="t-25" id="ReturnPrice"></span>
+                <span class="t-p1" style="margin-left:0.1rem;">运费：</span><span class="t-25" id="deliverPrice">0</span>
             </div>
         </div>
         <br />
@@ -234,7 +235,7 @@
                 //payAndDeliver
                 if(payAndDeliverCookie=="")
                 {
-                    var order_payAndDeliver = new global.order.payAndDeliver(result, result.DeliverType, result.DeliverPrice, result.DeliverAddress, result.DeliverTime);
+                    var order_payAndDeliver = new global.order.payAndDeliver(result.PayType, result.DeliverType, result.DeliverPrice, result.DeliverAddress, result.DeliverTime);
                     var order_payAndDeliver_str = JSON.stringify(order_payAndDeliver);
                     common.cookie.setCookie(global.domain, global.cookie.order.payAndDeliver, order_payAndDeliver_str, global.expire);
                 }
@@ -272,12 +273,13 @@
                     $("#product-isuranceLogoUrl").attr("src", getIsuranceLogoUrl(order_product_json.isuranceLogo));
                     $("#product-title").html(order_product_json.LicenseNo + "保费,交强险起保日期" + ForceExpireDate+ ",商业保险起保日期" + BusinessExpireDate);
                     //$("#product-dealPrice").html("￥" + order_product_json.dealPrice);
-                    $("#product-Discount").html(order_product_json.dealPrice)
+                    $("#product-Discount").html(common.operateNum.formatNum(parseFloat(order_product_json.originalPrice)-parseFloat(order_product_json.dealPrice),2))
                     $("#product-originalPrice").html("￥" + order_product_json.originalPrice);
                     //$("#product-PrepaidAmount").html(order_product_json.PrepaidAmount);
-                    $("#order-productPrice").html("￥" + order_product_json.dealPrice);
+                    //$("#order-productPrice").html("￥" + order_product_json.dealPrice);
                     //$("#PrepaidAmount").html(order_product_json.PrepaidAmount);
-                    $("#TotalAfter").html("￥" + order_product_json.dealPrice);
+                    $("#TotalAfter").html("￥" + order_product_json.originalPrice);
+                    $("#ReturnPrice").html("￥" + common.operateNum.formatNum(parseFloat(order_product_json.originalPrice)-parseFloat(order_product_json.dealPrice),2));
                 }
                 else {
                     //TODO by guoqiangs
@@ -343,7 +345,7 @@
 
             var endprice=0;
             if (order_product_json != null && order_product_json.dealPrice != null) {
-                endprice = parseFloat(order_product_json.dealPrice == null ? 0 : order_product_json.dealPrice);
+                endprice = parseFloat(order_product_json.originalPrice == null ? 0 : order_product_json.originalPrice);
 
             }
             if (order_payAndDeliver_json != null && order_payAndDeliver_json.deliverPrice != null) {
@@ -376,8 +378,21 @@
                 alert("请填写发票信息");
                 return false;
             }
-            if (order_payAndDeliver_json == null) {
-                alert("请填写支付配送信息");
+            if (order_payAndDeliver_json == null||order_payAndDeliver_json == undefined) {
+                alert("请填写支付信息");
+                return false;
+            }
+            else
+            {
+                if(order_payAndDeliver_json.deliverPrice==null||order_payAndDeliver_json.payType==null)
+                {
+                    alert("请填写支付信息");
+                    return false;
+                }
+            }
+            if(order_deliver_json == null||order_deliver_json == undefined)
+            {
+                alert("请填写配送地址");
                 return false;
             }
             if (order_payAndDeliver_json.deliverType == 1 && order_deliver_json == null){

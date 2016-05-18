@@ -367,6 +367,7 @@
     <Content Include="public\imagesTemp\page40-3.png" />
     <Content Include="public\imagesTemp\page40-5.png" />
     <Content Include="public\imagesTemp\page40-4.png" />
+    <Content Include="public\images\chongzhi.png" />
     <Content Include="public\images\f-select01-arrow.png" />
     <Content Include="public\images\f-select02.png" />
     <Content Include="public\images\f-tips01.png" />
