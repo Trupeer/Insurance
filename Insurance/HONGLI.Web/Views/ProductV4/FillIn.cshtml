@@ -60,17 +60,18 @@
     <!--配置header end-->
     <!--配置start-->
     <div class="page11-form02">
+        <input id="BusinessExpireDate" hidden="hidden" />
         <div class="page11-title01"><i></i>交强险（含车船税）</div>
         <div class="f-form01-item">
             <div class="f-form01-main"><p class="t-1">交强险</p></div>
-            <div class="f-form01-other"><input type="checkbox" checked="" value="1" readonly="" id="jqx" /></div>
+            <div class="f-form01-other"><input type="checkbox" checked="" value="1" id="jqx" /></div>
         </div>
         <div class="f-form01-item">
             <div class="f-form01-main">
                 <p class="t-1">车船税</p>
                 <p class="t-2">按照国家规定与交强险同时缴纳</p>
             </div>
-            <div class="f-form01-other"><input type="checkbox" checked="" value="1" readonly="" id="ccs" /></div>
+            <div class="f-form01-other"><input type="checkbox" checked="" value="1" id="ccs" /></div>
         </div>
     </div>
     <div class="page11-form03">
@@ -296,6 +297,7 @@
                     if (userInfo != null) {
                         $("#licenseNo").val(userInfo.LicenseNo);
                         $("#modelName").val(userInfo.ModleName);
+                        $("#BusinessExpireDate").val(userInfo.BusinessExpireDate);
                     }
                     if (data.BusinessStatus == 1) {
                         $(".page11-success").html("往年配置<span>获取成功</span>以下为往年配置详情");
@@ -358,8 +360,8 @@
                             $("#bujimianfujia").css("background", "#ccc");
                         }
 
-                        $("#jqx").val(quote.ForceTotal);
-                        $("#ccs").val(quote.TaxTotal);
+                        $("#jqx").val(1);
+                        $("#ccs").val(1);
                         $("#chesun").val(quote.CheSun);
                         $("#sanzhe").val(quote.SanZhe);
                         $("#sanzhe").siblings("input[type=checkbox]").val(quote.SanZhe);
@@ -429,10 +431,10 @@
         $("#submit").click(function () {
             var jqx = ($("#jqx").prop("checked") == true) ? 1 : 0;
             var ccs = ($("#ccs").prop("checked") == true) ? 1 : 0;
-            if (jqx == 0 || ccs == 0) {
-                alert("国家强制投保，未投保则无法验车并处双倍罚款!");
-                return;
-            }
+            //if (jqx == 0 || ccs == 0) {
+            //    alert("国家强制投保，未投保则无法验车并处双倍罚款!");
+            //    return;
+            //}
 
             var boli = $("#boli").val();  //0,1,2
             var bujimianchesun = $("#bujimianchesun").prop("disabled") ? 1 : 0;  //0,1
@@ -449,7 +451,14 @@
             var daoqiang = $("#daoqiang").prop('checked') ? 1 : 0; //0,1
             var sanzhe = $("#sanzhe").val(); //0,value
             var ziran = $("#ziran").prop('checked') ? 1 : 0; //0,1
+            var ForceTax = 1;
+            var BusinessExpireDate = $("#BusinessExpireDate").val();
+            if (jqx == 0 && ccs==0)
+            {
+                ForceTax = 0;
+            }
             var dataItem = {
+                ForceTax: ForceTax,
                 boli: boli,
                 bujimianchesun: bujimianchesun,
                 bujimiandaoqiang: bujimiandaoqiang,
@@ -464,7 +473,8 @@
                 chesun: chesun,
                 daoqiang: daoqiang,
                 sanzhe: sanzhe,
-                ziran: ziran
+                ziran: ziran,
+                BizStartDate: BusinessExpireDate
             };
 
             var jsonToString = JSON.stringify(dataItem);
@@ -602,13 +612,13 @@
 
         //checkbox change, select change 选取中间的index设置为选中
         $("input[type=checkbox]").change(function () {
-            if ($(this).prop("readonly")) {  //必选项不可取消选中
-                $(this).prop("checked", true);
-                alert("国家强制投保，未投保则无法验车并处双倍罚款!");
-            }
-            else {
+            //if ($(this).prop("readonly")) {  //必选项不可取消选中
+            //    $(this).prop("checked", true);
+            //    alert("国家强制投保，未投保则无法验车并处双倍罚款!");
+            //}
+            //else {
                 checkBoxChange($(this), "middle");
-            }
+            //}
         });
 
         //checkbox change, select change (选取中间的index为选中or最大值)
@@ -628,6 +638,11 @@
                             source.siblings(".f-select02").find("option:nth-child(" + index + ")").prop("selected", true);
                         }
                     }
+                }
+                if(source.prop("id") == "jqx" || source.prop("id") == "ccs")
+                {
+                    $("#jqx").prop("checked", true);
+                    $("#ccs").prop("checked", true);
                 }
             }
             else {
@@ -649,7 +664,12 @@
                         $("#bujimianfujia").css("background", "#ccc");
                     }
                 }
+                if (source.prop("id") == "jqx" || source.prop("id") == "ccs") {
+                    $("#jqx").prop("checked", false);
+                    $("#ccs").prop("checked", false);
+                }
             }
+
         }
     </script>
     <div id="myModal" class="reveal-modal">

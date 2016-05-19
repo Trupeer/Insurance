@@ -276,7 +276,8 @@ namespace HONGLI.Web.Controllers
 
                 #region 入参各种类型选择
                 var incomingParamModel = tempDataItem.ToString().FromJsonTo<Dictionary<string, object>>();
-                model.ForceTax = 1;     //1.报价交强车船 0.不报价交强车船
+                model.ForceTax = Convert.ToInt32(incomingParamModel["ForceTax"]);     //1.报价交强车船 0.不报价交强车船
+                model.BizStartDate = incomingParamModel["BizStartDate"].ToString();
                 model.BoLi = Convert.ToDouble(incomingParamModel["boli"]);
                 model.BuJiMianCheSun = Convert.ToDouble(incomingParamModel["bujimianchesun"]);
                 model.BuJiMianDaoQiang = Convert.ToDouble(incomingParamModel["bujimiandaoqiang"]);
@@ -571,62 +572,73 @@ namespace HONGLI.Web.Controllers
                 //核保成功，成功再记cache
                 if (data != null)
                 {
-                    //HttpContext.Session[keySubmit] = data;
-                    HttpContext.Cache.Insert(keySubmit, data);
+                    if(data.Item!=null)
+                    {
+                        if (data.Item.SubmitStatus != 3)
+                        {
+                            //HttpContext.Session[keySubmit] = data;
+                            HttpContext.Cache.Insert(keySubmit, data);
+                        }
+
+                    }
                 }
-                #region 同步核保数据
-                var product_item = new ProductV2_Item();
-                result.MapToEntity<ProductV2_Item>(product_item);
-                product_item.Id = ProductItemId;
-                product_item.SubmitStatus = (byte)(data.Item.SubmitStatus);
-                product_item.SubmitResult = data.Item.SubmitResult;
-                product_item.BizNo = data.Item.BizNo;
-                product_item.ForceNo = data.Item.ForceNo;
-
-                #region 平台自用费率，即用户的价格=总价*(1-保险公司费率+平台费率)
-                var keyPrice = string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, intentionCompany, "price");
-                var databaojia = HttpContext.Session[keyPrice] as PrecisePriceResultV2;
-                
-                var rateList = new ProductV3Service().GetCouponRateList(channelValue, Convert.ToInt32(intentionCompany));
-                var key = string.Format("{0}_{1}_CouponRate", channelValue, intentionCompany);
-                var couponRate = rateList[key];
-
-                var forceRate_Channel = Convert.ToDouble(0);
-                var taxRate_Channel = Convert.ToDouble(0);
-                var bizRate_Channel = Convert.ToDouble(0);
-                if (couponRate != null)
+                if(data.BusinessStatus != 3)
                 {
-                    var array = couponRate.Split(',').ToArray();
-                    forceRate_Channel = Convert.ToDouble(array[0]);
-                    taxRate_Channel = Convert.ToDouble(array[1]);
-                    bizRate_Channel = Convert.ToDouble(array[2]);
+                    #region 同步核保数据
+                    var product_item = new ProductV2_Item();
+                    result.MapToEntity<ProductV2_Item>(product_item);
+                    product_item.Id = ProductItemId;
+                    product_item.SubmitStatus = (byte)(data.Item.SubmitStatus);
+                    product_item.SubmitResult = data.Item.SubmitResult;
+                    product_item.BizNo = data.Item.BizNo;
+                    product_item.ForceNo = data.Item.ForceNo;
+
+                    #region 平台自用费率，即用户的价格=总价*(1-保险公司费率+平台费率)
+                    var keyPrice = string.Format("{0}/{1}/{2}/{3}/{4}", channelValue, mobile, licenseNo, intentionCompany, "price");
+                    var databaojia = HttpContext.Session[keyPrice] as PrecisePriceResultV2;
+
+                    var rateList = new ProductV3Service().GetCouponRateList(channelValue, Convert.ToInt32(intentionCompany));
+                    var key = string.Format("{0}_{1}_CouponRate", channelValue, intentionCompany);
+                    var couponRate = rateList[key];
+
+                    var forceRate_Channel = Convert.ToDouble(0);
+                    var taxRate_Channel = Convert.ToDouble(0);
+                    var bizRate_Channel = Convert.ToDouble(0);
+                    if (couponRate != null)
+                    {
+                        var array = couponRate.Split(',').ToArray();
+                        forceRate_Channel = Convert.ToDouble(array[0]);
+                        taxRate_Channel = Convert.ToDouble(array[1]);
+                        bizRate_Channel = Convert.ToDouble(array[2]);
+                    }
+
+                    product_item.ForceRate_Channel = Convert.ToDecimal(forceRate_Channel);
+                    product_item.TaxRate_Channel = Convert.ToDecimal(taxRate_Channel);
+                    product_item.BizRate_Channel = Convert.ToDecimal(bizRate_Channel);
+                    #endregion
+                    //product_item.BizRate = Convert.ToDecimal(data.Item.BizRate);
+                    product_item.BizAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.BizTotal * ((100 - bizRate_Channel) * 0.01)), 2);
+
+                    // product_item.ForceRate = Convert.ToDecimal(data.Item.ForceRate);
+                    product_item.ForceAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.ForceTotal * ((100 - forceRate_Channel) * 0.01)), 2);
+                    //product_item.TaxRate = 0; //核保后，交强险费率和车船税费率相同
+                    product_item.TaxAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.TaxTotal * ((100 - taxRate_Channel) * 0.01)), 2);
+                    product_item.TotalAfterCoupon = decimal.Round(Convert.ToDecimal(product_item.BizAfterCoupon + product_item.ForceAfterCoupon + product_item.TaxAfterCoupon), 2);
+                    //#region  从新添加费率并加入缓存
+                    //databaojia.Item.BizRate =Convert.ToDouble(product_item.BizRate);
+                    //databaojia.Item.ForceRate = Convert.ToDouble(product_item.ForceRate);
+                    //HttpContext.Session[keyPrice] = databaojia;
+                    //#endregion
+                    #region 预付比例
+                    var PrepaidAmountkey = string.Format("{0}_PrepaidAmount", channelValue);
+                    var prepaidlist = new ProductV3Service().GetPrepaidAmount(channelValue);
+                    decimal PrepaidAmount = Convert.ToDecimal(prepaidlist[PrepaidAmountkey]);
+                    product_item.PrepaidAmount = product_item.TotalAfterCoupon * PrepaidAmount;
+                    #endregion
+                    new ProductV3Service().Editproductitem(product_item);
+                    #endregion
                 }
 
-                product_item.ForceRate_Channel = Convert.ToDecimal(forceRate_Channel);
-                product_item.TaxRate_Channel = Convert.ToDecimal(taxRate_Channel);
-                product_item.BizRate_Channel = Convert.ToDecimal(bizRate_Channel);
-                #endregion
-                //product_item.BizRate = Convert.ToDecimal(data.Item.BizRate);
-                product_item.BizAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.BizTotal * ((100 -  bizRate_Channel) * 0.01)), 2);
-
-               // product_item.ForceRate = Convert.ToDecimal(data.Item.ForceRate);
-                product_item.ForceAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.ForceTotal * ((100 -  forceRate_Channel) * 0.01)), 2);
-                //product_item.TaxRate = 0; //核保后，交强险费率和车船税费率相同
-                product_item.TaxAfterCoupon = decimal.Round(Convert.ToDecimal(databaojia.Item.TaxTotal * ((100 - taxRate_Channel) * 0.01)), 2);
-                product_item.TotalAfterCoupon = decimal.Round(Convert.ToDecimal(product_item.BizAfterCoupon + product_item.ForceAfterCoupon + product_item.TaxAfterCoupon), 2);
-                //#region  从新添加费率并加入缓存
-                //databaojia.Item.BizRate =Convert.ToDouble(product_item.BizRate);
-                //databaojia.Item.ForceRate = Convert.ToDouble(product_item.ForceRate);
-                //HttpContext.Session[keyPrice] = databaojia;
-                //#endregion
-                #region 预付比例
-                var PrepaidAmountkey = string.Format("{0}_PrepaidAmount", channelValue);
-                var prepaidlist = new ProductV3Service().GetPrepaidAmount(channelValue);
-                decimal PrepaidAmount = Convert.ToDecimal(prepaidlist[PrepaidAmountkey]);
-                product_item.PrepaidAmount = product_item.TotalAfterCoupon * PrepaidAmount;
-                #endregion
-                new ProductV3Service().Editproductitem(product_item);
-                #endregion
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

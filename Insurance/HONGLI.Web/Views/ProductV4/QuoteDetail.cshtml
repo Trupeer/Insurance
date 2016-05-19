@@ -355,7 +355,7 @@
                         //$("#forceCoupon>div:eq(3)").html("x"+result.ForceTotal + "元（原价）");
                         //$("#taxCoupon>div:eq(2)").html("x"+result.TaxTotal + "元（原价）");
 
-                        $(".formula").show();
+                        $(".formula").hide();
                         $(".formulaBuy .t-info").hide();
                         $(".formulaBuy").show();
                     }
@@ -383,7 +383,7 @@
                 }
             });
         }
-
+        var hebaotime=0;
         //获取核保信息
         function getSubmitInfo(){
             $.ajax({
@@ -449,8 +449,31 @@
                     }
                     else if (submitStatus == "@(Convert.ToInt32(SubmitStatus.Checking))")
                     {
-                        submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-loading-title'><span>核保中</span></div>"+
-                                           "<div class='page12-hbzt-content page12-hbzt-loading-content'><span>请稍等...</span></div>";
+                        submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-loading-title'><span>人工审核中</span></div>"+
+                                           "<div class='page12-hbzt-content page12-hbzt-loading-content'><span>大约需要等待3分钟，请稍等...</span></div>";
+                        var mydate = new Date();
+                        if(parseFloat(mydate.getHours().toString()+mydate.getMinutes().toString())>=830&&parseFloat(mydate.getHours().toString()+mydate.getMinutes().toString())<1730)
+                        {
+                            if(hebaotime+20000>800000)
+                            {
+                                submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-no-title'><span>人工审核中</span></div>"+
+                                               "<div class='page12-hbzt-content page12-hbzt-no-content'><span>亲，核保遇到问题，请您联系客服</span></div>" +
+                                               "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' data-reveal-id='myModal' href='#' data-animation='fade'>客服</a></div>";
+                                
+                            }
+                            else
+                            {
+                                hebaotime+=20000;
+                                var t2 = window.setTimeout("getSubmitInfo()",10000);
+                            }
+                        }
+                        else
+                        {
+                            submitStatusHtml = "<div class='page12-hbzt-title page12-hbzt-no-title'><span>人工审核中</span></div>"+
+                                             "<div class='page12-hbzt-content page12-hbzt-no-content'><span>亲， 核保时间为：8:30-17:30,如有不便敬请谅解，如有问题请联系客服</span></div>" +
+                                             "<div class='page12-hbzt-error-other'> <a class='page12-hbzt-error-other-button' data-reveal-id='myModal' href='#' data-animation='fade'>客服</a></div>";
+                        }
+
                     }
                     else
                     {

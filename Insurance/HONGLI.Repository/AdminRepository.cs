@@ -1435,10 +1435,11 @@ namespace HONGLI.Repository
             sql.Append("ISNULL(v2Items.TaxTotal,0) as TaxTotal,");
             sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
             sql.Append("ISNULL(v2Items.Total,0) as Total,");
-            sql.Append("(ISNULL(v2Items.Total, 0) - ISNULL(v2Items.TotalAfterCoupon, 0)) AS 'BackMoney'");
+            sql.Append("(ISNULL(v2Items.Total, 0) - ISNULL(v2Items.TotalAfterCoupon, 0)) AS 'BackMoney',DeliverPrice");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
+            sql.Append(" LEFT JOIN dbo.Order_Deliver dl ON ob.OrderCode = dl.OrderCode");
             sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
             sql.Append(" Where 1=1");
             sql.Append(" AND ob.Status IN (3,4,5)");
@@ -1466,6 +1467,7 @@ namespace HONGLI.Repository
                 dt.Columns.Add("Commission");
                 dt.Columns.Add("Total");
                 dt.Columns.Add("BackMoney");
+                dt.Columns.Add("DeliverPrice");
                 foreach (var item in query)
                 {
                     DataRow dr = dt.NewRow();
@@ -1484,6 +1486,7 @@ namespace HONGLI.Repository
                     dr["Commission"] = item.Commission;
                     dr["Total"] = item.Total;
                     dr["BackMoney"] = item.BackMoney;
+                    dr["DeliverPrice"] = item.DeliverPrice;
                     dt.Rows.Add(dr);
                 }
                 return dt;
@@ -1543,10 +1546,11 @@ namespace HONGLI.Repository
             sql.Append("ISNULL(v2Items.TaxTotal,0) as TaxTotal,");
             sql.Append("(ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100) AS 'Commission',");
             sql.Append("ISNULL(v2Items.Total,0) as Total,");
-            sql.Append("(ISNULL(v2Items.Total, 0) - ISNULL(v2Items.TotalAfterCoupon, 0)) AS 'BackMoney'");
+            sql.Append("(ISNULL(v2Items.Total, 0) - ISNULL(v2Items.TotalAfterCoupon, 0)) AS 'BackMoney',DeliverPrice");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
+            sql.Append(" LEFT JOIN dbo.Order_Deliver dl ON ob.OrderCode = dl.OrderCode");
             sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
             sql.Append(" Where 1=1");
             sql.Append(" AND ob.Status IN (3,4,5)");
@@ -1573,6 +1577,9 @@ namespace HONGLI.Repository
                 dt.Columns.Add("佣金");
                 dt.Columns.Add("总价格");
                 dt.Columns.Add("返现");
+                dt.Columns.Add("实付金额");
+                dt.Columns.Add("运费");
+
                 foreach (var item in query)
                 {
                     DataRow dr = dt.NewRow();
@@ -1591,6 +1598,8 @@ namespace HONGLI.Repository
                     dr["佣金"] = Convert.ToDecimal(item.Commission).ToString("F2");
                     dr["总价格"] = Convert.ToDecimal(item.Total).ToString("F2");
                     dr["返现"] = Convert.ToDecimal(item.BackMoney).ToString("F2");
+                    dr["实付金额"] = (Convert.ToDecimal(item.Total)-Convert.ToDecimal(item.BackMoney)).ToString("F2");
+                    dr["运费"] = Convert.ToDecimal(item.DeliverPrice).ToString("F2"); 
                     dt.Rows.Add(dr);
                 }
                 return dt;
@@ -1631,10 +1640,11 @@ namespace HONGLI.Repository
             sql.Append("ISNULL(SUM(v2Items.TaxTotal),0) TaxTotal,");
             sql.Append("ISNULL(SUM((ISNULL(v2Items.BizRate, 0) * ISNULL(v2Items.BizTotal, 0) / 100) + (ISNULL(v2Items.ForceRate, 0) * ISNULL(v2Items.ForceTotal, 0) / 100) + (ISNULL(v2Items.TaxRate, 0) * ISNULL(v2Items.TaxTotal, 0) / 100)),0) AS 'Commission',");
             sql.Append("ISNULL(SUM(v2Items.Total),0) Total,");
-            sql.Append("(ISNULL(SUM(ISNULL(v2Items.Total, 0) - (ISNULL(v2Items.TotalAfterCoupon, 0))),0)) AS 'BackMoney'");
+            sql.Append("(ISNULL(SUM(ISNULL(v2Items.Total, 0) - (ISNULL(v2Items.TotalAfterCoupon, 0))),0)) AS 'BackMoney',ISNULL(SUM(DeliverPrice),0)  AS DeliverPrice ");
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
+            sql.Append(" LEFT JOIN dbo.Order_Deliver dl ON ob.OrderCode = dl.OrderCode");
             sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
             sql.Append(" Where 1=1");
             sql.Append(" AND ob.Status IN (3,4,5)");
@@ -1651,6 +1661,7 @@ namespace HONGLI.Repository
                 dt.Columns.Add("Commission");
                 dt.Columns.Add("Total");
                 dt.Columns.Add("BackMoney");
+                dt.Columns.Add("DeliverPrice");
                 foreach (var item in query)
                 {
                     DataRow dr = dt.NewRow();
@@ -1660,6 +1671,7 @@ namespace HONGLI.Repository
                     dr["Commission"] = item.Commission;
                     dr["Total"] = item.Total;
                     dr["BackMoney"] = item.BackMoney;
+                    dr["DeliverPrice"] = item.DeliverPrice;
                     dt.Rows.Add(dr);
                 }
                 return dt;
@@ -1715,6 +1727,7 @@ namespace HONGLI.Repository
             sql.Append(" FROM dbo.Order_Base ob");
             sql.Append(" LEFT JOIN dbo.Order_Item items ON ob.OrderCode = items.OrderCode");
             sql.Append(" LEFT JOIN dbo.Order_PolicyHolder ph ON items.OrderCode = ph.OrderCode");
+            sql.Append(" LEFT JOIN dbo.Order_Deliver dl ON ob.OrderCode = dl.OrderCode");
             sql.Append(" LEFT JOIN dbo.ProductV2_Item v2Items ON items.ProductId = v2Items.Id");
             sql.Append(" Where 1=1");
             sql.Append(" AND ob.Status IN (3,4,5)");
@@ -1740,6 +1753,8 @@ namespace HONGLI.Repository
             public decimal? Commission { get; set; }
             public decimal? Total { get; set; }
             public decimal? BackMoney { get; set; }
+
+            public decimal? DeliverPrice { get; set; }
         }
 
         public class ReportList
@@ -1759,6 +1774,7 @@ namespace HONGLI.Repository
             public decimal? Commission { get; set; }
             public decimal? Total { get; set; }
             public decimal? BackMoney { get; set; }
+            public decimal? DeliverPrice { get; set; }
         }
 
     }

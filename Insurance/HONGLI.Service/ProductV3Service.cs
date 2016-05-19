@@ -142,6 +142,7 @@ namespace HONGLI.Service
                 dict["RegisterDate"] = model.RegisterDate;
                 dict["MoldName"] = model.MoldName ?? "";
                 dict["ForceTax"] = model.ForceTax.ToString();
+                dict["BizStartDate"] = model.BizStartDate.ToString();
                 dict["BoLi"] = model.BoLi.ToString();
                 dict["BuJiMianCheSun"] = model.BuJiMianCheSun.ToString();
                 dict["BuJiMianDaoQiang"] = model.BuJiMianDaoQiang.ToString();

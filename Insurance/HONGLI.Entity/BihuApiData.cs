@@ -146,6 +146,8 @@ namespace HONGLI.Entity
         public string MoldName { get; set; }
         //交强险+车船税(1:报价交强车船，0：不报价交强车船) 
         public int ForceTax { get; set; }
+        //商业险到期时间
+        public string BizStartDate { get; set; }
         //玻璃单独破碎险，0-不投保，1国产，2进口
         public double BoLi { get; set; }
         //不计免赔险(车损) ，0-不投保，1投保

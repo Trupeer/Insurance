@@ -26,9 +26,11 @@
             </tr>
             <tr>
                 @{decimal Total;
+                    decimal TotalAfterCoupon;
                     decimal DeliverPrice;
                     decimal.TryParse(list["DeliverPrice"].ToString(), out DeliverPrice);
                     decimal.TryParse(list["Total"].ToString(), out Total);
+                    decimal.TryParse(list["TotalAfterCoupon"].ToString(), out TotalAfterCoupon);
                     }
                 <td bgcolor="#f1f1f1" align="center">应付保费</td>
                 <td align="center">@(DeliverPrice+Total)</td>
@@ -195,19 +197,17 @@
 
             </tr>
             <tr>
-                <td align="center" bgcolor="#f1f1f1"></td>
                 <td align="center" bgcolor="#f1f1f1">总价格</td>
-
                 <td align="center" bgcolor="#f1f1f1">优惠后总价格</td>
+                <td align="center" bgcolor="#f1f1f1">返现</td>
             </tr>
             <tr>
-                <td ></td>
                 <td align="center">@list["Total"]</td>
-
                 <td align="center">@list["TotalAfterCoupon"]</td>
+                <td align="center">@decimal.Round(Total- TotalAfterCoupon,2)</tdalign="center">
             </tr>
         </table>
-        <div style="float:right;margin-right:20px; font-size:16px; font-weight:600;"><span>预付金额：</span><span style="margin-right:15px;">@(list["PrepaidAmount"] == null ? "0" : list["PrepaidAmount"].ToString())</span></div>
+        @*<div style="float:right;margin-right:20px; font-size:16px; font-weight:600;"><span>预付金额：</span><span style="margin-right:15px;">@(list["PrepaidAmount"] == null ? "0" : list["PrepaidAmount"].ToString())</span></div>*@
         <br />
                 <strong>收单地址</strong>
                 <table class="table table-bordered" align="center">
@@ -220,26 +220,9 @@
                             </select>
                             运费
                             <input id="DeliverPrice" value="@list["DeliverPrice"]" readonly="readonly" />
-                            <input  id="OrderBaeCreateDate" type="hidden" value="@list["OrderBaeCreateDate"]"/>
+                            <input id="OrderBaeCreateDate" type="hidden" value="@list["OrderBaeCreateDate"]" />
                         </td>
                     </tr>
-                    <tr>
-                        <td bgcolor="#f1f1f1">收件人姓名</td>
-                        <td>@list["DeliverName"]</td>
-                        <td bgcolor="#f1f1f1">下单人联系方式</td>
-                        <td>@list["Mobile"]</td>
-                        <td bgcolor="#f1f1f1">收货人联系方式</td>
-                        <td>@list["DeliverMobile"]</td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#f1f1f1">收货地址</td>
-                        <td colspan="5">@list["DeliverAddress"]</td>
-                    </tr>
-                </table>
-                <br />
-                <span>修改</span>
-                <br />
-                <table class="table table-bordered" align="center">
                     <tr>
                         <td bgcolor="#f1f1f1">收件人姓名</td>
                         <td><input id="DeliverName" type="text" value="@list["DeliverName"]" /></td>

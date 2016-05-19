@@ -30,9 +30,11 @@
             <div style="width:12rem;height:21.3rem">
             </div>
         </div>
-        <div style="margin-left:1.5rem;top:65%;position:absolute;z-index:999;">
-                <input id="txt_redPacketCode" type="text" class="f-input01" placeholder="请输入返现提取码" />
-                <br />
+        <div style="margin-left:1.5rem;top:12rem;position:absolute;z-index:999;">
+            <p style="color:white;font-size:.620rem; text-align:center;font-weight:600;">输入红包密令即可领取红包</p>
+            <br />
+            <br />
+            <input id="txt_redPacketCode" type="text" class="f-input01" placeholder="请输入返现提取码" />
             <br />
             <br />
                 <a href="#" onclick="_go()"  class="f-button05">领取返现</a>

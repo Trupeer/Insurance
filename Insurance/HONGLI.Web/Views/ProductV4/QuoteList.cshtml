@@ -132,7 +132,7 @@
         //获取报价信息
         function getSpecialPrecisePrice(companyId) {
             var companyObj = $("#company" + companyId);
-            $("#lose" + companyId).removeClass("f-list01-other-01").addClass("f-list01-go").append("<i class='f-list01-icon-arrow'></i>");
+            $("#lose" + companyId).removeClass("f-list01-other-01").addClass("f-list01-go").html("").append("<i class='f-list01-icon-arrow'></i>");
             $.ajax({
                 type: "post",
                 url: '@Url.Action("GetSpecialPrecisePrice", "ProductV4")',

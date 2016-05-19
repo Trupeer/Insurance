@@ -393,7 +393,7 @@ body input.radio:checked:before{
     -webkit-box-align:center;
     box-align:center;
 }
-.page12-hbzt .page12-hbzt-loading-content span{ background: transparent url(../images/page12-loading.png) right center no-repeat; padding-right: 2.88rem; display: block; background-size: 2.88rem .48rem; margin: 0 auto;}
+.page12-hbzt .page12-hbzt-loading-content span{ background: transparent url(../images/page12-loading.gif) right center no-repeat; padding-right: 2.88rem; display: block; background-size: 2.88rem .48rem; margin: 0 auto;}
 
 .page12-hbzt-no-title{ background-color: #173e81; }
 .page12-hbzt-no-content{
